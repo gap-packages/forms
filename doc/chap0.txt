@@ -6,10 +6,10 @@
                            [1XSesquilinear and Quadratic[101X
   
   
-                                     1.2.3
+                                    1.2.3.4
   
   
-                                  October 2015
+                                  January 2016
   
   
                                   John Bamberg
@@ -27,18 +27,16 @@
   
   
   Jan De Beule
-      Email:    [7Xmailto:jan@debeule.eu[107X
+      Email:    [7Xmailto:Jan.De.Beule@vub.ac.be[107X
       Homepage: [7Xhttp://www.debeule.eu[107X
-      Address:  [33X[0;14YDepartment of Mathematics, Ghent University, Krijgslaan 281 --
-                S22, B--9000 Ghent, Belgium[133X
-                [33X[0;14YDepartment   of   Mathematics,   Vrije  Universiteit  Brussel,
+      Address:  [33X[0;14YDepartment   of   Mathematics,   Vrije  Universiteit  Brussel,
                 Pleinlaan 2, B--1050 Brussel, Belgium[133X
   
   
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2015 by the authors[133X
+  [33X[0;0Y© 2016 by the authors[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2 or higher.[133X

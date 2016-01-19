@@ -65,3 +65,6 @@
   read.g  files  had  windows  line  breaks,  this is also fixed. Finally, the
   documentation has been recompiled with the MathJax option.[133X
   
+  [33X[0;0YMax  Horn pointed out that we still used the depricated GAP_ROOT_PATHS. This
+  has been changed now into GAPInfo.RootPaths in version 1.2.3.4[133X
+  

@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.3",
-  Date := "26/10/2015",
+  Version := "1.2.3.4",
+  Date := "19/01/2016",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -46,7 +46,7 @@ Persons := [
     FirstNames    := "Jan",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "jdebeule@cage.ugent.be",
+    Email         := "Jan.De.Beule@vub.ac.be",
     WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
                        "Jan De Beule\n",

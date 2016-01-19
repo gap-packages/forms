@@ -7,10 +7,9 @@
 
   forms.xml          'Forms' package documentation    
                                                                   John Bamberg
-                                                               and Jan De Beule
+                                                                  Jan De Beule
                                                                 
   Copyright (C) 2015, The University of Western Australia
-  Copyright (C) 2015, Ghent University
   Copyright (C) 2015, Vrije Universiteit Brussel
 
 -->
@@ -39,25 +38,19 @@ Western Australia
 <Author>Jan De Beule
 <Address>
 Department of Mathematics,
-Ghent University,
-<Alt Only="LaTeX">\mbox{Krijgslaan}</Alt><Alt Not="LaTeX">Krijgslaan</Alt> 281 -- S22,
-B--9000 Ghent,
-Belgium
-<Br/>
-Department of Mathematics,
 Vrije Universiteit Brussel,
 Pleinlaan 2,
 B--1050 Brussel,
 Belgium
 </Address>
-<Email>jan@debeule.eu</Email>
+<Email>Jan.De.Beule@vub.ac.be</Email>
 <Homepage>http://www.debeule.eu</Homepage>
 </Author>
   
-<Date>October 2015</Date>
+<Date>January 2016</Date>
 
 <Copyright>
-  &copyright; 2015 by the authors<P/>
+  &copyright; 2016 by the authors<P/>
 
   This package may be distributed under the terms and conditions of the
   GNU Public License Version 2 or higher.

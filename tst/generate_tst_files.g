@@ -35,14 +35,14 @@ homedir := DirectoryCurrent();
 sourcedir := DirectoriesPackageLibrary("forms","tst/gap")[1];
 preambledir := DirectoriesPackageLibrary("forms","examples/")[1];
 outputdir := DirectoriesPackageLibrary("forms","tst/output")[1];
-paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L forms.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","forms.ws","-o","4G"];
 extension := ".out\";";
 cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"tst\/output\"\)\[1\]\;";
 
 #name of script to start gap version, might be different on your computer
-gapstart := "gap4r7";
+gapstart := "gap4r8";
 gap := Filename(Directory("/usr/bin/"),gapstart);
 
 #create .out files using the saved workspace
@@ -110,8 +110,11 @@ od;
 #now write testall.g file.
 
 o := Filename(includedir,"testall.g");
-PrintTo(o,"LoadPackage(\"forms\");\n");
-AppendTo(o,"dir := DirectoriesPackageLibrary( \"forms\", \"tst\" )[1];\n\n");
+tstdir := DirectoriesPackageLibrary("forms","tst")[1];
+part1 := Filename(tstdir,"template_part1.g");
+input_stream := InputTextFile(part1);
+PrintTo(o,ReadAll(input_stream));
+
 AppendTo(o,"testfiles := [\n");
 for i in [1..Length(files)-1] do
     filename := Concatenation(files[i],".tst");
@@ -119,5 +122,7 @@ for i in [1..Length(files)-1] do
 od;
 filename := Concatenation(files[Length(files)],".tst");
 AppendTo(o,Concatenation("\"",filename,"\"\n];\n\n"));
-AppendTo(o,"for f in testfiles do\n\tfile := Filename(dir,f);\n\tReadTest(file);\nod;");
 
+part2 := Filename(tstdir,"template_part2.g");
+input_stream := InputTextFile(part2);
+AppendTo(o,ReadAll(input_stream));
