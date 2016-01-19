@@ -1,0 +1,32 @@
+gap> 
+gap> #computing subspace orthogonal to given vector
+gap> mat := [[0,0,0,-2],[0,0,-3,0],[0,3,0,0],[2,0,0,0]]*Z(7)^0;
+[ [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^4, 0*Z(7) ], 
+  [ 0*Z(7), Z(7), 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ] ]
+gap> form := BilinearFormByMatrix(mat);
+< bilinear form >
+gap> v := Random(GF(7)^4);
+[ Z(7)^3, Z(7)^2, Z(7)^4, Z(7) ]
+gap> vperp := OrthogonalSubspaceMat(form,v);
+[ [ Z(7)^5, Z(7)^0, 0*Z(7), 0*Z(7) ], [ Z(7)^0, 0*Z(7), Z(7)^0, 0*Z(7) ], 
+  [ Z(7)^2, 0*Z(7), 0*Z(7), Z(7)^0 ] ]
+gap> sub := [[1,1,0,0],[0,0,1,2]]*Z(7)^0;
+[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^0, Z(7)^2 ] ]
+gap> subperp := OrthogonalSubspaceMat(form,sub);
+[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^4, Z(7)^0 ] ]
+gap> mat := [[1,0,0],[0,0,1],[0,0,0]]*Z(2)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap> form := QuadraticFormByMatrix(mat);
+< quadratic form >
+gap> v := Random(GF(2)^3);
+<a GF2 vector of length 3>
+gap> vperp := OrthogonalSubspaceMat(form,v);
+[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
+    3> ]
+gap> sub := [[1,0,1],[1,0,0]]*Z(2)^0;
+[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2) ] ]
+gap> subperp := OrthogonalSubspaceMat(form,sub);
+[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
+    3> ]
+gap> quit;

@@ -1,0 +1,15 @@
+gap> 
+gap> #Background theory: example 1
+gap> mat := [[1,0,0],[0,1,4],[1,2,1]]*Z(5)^0;
+[ [ Z(5)^0, 0*Z(5), 0*Z(5) ], [ 0*Z(5), Z(5)^0, Z(5)^2 ], 
+  [ Z(5)^0, Z(5), Z(5)^0 ] ]
+gap> form := BilinearFormByMatrix(mat,GF(5));
+Error, Invalid Gram matrix
+ called from
+BilinearFormByMatrixOp( m, f ) called from
+<function>( <arguments> ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk> quit;
+gap> quit;

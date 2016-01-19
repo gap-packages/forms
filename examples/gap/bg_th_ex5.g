@@ -1,0 +1,30 @@
+#Background theory: example 5
+mat := [[0*Z(5),0*Z(5),0*Z(25),Z(25)^3],[0*Z(5),0*Z(5),Z(25)^3,0*Z(25)],
+        [0*Z(5),-Z(25)^3,0*Z(5),0*Z(5)],[-Z(25)^3,0*Z(5),0*Z(25),0*Z(25)]];
+form := HermitianFormByMatrix(mat,GF(25));
+Display(form);
+WittIndex(form);
+form2 := BilinearFormByMatrix(mat,GF(25));
+Display(form2);
+IsAlternatingForm(form2);
+Display(IsometricCanonicalForm(form));
+Display(IsometricCanonicalForm(form2));
+V := GF(25)^4;
+u := [Z(5)^0,Z(5^2)^11,Z(5)^3,Z(5^2)^13 ];
+[u,u]^form;
+v := [Z(5)^0,Z(5^2)^5,Z(5^2),Z(5^2)^13 ];
+[v,v]^form;                                     
+[u,v]^form;
+([v,u]^form)^5;
+w := [Z(5^2)^21,Z(5^2)^19,Z(5^2)^4,Z(5)^3 ];
+[w,w]^form;
+v := [Z(5)^0,Z(5^2)^10,Z(5^2)^15,Z(5^2)^3 ];
+u := [Z(5)^3,Z(5^2)^9,Z(5^2)^4,Z(5^2)^16 ];
+w := [Z(5)^2,Z(5^2)^9,Z(5^2)^23,Z(5^2)^11 ];
+[u,v]^form;
+[u,w]^form;
+[v,w]^form;
+s := Subspace(V,[v,u,w]);
+Dimension(s);
+WittIndex(form);
+quit;

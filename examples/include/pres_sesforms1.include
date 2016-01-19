@@ -1,0 +1,11 @@
+gap> g := SU(4,3);
+SU(4,3)
+gap> forms := PreservedSesquilinearForms(g);
+[ &lt; hermitian form > ]
+gap> Display( forms[1] );
+Hermitian form
+Gram Matrix:
+ . . . 2
+ . . 2 .
+ . 2 . .
+ 2 . . .

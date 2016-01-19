@@ -1,0 +1,21 @@
+gap> go := GO(5, 5);
+GO(0,5,5)
+gap> x := 
+> [ [ Z(5)^0, Z(5)^3, 0*Z(5), Z(5)^3, Z(5)^3 ], 
+>   [ Z(5)^2, Z(5)^3, 0*Z(5), Z(5)^2, Z(5) ], 
+>   [ Z(5)^2, Z(5)^2, Z(5)^0, Z(5), Z(5)^3 ],
+>   [ Z(5)^0, Z(5)^3, Z(5), Z(5)^0, Z(5)^3 ], 
+>   [ Z(5)^3, 0*Z(5), Z(5)^0, 0*Z(5), Z(5) ] 
+>  ];;
+gap> go2 := go^x;
+&lt;matrix group of size 18720000 with 2 generators>
+gap> forms := PreservedSesquilinearForms( go2 );
+[ &lt; bilinear form > ]
+gap> Display( forms[1] );
+Bilinear form
+Gram Matrix:
+ 4 2 4 3 3
+ 2 2 2 3 3
+ 4 2 3 1 4
+ 3 3 1 2 4
+ 3 3 4 4 3

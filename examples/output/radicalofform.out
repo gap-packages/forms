@@ -1,0 +1,13 @@
+gap> 
+gap> #Radical of form: RadicalOfForm
+gap> r := PolynomialRing( GF(8), 3 );
+GF(2^3)[x_1,x_2,x_3]
+gap> poly := r.1^2 + r.2 * r.3;
+x_1^2+x_2*x_3
+gap> form := QuadraticFormByPolynomial( poly, r );
+< quadratic form >
+gap> r := RadicalOfForm( form );
+<vector space over GF(2^3), with 0 generators>
+gap> Dimension(r);
+0
+gap> quit;

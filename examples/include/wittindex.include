@@ -1,0 +1,26 @@
+gap> mat := [[0,0,1,0,0],[0,0,0,0,0],[-1,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]*Z(7)^0;
+[ [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ Z(7)^3, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ] ]
+gap> form := BilinearFormByMatrix(mat,GF(7));
+&lt; bilinear form >
+gap> WittIndex(form);
+1
+gap> RadicalOfForm(form);
+&lt;vector space over GF(7), with 3 generators>
+gap> Dimension(last);
+3
+gap> mat := IdentityMat(6,GF(5));
+&lt; mutable compressed matrix 6x6 over GF(5) >
+gap> form := QuadraticFormByMatrix(mat,GF(5));
+&lt; quadratic form >
+gap> WittIndex(form);
+3
+gap> mat := IdentityMat(6,GF(7));
+&lt; mutable compressed matrix 6x6 over GF(7) >
+gap> form := QuadraticFormByMatrix(mat,GF(7));
+&lt; quadratic form >
+gap> WittIndex(form);
+2

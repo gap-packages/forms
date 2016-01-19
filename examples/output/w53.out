@@ -1,0 +1,46 @@
+gap> 
+gap> #A form for W(5,3)
+gap> f := GF(3);
+GF(3)
+gap> gram := [
+> [0,0,0,1,0,0], 
+> [0,0,0,0,1,0],
+> [0,0,0,0,0,1],
+> [-1,0,0,0,0,0],
+> [0,-1,0,0,0,0],
+> [0,0,-1,0,0,0]] * One(f);;
+gap> form := BilinearFormByMatrix( gram, f );
+< bilinear form >
+gap> IsSymplecticForm( form );
+true
+gap> Display( form );
+Symplectic form
+Gram Matrix:
+ . . . 1 . .
+ . . . . 1 .
+ . . . . . 1
+ 2 . . . . .
+ . 2 . . . .
+ . . 2 . . .
+gap> b := BaseChangeToCanonical( form );
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap> Display( b );
+ 1 . . . . .
+ . . . 1 . .
+ . 1 . . . .
+ . . . . 1 .
+ . . 1 . . .
+ . . . . . 1
+gap> Display( b * gram * TransposedMat(b) );
+ . 1 . . . .
+ 2 . . . . .
+ . . . 1 . .
+ . . 2 . . .
+ . . . . . 1
+ . . . . 2 .
+gap> quit;

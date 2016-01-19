@@ -1,0 +1,25 @@
+#A conic of PG(2,8)
+gf := GF(8);
+vec := gf^3;
+r := PolynomialRing( gf, 3);
+poly := r.1^2 + r.2 * r.3;
+form := QuadraticFormByPolynomial( poly, r );
+Display( form );
+IsDegenerateForm( form );
+IsSingularForm( form );
+WittIndex( form );
+IsParabolicForm( form );
+RadicalOfForm( form );
+canonical := IsometricCanonicalForm( form );
+form = canonical;
+go := GO(3,8);
+mat := InvariantQuadraticForm( go )!.matrix;
+gapform := QuadraticFormByMatrix( mat, GF(8) );
+b := BaseChangeToCanonical( gapform );
+hom := BaseChangeHomomorphism( b, GF(8) );
+newgo := Image(hom, go);
+conic := Filtered(vec, x -> IsZero( x^form ));;
+Size(conic);
+orbs := Orbits(newgo, conic, OnRight);;
+List(orbs,Size);
+quit;

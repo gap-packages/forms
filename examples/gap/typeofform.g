@@ -1,0 +1,27 @@
+#Type Of Form
+mat := [[0,0,0,-1],[0,0,3,0],[0,-3,0,0],[1,0,0,0]]*Z(25)^0;
+form := BilinearFormByMatrix(mat,GF(25));
+IsDegenerateForm(form);
+TypeOfForm(form);
+mat := IdentityMat(3,GF(7));
+form := QuadraticFormByMatrix(mat,GF(7));
+IsSingularForm(form);
+TypeOfForm(form);
+mat := [[0,1,0,0],[-1,0,0,0],[0,0,0,0],[0,0,0,0]]*Z(5)^0;
+form := BilinearFormByMatrix(mat,GF(5));
+IsDegenerateForm(form);
+TypeOfForm(form);
+mat := [[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]]*Z(7)^0;
+form := BilinearFormByMatrix(mat,GF(7));
+IsDegenerateForm(form);
+TypeOfForm(form);
+mat := IdentityMat(3,GF(9));
+form := HermitianFormByMatrix(mat,GF(9));
+IsDegenerateForm(form);
+TypeOfForm(form);
+mat := [[0,0,0,1],[0,1,0,0],[0,0,1,0],[1,0,0,0]]*Z(8)^0;
+form := BilinearFormByMatrix(mat,GF(8));
+IsDegenerateForm(form);
+TypeOfForm(form);
+quit;
+quit;

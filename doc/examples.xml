@@ -1,0 +1,141 @@
+<!-- 
+
+  examples.xml            Forms package documentation
+                                                                   John Bamberg
+                                                               and Jan De Beule
+                                                                 
+  Copyright (C) 2015, The University of Western Australia
+  Copyright (C) 2015, Ghent University
+  Copyright (C) 2015, Vrije Universiteit Brussel
+
+This chapter gives examples for the usage of this package.
+
+-->
+
+<Chapter Label="examples">
+<Heading>Examples</Heading>
+
+Here we give some simple examples that display some of the functionality
+of <Package>Forms</Package>.
+
+<Section>
+<Heading>A conic of PG(2,8)</Heading>
+
+Consider the three-dimensional vector space <M>V := V(3,GF(8))</M>, and
+consider the following quadratic polynomial in 3 variables: <Alt Only="MathJax"><M>x_1^2+x_2x_3+d</M></Alt>
+<Alt Not="HTML"><Display>x_1^2+x_2x_3.</Display></Alt>
+<Alt Only="HTML">&lt;center>x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>+x&lt;sub>2&lt;/sub>x&lt;sub>3&lt;/sub>.&lt;/center></Alt>
+Then this polynomial defines a quadratic form on <M>V</M> and the zeros
+form a <E>conic</E> of the associated projective plane. So in particular,
+our quadratic form defines a degenerate parabolic quadric of Witt Index 1.
+We will see now how we can use <Package>Forms</Package> to view this example.
+<Example>
+gap> gf := GF(8);
+GF(2^3)
+gap> vec := gf^3;
+( GF(2^3)^3 )
+gap> r := PolynomialRing( gf, 3);
+PolynomialRing(..., [ x_1, x_2, x_3 ])
+gap> poly := r.1^2 + r.2 * r.3;
+x_1^2+x_2*x_3
+gap> form := QuadraticFormByPolynomial( poly, r );
+&lt; quadratic form >
+gap> Display( form );
+Quadratic form
+Gram Matrix:
+ 1 . .
+ . . 1
+ . . .
+Polynomial: x_1^2+x_2*x_3
+gap> IsDegenerateForm( form );
+#I  Testing degeneracy of the *associated bilinear form*
+true
+gap> IsSingularForm( form );
+false
+gap> WittIndex( form );
+1
+gap> IsParabolicForm( form );
+true
+gap> RadicalOfForm( form );
+&lt;vector space over GF(2^3), with 0 generators>
+</Example>
+Now our conic is stabilised by a group isomorphic to <M>GO(3,8)</M>, but not identical to the group returned by the GAP command
+<C>GO(3,8)</C>. However, our conic is the canonical conic given in <Package>Forms</Package>.
+<Example>
+gap> canonical := IsometricCanonicalForm( form );
+&lt; parabolic quadratic form >
+gap> form = canonical;
+true
+</Example>
+So we ``change forms''...
+<Example>
+gap> go := GO(3,8);
+GO(0,3,8)
+gap> mat := InvariantQuadraticForm( go )!.matrix;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), Z(2)^0, 0*Z(2) ] ]
+gap> gapform := QuadraticFormByMatrix( mat, GF(8) );
+&lt; quadratic form >
+gap> b := BaseChangeToCanonical( gapform );
+[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]
+gap> hom := BaseChangeHomomorphism( b, GF(8) );
+^[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]
+gap> newgo := Image(hom, go);
+Group(
+[ [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^3), 0*Z(2) ], [ 0*Z(2), 0*Z(2),
+           Z(2^3)^6 ] ], 
+  [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
+      [ 0*Z(2), Z(2)^0, 0*Z(2) ] ] ])
+</Example>
+Now we look at the action of our new <M>GO(3,8)</M> on the conic.
+<Example>
+gap> conic := Filtered(vec, x -> IsZero( x^form ));;
+gap> Size(conic);
+64
+gap> orbs := Orbits(newgo, conic, OnRight);;
+gap> List(orbs,Size);
+[ 1, 63 ]
+</Example> 
+So we see that there is a fixed point, which is actually the
+<E>nucleus</E> of the conic, or in other words, the radical
+of the form.
+</Section>
+
+<Section>
+<Heading>A form for W(5,3)</Heading>
+The symplectic polar space <M>W(5,q)</M> is defined by an
+alternating reflexive bilinear form on the
+six-dimensional vector space <Alt Not="HTML"><M>GF(q)^6</M></Alt><Alt
+Only="HTML">GF(q)&lt;sup>6&lt;/sup></Alt>. Any invertible
+<M>6 \times 6</M> matrix <M>A</M> which satisfies
+<Alt Not="HTML"><M>A+A^T=0</M></Alt><Alt Only="HTML">A+A&lt;sup>T&lt;/sup>=0</Alt>
+is a candidate for the Gram matrix of a symplectic polarity. The canonical form
+we adopt in <Package>Forms</Package> for an alternating form is
+<Alt Not="HTML"><Display>f(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.</Display>
+</Alt>
+<Alt Only="HTML">&lt;center>
+f(x,y)=x&lt;sub>1&lt;/sub>y&lt;sub>2&lt;/sub>&lt;font face="symbol">-&lt;/font
+>x&lt;sub>2&lt;/sub>y&lt;sub>1&lt;/sub>+x&lt;sub>3&lt;/sub>y&lt;sub>4&lt;/sub>&lt;font face="symbol">-&lt;/font
+>x&lt;sub>4&lt;/sub>y&lt;sub>3&lt;/sub>+ ... +x&lt;sub>2n&lt;font face="symbol">-&lt;/font
+>1&lt;/sub>y&lt;sub>2n&lt;/sub>&lt;font face="symbol">-&lt;/font
+>x&lt;sub>2n&lt;/sub>y&lt;sub>2n&lt;font face="symbol">-&lt;/font
+>1&lt;/sub>&lt;/center></Alt>
+<Example>
+<#Include SYSTEM "../examples/include/w53.include"> 
+</Example>
+</Section>
+
+<Section>
+<Heading>What is the form preserved by this group?</Heading>
+Here we start with a matrix group which is available in GAP,
+namely <M>GO(5,5)</M>. We then conjugate this group by an
+element of <M>GL(5,5)</M>, and then we find the forms left
+invariant by this copy of <M>GO(5,5)</M> (which we expect to
+be a symmetric bilinear form).
+<Example>
+<#Include SYSTEM "../examples/include/preservedform.include"> 
+</Example>
+</Section>
+</Chapter>

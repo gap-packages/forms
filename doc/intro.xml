@@ -1,0 +1,88 @@
+<!-- 
+
+  intro.xml            'Forms' package documentation 
+                                                                  John Bamberg
+                                                               and Jan De Beule
+                                                                  
+
+  Copyright (C) 2015, The University of Western Australia
+  Copyright (C) 2015, Ghent University
+  Copyright (C) 2015, Vrije Universiteit Brussel
+
+This chapter gives a short introduction to the package.
+
+-->
+
+<Chapter Label="intro">
+<Heading>Introduction</Heading>
+
+<Section Label="philosophy">
+<Heading>Philosophy</Heading>
+
+<Package>Forms</Package> is a package for computing with
+sesquilinear and quadratic forms on finite vector spaces.
+It provides users with the basic algebraic tools to 
+work with classical groups and polar geometries,
+and enables one to specify a form and its corresponding
+geometry. The functionality of the package includes:
+<List>
+ <Item>the construction of sesquilinear and quadratic forms;</Item>
+ <Item>operations which allow a user to change coordinates, that is,
+to ``change form'' and work in an isometric (or similar)
+formed vector space; and</Item>
+ <Item>a way to determine the form(s) left invariant by a matrix group (up to a scalar).</Item>
+</List>
+
+</Section>
+
+<Section Label="overview">
+<Heading>Overview over this manual</Heading>
+
+The next chapter (<Ref Chap="examples"/>) gives some basic examples of
+the use of this package. In "Background Theory of Forms" (Chapter
+<Ref Chap="theory"/>) we revise the basic notions of the theory of
+sesquilinear and quadratic forms, where we also set the notation
+and conventions adopted by this package. In "Constructing forms and basic
+functionality" (Chapter <Ref Chap="functionality"/>), we describe all operations
+to construct sesquilinear and quadratic forms and basic attributes and
+properties that do not require morphisms. In "Morphims of forms" (Chapter
+<Ref Chap="morphisms"/>) we revise the basic notions of morphisms of forms, and
+the classification of sesquilinear and quadratic forms on vector spaces over
+finite fields. Operations, attributes and properties that are related to the
+computation of morphisms of forms, are also described in this chapter. 
+</Section>
+
+<Section Label="howto">
+<Heading>How to read this manual</Heading>
+
+We have tried to make this manual pleasant to read for the general
+reader. So it is inevitable that we will use Greek symbols and simple
+mathematical formulas. To make these visible in the HTML version of this
+documentation, you may have to change the default character set
+of your browser to UTF-8.
+</Section>
+
+
+<Section Label="release_notes">
+<Heading>Release notes</Heading>
+
+Version 1.2.1 of <Package>Forms</Package> contains some changed and extra
+functionality with relation to trivial forms. The changed and new functionality
+is described completely in Section <Ref Sect="trivialform"/>. We gratefully
+acknowledge the useful feedback of Alice Niemeyer. 
+<P/>
+In version 1.2.2 of <Package>Forms</Package> a minor bug, pointed out by John Bamberg, 
+in the code of <F>IsTotallyIsotropicSubspace</F> is repaired. On the occasion of the release
+of the first beta versions of GAP4r5, we changed the names of some global functions such that 
+a name clash becomes unlikely. Version 1.2.2 of <Package>Forms</Package> is compatible with GAP4r4 
+and GAP4r5.
+<P/>Version 1.2.3 contains a new operation <F>TypeOfForm</F>. Together with this addition, some parts of
+the documentation, especially concerning degenerate and singular forms, have been edited. A bug found
+in the methods for <F>\^</F> applicable on a pair of vectors and a hermitian form, and a pair of matrices
+and a hermitian form has been fixed. A series of test files is now included in the tst directory.
+Alexander Konovalov pointed out the the init.g and read.g files had windows line breaks, this is also
+fixed. Finally, the documentation has been recompiled with the MathJax option.
+</Section>
+<!-- ############################################################ -->
+
+</Chapter>

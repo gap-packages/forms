@@ -1,0 +1,67 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YPhilosophy[133X[101X
+  
+  [33X[0;0Y[5XForms[105X  is  a  package for computing with sesquilinear and quadratic forms on
+  finite  vector  spaces.  It provides users with the basic algebraic tools to
+  work  with classical groups and polar geometries, and enables one to specify
+  a  form  and  its  corresponding  geometry. The functionality of the package
+  includes:[133X
+  
+  [30X    [33X[0;6Ythe construction of sesquilinear and quadratic forms;[133X
+  
+  [30X    [33X[0;6Yoperations  which  allow  a  user  to  change coordinates, that is, to
+        ``change  form''  and  work in an isometric (or similar) formed vector
+        space; and[133X
+  
+  [30X    [33X[0;6Ya way to determine the form(s) left invariant by a matrix group (up to
+        a scalar).[133X
+  
+  
+  [1X1.2 [33X[0;0YOverview over this manual[133X[101X
+  
+  [33X[0;0YThe  next  chapter ([14X2[114X) gives some basic examples of the use of this package.
+  In  "Background  Theory of Forms" (Chapter [14X3[114X) we revise the basic notions of
+  the  theory  of  sesquilinear  and  quadratic  forms,  where we also set the
+  notation and conventions adopted by this package. In "Constructing forms and
+  basic  functionality"  (Chapter  [14X4[114X), we describe all operations to construct
+  sesquilinear and quadratic forms and basic attributes and properties that do
+  not  require  morphisms.  In  "Morphims  of forms" (Chapter [14X5[114X) we revise the
+  basic  notions of morphisms of forms, and the classification of sesquilinear
+  and  quadratic  forms  on  vector  spaces  over  finite  fields. Operations,
+  attributes  and  properties that are related to the computation of morphisms
+  of forms, are also described in this chapter.[133X
+  
+  
+  [1X1.3 [33X[0;0YHow to read this manual[133X[101X
+  
+  [33X[0;0YWe  have  tried to make this manual pleasant to read for the general reader.
+  So  it  is inevitable that we will use Greek symbols and simple mathematical
+  formulas.  To  make these visible in the HTML version of this documentation,
+  you may have to change the default character set of your browser to UTF-8.[133X
+  
+  
+  [1X1.4 [33X[0;0YRelease notes[133X[101X
+  
+  [33X[0;0YVersion  1.2.1  of  [5XForms[105X contains some changed and extra functionality with
+  relation  to  trivial  forms. The changed and new functionality is described
+  completely  in Section [14X4.9[114X. We gratefully acknowledge the useful feedback of
+  Alice Niemeyer.[133X
+  
+  [33X[0;0YIn  version  1.2.2 of [5XForms[105X a minor bug, pointed out by John Bamberg, in the
+  code  of  [11XIsTotallyIsotropicSubspace[111X  is  repaired.  On  the occasion of the
+  release  of  the first beta versions of GAP4r5, we changed the names of some
+  global  functions  such that a name clash becomes unlikely. Version 1.2.2 of
+  [5XForms[105X is compatible with GAP4r4 and GAP4r5.[133X
+  
+  [33X[0;0YVersion  1.2.3  contains  a  new  operation  [11XTypeOfForm[111X.  Together with this
+  addition,  some parts of the documentation, especially concerning degenerate
+  and  singular  forms,  have  been  edited. A bug found in the methods for [11X\^[111X
+  applicable on a pair of vectors and a hermitian form, and a pair of matrices
+  and  a hermitian form has been fixed. A series of test files is now included
+  in  the  tst  directory.  Alexander Konovalov pointed out the the init.g and
+  read.g  files  had  windows  line  breaks,  this is also fixed. Finally, the
+  documentation has been recompiled with the MathJax option.[133X
+  
