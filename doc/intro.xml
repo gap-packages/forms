@@ -83,7 +83,8 @@ and a hermitian form has been fixed. A series of test files is now included in t
 Alexander Konovalov pointed out the the init.g and read.g files had windows line breaks, this is also
 fixed. Finally, the documentation has been recompiled with the MathJax option.
 <P/>Max Horn pointed out that we still used the depricated GAP_ROOT_PATHS. This has been changed now
-into GAPInfo.RootPaths in version 1.2.3.4
+into GAPInfo.RootPaths in version 1.2.4. More tests have been added to reach a better code coverage.
+Due to these tests, a bug in one of the methods for <C>EvaluateForm</C> was discovered and fixed.
 </Section>
 <!-- ############################################################ -->
 

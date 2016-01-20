@@ -1,0 +1,64 @@
+gap> START_TEST("Forms: test_forms14.tst");
+gap> q := 5;
+5
+gap> hdim := 3;
+3
+gap> dim := 2*hdim;
+6
+gap> f := GF(q);
+GF(5)
+gap> nzero := List([0..q-2],x->Z(q)^x);
+[ Z(5)^0, Z(5), Z(5)^2, Z(5)^3 ]
+gap> mat := NullMat(2*hdim,2*hdim,f);
+[ [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ] ]
+gap> for i in [1..hdim] do
+> entry := Random(nzero);;
+> mat[i][2*hdim-i+1] := entry;
+> mat[2*hdim-i+1][i] := -entry;
+> od;
+gap> form := BilinearFormByMatrix(mat,f);
+< bilinear form >
+gap> IsAlternatingForm(form);
+true
+gap> v := f^dim;
+( GF(5)^6 )
+gap> lines := Subspaces(v,1);
+Subspaces( ( GF(5)^6 ), 1 )
+gap> matrices := List(lines,x->BasisVectors(Basis(x)));;
+gap> vectors := List(matrices,x->x[1]);;
+gap> results := Collected(List(vectors,x->EvaluateForm(form,x,x)));;
+gap> [Zero(f),(q^dim-1)/(q-1)] in results;
+true
+gap> results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
+gap> [[[Zero(f)]],(q^dim-1)/(q-1)] in results;
+true
+gap> Length(Filtered(vectors,x->IsIsotropicVector(form,x)))=(q^dim-1)/(q-1);
+true
+gap> Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^dim-1)/(q-1);
+true
+gap> planes := Subspaces(v,2);
+Subspaces( ( GF(5)^6 ), 2 )
+gap> matrices := List(planes,x->BasisVectors(Basis(x)));;
+gap> results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
+gap> z := Zero(f);
+0*Z(5)
+gap> [[[z,z],[z,z]],(q^2+1)*(q^6-1)/(q-1)] in results;
+true
+gap> Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^2+1)*(q^6-1)/(q-1);
+true
+gap> threespaces := Subspaces(v,3);
+Subspaces( ( GF(5)^6 ), 3 )
+gap> matrices := List(lines,x->BasisVectors(Basis(x)));;
+gap> results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
+gap> z := Zero(f);
+0*Z(5)
+gap> [[[Zero(f)]],(q^3+1)*(q^2+q+1)] in results;
+true
+gap> Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^3+1)*(q^2+q+1);
+true
+gap> STOP_TEST("test_forms14.tst", 10000 );

@@ -24,7 +24,8 @@ quit;
 
 files := ["test_forms1", "test_forms2", "test_forms3", "test_forms4", "test_forms5",
             "test_forms6","test_forms7", "test_forms8", "test_forms9", "test_forms10",
-            "test_forms11", "test_recog" ];
+            "test_forms11", "test_recog", "test_forms12", "test_forms13", "test_forms14",
+            "test_forms15", "test_forms16" ];
 
 #initialize directorynames
 #sourcedir = dir where .g files are located : ".../pkg/forms/tst/gap"
@@ -76,7 +77,7 @@ for filename in files do
     cmd := ReadLine(input_stream);
     ReadAll(stream);
   od;
-  #repeat until ReadAll(stream)=fail; #new since oct 2015.
+  repeat until ReadAll(stream)=fail; #new since oct 2015.
 od;
 
 #create .tst files

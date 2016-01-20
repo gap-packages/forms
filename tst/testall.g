@@ -16,7 +16,12 @@ testfiles := [
 "test_forms9.tst",
 "test_forms10.tst",
 "test_forms11.tst",
-"test_recog.tst"
+"test_recog.tst",
+"test_forms12.tst",
+"test_forms13.tst",
+"test_forms14.tst",
+"test_forms15.tst",
+"test_forms16.tst"
 ];
 
 testresult:=true;

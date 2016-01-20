@@ -1,0 +1,37 @@
+#isotropic subspaces. symplectic form
+q := 5;
+hdim := 3;
+dim := 2*hdim;
+f := GF(q);
+nzero := List([0..q-2],x->Z(q)^x);
+mat := NullMat(2*hdim,2*hdim,f);
+for i in [1..hdim] do
+entry := Random(nzero);;
+mat[i][2*hdim-i+1] := entry;
+mat[2*hdim-i+1][i] := -entry;
+od;
+form := BilinearFormByMatrix(mat,f);
+IsAlternatingForm(form);
+v := f^dim;
+lines := Subspaces(v,1);
+matrices := List(lines,x->BasisVectors(Basis(x)));;
+vectors := List(matrices,x->x[1]);;
+results := Collected(List(vectors,x->EvaluateForm(form,x,x)));;
+[Zero(f),(q^dim-1)/(q-1)] in results;
+results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
+[[[Zero(f)]],(q^dim-1)/(q-1)] in results;
+Length(Filtered(vectors,x->IsIsotropicVector(form,x)))=(q^dim-1)/(q-1);
+Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^dim-1)/(q-1);
+planes := Subspaces(v,2);
+matrices := List(planes,x->BasisVectors(Basis(x)));;
+results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
+z := Zero(f);
+[[[z,z],[z,z]],(q^2+1)*(q^6-1)/(q-1)] in results;
+Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^2+1)*(q^6-1)/(q-1);
+threespaces := Subspaces(v,3);
+matrices := List(lines,x->BasisVectors(Basis(x)));;
+results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
+z := Zero(f);
+[[[Zero(f)]],(q^3+1)*(q^2+q+1)] in results;
+Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^3+1)*(q^2+q+1);
+quit;

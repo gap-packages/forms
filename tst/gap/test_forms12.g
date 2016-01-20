@@ -1,0 +1,20 @@
+#test_forms12.g code coverage test for constructor methods.
+f := GF(5);
+mat := IdentityMat(3,f);
+form := BilinearFormByMatrix(mat,f);
+Display(form);
+mat[1][2] := One(f);
+Display(form);
+f := GF(5);
+mat := IdentityMat(3,f);
+form := QuadraticFormByMatrix(mat,f);
+Display(form);
+mat[1][2] := One(f);
+Display(form);
+f := GF(81);
+mat := IdentityMat(4,f);
+form := HermitianFormByMatrix(mat,f);
+Display(form);
+mat[1][2] := One(f);
+Display(form);
+quit;

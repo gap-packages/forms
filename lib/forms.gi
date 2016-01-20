@@ -144,6 +144,9 @@ InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
     fi;
   end );
 
+# 20/01/2016: small change here: added MutableCopyMat, since it is not logical
+# that changing the matrix that was used for construction afterwards changes
+# the form. See test_forms12.g
 #############################################################################
 #O BilinearFormByMatrix( <m>, <f>): constructor for users.
 # <f> finite field, <m> orthogonal or symplectic matrix over <f>.
@@ -158,7 +161,7 @@ InstallMethod( BilinearFormByMatrix, "for a ffe matrix and a field",
     if not Z(Size(gf)) in f then
       Error("<m> is not a matrix over <f>");
     fi;
-    return BilinearFormByMatrixOp( m, f);
+    return BilinearFormByMatrixOp( MutableCopyMat(m), f);
 end );
 
 #############################################################################
@@ -196,6 +199,9 @@ InstallMethod( QuadraticFormByMatrixOp, "for a ffe matrix and a field",
     fi;
   end );
 
+# 20/01/2016: small change here: added MutableCopyMat, since it is not logical
+# that changing the matrix that was used for construction afterwards changes
+# the form. See test_forms12.g
 #############################################################################
 #O QuadraticFormByMatrix( <m>, <f> ): constructor for users.
 # <f> finite field, <m> matrix over <f>.
@@ -210,7 +216,7 @@ InstallMethod( QuadraticFormByMatrix, "for a ffe matrix and a field",
     if not Z(Size(gf)) in f then
       Error("<m> is not a matrix over <f>");
     fi;
-    return QuadraticFormByMatrixOp( m, f);
+    return QuadraticFormByMatrixOp( MutableCopyMat(m), f);
 end );
 
 #############################################################################
@@ -225,6 +231,9 @@ InstallMethod( QuadraticFormByMatrix, "for a ffe matrix ",
   return QuadraticFormByMatrixOp( m, f);
 end );
 
+# 20/01/2016: small change here: added MutableCopyMat, since it is not logical
+# that changing the matrix that was used for construction afterwards changes
+# the form. See test_forms12.g
 #############################################################################
 #O HermitianFormByMatrix( <m>, <f>): constructor  for users.
 # <f> finite field of square order, <m> hermitian matrix over <f>.
@@ -242,7 +251,7 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
         Error("No hermitian form exists when the order of <f> is not a square\n" );
     fi;
     if IsHermitianMatrix(m,f) then
-       el := rec( matrix := m, basefield := f, type := "hermitian" );
+       el := rec( matrix := MutableCopyMat(m), basefield := f, type := "hermitian" );
        Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
        return el;
     else
@@ -2957,14 +2966,20 @@ InstallMethod( EvaluateForm,  "for a bilinear form and a pair of matrices",
     return v*f!.matrix*TransposedMat(w);
 end );
 
+# jdb 20/01/2016: here was a bug, there is no method for  w^t, w a GF(q) vector
+# t just a natural number! Bugfix: look at the method for \^
 InstallMethod( EvaluateForm, "for an hermitian form and a pair of vectors",
   [IsHermitianForm and IsFormRep,         
         IsVector and IsFFECollection, IsVector and IsFFECollection],
   function(f,v,w)
-    local gf,t;
+    local gf,t,p,hh,frob;
+    #t := Sqrt(Size(gf));
+    #return v*f!.matrix*(w^t); # here was the mistake.
     gf := f!.basefield;
-    t := Sqrt(Size(gf));
-    return v*f!.matrix*(w^t);
+	p := Characteristic(gf);
+	hh := LogInt(Size(gf),p)/2;
+    frob := FrobeniusAutomorphism(gf)^hh;
+    return v*f!.matrix*(w^frob);
 end );
 
 InstallMethod( EvaluateForm,  "for an hermitian form and a pair of matrices",
