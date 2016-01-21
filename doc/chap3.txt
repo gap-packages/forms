@@ -132,13 +132,13 @@
     [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(5));[127X[104X
     [4X[28XError, Invalid Gram matrix[128X[104X
     [4X[28X called from[128X[104X
-    [4X[28XBilinearFormByMatrixOp( m, f ) called from[128X[104X
-    [4X[28X<function>( <arguments> ) called from read-eval-loop[128X[104X
-    [4X[28XEntering break read-eval-print loop ...[128X[104X
+    [4X[28XBilinearFormByMatrixOp( MutableCopyMat( m ), f [128X[104X
+    [4X[28X ) at ./pkg/forms/lib/forms.gi:164 called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 8 of *stdin*[128X[104X
     [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
     [4X[28Xyou can 'return;' to continue[128X[104X
-    [4X[26Xbrk>[126X [27Xquit;[127X[104X
-    [4X[28X [128X[104X
+    [4X[26Xbrk>[126X [27Xquit; [127X[104X
   [4X[32X[104X
   
   [33X[0;0YIt  is clear that the matrix used is not defining a reflexive bilinear form,
@@ -169,8 +169,7 @@
     [4X[25Xgap>[125X [27Xr := RadicalOfForm(form);[127X[104X
     [4X[28X<vector space over GF(3^2), with 0 generators>[128X[104X
     [4X[25Xgap>[125X [27XDimension(r);[127X[104X
-    [4X[28X0[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X0 [128X[104X
   [4X[32X[104X
   
   [33X[0;0YDegenerate  forms  are  allowed.  As  an example we construct an alternating
@@ -195,8 +194,7 @@
     [4X[25Xgap>[125X [27Xr := RadicalOfForm(form);[127X[104X
     [4X[28X<vector space over GF(7), with 1 generators>[128X[104X
     [4X[25Xgap>[125X [27XDimension(r);[127X[104X
-    [4X[28X1[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X1 [128X[104X
   [4X[32X[104X
   
   [33X[0;0YWhen  the characteristic of the field equals two, alternating forms are also
@@ -229,8 +227,7 @@
     [4X[25Xgap>[125X [27XIsDegenerateForm(form);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
-    [4X[28X3[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X3 [128X[104X
   [4X[32X[104X
   
   [33X[0;0YTo define a hermitian form, we need a matrix and the companion automorphism.
@@ -478,8 +475,7 @@
     [4X[28X   .   1   .[128X[104X
     [4X[28X   .   .   .[128X[104X
     [4X[25Xgap>[125X [27XPolynomialOfForm( qform );[127X[104X
-    [4X[28XZ(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2[128X[104X
-    [4X[28X [128X[104X
+    [4X[28XZ(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2 [128X[104X
   [4X[32X[104X
   
   [33X[0;0YIn  the  previous  example,  we  saw  how  we used a polynomial to display a
@@ -502,8 +498,7 @@
     [4X[28X . . . .[128X[104X
     [4X[28XPolynomial: x_1*x_2+x_3*x_4[128X[104X
     [4X[25Xgap>[125X [27XRadicalOfForm(qform);[127X[104X
-    [4X[28X<vector space over GF(2^3), with 0 generators>[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X<vector space over GF(2^3), with 0 generators> [128X[104X
   [4X[32X[104X
   
   [33X[0;0YWe  construct  now  two  different  quadratic forms with the same associated
@@ -547,14 +542,14 @@
     [4X[28X . 1 . .[128X[104X
     [4X[28X 1 . . .[128X[104X
     [4X[28X . . . 1[128X[104X
-    [4X[28X . . 1 .[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X . . 1 . [128X[104X
   [4X[32X[104X
   
   [33X[0;0YWe  end  with  an example of a non-singular quadratic form with a degenerate
   associated bilinear form.[133X
   
   [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [ [ Z(2^2), Z(2^2), Z(2^2), Z(2^2), Z(2^2) ], [127X[104X
     [4X[25X>[125X [27X   [ 0*Z(2), Z(2^2), Z(2^2)^2, 0*Z(2), Z(2)^0 ], [127X[104X
     [4X[25X>[125X [27X   [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ], [127X[104X
     [4X[25X>[125X [27X   [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [127X[104X
@@ -578,7 +573,6 @@
     [4X[28X z^1   .   1   .   1[128X[104X
     [4X[28X z^1   1   1   1   .[128X[104X
     [4X[25Xgap>[125X [27XIsDegenerateForm(biform);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[28X [128X[104X
+    [4X[28Xtrue [128X[104X
   [4X[32X[104X
   

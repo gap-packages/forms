@@ -45,8 +45,9 @@ gap> hom := BaseChangeHomomorphism( b, GF(8) );
   [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]
 gap> newgo := Image(hom, go);
 Group(
-[ [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^3), 0*Z(2) ], [ 0*Z(2), 0*Z(2),
-           Z(2^3)^6 ] ], 
+[ 
+  [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^3), 0*Z(2) ], 
+      [ 0*Z(2), 0*Z(2), Z(2^3)^6 ] ], 
   [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
       [ 0*Z(2), Z(2)^0, 0*Z(2) ] ] ])
 gap> conic := Filtered(vec, x -> IsZero( x^form ));;

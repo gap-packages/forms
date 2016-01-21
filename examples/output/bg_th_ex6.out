@@ -1,4 +1,3 @@
-gap> 
 gap> #Background theory: example 6
 gap> V := GF(4)^3;                           
 ( GF(2^2)^3 )

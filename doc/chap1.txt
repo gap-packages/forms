@@ -43,7 +43,18 @@
   you may have to change the default character set of your browser to UTF-8.[133X
   
   
-  [1X1.4 [33X[0;0YRelease notes[133X[101X
+  [1X1.4 [33X[0;0YWeb resources[133X[101X
+  
+  [30X    [33X[0;6YFind   [5XForms[105X   on   the   Packages   section   of   the   GAP-website:
+        [7Xhttp://www.gap-system.org/Packages/forms.html[107X.[133X
+  
+  [30X    [33X[0;6YFind [5XForms[105X on its homepage: [7Xhttp://cage.ugent.be/geometry/forms.php[107X.[133X
+  
+  [30X    [33X[0;6YReport  bugs,  questions  and  issues  on  the  [5XForms[105X  issue  tracker:
+        [7Xhttps://bitbucket.org/jdebeule/forms/issues[107X[133X
+  
+  
+  [1X1.5 [33X[0;0YRelease notes[133X[101X
   
   [33X[0;0YVersion  1.2.1  of  [5XForms[105X contains some changed and extra functionality with
   relation  to  trivial  forms. The changed and new functionality is described

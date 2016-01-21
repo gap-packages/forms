@@ -11,4 +11,3 @@ biform := AssociatedBilinearForm(qform);
 Display(biform);
 IsDegenerateForm(biform);
 quit;
-

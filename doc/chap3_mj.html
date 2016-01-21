@@ -111,13 +111,13 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := BilinearFormByMatrix(mat,GF(5));</span>
 Error, Invalid Gram matrix
  called from
-BilinearFormByMatrixOp( m, f ) called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+BilinearFormByMatrixOp( MutableCopyMat( m ), f 
+ ) at ./pkg/forms/lib/forms.gi:164 called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 8 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
-<span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit;</span>
- 
+<span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit; </span>
 </pre></div>
 
 <p>It is clear that the matrix used is not defining a reflexive bilinear form, which causes the system to generate the error message.</p>
@@ -147,8 +147,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := RadicalOfForm(form);</span>
 &lt;vector space over GF(3^2), with 0 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension(r);</span>
-0
- 
+0 
 </pre></div>
 
 <p>Degenerate forms are allowed. As an example we construct an alternating bilinear form on an odd dimensional vector space.</p>
@@ -173,8 +172,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := RadicalOfForm(form);</span>
 &lt;vector space over GF(7), with 1 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension(r);</span>
-1
- 
+1 
 </pre></div>
 
 <p>When the characteristic of the field equals two, alternating forms are also symmetric. We construct an example.</p>
@@ -207,8 +205,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDegenerateForm(form);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WittIndex(form);</span>
-3
- 
+3 
 </pre></div>
 
 <p>To define a hermitian form, we need a matrix and the companion automorphism. Since this automorphism has order 2, it exists and is unique if the ground field has square order. In the next example, the chosen matrix is somewhat special. Together with the companion automorphism, it determines a hermitian sesquilinear form. Without the companion automorphism, it determines an alternating bilinear form.</p>
@@ -389,8 +386,7 @@ z = Z(4)
    .   1   .
    .   .   .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PolynomialOfForm( qform );</span>
-Z(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2
- 
+Z(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2 
 </pre></div>
 
 <p>In the previous example, we saw how we used a polynomial to display a quadratic form. Conversely, <strong class="pkg">Forms</strong> allows the user to construct (quadratic) forms using a polynomial.</p>
@@ -412,8 +408,7 @@ Gram Matrix:
  . . . .
 Polynomial: x_1*x_2+x_3*x_4
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RadicalOfForm(qform);</span>
-&lt;vector space over GF(2^3), with 0 generators&gt;
- 
+&lt;vector space over GF(2^3), with 0 generators&gt; 
 </pre></div>
 
 <p>We construct now two different quadratic forms with the same associated bilinear form.</p>
@@ -457,14 +452,14 @@ Gram Matrix:
  . 1 . .
  1 . . .
  . . . 1
- . . 1 .
- 
+ . . 1 . 
 </pre></div>
 
 <p>We end with an example of a non-singular quadratic form with a degenerate associated bilinear form.</p>
 
 
 <div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [ Z(2^2), Z(2^2), Z(2^2), Z(2^2), Z(2^2) ], </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   [ 0*Z(2), Z(2^2), Z(2^2)^2, 0*Z(2), Z(2)^0 ], </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ], </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], </span>
@@ -488,8 +483,7 @@ z = Z(4)
  z^1   .   1   .   1
  z^1   1   1   1   .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDegenerateForm(biform);</span>
-true
- 
+true 
 </pre></div>
 
 

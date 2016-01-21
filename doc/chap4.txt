@@ -104,8 +104,7 @@
     [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(49));[127X[104X
     [4X[28X< bilinear form >[128X[104X
     [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
-    [4X[28X2[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X2 [128X[104X
   [4X[32X[104X
   
   [1X4.2-2 QuadraticFormByMatrix[101X
@@ -151,8 +150,7 @@
     [4X[28X   .   1   .   .[128X[104X
     [4X[28X   .   .   .   .[128X[104X
     [4X[28X   .   . z^2   1[128X[104X
-    [4X[28X   .   .   . z^2[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X   .   .   . z^2 [128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  following  example  shows how using the argument [3Xfield[103X has influence on
@@ -171,8 +169,7 @@
     [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(4));[127X[104X
     [4X[28X< quadratic form >[128X[104X
     [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
-    [4X[28X2[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X2 [128X[104X
   [4X[32X[104X
   
   [1X4.2-3 HermitianFormByMatrix[101X
@@ -215,8 +212,7 @@
     [4X[28XGram Matrix:[128X[104X
     [4X[28X  1  .  .[128X[104X
     [4X[28X  .  .  2[128X[104X
-    [4X[28X  .  2  .[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X  .  2  . [128X[104X
   [4X[32X[104X
   
   
@@ -273,16 +269,17 @@
     [4X[25Xgap>[125X [27Xpol := r.1*r.2;[127X[104X
     [4X[28Xx_1*x_2[128X[104X
     [4X[25Xgap>[125X [27Xform := BilinearFormByPolynomial(pol,r);[127X[104X
-    [4X[28XError, No orthogonal form can be associated with a quadratic polynomial in eve[128X[104X
-    [4X[28Xn characteristic[128X[104X
+    [4X[28XError, No orthogonal form can be associated with a quadratic polynomial in even cha\[128X[104X
+    [4X[28Xra[128X[104X
+    [4X[28Xcteristic[128X[104X
     [4X[28X called from[128X[104X
-    [4X[28XBilinearFormByPolynomial( pol, pring, n ) called from[128X[104X
-    [4X[28X<function>( <arguments> ) called from read-eval-loop[128X[104X
-    [4X[28XEntering break read-eval-print loop ...[128X[104X
+    [4X[28XBilinearFormByPolynomial( pol, pring, n [128X[104X
+    [4X[28X ) at ./pkg/forms/lib/forms.gi:470 called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 14 of *stdin*[128X[104X
     [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
     [4X[28Xyou can 'return;' to continue[128X[104X
-    [4X[26Xbrk>[126X [27Xquit;[127X[104X
-    [4X[28X [128X[104X
+    [4X[26Xbrk>[126X [27Xquit; [127X[104X
   [4X[32X[104X
   
   [1X4.3-2 QuadraticFormByPolynomial[101X
@@ -321,8 +318,7 @@
     [4X[28X . 1 . .[128X[104X
     [4X[28X . . . 1[128X[104X
     [4X[28X . . . .[128X[104X
-    [4X[28XPolynomial: x_1^2+x_2^2+x_3*x_4[128X[104X
-    [4X[28X [128X[104X
+    [4X[28XPolynomial: x_1^2+x_2^2+x_3*x_4 [128X[104X
   [4X[32X[104X
   
   [1X4.3-3 HermitianFormByPolynomial[101X
@@ -356,8 +352,7 @@
     [4X[28X 1 . . .[128X[104X
     [4X[28X . . . 1[128X[104X
     [4X[28X . . 1 .[128X[104X
-    [4X[28XPolynomial: x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3[128X[104X
-    [4X[28X [128X[104X
+    [4X[28XPolynomial: x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3 [128X[104X
   [4X[32X[104X
   
   
@@ -426,8 +421,7 @@
     [4X[25Xgap>[125X [27XPolynomialOfForm(Q);[127X[104X
     [4X[28XZ(3^2)^7*x_1^2-x_1*x_2+Z(3^2)^6*x_1*x_3+Z(3^2)*x_1*x_5+Z(3^2)^7*x_2^2+Z(3^2)^2[128X[104X
     [4X[28X*x_2*x_3+Z(3^2)*x_2*x_4+Z(3^2)^6*x_2*x_5+Z(3^2)^7*x_3^2+Z(3^2)^6*x_3*x_4+Z(3^2[128X[104X
-    [4X[28X)^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X)^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2 [128X[104X
   [4X[32X[104X
   
   [33X[0;0YNote  that  the given bilinear form [3Xform[103X is [12Xnot[112X the associated bilinear form
@@ -473,8 +467,7 @@
     [4X[28X   .   . z^1   .[128X[104X
     [4X[28X   .   .   .   1[128X[104X
     [4X[25Xgap>[125X [27XSet(GF(9)^4, x -> [x,x]^form = x^qform);[127X[104X
-    [4X[28X[ true ][128X[104X
-    [4X[28X [128X[104X
+    [4X[28X[ true ] [128X[104X
   [4X[32X[104X
   
   [33X[0;0YNote  that  the  constructed  bilinear form [22Xf[122X is [12Xnot[112X the associated bilinear
@@ -510,8 +503,7 @@
     [4X[28X  .  .  .  1  .  .[128X[104X
     [4X[28X  .  .  1  .  .  .[128X[104X
     [4X[28X  1  .  .  .  .  .[128X[104X
-    [4X[28X  . 10  .  .  .  .[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X  . 10  .  .  .  . [128X[104X
   [4X[32X[104X
   
   
@@ -554,8 +546,7 @@
     [4X[25Xgap>[125X [27XEvaluateForm( form, u, v);[127X[104X
     [4X[28X[ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ][128X[104X
     [4X[25Xgap>[125X [27X[u,v]^form;[127X[104X
-    [4X[28X[ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ][128X[104X
-    [4X[28X [128X[104X
+    [4X[28X[ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ] [128X[104X
   [4X[32X[104X
   
   
@@ -574,35 +565,6 @@
   quadratic form [3Xform[103X[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xmat := [[0,0,0,-2],[0,0,-3,0],[0,3,0,0],[2,0,0,0]]*Z(7)^0;[127X[104X
-    [4X[28X[ [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^4, 0*Z(7) ], [128X[104X
-    [4X[28X  [ 0*Z(7), Z(7), 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ] ][128X[104X
-    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat);[127X[104X
-    [4X[28X< bilinear form >[128X[104X
-    [4X[25Xgap>[125X [27Xv := Random(GF(7)^4);[127X[104X
-    [4X[28X[ Z(7)^3, Z(7)^2, Z(7)^4, Z(7) ][128X[104X
-    [4X[25Xgap>[125X [27Xvperp := OrthogonalSubspaceMat(form,v);[127X[104X
-    [4X[28X[ [ Z(7)^5, Z(7)^0, 0*Z(7), 0*Z(7) ], [ Z(7)^0, 0*Z(7), Z(7)^0, 0*Z(7) ], [128X[104X
-    [4X[28X  [ Z(7)^2, 0*Z(7), 0*Z(7), Z(7)^0 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xsub := [[1,1,0,0],[0,0,1,2]]*Z(7)^0;[127X[104X
-    [4X[28X[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^0, Z(7)^2 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xsubperp := OrthogonalSubspaceMat(form,sub);[127X[104X
-    [4X[28X[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^4, Z(7)^0 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xmat := [[1,0,0],[0,0,1],[0,0,0]]*Z(2)^0;[127X[104X
-    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ], [128X[104X
-    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ][128X[104X
-    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat);[127X[104X
-    [4X[28X< quadratic form >[128X[104X
-    [4X[25Xgap>[125X [27Xv := Random(GF(2)^3);[127X[104X
-    [4X[28X<a GF2 vector of length 3>[128X[104X
-    [4X[25Xgap>[125X [27Xvperp := OrthogonalSubspaceMat(form,v);[127X[104X
-    [4X[28X[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length [128X[104X
-    [4X[28X    3> ][128X[104X
-    [4X[25Xgap>[125X [27Xsub := [[1,0,1],[1,0,0]]*Z(2)^0;[127X[104X
-    [4X[28X[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
-    [4X[25Xgap>[125X [27Xsubperp := OrthogonalSubspaceMat(form,sub);[127X[104X
-    [4X[28X[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length [128X[104X
-    [4X[28X    3> ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -898,8 +860,7 @@
     [4X[25Xgap>[125X [27Xr := RadicalOfForm( form );[127X[104X
     [4X[28X<vector space over GF(2^3), with 0 generators>[128X[104X
     [4X[25Xgap>[125X [27XDimension(r);[127X[104X
-    [4X[28X0[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X0 [128X[104X
   [4X[32X[104X
   
   [1X4.7-12 PolynomialOfForm[101X
@@ -922,8 +883,7 @@
     [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(8));[127X[104X
     [4X[28X< quadratic form >[128X[104X
     [4X[25Xgap>[125X [27XPolynomialOfForm(form);[127X[104X
-    [4X[28XZ(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5[128X[104X
-    [4X[28X [128X[104X
+    [4X[28XZ(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5 [128X[104X
   [4X[32X[104X
   
   [1X4.7-13 DiscriminantOfForm[101X
@@ -948,8 +908,7 @@
     [4X[25Xgap>[125X [27Xqform := QuadraticFormByMatrix(gram, GF(5));[127X[104X
     [4X[28X< quadratic form >[128X[104X
     [4X[25Xgap>[125X [27XDiscriminantOfForm( qform );[127X[104X
-    [4X[28X"nonsquare"[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X"nonsquare" [128X[104X
   [4X[32X[104X
   
   
@@ -987,8 +946,7 @@
     [4X[28X . . . 2[128X[104X
     [4X[28X . . 2 .[128X[104X
     [4X[28X . 2 . .[128X[104X
-    [4X[28X 2 . . .[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X 2 . . . [128X[104X
   [4X[32X[104X
   
   [33X[0;0YHere  is another example which shows that this procedure is suitable in some
@@ -1018,8 +976,7 @@
     [4X[28X . . . . 1 .[128X[104X
     [4X[25Xgap>[125X [27Xm := GModuleByMats( [a,b], GF(3) );;[127X[104X
     [4X[25Xgap>[125X [27Xusemeataxe := MTX.InvariantBilinearForm(m);[127X[104X
-    [4X[28Xfail[128X[104X
-    [4X[28X [128X[104X
+    [4X[28Xfail [128X[104X
   [4X[32X[104X
   
   

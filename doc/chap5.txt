@@ -335,8 +335,7 @@
     [4X[28X . . . 1 . .[128X[104X
     [4X[28X . . 2 . . .[128X[104X
     [4X[28X . . . . . 1[128X[104X
-    [4X[28X . . . . 2 .[128X[104X
-    [4X[28X [128X[104X
+    [4X[28X . . . . 2 . [128X[104X
   [4X[32X[104X
   
   [1X5.3-2 BaseChangeHomomorphism[101X
@@ -365,17 +364,17 @@
     [4X[28X  [ Z(3)^0, Z(3), 0*Z(3) ] ][128X[104X
     [4X[25Xgap>[125X [27Xnewgo := Image(hom, go); [127X[104X
     [4X[28XGroup([128X[104X
-    [4X[28X[ [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], [ Z(3), Z(3)^0,[128X[104X
-    [4X[28X           Z(3) ] ], [128X[104X
-    [4X[28X  [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3)^0,[128X[104X
-    [4X[28X           0*Z(3) ] ] ])[128X[104X
+    [4X[28X[ [128X[104X
+    [4X[28X  [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X      [ Z(3), Z(3)^0, Z(3) ] ], [128X[104X
+    [4X[28X  [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], [128X[104X
+    [4X[28X      [ 0*Z(3), Z(3)^0, 0*Z(3) ] ] ])[128X[104X
     [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroup(newgo);;[127X[104X
     [4X[25Xgap>[125X [27Xcanonical := b * gram * TransposedMat(b);[127X[104X
     [4X[28X[ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3) ], [128X[104X
     [4X[28X  [ 0*Z(3), Z(3), 0*Z(3) ] ][128X[104X
     [4X[25Xgap>[125X [27XForAll(gens, y -> y * canonical * TransposedMat(y) = canonical);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[28X [128X[104X
+    [4X[28Xtrue [128X[104X
   [4X[32X[104X
   
   [1X5.3-3 IsometricCanonicalForm[101X
@@ -416,8 +415,7 @@
     [4X[28X . . . . .[128X[104X
     [4X[28X . . . . 1[128X[104X
     [4X[28X . . . . .[128X[104X
-    [4X[28XWitt Index: 2[128X[104X
-    [4X[28X [128X[104X
+    [4X[28XWitt Index: 2 [128X[104X
   [4X[32X[104X
   
   [1X5.3-4 ScalarOfSimilarity[101X
@@ -478,13 +476,23 @@
     [4X[25Xgap>[125X [27XDimension(last);[127X[104X
     [4X[28X3[128X[104X
     [4X[25Xgap>[125X [27Xmat := IdentityMat(6,GF(5));[127X[104X
-    [4X[28X< mutable compressed matrix 6x6 over GF(5) >[128X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ][128X[104X
     [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(5));[127X[104X
     [4X[28X< quadratic form >[128X[104X
     [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
     [4X[28X3[128X[104X
     [4X[25Xgap>[125X [27Xmat := IdentityMat(6,GF(7));[127X[104X
-    [4X[28X< mutable compressed matrix 6x6 over GF(7) >[128X[104X
+    [4X[28X[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ][128X[104X
     [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(7));[127X[104X
     [4X[28X< quadratic form >[128X[104X
     [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
@@ -613,7 +621,7 @@
     [4X[25Xgap>[125X [27XTypeOfForm(form);[127X[104X
     [4X[28XError, <f> is a pseudo form and has no defined type called from[128X[104X
     [4X[28X<function "unknown">( <arguments> )[128X[104X
-    [4X[28X called from read-eval loop at line 31 of *stdin*[128X[104X
+    [4X[28X called from read-eval loop at line 30 of *stdin*[128X[104X
     [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
     [4X[28Xyou can 'return;' to continue[128X[104X
     [4X[26Xbrk>[126X [27Xquit;[127X[104X

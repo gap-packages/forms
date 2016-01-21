@@ -1,4 +1,3 @@
-gap> 
 gap> #A form for W(5,3)
 gap> f := GF(3);
 GF(3)

@@ -253,8 +253,7 @@ GF(3)
  . . . 1 . .
  . . 2 . . .
  . . . . . 1
- . . . . 2 .
- 
+ . . . . 2 . 
 </pre></div>
 
 <p><a id="X87A6F5C979551677" name="X87A6F5C979551677"></a></p>
@@ -283,17 +282,17 @@ GO(0,3,3)
   [ Z(3)^0, Z(3), 0*Z(3) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">newgo := Image(hom, go); </span>
 Group(
-[ [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], [ Z(3), Z(3)^0,
-           Z(3) ] ], 
-  [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3)^0,
-           0*Z(3) ] ] ])
+[ 
+  [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], 
+      [ Z(3), Z(3)^0, Z(3) ] ], 
+  [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], 
+      [ 0*Z(3), Z(3)^0, 0*Z(3) ] ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := GeneratorsOfGroup(newgo);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">canonical := b * gram * TransposedMat(b);</span>
 [ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3) ], 
   [ 0*Z(3), Z(3), 0*Z(3) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(gens, y -&gt; y * canonical * TransposedMat(y) = canonical);</span>
-true
- 
+true 
 </pre></div>
 
 <p><a id="X7DFEFA2C7945A5AD" name="X7DFEFA2C7945A5AD"></a></p>
@@ -334,8 +333,7 @@ Gram Matrix:
  . . . . .
  . . . . 1
  . . . . .
-Witt Index: 2
- 
+Witt Index: 2 
 </pre></div>
 
 <p><a id="X7C7D92267EFE71DB" name="X7C7D92267EFE71DB"></a></p>
@@ -399,13 +397,23 @@ Z(3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension(last);</span>
 3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := IdentityMat(6,GF(5));</span>
-&lt; mutable compressed matrix 6x6 over GF(5) &gt;
+[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := QuadraticFormByMatrix(mat,GF(5));</span>
 &lt; quadratic form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WittIndex(form);</span>
 3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := IdentityMat(6,GF(7));</span>
-&lt; mutable compressed matrix 6x6 over GF(7) &gt;
+[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := QuadraticFormByMatrix(mat,GF(7));</span>
 &lt; quadratic form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WittIndex(form);</span>
@@ -529,7 +537,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TypeOfForm(form);</span>
 Error, &lt;f&gt; is a pseudo form and has no defined type called from
 &lt;function "unknown"&gt;( &lt;arguments&gt; )
- called from read-eval loop at line 31 of *stdin*
+ called from read-eval loop at line 30 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 <span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit;</span>

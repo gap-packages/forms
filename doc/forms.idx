@@ -20,9 +20,9 @@
 \indexentry{Form@Form!parabolic|hyperpage}{11}
 \indexentry{Form@Quadratic Form!quadratic|hyperpage}{15}
 \indexentry{Form@Form!orthogonal|hyperpage}{16}
-\indexentry{Form@Form!hyperbolic|hyperpage}{17}
-\indexentry{Form@Form!elliptic|hyperpage}{17}
-\indexentry{Form@Form!parabolic|hyperpage}{17}
+\indexentry{Form@Form!hyperbolic|hyperpage}{16}
+\indexentry{Form@Form!elliptic|hyperpage}{16}
+\indexentry{Form@Form!parabolic|hyperpage}{16}
 \indexentry{IsBilinearForm@\texttt  {IsBilinearForm}|hyperpage}{20}
 \indexentry{IsHermitianForm@\texttt  {IsHermitianForm}|hyperpage}{20}
 \indexentry{IsSesquilinearForm@\texttt  {IsSesquilinearForm}|hyperpage}{20}
@@ -40,50 +40,50 @@
 \indexentry{BilinearFormByPolynomial@\texttt  {BilinearFormByPolynomial}|hyperpage}{24}
 \indexentry{QuadraticFormByPolynomial@\texttt  {QuadraticFormByPolynomial}|hyperpage}{25}
 \indexentry{QuadraticFormByPolynomial@\texttt  {QuadraticFormByPolynomial}|hyperpage}{25}
-\indexentry{HermitianFormByPolynomial@\texttt  {HermitianFormByPolynomial}|hyperpage}{26}
-\indexentry{HermitianFormByPolynomial@\texttt  {HermitianFormByPolynomial}|hyperpage}{26}
+\indexentry{HermitianFormByPolynomial@\texttt  {HermitianFormByPolynomial}|hyperpage}{25}
+\indexentry{HermitianFormByPolynomial@\texttt  {HermitianFormByPolynomial}|hyperpage}{25}
 \indexentry{QuadraticFormByBilinearForm@\texttt  {QuadraticFormByBilinearForm}|hyperpage}{26}
-\indexentry{BilinearFormByQuadraticForm@\texttt  {BilinearFormByQuadraticForm}|hyperpage}{28}
+\indexentry{BilinearFormByQuadraticForm@\texttt  {BilinearFormByQuadraticForm}|hyperpage}{27}
 \indexentry{AssociatedBilinearForm@\texttt  {AssociatedBilinearForm}|hyperpage}{28}
 \indexentry{EvaluateForm@\texttt  {EvaluateForm}|hyperpage}{29}
 \indexentry{EvaluateForm@\texttt  {EvaluateForm}|hyperpage}{29}
 \indexentry{OrthogonalSubspaceMat@\texttt  {OrthogonalSubspaceMat}|hyperpage}{30}
-\indexentry{IsIsotropicVector@\texttt  {IsIsotropicVector}|hyperpage}{31}
+\indexentry{IsIsotropicVector@\texttt  {IsIsotropicVector}|hyperpage}{30}
 \indexentry{IsSingularVector@\texttt  {IsSingularVector}|hyperpage}{31}
-\indexentry{IsTotallyIsotropicSubspace@\texttt  {IsTotallyIsotropicSubspace}|hyperpage}{32}
-\indexentry{IsTotallySingularSubspace@\texttt  {IsTotallySingularSubspace}|hyperpage}{33}
-\indexentry{IsReflexiveForm@\texttt  {IsReflexiveForm}|hyperpage}{33}
-\indexentry{Form@Form!Reflexive|hyperpage}{33}
+\indexentry{IsTotallyIsotropicSubspace@\texttt  {IsTotallyIsotropicSubspace}|hyperpage}{31}
+\indexentry{IsTotallySingularSubspace@\texttt  {IsTotallySingularSubspace}|hyperpage}{32}
+\indexentry{IsReflexiveForm@\texttt  {IsReflexiveForm}|hyperpage}{32}
+\indexentry{Form@Form!Reflexive|hyperpage}{32}
 \indexentry{IsAlternatingForm@\texttt  {IsAlternatingForm}|hyperpage}{33}
 \indexentry{Form@Form!Alternating|hyperpage}{33}
-\indexentry{IsSymmetricForm@\texttt  {IsSymmetricForm}|hyperpage}{34}
-\indexentry{Form@Form!Symmetric|hyperpage}{34}
-\indexentry{IsOrthogonalForm@\texttt  {IsOrthogonalForm}|hyperpage}{34}
-\indexentry{Form@Form!orthogonal|hyperpage}{34}
-\indexentry{IsPseudoForm@\texttt  {IsPseudoForm}|hyperpage}{34}
-\indexentry{Form@Form!pseudo|hyperpage}{34}
-\indexentry{IsSymplecticForm@\texttt  {IsSymplecticForm}|hyperpage}{34}
-\indexentry{Form@Form!symplectic|hyperpage}{34}
+\indexentry{IsSymmetricForm@\texttt  {IsSymmetricForm}|hyperpage}{33}
+\indexentry{Form@Form!Symmetric|hyperpage}{33}
+\indexentry{IsOrthogonalForm@\texttt  {IsOrthogonalForm}|hyperpage}{33}
+\indexentry{Form@Form!orthogonal|hyperpage}{33}
+\indexentry{IsPseudoForm@\texttt  {IsPseudoForm}|hyperpage}{33}
+\indexentry{Form@Form!pseudo|hyperpage}{33}
+\indexentry{IsSymplecticForm@\texttt  {IsSymplecticForm}|hyperpage}{33}
+\indexentry{Form@Form!symplectic|hyperpage}{33}
 \indexentry{IsDegenerateForm@\texttt  {IsDegenerateForm}|hyperpage}{34}
-\indexentry{IsSingularForm@\texttt  {IsSingularForm}|hyperpage}{35}
-\indexentry{BaseField@\texttt  {BaseField}|hyperpage}{35}
-\indexentry{GramMatrix@\texttt  {GramMatrix}|hyperpage}{35}
-\indexentry{RadicalOfForm@\texttt  {RadicalOfForm}|hyperpage}{35}
-\indexentry{PolynomialOfForm@\texttt  {PolynomialOfForm}|hyperpage}{36}
-\indexentry{DiscriminantOfForm@\texttt  {DiscriminantOfForm}|hyperpage}{36}
-\indexentry{PreservedSesquilinearForms@\texttt  {PreservedSesquilinearForms}|hyperpage}{37}
-\indexentry{Isometry|hyperpage}{40}
-\indexentry{Similarity|hyperpage}{40}
-\indexentry{Semi-similarity|hyperpage}{40}
-\indexentry{Isometry|hyperpage}{43}
-\indexentry{Similarity|hyperpage}{43}
-\indexentry{Semi-similarity|hyperpage}{43}
-\indexentry{BaseChangeToCanonical@\texttt  {BaseChangeToCanonical}|hyperpage}{44}
-\indexentry{BaseChangeHomomorphism@\texttt  {BaseChangeHomomorphism}|hyperpage}{45}
-\indexentry{IsometricCanonicalForm@\texttt  {IsometricCanonicalForm}|hyperpage}{46}
-\indexentry{ScalarOfSimilarity@\texttt  {ScalarOfSimilarity}|hyperpage}{46}
-\indexentry{WittIndex@\texttt  {WittIndex}|hyperpage}{47}
-\indexentry{IsEllipticForm@\texttt  {IsEllipticForm}|hyperpage}{48}
-\indexentry{IsParabolicForm@\texttt  {IsParabolicForm}|hyperpage}{48}
-\indexentry{IsHyperbolicForm@\texttt  {IsHyperbolicForm}|hyperpage}{48}
+\indexentry{IsSingularForm@\texttt  {IsSingularForm}|hyperpage}{34}
+\indexentry{BaseField@\texttt  {BaseField}|hyperpage}{34}
+\indexentry{GramMatrix@\texttt  {GramMatrix}|hyperpage}{34}
+\indexentry{RadicalOfForm@\texttt  {RadicalOfForm}|hyperpage}{34}
+\indexentry{PolynomialOfForm@\texttt  {PolynomialOfForm}|hyperpage}{35}
+\indexentry{DiscriminantOfForm@\texttt  {DiscriminantOfForm}|hyperpage}{35}
+\indexentry{PreservedSesquilinearForms@\texttt  {PreservedSesquilinearForms}|hyperpage}{36}
+\indexentry{Isometry|hyperpage}{39}
+\indexentry{Similarity|hyperpage}{39}
+\indexentry{Semi-similarity|hyperpage}{39}
+\indexentry{Isometry|hyperpage}{42}
+\indexentry{Similarity|hyperpage}{42}
+\indexentry{Semi-similarity|hyperpage}{42}
+\indexentry{BaseChangeToCanonical@\texttt  {BaseChangeToCanonical}|hyperpage}{43}
+\indexentry{BaseChangeHomomorphism@\texttt  {BaseChangeHomomorphism}|hyperpage}{44}
+\indexentry{IsometricCanonicalForm@\texttt  {IsometricCanonicalForm}|hyperpage}{45}
+\indexentry{ScalarOfSimilarity@\texttt  {ScalarOfSimilarity}|hyperpage}{45}
+\indexentry{WittIndex@\texttt  {WittIndex}|hyperpage}{46}
+\indexentry{IsEllipticForm@\texttt  {IsEllipticForm}|hyperpage}{47}
+\indexentry{IsParabolicForm@\texttt  {IsParabolicForm}|hyperpage}{47}
+\indexentry{IsHyperbolicForm@\texttt  {IsHyperbolicForm}|hyperpage}{47}
 \indexentry{TypeOfForm@\texttt  {TypeOfForm}|hyperpage}{48}

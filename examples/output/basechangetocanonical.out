@@ -1,4 +1,3 @@
-gap> 
 gap> #morphisms: BaseChangeToCanonical
 gap> gf := GF(3);
 GF(3)

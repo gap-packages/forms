@@ -1,4 +1,3 @@
-gap> 
 gap> #Preserved Sesquilinear forms: example 1
 gap> g := SU(4,3);
 SU(4,3)

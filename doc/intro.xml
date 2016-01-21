@@ -62,6 +62,14 @@ documentation, you may have to change the default character set
 of your browser to UTF-8.
 </Section>
 
+<Section Label="web">
+<Heading>Web resources</Heading>
+<List>
+<Item>Find <Package>Forms</Package> on the Packages section of the GAP-website: <Homepage>http://www.gap-system.org/Packages/forms.html</Homepage>.</Item>
+<Item>Find <Package>Forms</Package> on its homepage: <Homepage>http://cage.ugent.be/geometry/forms.php</Homepage>.</Item>
+<Item>Report bugs, questions and issues on the <Package>Forms</Package> issue tracker: <Homepage>https://bitbucket.org/jdebeule/forms/issues</Homepage></Item>
+</List>
+</Section>
 
 <Section Label="release_notes">
 <Heading>Release notes</Heading>

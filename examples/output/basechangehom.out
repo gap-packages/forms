@@ -1,4 +1,3 @@
-gap> 
 gap> #morphisms: BaseChangeHomomorphism
 gap> gl:=GL(3,3);
 GL(3,3)
@@ -15,10 +14,11 @@ gap> hom := BaseChangeHomomorphism(b, GF(3));
   [ Z(3)^0, Z(3), 0*Z(3) ] ]
 gap> newgo := Image(hom, go); 
 Group(
-[ [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], [ Z(3), Z(3)^0,
-           Z(3) ] ], 
-  [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3)^0,
-           0*Z(3) ] ] ])
+[ 
+  [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], 
+      [ Z(3), Z(3)^0, Z(3) ] ], 
+  [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], 
+      [ 0*Z(3), Z(3)^0, 0*Z(3) ] ] ])
 gap> gens := GeneratorsOfGroup(newgo);;
 gap> canonical := b * gram * TransposedMat(b);
 [ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3) ], 

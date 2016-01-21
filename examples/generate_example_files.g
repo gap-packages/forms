@@ -18,17 +18,16 @@ quit;
 
 #initialize filenames
 
-files := ["conic", "w53", "preservedform", "bg_th_ex1",
-          "bg_th_ex2","bg_th_ex3","bg_th_ex4","bg_th_ex5",
-	  "bg_th_ex6", "bg_th_ex7", "bg_th_ex8", "bg_th_ex9",
-	  "bilformbymatrix", "quadformbymatrix", "hermitianformbymatrix",
-	  "bilformbypoly", "quadformbypoly", "hermitianformbypoly", "quadformbybilform",
-	  "bilformbyquadform", "assocbilform", "evalform", "radicalofform", "polyofform",
-	  "discofform", "pres_sesforms1", "pres_sesforms2", "basechangehom", 
-	  "basechangetocanonical", "isometriccanonicalform", "quadformfields",
-	  "orthogonaltovector", "istotallysingular", "istotallyisotropic",
-	  "isisotropicvector", "issingularvector", "istotallysingular",
-	  "scalarfromsim", "trivialform", "trivialform_prop", "wittindex", "typeofform"];
+files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3","bg_th_ex4",
+            "bg_th_ex5", "bg_th_ex6", "bg_th_ex7", "bg_th_ex8", "bg_th_ex9", "bilformbymatrix",
+            "quadformbymatrix", "hermitianformbymatrix", "bilformbypoly", "quadformbypoly",
+            "hermitianformbypoly", "quadformbybilform", "bilformbyquadform", "assocbilform",
+            "evalform", "radicalofform", "polyofform", "discofform", "pres_sesforms1",
+            "pres_sesforms2", "basechangehom", "basechangetocanonical",
+            "isometriccanonicalform", "quadformfields", "orthogonaltovector",
+            "istotallysingular", "istotallyisotropic", "isisotropicvector",
+            "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
+            "trivialform_prop", "wittindex", "typeofform"];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/forms/examples/gap"
@@ -41,7 +40,8 @@ exampledir := DirectoriesPackageLibrary("forms","examples/gap")[1];
 preambledir := DirectoriesPackageLibrary("forms","examples/")[1];
 outputdir := DirectoriesPackageLibrary("forms","examples/output")[1];
 gap := Filename(Directory("/usr/bin/"),"gap4r7");
-paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
+#paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L forms.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","forms.ws","-o","4G"];
 extension := ".out\";";
@@ -55,7 +55,7 @@ cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"examples\/output\"\)
 
 #Exec("which gap4r4"); #for UNIX only
 
-gapstart := "gap4r7"; #might be different on your computer
+gapstart := "gap4r8"; #might be different on your computer
 gap := Filename(Directory("/usr/bin/"),gapstart);
 
 for filename in files do
@@ -81,7 +81,7 @@ for filename in files do
     cmd := ReadLine(input_stream);
     ReadAll(stream);
   od;
-  #repeat until ReadAll(stream)=fail; #new since oct 2015.
+  repeat until ReadAll(stream)=fail; #new since oct 2015.
 od;
 
 #create .include files
@@ -95,7 +95,7 @@ for filename in files do
   o := Filename(includedir,Concatenation(filename,".include"));
   PrintTo(o,"");
   input_stream := InputTextFile(i);
-  ReadLine(input_stream);
+  #ReadLine(input_stream);
   ReadLine(input_stream);
   line := ReadLine(input_stream);
   while line <> "gap> quit;\n" do
@@ -107,4 +107,33 @@ for filename in files do
   od;
 od;
 SizeScreen([80,24]);
+
+
+SizeScreen([85,24]);
+includedir := DirectoriesPackageLibrary("forms","examples/include")[1];
+for filename in files do
+  i := Filename(outputdir,Concatenation(filename,".out"));
+  o := Filename(includedir,Concatenation(filename,".include"));
+  PrintTo(o,"");
+  input_stream := InputTextFile(i);
+  ReadLine(input_stream);
+  list := [];
+  line := ReadLine(input_stream);
+  while line <> "gap> quit;\n" do
+    if line <> "\n" then
+      line := ReplacedString(line,"\\\n","\n");
+      #AppendTo(o,ReplacedString(line,"<","&lt;"));
+      Add(list,ReplacedString(line,"<","&lt;"));
+    fi;
+    line := ReadLine(input_stream);
+  od;
+  l := Length(list);
+  new := ReplacedString(list[l],"\n","");
+  list[l] := new;
+  for line in list do
+    AppendTo(o,line);
+  od;
+od;
+SizeScreen([80,24]);
+
 

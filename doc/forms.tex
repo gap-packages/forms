@@ -187,8 +187,21 @@ formulas. To make these visible in the HTML version of this documentation, you
 may have to change the default character set of your browser to UTF-8. }
 
  
-\section{\textcolor{Chapter }{Release notes}}\label{release_notes}
+\section{\textcolor{Chapter }{Web resources}}\label{web}
 \logpage{[ 1, 4, 0 ]}
+\hyperdef{L}{X7B1A58BA78CC28FF}{}
+{
+  
+\begin{itemize}
+\item Find \textsf{Forms} on the Packages section of the GAP-website: \href{http://www.gap-system.org/Packages/forms.html} {\texttt{http://www.gap-system.org/Packages/forms.html}}.
+\item Find \textsf{Forms} on its homepage: \href{http://cage.ugent.be/geometry/forms.php} {\texttt{http://cage.ugent.be/geometry/forms.php}}.
+\item Report bugs, questions and issues on the \textsf{Forms} issue tracker: \href{https://bitbucket.org/jdebeule/forms/issues} {\texttt{https://bitbucket.org/jdebeule/forms/issues}}
+\end{itemize}
+ }
+
+ 
+\section{\textcolor{Chapter }{Release notes}}\label{release_notes}
+\logpage{[ 1, 5, 0 ]}
 \hyperdef{L}{X7FFDC142827888CA}{}
 {
   Version 1.2.1 of \textsf{Forms} contains some changed and extra functionality with relation to trivial forms.
@@ -349,8 +362,7 @@ form we adopt in \textsf{Forms} for an alternating form is
    . . . 1 . .
    . . 2 . . .
    . . . . . 1
-   . . . . 2 .
-   
+   . . . . 2 . 
 \end{Verbatim}
  }
 
@@ -380,8 +392,7 @@ form we adopt in \textsf{Forms} for an alternating form is
    2 2 2 3 3
    4 2 3 1 4
    3 3 1 2 4
-   3 3 4 4 3
-   
+   3 3 4 4 3 
 \end{Verbatim}
  }
 
@@ -476,13 +487,13 @@ listed in detail in the next chapter.
   !gapprompt@gap>| !gapinput@form := BilinearFormByMatrix(mat,GF(5));|
   Error, Invalid Gram matrix
    called from
-  BilinearFormByMatrixOp( m, f ) called from
-  <function>( <arguments> ) called from read-eval-loop
-  Entering break read-eval-print loop ...
+  BilinearFormByMatrixOp( MutableCopyMat( m ), f 
+   ) at ./pkg/forms/lib/forms.gi:164 called from
+  <function "unknown">( <arguments> )
+   called from read-eval loop at line 8 of *stdin*
   you can 'quit;' to quit to outer loop, or
   you can 'return;' to continue
-  !gapbrkprompt@brk>| !gapinput@quit;|
-   
+  !gapbrkprompt@brk>| !gapinput@quit; |
 \end{Verbatim}
  It is clear that the matrix used is not defining a reflexive bilinear form,
 which causes the system to generate the error message. 
@@ -511,8 +522,7 @@ the form.
   !gapprompt@gap>| !gapinput@r := RadicalOfForm(form);|
   <vector space over GF(3^2), with 0 generators>
   !gapprompt@gap>| !gapinput@Dimension(r);|
-  0
-   
+  0 
 \end{Verbatim}
  
 
@@ -537,8 +547,7 @@ bilinear form on an odd dimensional vector space.
   !gapprompt@gap>| !gapinput@r := RadicalOfForm(form);|
   <vector space over GF(7), with 1 generators>
   !gapprompt@gap>| !gapinput@Dimension(r);|
-  1
-   
+  1 
 \end{Verbatim}
  When the characteristic of the field equals two, alternating forms are also
 symmetric. We construct an example. 
@@ -569,8 +578,7 @@ symmetric. We construct an example.
   !gapprompt@gap>| !gapinput@IsDegenerateForm(form);|
   false
   !gapprompt@gap>| !gapinput@WittIndex(form);|
-  3
-   
+  3 
 \end{Verbatim}
  To define a hermitian form, we need a matrix and the companion automorphism.
 Since this automorphism has order 2, it exists and is unique if the ground
@@ -774,8 +782,7 @@ matrix, as explained above.
      .   1   .
      .   .   .
   !gapprompt@gap>| !gapinput@PolynomialOfForm( qform );|
-  Z(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2
-   
+  Z(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2 
 \end{Verbatim}
  In the previous example, we saw how we used a polynomial to display a
 quadratic form. Conversely, \textsf{Forms} allows the user to construct (quadratic) forms using a polynomial. 
@@ -795,8 +802,7 @@ quadratic form. Conversely, \textsf{Forms} allows the user to construct (quadrat
    . . . .
   Polynomial: x_1*x_2+x_3*x_4
   !gapprompt@gap>| !gapinput@RadicalOfForm(qform);|
-  <vector space over GF(2^3), with 0 generators>
-   
+  <vector space over GF(2^3), with 0 generators> 
 \end{Verbatim}
  We construct now two different quadratic forms with the same associated
 bilinear form. 
@@ -838,12 +844,12 @@ bilinear form.
    . 1 . .
    1 . . .
    . . . 1
-   . . 1 .
-   
+   . . 1 . 
 \end{Verbatim}
  We end with an example of a non-singular quadratic form with a degenerate
 associated bilinear form. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@mat := [ [ Z(2^2), Z(2^2), Z(2^2), Z(2^2), Z(2^2) ], |
   !gapprompt@>| !gapinput@   [ 0*Z(2), Z(2^2), Z(2^2)^2, 0*Z(2), Z(2)^0 ], |
   !gapprompt@>| !gapinput@   [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ], |
   !gapprompt@>| !gapinput@   [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], |
@@ -867,8 +873,7 @@ associated bilinear form.
    z^1   .   1   .   1
    z^1   1   1   1   .
   !gapprompt@gap>| !gapinput@IsDegenerateForm(biform);|
-  true
-   
+  true 
 \end{Verbatim}
  }
 
@@ -1006,8 +1011,7 @@ output is a bilinear form (i.e., an object in \texttt{IsBilinearForm}) with Gram
   !gapprompt@gap>| !gapinput@form := BilinearFormByMatrix(mat,GF(49));|
   < bilinear form >
   !gapprompt@gap>| !gapinput@WittIndex(form);|
-  2
-   
+  2 
 \end{Verbatim}
  }
 
@@ -1059,8 +1063,7 @@ quadratic form (i.e., an object in \texttt{IsQuadraticForm}) with defining field
      .   1   .   .
      .   .   .   .
      .   . z^2   1
-     .   .   . z^2
-   
+     .   .   . z^2 
 \end{Verbatim}
  The following example shows how using the argument \mbox{\texttt{\mdseries\slshape field}} has influence on the properties of the constructed form. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -1076,8 +1079,7 @@ quadratic form (i.e., an object in \texttt{IsQuadraticForm}) with defining field
   !gapprompt@gap>| !gapinput@form := QuadraticFormByMatrix(mat,GF(4));|
   < quadratic form >
   !gapprompt@gap>| !gapinput@WittIndex(form);|
-  2
-   
+  2 
 \end{Verbatim}
  }
 
@@ -1124,8 +1126,7 @@ is returned. The output is a hermitian sesquilinear form (i.e., an object in \te
   Gram Matrix:
     1  .  .
     .  .  2
-    .  2  .
-   
+    .  2  . 
 \end{Verbatim}
  }
 
@@ -1185,16 +1186,17 @@ characteristic. The output is a bilinear (orthogonal) form in the category \text
   !gapprompt@gap>| !gapinput@pol := r.1*r.2;|
   x_1*x_2
   !gapprompt@gap>| !gapinput@form := BilinearFormByPolynomial(pol,r);|
-  Error, No orthogonal form can be associated with a quadratic polynomial in eve
-  n characteristic
+  Error, No orthogonal form can be associated with a quadratic polynomial in even cha\
+  ra
+  cteristic
    called from
-  BilinearFormByPolynomial( pol, pring, n ) called from
-  <function>( <arguments> ) called from read-eval-loop
-  Entering break read-eval-print loop ...
+  BilinearFormByPolynomial( pol, pring, n 
+   ) at ./pkg/forms/lib/forms.gi:470 called from
+  <function "unknown">( <arguments> )
+   called from read-eval loop at line 14 of *stdin*
   you can 'quit;' to quit to outer loop, or
   you can 'return;' to continue
-  !gapbrkprompt@brk>| !gapinput@quit;|
-   
+  !gapbrkprompt@brk>| !gapinput@quit; |
 \end{Verbatim}
  }
 
@@ -1241,8 +1243,7 @@ is a quadratic form in the category \texttt{IsQuadraticForm}. (See \ref{quadform
    . 1 . .
    . . . 1
    . . . .
-  Polynomial: x_1^2+x_2^2+x_3*x_4
-   
+  Polynomial: x_1^2+x_2^2+x_3*x_4 
 \end{Verbatim}
  }
 
@@ -1283,8 +1284,7 @@ the category \texttt{IsHermitianForm}. (See \ref{theory:sesquilinearforms} for m
    1 . . .
    . . . 1
    . . 1 .
-  Polynomial: x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3
-   
+  Polynomial: x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3 
 \end{Verbatim}
  }
 
@@ -1355,8 +1355,7 @@ quadratic form $Q$ (an object in \texttt{IsQuadraticForm}), such that $Q(v) = fo
   !gapprompt@gap>| !gapinput@PolynomialOfForm(Q);|
   Z(3^2)^7*x_1^2-x_1*x_2+Z(3^2)^6*x_1*x_3+Z(3^2)*x_1*x_5+Z(3^2)^7*x_2^2+Z(3^2)^2
   *x_2*x_3+Z(3^2)*x_2*x_4+Z(3^2)^6*x_2*x_5+Z(3^2)^7*x_3^2+Z(3^2)^6*x_3*x_4+Z(3^2
-  )^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2
-   
+  )^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2 
 \end{Verbatim}
  Note that the given bilinear form \mbox{\texttt{\mdseries\slshape form}} is \textsc{not} the associated bilinear form of the constructed quadratic form $Q$, according to the definition in Section \ref{quadforms}. We can construct the associated bilinear forms by using \texttt{AssociatedBilinearForm} (\ref{AssociatedBilinearForm}). (See \ref{quadforms} for more on quadratic forms). }
 
@@ -1401,8 +1400,7 @@ The argument $Q$ must be a quadratic form (and thus it belongs to \texttt{IsQuad
      .   . z^1   .
      .   .   .   1
   !gapprompt@gap>| !gapinput@Set(GF(9)^4, x -> [x,x]^form = x^qform);|
-  [ true ]
-   
+  [ true ] 
 \end{Verbatim}
  Note that the constructed bilinear form $f$ is \textsc{not} the associated bilinear form of the given quadratic form $Q$, according to the definition in Section \ref{quadforms}. We can construct the associated bilinear forms by using \texttt{AssociatedBilinearForm} (\ref{AssociatedBilinearForm}). (See \ref{quadforms} for more on quadratic forms). }
 
@@ -1437,8 +1435,7 @@ The argument $Q$ must be a quadratic form (and thus it belongs to \texttt{IsQuad
     .  .  .  1  .  .
     .  .  1  .  .  .
     1  .  .  .  .  .
-    . 10  .  .  .  .
-   
+    . 10  .  .  .  . 
 \end{Verbatim}
  }
 
@@ -1490,8 +1487,7 @@ version of this operation, which we show in the following example:
   !gapprompt@gap>| !gapinput@EvaluateForm( form, u, v);|
   [ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ]
   !gapprompt@gap>| !gapinput@[u,v]^form;|
-  [ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ]
-   
+  [ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ] 
 \end{Verbatim}
  }
 
@@ -1519,35 +1515,6 @@ given form
  The argument \mbox{\texttt{\mdseries\slshape form}} is a sesquilinear or quadratic form. The operation returns a base of the
 subspace orthogonal to the given vector \mbox{\texttt{\mdseries\slshape v}} with relation to the sesquilinear \mbox{\texttt{\mdseries\slshape form}} or with relation to the associated bilinear form of the quadratic form \mbox{\texttt{\mdseries\slshape form}} 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@mat := [[0,0,0,-2],[0,0,-3,0],[0,3,0,0],[2,0,0,0]]*Z(7)^0;|
-  [ [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^4, 0*Z(7) ], 
-    [ 0*Z(7), Z(7), 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ] ]
-  !gapprompt@gap>| !gapinput@form := BilinearFormByMatrix(mat);|
-  < bilinear form >
-  !gapprompt@gap>| !gapinput@v := Random(GF(7)^4);|
-  [ Z(7)^3, Z(7)^2, Z(7)^4, Z(7) ]
-  !gapprompt@gap>| !gapinput@vperp := OrthogonalSubspaceMat(form,v);|
-  [ [ Z(7)^5, Z(7)^0, 0*Z(7), 0*Z(7) ], [ Z(7)^0, 0*Z(7), Z(7)^0, 0*Z(7) ], 
-    [ Z(7)^2, 0*Z(7), 0*Z(7), Z(7)^0 ] ]
-  !gapprompt@gap>| !gapinput@sub := [[1,1,0,0],[0,0,1,2]]*Z(7)^0;|
-  [ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^0, Z(7)^2 ] ]
-  !gapprompt@gap>| !gapinput@subperp := OrthogonalSubspaceMat(form,sub);|
-  [ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^4, Z(7)^0 ] ]
-  !gapprompt@gap>| !gapinput@mat := [[1,0,0],[0,0,1],[0,0,0]]*Z(2)^0;|
-  [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ], 
-    [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]
-  !gapprompt@gap>| !gapinput@form := QuadraticFormByMatrix(mat);|
-  < quadratic form >
-  !gapprompt@gap>| !gapinput@v := Random(GF(2)^3);|
-  <a GF2 vector of length 3>
-  !gapprompt@gap>| !gapinput@vperp := OrthogonalSubspaceMat(form,v);|
-  [ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
-      3> ]
-  !gapprompt@gap>| !gapinput@sub := [[1,0,1],[1,0,0]]*Z(2)^0;|
-  [ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2) ] ]
-  !gapprompt@gap>| !gapinput@subperp := OrthogonalSubspaceMat(form,sub);|
-  [ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
-      3> ]
    
 \end{Verbatim}
  }
@@ -1913,8 +1880,7 @@ i.e.,
   !gapprompt@gap>| !gapinput@r := RadicalOfForm( form );|
   <vector space over GF(2^3), with 0 generators>
   !gapprompt@gap>| !gapinput@Dimension(r);|
-  0
-   
+  0 
 \end{Verbatim}
  }
 
@@ -1942,8 +1908,7 @@ associated polynomial defining a quadratic or hermitian form (see \ref{theory:se
   !gapprompt@gap>| !gapinput@form := QuadraticFormByMatrix(mat,GF(8));|
   < quadratic form >
   !gapprompt@gap>| !gapinput@PolynomialOfForm(form);|
-  Z(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5
-   
+  Z(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5 
 \end{Verbatim}
  }
 
@@ -1972,8 +1937,7 @@ result in an error message.
   @gapprompt|gap>A @gapinput|qform := QuadraticFormByMatrix(gram, GF(5));A
   < quadratic form >
   @gapprompt|gap>A @gapinput|DiscriminantOfForm( qform );A
-  "nonsquare"
-   
+  "nonsquare" 
 \end{Verbatim}
  }
 
@@ -2017,8 +1981,7 @@ operation more than once to find all invariant sesquilinear forms.
    . . . 2
    . . 2 .
    . 2 . .
-   2 . . .
-   
+   2 . . . 
 \end{Verbatim}
  Here is another example which shows that this procedure is suitable in some
 cases where using the \textsf{MeatAxe} is not applicable. Here, our matrix group is the group of similarities
@@ -2045,8 +2008,7 @@ preserving a (hyperbolic) bilinear form on $GF(3)^6$.
    . . . . 1 .
   !gapprompt@gap>| !gapinput@m := GModuleByMats( [a,b], GF(3) );;|
   !gapprompt@gap>| !gapinput@usemeataxe := MTX.InvariantBilinearForm(m);|
-  fail
-   
+  fail 
 \end{Verbatim}
  }
 
@@ -2353,8 +2315,7 @@ is a canonical representative, as described in Section \ref{morphisms:sesquiline
    . . . 1 . .
    . . 2 . . .
    . . . . . 1
-   . . . . 2 .
-   
+   . . . . 2 . 
 \end{Verbatim}
  }
 
@@ -2388,17 +2349,17 @@ the inner automorphism of GL(d,q) associated to the transition matrix \mbox{\tex
     [ Z(3)^0, Z(3), 0*Z(3) ] ]
   !gapprompt@gap>| !gapinput@newgo := Image(hom, go); |
   Group(
-  [ [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], [ Z(3), Z(3)^0,
-             Z(3) ] ], 
-    [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3)^0,
-             0*Z(3) ] ] ])
+  [ 
+    [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], 
+        [ Z(3), Z(3)^0, Z(3) ] ], 
+    [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], 
+        [ 0*Z(3), Z(3)^0, 0*Z(3) ] ] ])
   !gapprompt@gap>| !gapinput@gens := GeneratorsOfGroup(newgo);;|
   !gapprompt@gap>| !gapinput@canonical := b * gram * TransposedMat(b);|
   [ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3) ], 
     [ 0*Z(3), Z(3), 0*Z(3) ] ]
   !gapprompt@gap>| !gapinput@ForAll(gens, y -> y * canonical * TransposedMat(y) = canonical);|
-  true
-   
+  true 
 \end{Verbatim}
  }
 
@@ -2445,8 +2406,7 @@ is a canonical representative, as described in Section \ref{morphisms:sesquiline
    . . . . .
    . . . . 1
    . . . . .
-  Witt Index: 2
-   
+  Witt Index: 2 
 \end{Verbatim}
  }
 
@@ -2517,13 +2477,23 @@ vector space $V/Rad(f)$, see Sections \ref{theory:sesquilinearforms} and \ref{qu
   !gapprompt@gap>| !gapinput@Dimension(last);|
   3
   !gapprompt@gap>| !gapinput@mat := IdentityMat(6,GF(5));|
-  < mutable compressed matrix 6x6 over GF(5) >
+  [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+    [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+    [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+    [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
+    [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], 
+    [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ]
   !gapprompt@gap>| !gapinput@form := QuadraticFormByMatrix(mat,GF(5));|
   < quadratic form >
   !gapprompt@gap>| !gapinput@WittIndex(form);|
   3
   !gapprompt@gap>| !gapinput@mat := IdentityMat(6,GF(7));|
-  < mutable compressed matrix 6x6 over GF(7) >
+  [ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+    [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+    [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], 
+    [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
+    [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], 
+    [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ]
   !gapprompt@gap>| !gapinput@form := QuadraticFormByMatrix(mat,GF(7));|
   < quadratic form >
   !gapprompt@gap>| !gapinput@WittIndex(form);|
@@ -2663,7 +2633,7 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
   !gapprompt@gap>| !gapinput@TypeOfForm(form);|
   Error, <f> is a pseudo form and has no defined type called from
   <function "unknown">( <arguments> )
-   called from read-eval loop at line 31 of *stdin*
+   called from read-eval loop at line 30 of *stdin*
   you can 'quit;' to quit to outer loop, or
   you can 'return;' to continue
   !gapbrkprompt@brk>| !gapinput@quit;|

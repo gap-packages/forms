@@ -1,4 +1,3 @@
-gap> 
 gap> #Background theory: example 7
 gap> r := PolynomialRing(GF(8),4);
 GF(2^3)[x_1,x_2,x_3,x_4]

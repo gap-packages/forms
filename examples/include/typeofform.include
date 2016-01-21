@@ -53,7 +53,7 @@ false
 gap> TypeOfForm(form);
 Error, &lt;f> is a pseudo form and has no defined type called from
 &lt;function "unknown">( &lt;arguments> )
- called from read-eval loop at line 31 of *stdin*
+ called from read-eval loop at line 30 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk> quit;

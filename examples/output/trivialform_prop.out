@@ -1,4 +1,3 @@
-gap> 
 gap> #attributes and properties of a trivial form
 gap> mat := [[0,0,0],[0,0,0],[0,0,0]]*Z(11)^0;
 [ [ 0*Z(11), 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), 0*Z(11) ], 

@@ -2,7 +2,8 @@
 \contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Philosophy}}{4}{section.1.1}
 \contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Overview over this manual}}{4}{section.1.2}
 \contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }How to read this manual}}{4}{section.1.3}
-\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Release notes}}{5}{section.1.4}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Web resources}}{5}{section.1.4}
+\contentsline {section}{\numberline {1.5}\leavevmode {\color {Chapter }Release notes}}{5}{section.1.5}
 \contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Examples}}{6}{chapter.2}
 \contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }A conic of PG(2,8)}}{6}{section.2.1}
 \contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }A form for W(5,3)}}{7}{section.2.2}
@@ -23,53 +24,53 @@
 \contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Constructing forms using a polynomial}}{24}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }BilinearFormByPolynomial}}{24}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }QuadraticFormByPolynomial}}{25}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }HermitianFormByPolynomial}}{26}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }HermitianFormByPolynomial}}{25}{subsection.4.3.3}
 \contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Switching between bilinear and quadratic forms}}{26}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }QuadraticFormByBilinearForm}}{26}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }BilinearFormByQuadraticForm}}{28}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }BilinearFormByQuadraticForm}}{27}{subsection.4.4.2}
 \contentsline {subsection}{\numberline {4.4.3}\leavevmode {\color {Chapter }AssociatedBilinearForm}}{28}{subsection.4.4.3}
 \contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }Evaluating forms}}{29}{section.4.5}
 \contentsline {subsection}{\numberline {4.5.1}\leavevmode {\color {Chapter }EvaluateForm}}{29}{subsection.4.5.1}
 \contentsline {section}{\numberline {4.6}\leavevmode {\color {Chapter }Orthogonality, totally isotropic subspaces, and totally singular subspaces}}{30}{section.4.6}
 \contentsline {subsection}{\numberline {4.6.1}\leavevmode {\color {Chapter }OrthogonalSubspaceMat}}{30}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}\leavevmode {\color {Chapter }IsIsotropicVector}}{31}{subsection.4.6.2}
+\contentsline {subsection}{\numberline {4.6.2}\leavevmode {\color {Chapter }IsIsotropicVector}}{30}{subsection.4.6.2}
 \contentsline {subsection}{\numberline {4.6.3}\leavevmode {\color {Chapter }IsSingularVector}}{31}{subsection.4.6.3}
-\contentsline {subsection}{\numberline {4.6.4}\leavevmode {\color {Chapter }IsTotallyIsotropicSubspace}}{32}{subsection.4.6.4}
-\contentsline {subsection}{\numberline {4.6.5}\leavevmode {\color {Chapter }IsTotallySingularSubspace}}{33}{subsection.4.6.5}
-\contentsline {section}{\numberline {4.7}\leavevmode {\color {Chapter }Attributes and properties of forms}}{33}{section.4.7}
-\contentsline {subsection}{\numberline {4.7.1}\leavevmode {\color {Chapter }IsReflexiveForm}}{33}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.6.4}\leavevmode {\color {Chapter }IsTotallyIsotropicSubspace}}{31}{subsection.4.6.4}
+\contentsline {subsection}{\numberline {4.6.5}\leavevmode {\color {Chapter }IsTotallySingularSubspace}}{32}{subsection.4.6.5}
+\contentsline {section}{\numberline {4.7}\leavevmode {\color {Chapter }Attributes and properties of forms}}{32}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}\leavevmode {\color {Chapter }IsReflexiveForm}}{32}{subsection.4.7.1}
 \contentsline {subsection}{\numberline {4.7.2}\leavevmode {\color {Chapter }IsAlternatingForm}}{33}{subsection.4.7.2}
-\contentsline {subsection}{\numberline {4.7.3}\leavevmode {\color {Chapter }IsSymmetricForm}}{34}{subsection.4.7.3}
-\contentsline {subsection}{\numberline {4.7.4}\leavevmode {\color {Chapter }IsOrthogonalForm}}{34}{subsection.4.7.4}
-\contentsline {subsection}{\numberline {4.7.5}\leavevmode {\color {Chapter }IsPseudoForm}}{34}{subsection.4.7.5}
-\contentsline {subsection}{\numberline {4.7.6}\leavevmode {\color {Chapter }IsSymplecticForm}}{34}{subsection.4.7.6}
+\contentsline {subsection}{\numberline {4.7.3}\leavevmode {\color {Chapter }IsSymmetricForm}}{33}{subsection.4.7.3}
+\contentsline {subsection}{\numberline {4.7.4}\leavevmode {\color {Chapter }IsOrthogonalForm}}{33}{subsection.4.7.4}
+\contentsline {subsection}{\numberline {4.7.5}\leavevmode {\color {Chapter }IsPseudoForm}}{33}{subsection.4.7.5}
+\contentsline {subsection}{\numberline {4.7.6}\leavevmode {\color {Chapter }IsSymplecticForm}}{33}{subsection.4.7.6}
 \contentsline {subsection}{\numberline {4.7.7}\leavevmode {\color {Chapter }IsDegenerateForm}}{34}{subsection.4.7.7}
-\contentsline {subsection}{\numberline {4.7.8}\leavevmode {\color {Chapter }IsSingularForm}}{35}{subsection.4.7.8}
-\contentsline {subsection}{\numberline {4.7.9}\leavevmode {\color {Chapter }BaseField}}{35}{subsection.4.7.9}
-\contentsline {subsection}{\numberline {4.7.10}\leavevmode {\color {Chapter }GramMatrix}}{35}{subsection.4.7.10}
-\contentsline {subsection}{\numberline {4.7.11}\leavevmode {\color {Chapter }RadicalOfForm}}{35}{subsection.4.7.11}
-\contentsline {subsection}{\numberline {4.7.12}\leavevmode {\color {Chapter }PolynomialOfForm}}{36}{subsection.4.7.12}
-\contentsline {subsection}{\numberline {4.7.13}\leavevmode {\color {Chapter }DiscriminantOfForm}}{36}{subsection.4.7.13}
+\contentsline {subsection}{\numberline {4.7.8}\leavevmode {\color {Chapter }IsSingularForm}}{34}{subsection.4.7.8}
+\contentsline {subsection}{\numberline {4.7.9}\leavevmode {\color {Chapter }BaseField}}{34}{subsection.4.7.9}
+\contentsline {subsection}{\numberline {4.7.10}\leavevmode {\color {Chapter }GramMatrix}}{34}{subsection.4.7.10}
+\contentsline {subsection}{\numberline {4.7.11}\leavevmode {\color {Chapter }RadicalOfForm}}{34}{subsection.4.7.11}
+\contentsline {subsection}{\numberline {4.7.12}\leavevmode {\color {Chapter }PolynomialOfForm}}{35}{subsection.4.7.12}
+\contentsline {subsection}{\numberline {4.7.13}\leavevmode {\color {Chapter }DiscriminantOfForm}}{35}{subsection.4.7.13}
 \contentsline {section}{\numberline {4.8}\leavevmode {\color {Chapter }Recognition of sesquilinear forms preserved by a classical group}}{36}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}\leavevmode {\color {Chapter }PreservedSesquilinearForms}}{37}{subsection.4.8.1}
-\contentsline {section}{\numberline {4.9}\leavevmode {\color {Chapter }The trivial form and some of its properties}}{38}{section.4.9}
-\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Morphisms of forms}}{40}{chapter.5}
-\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Morphisms of sesquilinear forms}}{40}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }Hermitian forms}}{41}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }Alternating forms}}{41}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }Bilinear forms}}{41}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }Degenerate forms}}{42}{subsection.5.1.4}
-\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Morphisms of quadratic forms}}{43}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }Singular forms}}{44}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Operations based on morphisms of forms}}{44}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }BaseChangeToCanonical}}{44}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }BaseChangeHomomorphism}}{45}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }IsometricCanonicalForm}}{46}{subsection.5.3.3}
-\contentsline {subsection}{\numberline {5.3.4}\leavevmode {\color {Chapter }ScalarOfSimilarity}}{46}{subsection.5.3.4}
-\contentsline {subsection}{\numberline {5.3.5}\leavevmode {\color {Chapter }WittIndex}}{47}{subsection.5.3.5}
-\contentsline {subsection}{\numberline {5.3.6}\leavevmode {\color {Chapter }IsEllipticForm}}{48}{subsection.5.3.6}
-\contentsline {subsection}{\numberline {5.3.7}\leavevmode {\color {Chapter }IsParabolicForm}}{48}{subsection.5.3.7}
-\contentsline {subsection}{\numberline {5.3.8}\leavevmode {\color {Chapter }IsHyperbolicForm}}{48}{subsection.5.3.8}
+\contentsline {subsection}{\numberline {4.8.1}\leavevmode {\color {Chapter }PreservedSesquilinearForms}}{36}{subsection.4.8.1}
+\contentsline {section}{\numberline {4.9}\leavevmode {\color {Chapter }The trivial form and some of its properties}}{37}{section.4.9}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Morphisms of forms}}{39}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Morphisms of sesquilinear forms}}{39}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }Hermitian forms}}{40}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }Alternating forms}}{40}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }Bilinear forms}}{40}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }Degenerate forms}}{41}{subsection.5.1.4}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Morphisms of quadratic forms}}{42}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }Singular forms}}{43}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Operations based on morphisms of forms}}{43}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }BaseChangeToCanonical}}{43}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }BaseChangeHomomorphism}}{44}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }IsometricCanonicalForm}}{45}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}\leavevmode {\color {Chapter }ScalarOfSimilarity}}{45}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}\leavevmode {\color {Chapter }WittIndex}}{46}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}\leavevmode {\color {Chapter }IsEllipticForm}}{47}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}\leavevmode {\color {Chapter }IsParabolicForm}}{47}{subsection.5.3.7}
+\contentsline {subsection}{\numberline {5.3.8}\leavevmode {\color {Chapter }IsHyperbolicForm}}{47}{subsection.5.3.8}
 \contentsline {subsection}{\numberline {5.3.9}\leavevmode {\color {Chapter }TypeOfForm}}{48}{subsection.5.3.9}
-\contentsline {chapter}{References}{51}{chapter*.3}
-\contentsline {chapter}{Index}{52}{section*.4}
+\contentsline {chapter}{References}{50}{chapter*.3}
+\contentsline {chapter}{Index}{51}{section*.4}

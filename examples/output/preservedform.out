@@ -1,4 +1,3 @@
-gap> 
 gap> #What is the form preserved by this group?
 gap> go := GO(5, 5);
 GO(0,5,5)
