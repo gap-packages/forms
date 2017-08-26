@@ -49,7 +49,7 @@ bilinear forms.
 <P/>
 For a given sesquilinear form <M>f</M>, the choice of the basis determines
 uniquely an <M>n\times n</M> matrix <M>M</M> such that 
-<Alt Not="HTML"><M>f(v, w) = v M w^{\alpha}^T.</M></Alt><Alt Only="HTML">f(v, w) = v M w&lt;sup>&#945;T&lt;/sup>.</Alt>
+<Alt Not="HTML"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt><Alt Only="HTML">f(v, w) = v M w&lt;sup>&#945;T&lt;/sup>.</Alt>
 <P/>
 This matrix is also called the <E>Gram matrix</E> of <M>f</M>.
 Given a sesquilinear form <M>f</M>, we will denote its Gram matrix by <Alt Not="HTML"><M>M_f</M></Alt>

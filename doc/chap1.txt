@@ -76,8 +76,11 @@
   read.g  files  had  windows  line  breaks,  this is also fixed. Finally, the
   documentation has been recompiled with the MathJax option.[133X
   
-  [33X[0;0YMax  Horn pointed out that we still used the depricated GAP_ROOT_PATHS. This
+  [33X[0;0YMax  Horn pointed out that we still used the deprecated GAP_ROOT_PATHS. This
   has  been  changed  now  into GAPInfo.RootPaths in version 1.2.4. More tests
   have  been  added to reach a better code coverage. Due to these tests, a bug
-  in one of the methods for [10XEvaluateForm[110X was discovered and fixed.[133X
+  in  one  of the methods for [10XEvaluateForm[110X was discovered and fixed. Alexander
+  Konovalov noted that we used the deprecated [11XReadTest[111X in our test files. This
+  has  been  changed  to  [11XTest[111X. Finally some LaTeX issues were resolved in the
+  documentation.[133X
   

@@ -124,7 +124,7 @@ vector space, it is clear immediately that the Gram matrix of <M>f</M> must be
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
 &lt;!-- matrix expression end --></Alt>
-<Alt Only="LaTeX"><M>\left( \begin{array}{cc}0 &amp; r \\ -r &amp; 0 \end{arry}
+<Alt Only="LaTeX"><M>\left( \begin{array}{cc}0 &amp; r \\ -r &amp; 0 \end{array}
 \right)</M></Alt>
 for some non-zero <M>r \in F</M>. If we rescale one of the basisvectors, which
 induces an isometry, then we see that there always exists a basis such that
@@ -243,7 +243,7 @@ orthogonal form with Gram matrix
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
 &lt;!-- matrix expression end --></Alt>
-<Alt Only="LaTeX"><Display>\left( \begin{array}{cc}0 &amp; 1 \\ 1 &amp; 0 \end{arry}
+<Alt Only="LaTeX"><Display>\left( \begin{array}{cc}0 &amp; 1 \\ 1 &amp; 0 \end{array}
 \right).</Display></Alt>
 <P/>
 It can be proved (see Theorem 6.10 of <Cite Key="Cameron"/>)
@@ -339,7 +339,7 @@ isometric with a sesquilinear form having Gram matrix
 &lt;!-- matrix expression end -->
 </Alt>
 <Alt Only="LaTeX">
-<Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{arry}
+<Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
 \right)</Display>
 </Alt>
 where <M>M</M> is the Gram matrix of a non-degenerate sesquilinear form and
@@ -491,7 +491,7 @@ isometric with a quadratic form having Gram matrix
 &lt;!-- matrix expression end -->
 </Alt>
 <Alt Only="LaTeX">
-<Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{arry}
+<Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
 \right)</Display>
 </Alt>
 where <M>M</M> is the Gram matrix of a non-singular quadratic form and

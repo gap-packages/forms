@@ -90,9 +90,11 @@ in the methods for <F>\^</F> applicable on a pair of vectors and a hermitian for
 and a hermitian form has been fixed. A series of test files is now included in the tst directory.
 Alexander Konovalov pointed out the the init.g and read.g files had windows line breaks, this is also
 fixed. Finally, the documentation has been recompiled with the MathJax option.
-<P/>Max Horn pointed out that we still used the depricated GAP_ROOT_PATHS. This has been changed now
+<P/>Max Horn pointed out that we still used the deprecated GAP_ROOT_PATHS. This has been changed now
 into GAPInfo.RootPaths in version 1.2.4. More tests have been added to reach a better code coverage.
 Due to these tests, a bug in one of the methods for <C>EvaluateForm</C> was discovered and fixed.
+Alexander Konovalov noted that we used the deprecated <F>ReadTest</F> in our test files. This has
+been changed to <F>Test</F>. Finally some LaTeX issues were resolved in the documentation.
 </Section>
 <!-- ############################################################ -->
 

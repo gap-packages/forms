@@ -25,7 +25,7 @@
   reflexive bilinear forms.[133X
   
   [33X[0;0YFor a given sesquilinear form [22Xf[122X, the choice of the basis determines uniquely
-  an [22Xn× n[122X matrix [22XM[122X such that [22Xf(v, w) = v M w^α^T.[122X[133X
+  an [22Xn× n[122X matrix [22XM[122X such that [22Xf(v, w) = v M w^α}^T.[122X[133X
   
   [33X[0;0YThis  matrix  is also called the [13XGram matrix[113X of [22Xf[122X. Given a sesquilinear form
   [22Xf[122X,  we will denote its Gram matrix by [22XM_f[122X . In [5XForms[105X, sesquilinear forms can

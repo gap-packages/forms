@@ -5,7 +5,7 @@
 \sloppy
 \pagestyle{myheadings}
 \usepackage{amssymb}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{makeidx}
 \makeindex
 \usepackage{color}
@@ -219,10 +219,11 @@ the tst directory. Alexander Konovalov pointed out the the init.g and read.g
 files had windows line breaks, this is also fixed. Finally, the documentation
 has been recompiled with the MathJax option. 
 
-Max Horn pointed out that we still used the depricated
+Max Horn pointed out that we still used the deprecated
 GAP{\textunderscore}ROOT{\textunderscore}PATHS. This has been changed now into
 GAPInfo.RootPaths in version 1.2.4. More tests have been added to reach a
-better code coverage. Due to these tests, a bug in one of the methods for \texttt{EvaluateForm} was discovered and fixed. }
+better code coverage. Due to these tests, a bug in one of the methods for \texttt{EvaluateForm} was discovered and fixed. Alexander Konovalov noted that we used the
+deprecated \texttt{ReadTest} in our test files. This has been changed to \texttt{Test}. Finally some LaTeX issues were resolved in the documentation. }
 
   }
 
@@ -415,7 +416,7 @@ and quadratic forms. The reader can find more in the texts: Cameron \cite{Camero
 of the field differs from 2, an alternating form $f$ can also be characterised as $f(v,w) = -f(w,v)$ for all $v,w \in V$. It can be proved (see Chapter 7 of \cite{Taylor}) that symmetric and alternating bilinear forms are the only reflexive
 bilinear forms. 
 
- For a given sesquilinear form $f$, the choice of the basis determines uniquely an $n\times n$ matrix $M$ such that $f(v, w) = v M w^{\alpha}^T.$ 
+ For a given sesquilinear form $f$, the choice of the basis determines uniquely an $n\times n$ matrix $M$ such that $f(v, w) = v M {w^{\alpha}}^T.$ 
 
  This matrix is also called the \emph{Gram matrix} of $f$. Given a sesquilinear form $f$, we will denote its Gram matrix by $M_f$ . In \textsf{Forms}, sesquilinear forms can be constructed using matrices or polynomials, where
 we always suppose that the basis of the vector space is the standard basis
@@ -2157,7 +2158,7 @@ alternating cases.
 {
   We suppose that $f$ is a non-degenerate alternating bilinear form on a vector space $V$ over a finite field $F$. As already mentioned in Section \ref{theory:sesquilinearforms}, non-degenerate alternating forms only exist on even dimensional vector
 spaces. Restricting to a two dimensional vector space, it is clear immediately
-that the Gram matrix of $f$ must be  $\left( \begin{array}{cc}0 & r \\ -r & 0 \end{arry} \right)$ for some non-zero $r \in F$. If we rescale one of the basisvectors, which induces an isometry, then we
+that the Gram matrix of $f$ must be  $\left( \begin{array}{cc}0 & r \\ -r & 0 \end{array} \right)$ for some non-zero $r \in F$. If we rescale one of the basisvectors, which induces an isometry, then we
 see that there always exists a basis such that $r=1$. We call a two dimensional vector space equipped with a non-degenerate
 alternating form a \emph{symplectic hyperbolic line}, and it is proved (see Theorem 6.7 of \cite{Cameron}) that the formed space $(V,f)$ can be written as an orthogonal direct sum of symplectic hyperbolic planes.
 Hence, up to isometry, there is only one non-degenerate alternating form of an
@@ -2177,7 +2178,7 @@ alternating form with Gram matrix
 {
   We suppose that $f$ is a non-degenerate symmetric bilinear form on a vector space $V$ over a finite field $F$ with odd characteristic. We call a two dimensional vector space a \emph{hyperbolic line} if it contains a non-zero vector such that $f(v,v) = 0$. It is proved (see Proposition 6.9 of \cite{Cameron}) that any two hyperbolic lines are isometric, and we choose as canonical
 representative the orthogonal form with Gram matrix  
-\[\left( \begin{array}{cc}0 & 1 \\ 1 & 0 \end{arry} \right).\]
+\[\left( \begin{array}{cc}0 & 1 \\ 1 & 0 \end{array} \right).\]
  
 
  It can be proved (see Theorem 6.10 of \cite{Cameron}) that the formed space $(V,f)$ can be written as the orthogonal direct sum of hyperbolic lines and one
@@ -2212,7 +2213,7 @@ change yields the polynomial
 \hyperdef{L}{X79453E2B7DDE1412}{}
 {
   Suppose that $f$ is a degenerate sesquilinear form on the vector space $V$, then $Rad(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $Rad(f)$, and the restriction of $f$ to $W$ is a non-degenerate sesquilinear form on $W$. Hence, $f$ is isometric with a sesquilinear form having Gram matrix   
-\[\left( \begin{array}{cc} M & A \\ B & C \end{arry} \right)\]
+\[\left( \begin{array}{cc} M & A \\ B & C \end{array} \right)\]
   where $M$ is the Gram matrix of a non-degenerate sesquilinear form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{theory:sesquilinearforms}, the form $f$ induces a non-degenerate form $g$ on the vector space $V/Rad(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{theory:sesquilinearforms}, the Witt index of the degenerate form $f$ is the Witt index of the non-degenerate inducedform $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
 
  }
@@ -2271,7 +2272,7 @@ and the dimension of the radical.
 \hyperdef{L}{X7C738FBB80F533AC}{}
 {
   Suppose that $f$ is a singular quadratic form on the vector space $V$, then $Rad(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $Rad(f)$, and the restriction of $f$ to $W$ is a non-singular quadratic form on $W$. Hence, $f$ is isometric with a quadratic form having Gram matrix   
-\[\left( \begin{array}{cc} M & A \\ B & C \end{arry} \right)\]
+\[\left( \begin{array}{cc} M & A \\ B & C \end{array} \right)\]
   where $M$ is the Gram matrix of a non-singular quadratic form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{quadforms}, the form $f$ induces a non-singular form $g$ on the vector space $V/Rad(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{quadforms}, the Witt index of the singular form $f$ is the Witt index of the non-singular induced form $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
 
  }
@@ -2665,6 +2666,10 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \newpage
 \immediate\write\pagenrlog{["End"], \arabic{page}];}
 \immediate\closeout\pagenrlog
