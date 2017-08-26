@@ -21,7 +21,7 @@ SetPackageInfo( rec(
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.3",
+ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.4",
 ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
 Persons := [
   rec( 
