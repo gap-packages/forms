@@ -86,14 +86,13 @@ form of an odd dimensional vector space is degenerate.
 <P/>
 A sesquilinear form <M>f</M> is <E>hermitian</E><Index Key="Form"
 Subkey="hermitian">Form</Index> (n.b., <E>conjugate-symmetric</E> in <Cite Key="Atlas"/>) 
-if <Alt Not="HTML"><M>f(v,w)=f(w,v)^\alpha</M></Alt>
-<Alt Only="HTML">f(v,w)=f(w,v)&lt;sup>&#945;&lt;/sup></Alt> 
-holds for all vectors <Alt Not="HTML"><M>v,w</M></Alt>
-<Alt Only="HTML">v,w&lt;sup>&#945;&lt;/sup></Alt>
-and <Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt>
-has order 2. Again, it can be easily proved that a sesquilinear
-form <M>f</M> is hermitian if and only if <Alt Not="HTML"><M>m_f^T = m_f^{\alpha}</M></Alt>
-<Alt Only="HTML">m&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=m&lt;sub>f&lt;/sub>&lt;sup>&#945;&lt;/sup></Alt>
+if <Alt Only="Text"><M>f(v,w)=f(w,v)^\alpha</M></Alt><Alt Only="LaTeX"><M>f(v,w)=f(w,v)^\alpha</M></Alt>
+<Alt Only="HTML MathJax"><M>f(v,w)=f(w,v)^\alpha</M></Alt><Alt Only="HTML noMathJax">f(v,w)=f(w,v)&lt;sup>&#945;&lt;/sup></Alt>
+holds for all vectors <M>v,w</M>, with <M>\alpha</M> an involutory field automorphism only dependent on <M>f</M>.
+Again, it can be easily proved that a sesquilinear
+form <M>f</M> is hermitian if and only if <Alt Only="Text"><M>M_f^T = M_f^{\alpha}</M></Alt>
+<Alt Only="LaTeX"><M>M_f^T = M_f^{\alpha}</M></Alt><Alt Only="HTML MathJax"><M>M_f^T = M_f^{\alpha}</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub>&lt;sup>&#945;&lt;/sup></Alt>
 (i.e., a hermitian matix). It is proved (see Chapter 7 of <Cite Key="Taylor"/>)
 that hermitian forms are the only reflexive
 sesquilinear forms that are not bilinear. Hence, in general, all reflexive
@@ -113,9 +112,11 @@ Given a sesquilinear form <M>f</M>, two vectors <M>v</M> and <M>w</M> are
 symmetric relation. A vector <M>v</M> is called <E>isotropic</E><Index>isotropic</Index> if <M>f(v,v)=0</M>.
 The <E>radical</E><Index>Radical</Index> of <M>f</M> (n.b., <E>kernel</E> in <Cite Key="Atlas"/>) 
 is the subspace consisting of vectors which are orthogonal to every vector. That is,
-<Alt Not="HTML"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in
-V\},</Display></Alt><Alt Only="HTML">&lt;center>Rad(f) = {v &#8712; V | f(v,w) = 0
-for all w &#8712; V},&lt;/center></Alt> and we say that <M>f</M> is
+<Alt Only="Text"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="LaTeX"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>Rad(f) = {v &#8712; V | f(v,w) = 0 for all w &#8712; V},&lt;/center></Alt>
+and we say that <M>f</M> is
 <E>non-degenerate</E><Index Key="Form" Subkey="sesquilinear">Non-degenerate</Index> if
 its radical is trivial (and <E>degenerate</E> otherwise).
 <P/>Given a subspace <M>W</M>, we denote the 

@@ -10,7 +10,7 @@
 \contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }What is the form preserved by this group?}}{9}{section.2.3}
 \contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Background Theory on Forms}}{10}{chapter.3}
 \contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Sesquilinear forms}}{10}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Examples}}{11}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Examples}}{12}{subsection.3.1.1}
 \contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Quadratic forms}}{15}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }Examples}}{17}{subsection.3.2.1}
 \contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Constructing forms and basic functionality}}{20}{chapter.4}

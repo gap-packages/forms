@@ -425,7 +425,7 @@ we always suppose that the basis of the vector space is the standard basis
  One proves easily that a bilinear form $f$ is symmetric if and only if $M_f$  is a symmetric matrix, i.e., $M_f^T=M_f,$  and that a bilinear form $f$ is alternating if and only if  $M_f$ is a skew symmetric matrix, i.e., $M_f^T=-M_f$ . When the characteristic of the field is two, the condition that $f(v,v)=0$ for all $v \in V$ implies $M_f^T=M_f$  \textsc{and} $(M_{ii})=0$  for all $i$ (and where the matrix  $M_f = (M_{ij})$ ). Since any skew symmetric odd dimensional matrix is singular, it follows
 that an alternating form of an odd dimensional vector space is degenerate. 
 
- A sesquilinear form $f$ is \emph{hermitian}\index{Form@Form!hermitian} (n.b., \emph{conjugate-symmetric} in \cite{Atlas}) if $f(v,w)=f(w,v)^\alpha$  holds for all vectors $v,w$  and $\alpha$ has order 2. Again, it can be easily proved that a sesquilinear form $f$ is hermitian if and only if $m_f^T = m_f^{\alpha}$  (i.e., a hermitian matix). It is proved (see Chapter 7 of \cite{Taylor}) that hermitian forms are the only reflexive sesquilinear forms that are not
+ A sesquilinear form $f$ is \emph{hermitian}\index{Form@Form!hermitian} (n.b., \emph{conjugate-symmetric} in \cite{Atlas}) if $f(v,w)=f(w,v)^\alpha$  holds for all vectors $v,w$, with $\alpha$ an involutory field automorphism only dependent on $f$. Again, it can be easily proved that a sesquilinear form $f$ is hermitian if and only if  $M_f^T = M_f^{\alpha}$  (i.e., a hermitian matix). It is proved (see Chapter 7 of \cite{Taylor}) that hermitian forms are the only reflexive sesquilinear forms that are not
 bilinear. Hence, in general, all reflexive sesquilinear forms are known, they
 are either hermitian or bilinear, and in the latter case, they are either
 symmetric or alternating (again, see Chapter 7 of \cite{Taylor}). 
@@ -438,9 +438,9 @@ skew symmetric or a hermitian matrix. From now on, the notion of a
 
  Given a sesquilinear form $f$, two vectors $v$ and $w$ are \emph{orthogonal}\index{Orthogonal} with respect to $f$ if $f(v,w) = 0$. Note that the reflexivity makes orthogonality between two vectors a
 symmetric relation. A vector $v$ is called \emph{isotropic}\index{isotropic} if $f(v,v)=0$. The \emph{radical}\index{Radical} of $f$ (n.b., \emph{kernel} in \cite{Atlas}) is the subspace consisting of vectors which are orthogonal to every vector.
-That is, 
+That is,  
 \[Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},\]
- and we say that $f$ is \emph{non-degenerate}\index{Form@Non-degenerate!sesquilinear} if its radical is trivial (and \emph{degenerate} otherwise). 
+   and we say that $f$ is \emph{non-degenerate}\index{Form@Non-degenerate!sesquilinear} if its radical is trivial (and \emph{degenerate} otherwise). 
 
 Given a subspace $W$, we denote the set of vectors of $V$ orthogonal with all vectors of $W$ by $W^\perp$. We call a subspace $W$ \emph{totally isotropic}\index{Form@Totally Isotropic!sesquilinear} with respect to $f$ if $W$ is contained in $W^\perp$, i.e. 
 \[f(v,w) = 0,\, \mbox{\rm for all } v,w \in W.\]
@@ -2677,6 +2677,12 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
