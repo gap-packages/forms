@@ -25,13 +25,15 @@ A <E>sesquilinear form</E><Index Key="Form" Subkey="sesquilinear">Form</Index>
 on an <M>n</M>-dimensional vector space <M>V</M> over a field <M>F</M>, is a map
 <M>f</M> from <M>V\times V</M> to <M>F</M> which is linear in the first coordinate, but
 semilinear<Index>Semilinear</Index> in the second coordinate; that is, there is a field
-automorphism <Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt>
+automorphism <M>\alpha</M><!--<Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt>-->
 (the <E>companion automorphism</E><Index>Companion
-Automorphism</Index> of <M>f</M>) such that <Alt Not="HTML"><M>f(v,\lambda w)=\lambda^\alpha
-f(v,w)</M></Alt><Alt Only="HTML">f(v,&#955;w)=&#955;&lt;sup>&#945;&lt;/sup>f(v,w)</Alt>
-for all <M>v,w \in V</M> and <Alt Not="HTML"><M>\lambda \in F</M></Alt><Alt
-Only="HTML">&#955; in F</Alt>. If <Alt Not="HTML"><M>\alpha</M></Alt><Alt
-Only="HTML">&#945;</Alt> is the identity, then <M>f</M> is <E>bilinear</E><Index
+Automorphism</Index> of <M>f</M>) such that
+<Alt Only="Text"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
+<Alt Only="Latex"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,&#955;w)=&#955;&lt;sup>&#945;&lt;/sup>f(v,w),</Display></Alt>
+for all <M>v,w \in V</M> and <M>\lambda \in F</M>.
+If <M>\alpha</M> is the identity, then <M>f</M> is <E>bilinear</E><Index
 Key="Form" Subkey="bilinear">Form</Index>.
 <P/>
 A bilinear form is <E>reflexive</E><Index Key="Form"
@@ -49,33 +51,36 @@ bilinear forms.
 <P/>
 For a given sesquilinear form <M>f</M>, the choice of the basis determines
 uniquely an <M>n\times n</M> matrix <M>M</M> such that 
-<Alt Not="HTML"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt><Alt Only="HTML">f(v, w) = v M w&lt;sup>&#945;T&lt;/sup>.</Alt>
+<Alt Only="Text"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt>
+<Alt Only="LaTeX"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt>
+<Alt Only="HTML MathJax"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt>
+<Alt Only="HTML noMathJax">f(v, w) = v M w&lt;sup>&#945;T&lt;/sup>.</Alt>
 <P/>
 This matrix is also called the <E>Gram matrix</E> of <M>f</M>.
-Given a sesquilinear form <M>f</M>, we will denote its Gram matrix by <Alt Not="HTML"><M>M_f</M></Alt>
-<Alt Only="HTML">M&lt;sub>f&lt;/sub></Alt>. In
+Given a sesquilinear form <M>f</M>, we will denote its Gram matrix by
+<Alt Only="Text"><M>M_f.</M></Alt><Alt Only="LaTeX"><M>M_f.</M></Alt><Alt Only="HTML MathJax"><M>M_f.</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>.</Alt>. In
 <Package>Forms</Package>, sesquilinear forms can be constructed using matrices
 or polynomials, where we always suppose that the basis of the vector space is the
 standard basis (i.e., the rows of the identity matrix).
 <P/>
 One proves easily that a bilinear form <M>f</M> is symmetric if and only if
-<Alt Not="HTML"><M>M_f</M></Alt><Alt Only="HTML">M&lt;sub>f&lt;/sub></Alt> is a
-symmetric matrix, i.e., <Alt Not="HTML"><M>M_f^T=M_f</M></Alt>
-<Alt
-Only="HTML">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub></Alt>,
-and that a bilinear 
-form <M>f</M> is alternating if and only if <Alt Not="HTML"><M>M_f</M></Alt><Alt
-Only="HTML">M&lt;sub>f&lt;/sub></Alt> is a skew symmetric matrix,
-i.e., <Alt Not="HTML"><M>M_f^T=-M_f</M></Alt>
-<Alt
-Only="HTML">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=-M&lt;sub>f&lt;/sub></Alt>.
-When the characteristic of the field is two, the 
-condition that <M>f(v,v)=0</M> for all <M>v \in V</M> implies <Alt Not="HTML"><M>M_f^T=M_f</M></Alt>
-<Alt Only="HTML">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub></Alt>
-<B>and</B> <Alt Not="HTML"><M>(M_{ii})=0</M></Alt><Alt
-Only="HTML">(M&lt;sub>ii&lt;/sub>)=0</Alt>
-(denoting the matrix <Alt Not="HTML"><M>M_f = (M_{ij}))</M></Alt><Alt
-Only="HTML">M&lt;sub>f&lt;/sub> = (M&lt;sub>ij&lt;/sub>)</Alt>.
+<Alt Only="Text"><M>M_f</M></Alt><Alt Only="LaTeX"><M>M_f</M></Alt><Alt Only="HTML MathJax"><M>M_f</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub></Alt> is a
+symmetric matrix, i.e., <Alt Only="Text"><M>M_f^T=M_f,</M></Alt><Alt Only="LaTeX"><M>M_f^T=M_f,</M></Alt>
+<Alt Only="HTML MathJax"><M>M_f^T=M_f,</M></Alt><Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub>,</Alt>
+and that a bilinear form <M>f</M> is alternating if and only if <Alt Only="Text"><M>M_f</M></Alt>
+<Alt Only="LaTeX"><M>M_f</M></Alt><Alt Only="HTML MathJax"><M>M_f</M></Alt><Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub></Alt>
+is a skew symmetric matrix, i.e., <Alt Only="Text"><M>M_f^T=-M_f</M></Alt><Alt Only="LaTeX"><M>M_f^T=-M_f</M></Alt>
+<Alt Only="HTML MathJax"><M>M_f^T=-M_f</M></Alt><Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=-M&lt;sub>f&lt;/sub></Alt>.
+When the characteristic of the field is two, the condition that <M>f(v,v)=0</M> for all <M>v \in V</M> implies
+<Alt Only="Text"><M>M_f^T=M_f</M></Alt><Alt Only="LaTeX"><M>M_f^T=M_f</M></Alt><Alt Only="HTML MathJax"><M>M_f^T=M_f</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub></Alt>
+<B>and</B> <Alt Only="Text"><M>(M_{ii})=0</M></Alt><Alt Only="LaTeX"><M>(M_{ii})=0</M></Alt>
+<Alt Only="HTML MathJax"><M>(M_{ii})=0</M></Alt><Alt Only="HTML noMathJax">(M&lt;sub>ii&lt;/sub>)=0</Alt> for
+all <M>i</M> (and where the matrix <Alt Only="Text"><M>M_f = (M_{ij})</M></Alt>
+<Alt Only="LaTeX"><M>M_f = (M_{ij})</M></Alt><Alt Only="HTML MathJax"><M>M_f = (M_{ij})</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub> = (M&lt;sub>ij&lt;/sub>)</Alt>).
 Since any skew symmetric odd dimensional matrix is singular, it follows that an alternating
 form of an odd dimensional vector space is degenerate.
 <P/>

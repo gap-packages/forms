@@ -410,20 +410,20 @@ and quadratic forms. The reader can find more in the texts: Cameron \cite{Camero
 \logpage{[ 3, 1, 0 ]}
 \hyperdef{L}{X874CD5E0802FEB50}{}
 {
-  A \emph{sesquilinear form}\index{Form@Form!sesquilinear} on an $n$-dimensional vector space $V$ over a field $F$, is a map $f$ from $V\times V$ to $F$ which is linear in the first coordinate, but semilinear\index{Semilinear} in the second coordinate; that is, there is a field automorphism $\alpha$ (the \emph{companion automorphism}\index{Companion Automorphism} of $f$) such that $f(v,\lambda w)=\lambda^\alpha f(v,w)$ for all $v,w \in V$ and $\lambda \in F$. If $\alpha$ is the identity, then $f$ is \emph{bilinear}\index{Form@Form!bilinear}. 
+  A \emph{sesquilinear form}\index{Form@Form!sesquilinear} on an $n$-dimensional vector space $V$ over a field $F$, is a map $f$ from $V\times V$ to $F$ which is linear in the first coordinate, but semilinear\index{Semilinear} in the second coordinate; that is, there is a field automorphism $\alpha$ (the \emph{companion automorphism}\index{Companion Automorphism} of $f$) such that     for all $v,w \in V$ and $\lambda \in F$. If $\alpha$ is the identity, then $f$ is \emph{bilinear}\index{Form@Form!bilinear}. 
 
  A bilinear form is \emph{reflexive}\index{Form@Form!reflexive} if $f(v,w)=0 \Rightarrow f(w,v)=0$ for all $v,w \in V$. A bilinear form is \emph{symmetric}\index{Form@Form!symmetric} if $f(v,w)=f(w,v)$ for all $v,w \in V$. It is clear that a symmetric bilinear form is reflexive. A bilinear form is \emph{alternating}\index{Form@Form!alternating} if $f(v,v)=0$ for all $v \in V$. Using the linearity to compute $f(v+w,v+w)$, we see that an alternating form is also reflexive. When the characteristic
 of the field differs from 2, an alternating form $f$ can also be characterised as $f(v,w) = -f(w,v)$ for all $v,w \in V$. It can be proved (see Chapter 7 of \cite{Taylor}) that symmetric and alternating bilinear forms are the only reflexive
 bilinear forms. 
 
- For a given sesquilinear form $f$, the choice of the basis determines uniquely an $n\times n$ matrix $M$ such that $f(v, w) = v M {w^{\alpha}}^T.$ 
+ For a given sesquilinear form $f$, the choice of the basis determines uniquely an $n\times n$ matrix $M$ such that  $f(v, w) = v M {w^{\alpha}}^T.$   
 
- This matrix is also called the \emph{Gram matrix} of $f$. Given a sesquilinear form $f$, we will denote its Gram matrix by $M_f$ . In \textsf{Forms}, sesquilinear forms can be constructed using matrices or polynomials, where
+ This matrix is also called the \emph{Gram matrix} of $f$. Given a sesquilinear form $f$, we will denote its Gram matrix by $M_f.$ . In \textsf{Forms}, sesquilinear forms can be constructed using matrices or polynomials, where
 we always suppose that the basis of the vector space is the standard basis
 (i.e., the rows of the identity matrix). 
 
- One proves easily that a bilinear form $f$ is symmetric if and only if $M_f$ is a symmetric matrix, i.e., $M_f^T=M_f$ , and that a bilinear form $f$ is alternating if and only if $M_f$ is a skew symmetric matrix, i.e., $M_f^T=-M_f$ . When the characteristic of the field is two, the condition that $f(v,v)=0$ for all $v \in V$ implies $M_f^T=M_f$  \textsc{and} $(M_{ii})=0$ (denoting the matrix $M_f = (M_{ij}))$. Since any skew symmetric odd dimensional matrix is singular, it follows that
-an alternating form of an odd dimensional vector space is degenerate. 
+ One proves easily that a bilinear form $f$ is symmetric if and only if $M_f$  is a symmetric matrix, i.e., $M_f^T=M_f,$  and that a bilinear form $f$ is alternating if and only if  $M_f$ is a skew symmetric matrix, i.e., $M_f^T=-M_f$ . When the characteristic of the field is two, the condition that $f(v,v)=0$ for all $v \in V$ implies $M_f^T=M_f$  \textsc{and} $(M_{ii})=0$  for all $i$ (and where the matrix  $M_f = (M_{ij})$ ). Since any skew symmetric odd dimensional matrix is singular, it follows
+that an alternating form of an odd dimensional vector space is degenerate. 
 
  A sesquilinear form $f$ is \emph{hermitian}\index{Form@Form!hermitian} (n.b., \emph{conjugate-symmetric} in \cite{Atlas}) if $f(v,w)=f(w,v)^\alpha$  holds for all vectors $v,w$  and $\alpha$ has order 2. Again, it can be easily proved that a sesquilinear form $f$ is hermitian if and only if $m_f^T = m_f^{\alpha}$  (i.e., a hermitian matix). It is proved (see Chapter 7 of \cite{Taylor}) that hermitian forms are the only reflexive sesquilinear forms that are not
 bilinear. Hence, in general, all reflexive sesquilinear forms are known, they
@@ -2677,19 +2677,6 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
