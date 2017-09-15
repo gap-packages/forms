@@ -19,12 +19,18 @@ Here we give some simple examples that display some of the functionality
 of <Package>Forms</Package>.
 
 <Section>
-<Heading>A conic of PG(2,8)</Heading>
+<Heading>A conic of <Alt Only="Text"><M>PG(2,8)</M></Alt><Alt Only="LaTeX"><M>&pg;(2,8)</M></Alt>
+<Alt Only="HTML MathJax"><M>&pg;(2,8)</M></Alt><Alt Only="HTML noMathJax">PG(2,8)</Alt>
+</Heading>
 
-Consider the three-dimensional vector space <M>V := V(3,GF(8))</M>, and
-consider the following quadratic polynomial in 3 variables: <Alt Only="MathJax"><M>x_1^2+x_2x_3+d</M></Alt>
-<Alt Not="HTML"><Display>x_1^2+x_2x_3.</Display></Alt>
-<Alt Only="HTML">&lt;center>x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>+x&lt;sub>2&lt;/sub>x&lt;sub>3&lt;/sub>.&lt;/center></Alt>
+Consider the three-dimensional vector space <M>V</M> over the finite field
+<Alt Only="Text"><M>GF(8)</M></Alt><Alt Only="LaTeX"><M>&gf;(8)</M></Alt><Alt Only="HTML MathJax"><M>&gf;(8)</M></Alt>
+<Alt Only="HTML noMathJax">GF(8)</Alt>, and
+consider the following quadratic polynomial in 3 variables:
+<Alt Only="HTML MathJax"><Display>x_1^2+x_2x_3.</Display></Alt>
+<Alt Only="LaTeX"><Display>x_1^2+x_2x_3.</Display></Alt>
+<Alt Only="Text"><Display>x_1^2+x_2x_3.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>+x&lt;sub>2&lt;/sub>x&lt;sub>3&lt;/sub>.&lt;/center></Alt>
 Then this polynomial defines a quadratic form on <M>V</M> and the zeros
 form a <E>conic</E> of the associated projective plane. So in particular,
 our quadratic form defines a degenerate parabolic quadric of Witt Index 1.
@@ -59,7 +65,10 @@ true
 gap> RadicalOfForm( form );
 &lt;vector space over GF(2^3), with 0 generators>
 </Example>
-Now our conic is stabilised by a group isomorphic to <M>GO(3,8)</M>, but not identical to the group returned by the GAP command
+Now our conic is stabilised by a group isomorphic to
+<Alt Only="Text"><M>GO(3,8)</M></Alt><Alt Only="LaTeX"><M>&go;(3,8)</M></Alt>
+<Alt Only="HTML MathJax"><M>&go;(3,8)</M></Alt><Alt Only="HTML noMathJax">GO(3,8)</Alt>,
+but which is not identical to the group returned by the GAP command
 <C>GO(3,8)</C>. However, our conic is the canonical conic given in <Package>Forms</Package>.
 <Example>
 gap> canonical := IsometricCanonicalForm( form );
@@ -89,7 +98,9 @@ Group(
   [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
       [ 0*Z(2), Z(2)^0, 0*Z(2) ] ] ])
 </Example>
-Now we look at the action of our new <M>GO(3,8)</M> on the conic.
+Now we look at the action of our new
+<Alt Only="Text"><M>GO(3,8)</M></Alt><Alt Only="LaTeX"><M>&go;(3,8)</M></Alt>
+<Alt Only="HTML MathJax"><M>&go;(3,8)</M></Alt><Alt Only="HTML noMathJax">GO(3,8)</Alt> on the conic.
 <Example>
 gap> conic := Filtered(vec, x -> IsZero( x^form ));;
 gap> Size(conic);

@@ -6,7 +6,7 @@
                            [1XSesquilinear and Quadratic[101X
   
   
-                                     1.2.4
+                                     1.2.5
   
   
                                   August 2017
@@ -54,7 +54,7 @@
     1.4 [33X[0;0YWeb resources[133X
     1.5 [33X[0;0YRelease notes[133X
   2 [33X[0;0YExamples[133X
-    2.1 [33X[0;0YA conic of PG(2,8)[133X
+    2.1 [33X[0;0YA conic of [22XPG(2,8)[122X[133X
     2.2 [33X[0;0YA form for W(5,3)[133X
     2.3 [33X[0;0YWhat is the form preserved by this group?[133X
   3 [33X[0;0YBackground Theory on Forms[133X

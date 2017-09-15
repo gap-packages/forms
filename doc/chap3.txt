@@ -42,7 +42,7 @@
   follows  that  an  alternating  form  of  an odd dimensional vector space is
   degenerate.[133X
   
-  [33X[0;0YA  sesquilinear form [22Xf[122X is [13Xhermitian[113X (n.b., [13Xconjugate-symmetric[113X in [CCNPW85])
+  [33X[0;0YA  sesquilinear  form [22Xf[122X is [13Xhermitian[113X (n.b., [13Xconjugate-symmetric[113X in [CCN+85])
   if  [22Xf(v,w)=f(w,v)^α[122X  holds  for all vectors [22Xv,w[122X and [22Xα[122X has order 2. Again, it
   can  be easily proved that a sesquilinear form [22Xf[122X is hermitian if and only if
   [22Xm_f^T  =  m_f^α[122X  (i.e.,  a  hermitian matix). It is proved (see Chapter 7 of
@@ -61,12 +61,13 @@
   [33X[0;0YGiven a sesquilinear form [22Xf[122X, two vectors [22Xv[122X and [22Xw[122X are [13Xorthogonal[113X with respect
   to  [22Xf[122X  if  [22Xf(v,w) = 0[122X. Note that the reflexivity makes orthogonality between
   two  vectors  a  symmetric  relation.  A  vector  [22Xv[122X  is  called [13Xisotropic[113X if
-  [22Xf(v,v)=0[122X.  The  [13Xradical[113X  of  [22Xf[122X  (n.b.,  [13Xkernel[113X in [CCNPW85]) is the subspace
+  [22Xf(v,v)=0[122X.  The  [13Xradical[113X  of  [22Xf[122X  (n.b.,  [13Xkernel[113X  in [CCN+85]) is the subspace
   consisting of vectors which are orthogonal to every vector. That is,[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YRad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},[133X [124X[133X
+  [24X[33X[0;6YRad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},[133X
   
+  [124X
   
   [33X[0;0Yand  we  say  that  [22Xf[122X  is  [13Xnon-degenerate[113X  if  its  radical  is trivial (and
   [13Xdegenerate[113X otherwise).[133X
@@ -76,8 +77,9 @@
   to [22Xf[122X if [22XW[122X is contained in [22XW^perp[122X, i.e.[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v,w) = 0,\, \mbox{\rm for all } v,w \in W.[133X [124X[133X
+  [24X[33X[0;6Yf(v,w) = 0,\, \mbox{\rm for all } v,w \in W.[133X
   
+  [124X
   
   [33X[0;0YSuppose that [22Xf[122X is a non-degenerate sesquilinear form. The [13XWitt index[113X of [22Xf[122X is
   the maximum dimension of a totally isotropic subspace with respect to [22Xf[122X.[133X
@@ -105,11 +107,11 @@
   that,  as  explained  above,  the Witt index refers to the Witt index of the
   [12Xinduced non-degenerate form[112X [22Xg[122X when [22Xf[122X is degenerate.[133X
   
-        ───────────┬──────────────────────┬─  
-        Hyperbolic │ Orthogonal of + type │ [22XV/Rad(f)[122X has even dimension, [22Xg[122X has maximal Witt index    
-        Elliptic   │ Orthogonal of - type │ [22XV/Rad(f)[122X has even dimension, [22Xg[122X has non-maximal Witt index
-        Parabolic  │ Orthogonal of o type │ [22XV/Rad(f)[122X has odd dimension                               
-        ───────────┴──────────────────────┴─  
+        ───────────┬──────────────────────┬──────────────────────────────────────────────────────────  
+        Hyperbolic │ Orthogonal of + type │ [22XV/Rad(f)[122X has even dimension, [22Xg[122X has maximal Witt index       
+        Elliptic   │ Orthogonal of - type │ [22XV/Rad(f)[122X has even dimension, [22Xg[122X has non-maximal Witt index   
+        Parabolic  │ Orthogonal of o type │ [22XV/Rad(f)[122X has odd dimension                                  
+        ───────────┴──────────────────────┴──────────────────────────────────────────────────────────  
   
        [1XTable:[101X Posibilites for an orthogonal form [22Xf[122X on a vector space [22XV[122X
   
@@ -337,24 +339,25 @@
   [22XQ[122X from [22XV[122X to [22XF[122X satisfying the following two conditions:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YQ(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in
-        V,[133X [124X[133X
+  [24X[33X[0;6YQ(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,[133X
   
+  [124X
   
   [33X[0;0Yand, the map [22Xf[122X defined from [22XV× V[122X to [22XF[122X as follows,[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v,w) := Q(v+w) - Q(v) - Q(w),[133X [124X[133X
+  [24X[33X[0;6Yf(v,w) := Q(v+w) - Q(v) - Q(w),[133X
   
+  [124X
   
   [33X[0;0Yis a bilinear form on [22XV[122X. From this definition it follows that [22Xf(v,v) = Q(2v)
   - 2Q(v) = 2Q(v)[122X.[133X
   
   [33X[0;0YThe  associated  bilinear  form  [22Xf[122X  (which  is called the [13Xpolar form[113X of [22XQ[122X in
-  [CCNPW85])  is  clearly  reflexive.  When the characteristic of the field is
-  odd,  it is clear that [22Xf[122X is a symmetric bilinear form. The equation [22Xf(v,v) =
-  2Q(v)[122X  allows  us  to reconstruct the quadratic form from the bilinear form,
-  and  hence  there is a one-to-one correspondence between quadratic forms and
+  [CCN+85]) is clearly reflexive. When the characteristic of the field is odd,
+  it is clear that [22Xf[122X is a symmetric bilinear form. The equation [22Xf(v,v) = 2Q(v)[122X
+  allows  us  to  reconstruct  the  quadratic form from the bilinear form, and
+  hence  there  is  a  one-to-one  correspondence  between quadratic forms and
   symmetric bilinear forms. When the characteristic of the field equals 2, the
   bilinear  form  [22Xf[122X  is  alternating  (from the fact that [22Xf(v,v) = 2Q(v) = 0[122X).
   Note,  however,  that  different  quadratic  forms  can  determine  the same
@@ -366,8 +369,9 @@
   matrix[113X of a quadratic form is always an upper triangle matrix [22XM[122X, such that[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YQ(v) = vMv^T,[133X [124X[133X
+  [24X[33X[0;6YQ(v) = vMv^T,[133X
   
+  [124X
   
   [33X[0;0Ywhere  the basis of [22XV[122X is the standard basis. Although the Gram matrix stored
   with  the  quadratic  form  is  always an upper triangle matrix, the user is
@@ -398,8 +402,9 @@
   bilinear form [22Xf[122X, i.e.[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YRad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.[133X [124X[133X
+  [24X[33X[0;6YRad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.[133X
   
+  [124X
   
   [33X[0;0YWe  call a quadratic form [22XQ[122X [13Xnon-singular[113X if and only if the radical contains
   only the zero vector, and [13Xsingular[113X otherwise.[133X
@@ -430,11 +435,11 @@
   refers  to  the  Witt  index  of  the [12Xinduced non-singular form[112X [22XQ[122X when [22XQ'[122X is
   singular.[133X
   
-        ───────────┬──────────────────────┬─  
-        Hyperbolic │ Orthogonal of + type │ [22XV/Rad(Q)[122X has even dimension, [22XQ'[122X has maximal Witt index    
-        Elliptic   │ Orthogonal of - type │ [22XV/Rad(Q)[122X has even dimension, [22XQ'[122X has non-maximal Witt index
-        Parabolic  │ Orthogonal of o type │ [22XV/Rad(Q)[122X has odd dimension                                
-        ───────────┴──────────────────────┴─  
+        ───────────┬──────────────────────┬───────────────────────────────────────────────────────────  
+        Hyperbolic │ Orthogonal of + type │ [22XV/Rad(Q)[122X has even dimension, [22XQ'[122X has maximal Witt index       
+        Elliptic   │ Orthogonal of - type │ [22XV/Rad(Q)[122X has even dimension, [22XQ'[122X has non-maximal Witt index   
+        Parabolic  │ Orthogonal of o type │ [22XV/Rad(Q)[122X has odd dimension                                   
+        ───────────┴──────────────────────┴───────────────────────────────────────────────────────────  
   
        [1XTable:[101X Posibilites for a quadratic form [22XQ[122X on a vector space [22XV[122X
   

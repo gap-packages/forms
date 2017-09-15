@@ -18,22 +18,25 @@
   formed space [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v,w) = f'(\phi(v), \phi(w)).[133X [124X[133X
+  [24X[33X[0;6Yf(v,w) = f'(\phi(v), \phi(w)).[133X
   
+  [124X
   
   [33X[0;0YThe  map  [22Xϕ[122X  is a [13Xsimilarity[113X from the formed space [22X(V,f)[122X to the formed space
   [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v,w) = \lambda f'(\phi(v), \phi(w)).[133X [124X[133X
+  [24X[33X[0;6Yf(v,w) = \lambda f'(\phi(v), \phi(w)).[133X
   
+  [124X
   
   [33X[0;0Yfor  some  non-zero [22Xλ ∈ F[122X. Finally, the map [22Xϕ[122X. is a [13Xsemi-similarity[113X from the
   formed space [22X(V,f)[122X to the formed space [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha[133X [124X[133X
+  [24X[33X[0;6Yf(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha[133X
   
+  [124X
   
   [33X[0;0Yfor some non-zero [22Xλ ∈ F[122X and a field automorphism [22Xα[122X of [22XF[122X.[133X
   
@@ -121,8 +124,9 @@
         above. The chosen canonical form has polynomial[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Yx_1 x_2 + \ldots + x_{n-1}x_n[133X [124X[133X
+  [24X      [33X[0;6Yx_1 x_2 + \ldots + x_{n-1}x_n[133X
   
+  [124X
   
         [33X[0;6YNote  that the dimension of the vector space [22XV[122X is necessarily even. We
         call [22Xf[122X [13Xhyperbolic[113X (see also Section [14X3.1[114X). It follows also that in this
@@ -133,23 +137,26 @@
         equals[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Y\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n[133X [124X[133X
+  [24X      [33X[0;6Y\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n[133X
   
+  [124X
   
         [33X[0;6Yfor  some  [22Xμ  ∈  F[122X, and the dimension of the vector space [22XV[122X is odd. We
         call  [22Xf[122X  [13Xparabolic[113X  (see also Section [14X3.1[114X). It is clear that if [22Xμ[122X is a
         square in [22XF[122X, then rescaling the first basis vector yields a polynomial[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Yx_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n[133X [124X[133X
+  [24X      [33X[0;6Yx_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n[133X
   
+  [124X
   
         [33X[0;6Ywhich  we choose as the canonical form for this similarity class. If [22Xμ[122X
         is a non-square, a rescaling of [22Xx_2,x_4,...,x_n-1[122X yields a polynomial[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Y\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)[133X [124X[133X
+  [24X      [33X[0;6Y\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)[133X
   
+  [124X
   
         [33X[0;6Ywhich represents now a bilinear form that is [12Xsimilar but not isometric[112X
         to  the  given one. Hence, the parabolic similarity class contains two
@@ -160,8 +167,9 @@
         suitable base change yields the polynomial[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Y\mu x_1^2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n[133X [124X[133X
+  [24X      [33X[0;6Y\mu x_1^2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n[133X
   
+  [124X
   
         [33X[0;6Yfor  a  non-square  [22Xμ  ∈ F[122X, and the dimension of the vector space [22XV[122X is
         even. We call [22Xf[122X [13Xelliptic[113X. The Witt index of [22Xf[122X equals [22X(n-2)/2[122X.[133X
@@ -193,22 +201,25 @@
   space [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v) = f'(\phi(v)).[133X [124X[133X
+  [24X[33X[0;6Yf(v) = f'(\phi(v)).[133X
   
+  [124X
   
   [33X[0;0YThe  map  [22Xϕ[122X  is  a  [13Xsimilarity[113X from the formed space [22X(V,f)[122X to a formed space
   [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v) = \lambda f'(\phi(v)).[133X [124X[133X
+  [24X[33X[0;6Yf(v) = \lambda f'(\phi(v)).[133X
   
+  [124X
   
   [33X[0;0Yfor  some  non-zero [22Xλ ∈ F[122X. Finally, the map [22Xϕ[122X. is a [13Xsemi-similarity[113X from the
   formed space [22X(V,f)[122X to the formed space [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(v)=\lambda f'(\phi(v))^\alpha[133X [124X[133X
+  [24X[33X[0;6Yf(v)=\lambda f'(\phi(v))^\alpha[133X
   
+  [124X
   
   [33X[0;0Yfor some non-zero [22Xλ ∈ F[122X and a field automorphism [22Xα[122X of [22XF[122X.[133X
   
@@ -235,8 +246,9 @@
         [22X(V,f')[122X, with polynomial[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Yx_1 x_2 + \ldots + x_{n-1}x_n,[133X [124X[133X
+  [24X      [33X[0;6Yx_1 x_2 + \ldots + x_{n-1}x_n,[133X
   
+  [124X
   
         [33X[0;6Ywhich  is chosen as the canonical form. Note that the dimension of the
         vector  space  [22XV[122X  is  necessarily even. We call [22Xf[122X [13Xhyperbolic[113X (see also
@@ -247,8 +259,9 @@
         equals[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Y\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n[133X [124X[133X
+  [24X      [33X[0;6Y\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n[133X
   
+  [124X
   
         [33X[0;6Yfor  some  [22Xμ  ∈  F[122X, and the dimension of the vector space [22XV[122X is odd. We
         call  [22Xf[122X  [13Xparabolic[113X  (see  also  Section [14X3.1[114X). Since every element is a
@@ -260,8 +273,9 @@
         base change yields the polynomial[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Yd x_1^2 + x_1x_2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n[133X [124X[133X
+  [24X      [33X[0;6Yd x_1^2 + x_1x_2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n[133X
   
+  [124X
   
         [33X[0;6Yfor  an  element of category 1, this is, an element [22Xd[122X such that [22XT(d)=1[122X
         with  [22XT[122X  the  trace map from [22XF[122X to [22XGF(2)[122X. Furthermore, an easy argument

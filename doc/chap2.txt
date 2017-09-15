@@ -5,14 +5,15 @@
   [5XForms[105X.[133X
   
   
-  [1X2.1 [33X[0;0YA conic of PG(2,8)[133X[101X
+  [1X2.1 [33X[0;0YA conic of [22XPG(2,8)[122X[101X[1X[133X[101X
   
-  [33X[0;0YConsider  the  three-dimensional  vector space [22XV := V(3,GF(8))[122X, and consider
-  the following quadratic polynomial in 3 variables:[133X
+  [33X[0;0YConsider  the three-dimensional vector space [22XV[122X over the finite field [22XGF(8)[122X ,
+  and consider the following quadratic polynomial in 3 variables:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yx_1^2+x_2x_3.[133X [124X[133X
+  [24X[33X[0;6Yx_1^2+x_2x_3.[133X
   
+  [124X
   
   [33X[0;0YThen  this  polynomial  defines  a  quadratic form on [22XV[122X and the zeros form a
   [13Xconic[113X  of  the  associated projective plane. So in particular, our quadratic
@@ -50,8 +51,8 @@
     [4X[28X<vector space over GF(2^3), with 0 generators>[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YNow  our  conic  is  stabilised  by  a  group isomorphic to [22XGO(3,8)[122X, but not
-  identical  to  the  group  returned by the GAP command [10XGO(3,8)[110X. However, our
+  [33X[0;0YNow  our conic is stabilised by a group isomorphic to [22XGO(3,8)[122X , but which is
+  not identical to the group returned by the GAP command [10XGO(3,8)[110X. However, our
   conic is the canonical conic given in [5XForms[105X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -109,9 +110,9 @@
   form is[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.[133X
-        [124X[133X
+  [24X[33X[0;6Yf(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.[133X
   
+  [124X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf := GF(3);[127X[104X

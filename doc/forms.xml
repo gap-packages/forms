@@ -1,6 +1,15 @@
 <?xml version="1.2.3" encoding="UTF-8"?>
 
-<!DOCTYPE Book SYSTEM "gapdoc.dtd">
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+    [<!ENTITY pg "\mathrm{PG}">
+    <!ENTITY go "\mathrm{GO}">
+    <!ENTITY gf "\mathrm{GF}">
+    <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
+    ]
+   >
+
+
 <?LaTeX ExtraPreamble="\usepackage{url}"?>
 
 <!--

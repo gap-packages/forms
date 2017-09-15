@@ -30,7 +30,7 @@ geometry. The functionality of the package includes:
  <Item>operations which allow a user to change coordinates, that is,
 to ``change form'' and work in an isometric (or similar)
 formed vector space; and</Item>
- <Item>a way to determine the form(s) left invariant by a matrix group (up to a scalar).</Item>
+<Item>a way to determine the form(s) left invariant by a matrix group (up to a scalar).</Item>
 </List>
 
 </Section>

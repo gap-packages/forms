@@ -9,14 +9,13 @@
   [[20XCam00[120X]   [16XCameron,  P.  J.[116X,  [17XProjective  and  Polar  Spaces[117X,  Online  notes,
   \url{http://www.maths.qmul.ac.uk/~pjc/pps} (2000).
   
-  [[20XCLNNPP08[120X]  [16XCeller,  F.,  Leedham-Green, C. R., Neumann, P. M., Niemeyer, A.
-  C.,  Pasechnik,  D.  and  Praeger,  C. E.[116X, [17XFinding invariant forms[117X, [18Xpreprint[118X
-  (2008).
-  
-  [[20XCCNPW85[120X]  [16XConway,  J.  H.,  Curtis, R. T., Norton, S. P., Parker, R. A. and
+  [[20XCCN+85[120X]  [16XConway,  J.  H.,  Curtis,  R. T., Norton, S. P., Parker, R. A. and
   Wilson,  R.  A.[116X,  [17XAtlas  of  finite groups[117X, Oxford University Press, Eynsham
   (1985),  xxxiv+252  pages,  ((Maximal  subgroups and ordinary characters for
   simple groups, With computational assistance from J. G. Thackray)).
+  
+  [[20XCLGN+08[120X] [16XCeller, F., Leedham-Green, C. R., Neumann, P. M., Niemeyer, A. C.,
+  Pasechnik, D. and Praeger, C. E.[116X, [17XFinding invariant forms[117X, [18Xpreprint[118X (2008).
   
   [[20XKL90[120X]  [16XKleidman,  P.  and Liebeck, M.[116X, [17XThe subgroup structure of the finite
   classical  groups[117X,  Cambridge  University Press, London Mathematical Society

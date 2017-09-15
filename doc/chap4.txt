@@ -847,8 +847,9 @@
   are orthogonal to every vector, i.e.,[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YRad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.[133X [124X[133X
+  [24X[33X[0;6YRad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.[133X
   
+  [124X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr := PolynomialRing( GF(8), 3 );[127X[104X
@@ -895,7 +896,7 @@
   quadratic  or  bilinear  form  [3Xf[103X of even dimension, this operation returns a
   string: ``square'' or ``nonsquare''. More specifically, let [22Xf[122X be a from over
   [22XGF(q)[122X,  and  let  [22XM[122X  be  the  Gram matrix of [22Xf[122X. Define the [13Xdiscriminant[113X of [22XQ[122X
-  (n.b.,  [13Xquasideterminant[113X  in [CCNPW85]) as `square' if [22Xdet(M)[122X is a square of
+  (n.b.,  [13Xquasideterminant[113X  in  [CCN+85]) as `square' if [22Xdet(M)[122X is a square of
   [22XGF(q)[122X,  and  `non-square'  otherwise.  The  discriminant  is an invariant of
   nondegenerate  orthogonal  spaces  over  finite  fields  of odd order, up to
   isometry.  Thus, discriminants can be used to delineate the isometry type of
@@ -922,7 +923,7 @@
   Eventually, the procedure used for finding preserved sesquilinear forms does
   use the [5XMeatAxe[105X but in some cases it can rule out the existence of preserved
   forms  without  calling  the [5XMeatAxe[105X. For more information on the algorithm,
-  please see [CLNNPP08].[133X
+  please see [CLGN+08].[133X
   
   [1X4.8-1 PreservedSesquilinearForms[101X
   
