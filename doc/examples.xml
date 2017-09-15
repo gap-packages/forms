@@ -115,18 +115,21 @@ of the form.
 </Section>
 
 <Section>
-<Heading>A form for W(5,3)</Heading>
-The symplectic polar space <M>W(5,q)</M> is defined by an
+<Heading>A form for <Alt Only="Text"><M>W(5,3)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(5,3)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{W}(5,3)</M></Alt><Alt Only="HTML noMathJax">W(5,3)</Alt></Heading>
+The symplectic polar space <Alt Only="Text"><M>W(5,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(5,q)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{W}(5,q)</M></Alt><Alt Only="HTML noMathJax">W(5,q)</Alt> is defined by an
 alternating reflexive bilinear form on the
-six-dimensional vector space <Alt Not="HTML"><M>GF(q)^6</M></Alt><Alt
-Only="HTML">GF(q)&lt;sup>6&lt;/sup></Alt>. Any invertible
+six-dimensional vector space over the finite field &gfq;. Any invertible
 <M>6 \times 6</M> matrix <M>A</M> which satisfies
-<Alt Not="HTML"><M>A+A^T=0</M></Alt><Alt Only="HTML">A+A&lt;sup>T&lt;/sup>=0</Alt>
+<Alt Only="Text"><M>A+A^T=0</M></Alt><Alt Only="LaTeX"><M>A+A^T=0</M></Alt>
+<Alt Only="HTML MathJax"><M>A+A^T=0</M></Alt><Alt Only="HTML noMathJax">A+A&lt;sup>T&lt;/sup>=0</Alt>
 is a candidate for the Gram matrix of a symplectic polarity. The canonical form
 we adopt in <Package>Forms</Package> for an alternating form is
-<Alt Not="HTML"><Display>f(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.</Display>
-</Alt>
-<Alt Only="HTML">&lt;center>
+<Alt Only="Text"><Display>f(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.</Display></Alt>
+<Alt Only="LaTeX"><Display>f(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>f(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>
 f(x,y)=x&lt;sub>1&lt;/sub>y&lt;sub>2&lt;/sub>&lt;font face="symbol">-&lt;/font
 >x&lt;sub>2&lt;/sub>y&lt;sub>1&lt;/sub>+x&lt;sub>3&lt;/sub>y&lt;sub>4&lt;/sub>&lt;font face="symbol">-&lt;/font
 >x&lt;sub>4&lt;/sub>y&lt;sub>3&lt;/sub>+ ... +x&lt;sub>2n&lt;font face="symbol">-&lt;/font
