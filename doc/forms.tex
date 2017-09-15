@@ -442,9 +442,9 @@ That is,
 \[Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},\]
    and we say that $f$ is \emph{non-degenerate}\index{Form@Non-degenerate!sesquilinear} if its radical is trivial (and \emph{degenerate} otherwise). 
 
-Given a subspace $W$, we denote the set of vectors of $V$ orthogonal with all vectors of $W$ by $W^\perp$. We call a subspace $W$ \emph{totally isotropic}\index{Form@Totally Isotropic!sesquilinear} with respect to $f$ if $W$ is contained in $W^\perp$, i.e. 
-\[f(v,w) = 0,\, \mbox{\rm for all } v,w \in W.\]
- 
+Given a subspace $W$, we denote the set of vectors of $V$ orthogonal with all vectors of $W$ by $W^\perp$ . We call a subspace $W$ \emph{totally isotropic}\index{Form@Totally Isotropic!sesquilinear} with respect to $f$ if $W$ is contained in $W^\perp$ , i.e.  
+\[f(v,w) = 0,\, \forall v,w \in W.\]
+   
 
 Suppose that $f$ is a non-degenerate sesquilinear form. The \emph{Witt index}\index{Form@Witt Index!sesquilinear} of $f$ is the maximum dimension of a totally isotropic subspace with respect to $f$. 
 
@@ -685,9 +685,9 @@ function.
 \logpage{[ 3, 2, 0 ]}
 \hyperdef{L}{X864CAF8881067D8A}{}
 {
-  A \emph{quadratic form}\index{Form@Quadratic Form!quadratic} on an $n$-dimensional vector space $V$ over a field $F$, is a map $Q$ from $V$ to $F$ satisfying the following two conditions: 
+  A \emph{quadratic form}\index{Form@Quadratic Form!quadratic} on an $n$-dimensional vector space $V$ over a field $F$, is a map $Q$ from $V$ to $F$ satisfying the following two conditions:  
 \[Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,\]
- and, the map $f$ defined from $V\times V$ to $F$ as follows, 
+   and, the map $f$ defined from $V\times V$ to $F$ as follows, 
 \[f(v,w) := Q(v+w) - Q(v) - Q(w),\]
  is a bilinear form on $V$. From this definition it follows that $f(v,v) = Q(2v) - 2Q(v) = 2Q(v)$. 
 
@@ -701,11 +701,11 @@ alternating form.
  As in the case of sesquilinear forms, we will associate a matrix to a
 quadratic form. Chosing a basis of the vector space $V$, it is clear that an $n \times n$ matrix determines the quadratic form completely. In \textsf{Forms}, the \emph{Gram matrix} of a quadratic form is always an upper triangle matrix $M$, such that 
 \[Q(v) = vMv^T,\]
- where the basis of $V$ is the standard basis. Although the Gram matrix stored with the quadratic form
+  where the basis of $V$ is the standard basis. Although the Gram matrix stored with the quadratic form
 is always an upper triangle matrix, the user is allowed to use any matrix to
-define the quadratic form, since any matrix $M$ defines a quadratic form $Q(v) := vMv^T$. During the construction, an appopriate upper triangle matrix is computed and
+define the quadratic form, since any matrix $M$ defines a quadratic form  $Q(v) := vMv^T$ . During the construction, an appopriate upper triangle matrix is computed and
 stored as the Gram matrix. So the Gram matrix of the associated bilinear form
-is $M+M^T$. 
+is  $M+M^T$.  
 
  The associated bilinear form could be used to define the notions
 ``isotropic'', ``totally isotropic'' and ``non-degenerate'', however, under
@@ -721,9 +721,9 @@ respect to the associated bilinear form, and we call the quadratic form
 degenerate if and only if the associated bilinear form is degenerate. 
 
  A vector $v$ is called \emph{singular} with relation to the quadratic form $Q$ if and only if $Q(v)=0$. two vectors $v$ and $w$ are \emph{orthogonal}\index{Form@Form!orthogonal} with respect to $Q$ if and only if they are orthogonal with respect to the associated bilinear
-form $f$. The \emph{radical} of the quadratic form $Q$, is the intersection of the set of all singular vectors with relation to $Q$ and the radical of the associated bilinear form $f$, i.e. 
+form $f$. The \emph{radical} of the quadratic form $Q$, is the intersection of the set of all singular vectors with relation to $Q$ and the radical of the associated bilinear form $f$, i.e.  
 \[Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.\]
-  We call a quadratic form $Q$ \emph{non-singular} if and only if the radical contains only the zero vector, and \emph{singular} otherwise. 
+   We call a quadratic form $Q$ \emph{non-singular} if and only if the radical contains only the zero vector, and \emph{singular} otherwise. 
 
  A subspace $W$ of the vector space is called \emph{totally singular} if and only if all vectors of $W$ are singular, i.e., $Q$ vanishes totally on $W$. Necessarily, a totally singular subspace is also totally isotropic with
 relation to the associated bilinear form $f$, but the converse is only true when the characteristic of the field is odd. 
@@ -2677,16 +2677,6 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}

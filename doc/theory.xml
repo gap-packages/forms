@@ -121,14 +121,16 @@ and we say that <M>f</M> is
 its radical is trivial (and <E>degenerate</E> otherwise).
 <P/>Given a subspace <M>W</M>, we denote the 
 set of vectors of <M>V</M> orthogonal with all vectors of <M>W</M> by
-<Alt Not="HTML"><M>W^\perp</M></Alt><Alt
-Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>.
+<Alt Only="Text"><M>W^\perp</M></Alt><Alt Only="LaTeX"><M>W^\perp</M></Alt><Alt Only="HTML MathJax"><M>W^\perp</M></Alt>
+<Alt Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>.
 We call a subspace <M>W</M> <E>totally isotropic</E><Index Key="Form"
 Subkey="sesquilinear">Totally Isotropic</Index> with respect to <M>f</M> if
-<M>W</M> is contained in <Alt Not="HTML"><M>W^\perp</M></Alt><Alt
-Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>, i.e.
-<Alt Not="HTML"><Display>f(v,w) = 0,\, \mbox{\rm for all } v,w \in W.</Display></Alt><Alt
-Only="HTML">&lt;center>f(v,w) = 0 for all v,w &#8712; W.&lt;/center></Alt>
+<M>W</M> is contained in <Alt Only="Text"><M>W^\perp</M></Alt><Alt Only="LaTeX"><M>W^\perp</M></Alt><Alt Only="HTML MathJax"><M>W^\perp</M></Alt>
+<Alt Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>, i.e.
+<Alt Only="Text"><Display>f(v,w) = 0,\, \forall v,w \in W.</Display></Alt>
+<Alt Only="LaTeX"><Display>f(v,w) = 0,\, \forall v,w \in W.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = 0,\, \forall v,w \in W.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>f(v,w) = 0 for all v,w &#8712; W.&lt;/center></Alt>
 <P/>Suppose that <M>f</M> is a non-degenerate sesquilinear form. The <E>Witt
 index</E><Index Key="Form" Subkey="sesquilinear">Witt Index</Index> of <M>f</M>
 is the maximum dimension of a totally isotropic subspace with respect to
@@ -308,9 +310,10 @@ gap> WittIndex(form);
 A <E>quadratic form</E><Index Key="Form" Subkey="quadratic">Quadratic Form</Index>
 on an <M>n</M>-dimensional vector space <M>V</M> over a field <M>F</M>, is a map
 <M>Q</M> from <M>V</M> to <M>F</M> satisfying the following two conditions:
-<Alt Not="HTML"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in
-V,</Display></Alt><Alt Only="HTML"><Display>Q(&#955; v) = &#955;&lt;sup>2&lt;/sup>
-Q(v), for all &#955; in F, for all v in V,</Display></Alt>
+<Alt Only="Text"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,</Display></Alt>
+<Alt Only="LaTeX"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>Q(&#955; v) = &#955;&lt;sup>2&lt;/sup> Q(v), for all &#955; in F, for all v in V,</Display></Alt>
 and, the map <M>f</M> defined from <M>V\times V</M> to <M>F</M> as follows,
 <Display>f(v,w) := Q(v+w) - Q(v) - Q(w),</Display>
 is a bilinear form on <M>V</M>. From this definition it follows that <M>f(v,v) =
@@ -331,16 +334,18 @@ form. Chosing a basis of the vector space <M>V</M>, it is clear that an <M>n
 \times n</M> matrix determines the quadratic form completely. In
 <Package>Forms</Package>, the <E>Gram matrix</E> of a quadratic form is always an upper
 triangle matrix <M>M</M>, such that
-<Alt Not="HTML"><Display>Q(v) = vMv^T,</Display></Alt><Alt
-Only="HTML">&lt;center>Q(v)=vMv&lt;sup>T&lt;/sup>,&lt;/center></Alt>
+<Alt Only="Text"><Display>Q(v) = vMv^T,</Display></Alt><Alt Only="LaTeX"><Display>Q(v) = vMv^T,</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Q(v) = vMv^T,</Display></Alt><Alt Only="HTML noMathJax">&lt;center>Q(v)=vMv&lt;sup>T&lt;/sup>,&lt;/center></Alt>
 where the basis of <M>V</M> is the standard basis. Although the Gram matrix
 stored with the quadratic form is always an upper triangle matrix, the user is
 allowed to use any matrix to define the quadratic form, since any matrix
-<M>M</M> defines a quadratic form <Alt Not="HTML"><M>Q(v) := vMv^T</M></Alt><Alt
-Only="HTML">Q(v):=vMv&lt;sup>T&lt;/sup></Alt>. During the construction,
+<M>M</M> defines a quadratic form <Alt Only="Text"><M>Q(v) := vMv^T</M></Alt>
+<Alt Only="LaTeX"><M>Q(v) := vMv^T</M></Alt><Alt Only="HTML MathJax"><M>Q(v) := vMv^T</M></Alt>
+<Alt Only="HTML noMathJax">Q(v):=vMv&lt;sup>T&lt;/sup></Alt>. During the construction,
 an appopriate upper triangle matrix is computed and stored as the Gram matrix. 
-So the Gram matrix of the associated bilinear form is <Alt
-Not="HTML"><M>M+M^T</M></Alt><Alt Only="HTML">M+M&lt;sup>T&lt;/sup></Alt>.
+So the Gram matrix of the associated bilinear form is <Alt Only="Text"><M>M+M^T</M>.</Alt>
+<Alt Only="LaTeX"><M>M+M^T</M>.</Alt><Alt Only="HTML MathJax"><M>M+M^T</M>.</Alt>
+<Alt Only="HTML noMathJax">M+M&lt;sup>T&lt;/sup>.</Alt>
 <P/>
 The associated bilinear form could be used to define the notions ``isotropic'',
 ``totally isotropic'' and ``non-degenerate'', however, under these restrictions
@@ -362,8 +367,10 @@ if and only if they are orthogonal with respect to the associated bilinear form
 <M>f</M>. The <E>radical</E> of the quadratic form <M>Q</M>, is the intersection
 of the set of all singular vectors with relation to <M>Q</M> and the radical of
 the associated bilinear form <M>f</M>, i.e.
-<Alt Not="HTML"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
-<Alt Only="HTML">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
+<Alt Only="Text"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="LaTeX"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
 We call a quadratic form <M>Q</M> <E>non-singular</E> if and only if the radical
 contains only the zero vector, and <E>singular</E> otherwise.
 <P/>
