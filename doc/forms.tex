@@ -418,7 +418,7 @@ bilinear forms.
 
  For a given sesquilinear form $f$, the choice of the basis determines uniquely an $n\times n$ matrix $M$ such that  $f(v, w) = v M {w^{\alpha}}^T.$   
 
- This matrix is also called the \emph{Gram matrix} of $f$. Given a sesquilinear form $f$, we will denote its Gram matrix by $M_f.$ . In \textsf{Forms}, sesquilinear forms can be constructed using matrices or polynomials, where
+ This matrix is also called the \emph{Gram matrix} of $f$. Given a sesquilinear form $f$, we will denote its Gram matrix by $M_f.$  In \textsf{Forms}, sesquilinear forms can be constructed using matrices or polynomials, where
 we always suppose that the basis of the vector space is the standard basis
 (i.e., the rows of the identity matrix). 
 
@@ -1138,9 +1138,9 @@ is returned. The output is a hermitian sesquilinear form (i.e., an object in \te
 \logpage{[ 4, 3, 0 ]}
 \hyperdef{L}{X78476EDF7B9498D7}{}
 {
-  Suppose that $f$ is a sesquilinear form on an $n$-dimensional vectorspace. Consider a vector $x$ with coordinates $x_1,\ldots,x_{n}$ with $x_i$ indeterminates over the field. Then $f(x,x)$ is a polynomial in $n$ indeterminates. When $f$ is alternating, $f(x,x)$ is identically zero, but in all other cases, $f(x,x)$ determines $f$ completely. 
+  Suppose that $f$ is a sesquilinear form on an $n$-dimensional vectorspace. Consider a vector $x$ with coordinates  $x_1,\ldots,x_{n}$  with $x_i$  indeterminates over the field. Then $f(x,x)$ is a polynomial in $n$ indeterminates. When $f$ is alternating, $f(x,x)$ is identically zero, but in all other cases, $f(x,x)$ determines $f$ completely. 
 
- Conversely, suppose that $Q$ is a quadratic form on an $n$-dimensional vectorspace. Consider a vector $x$ with coordinates $x_1,\ldots,x_{n}$ with $x_i$ indeterminates over the field. Then $Q(x)$ is a polynomial in $n$ indeterminates, and $Q(x)$ determines $Q$ completely. 
+ Conversely, suppose that $Q$ is a quadratic form on an $n$-dimensional vectorspace. Consider a vector $x$ with coordinates  $x_1,\ldots,x_{n}$  with $x_i$  indeterminates over the field. Then $Q(x)$ is a polynomial in $n$ indeterminates, and $Q(x)$ determines $Q$ completely. 
 
  \textsf{Forms} provides functionality to construct bilinear, hermitian and quadratic forms
 using an appropriate polynomial. 
@@ -1264,7 +1264,7 @@ an hermitian form
 
 
 
- The argument \mbox{\texttt{\mdseries\slshape poly}} must be a polynomial in the polynomial ring \mbox{\texttt{\mdseries\slshape r}} defined over a finite field of square order $q^2$ The (optional) last argument is the dimension for the underlying vector space
+ The argument \mbox{\texttt{\mdseries\slshape poly}} must be a polynomial in the polynomial ring \mbox{\texttt{\mdseries\slshape r}} defined over a finite field of square order $q^2$  The (optional) last argument is the dimension for the underlying vector space
 of the resulting form, which by default is the number of indeterminates
 specified by \mbox{\texttt{\mdseries\slshape poly}}. It is checked whether the polynomial is a homogeneous polynomial of degree $q+1$, and if not, an error message is returned. The output is a hermitian form in
 the category \texttt{IsHermitianForm}. (See \ref{theory:sesquilinearforms} for more on hermitian forms). 
@@ -1463,9 +1463,10 @@ a finite field element
 
 
 
- The argument \mbox{\texttt{\mdseries\slshape f}} is either a sesquilinear or quadratic form defined over a finite field $GF(q)$. The other argument is a pair of vectors or matrices, or a single vector or
-matrix, which represent the bases of given subspaces of $GF(q)^d$. This operation evaluates the form on the given vector or pair of vectors and
-returns an element in $GF(q)$. There is also an overloading of the operation \mbox{\texttt{\mdseries\slshape \texttt{\symbol{92}}\texttt{\symbol{94}}}} where $(u,v)^f$ represents $f(u,v)$ in the case that \mbox{\texttt{\mdseries\slshape f}} is sesquilinear, and $u^f$ stands for $f(u)$ in the quadratic case. So for convenience, the user may use this compressed
+ The argument \mbox{\texttt{\mdseries\slshape f}} is either a sesquilinear or quadratic form defined over a finite field $\mathrm{GF}(q)$. The other argument is a pair of vectors or matrices, or a single vector or
+matrix. In case that \mbox{\texttt{\mdseries\slshape u}} (and \mbox{\texttt{\mdseries\slshape v}} when using three arguments) is a matrix, its rows represent a basis for the
+subspace (or subspaces) where $f$ is evaluated in. This operation evaluates the form on the given vector or pair
+of vectors and returns an element in $GF(q)$. There is also an overloading of the operation \mbox{\texttt{\mdseries\slshape \texttt{\symbol{92}}\texttt{\symbol{94}}}} where \texttt{(u,v)\texttt{\symbol{94}}f} represents $f(u,v)$ in the case that \mbox{\texttt{\mdseries\slshape f}} is sesquilinear, and \texttt{u\texttt{\symbol{94}}f} stands for $f(u)$ in the quadratic case. So for convenience, the user may use this compressed
 version of this operation, which we show in the following example: 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@mat := [[Z(8),0,0,0],[0,0,Z(8)^4,0],[0,0,0,1],[0,0,0,0]]*Z(8)^0;;|
@@ -1867,10 +1868,14 @@ The radical of the form \mbox{\texttt{\mdseries\slshape f}}
 
 
 
- The argument $f$ must be a form (and thus it belongs to \texttt{IsForm}) on some vector space $V$. The radical of a form $f$ is the subspace consisting of vectors which are orthogonal to every vector,
-i.e., 
+ The argument $f$ must be a form (and thus it belongs to \texttt{IsForm}) on some vector space $V$. The radical of a sesquilinear form $f$ is the subspace consisting of vectors which are orthogonal to every vector,
+i.e.,  
 \[Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.\]
- 
+   
+
+ The \emph{radical} of the quadratic form $Q$, is the intersection of the set of all singular vectors with relation to $Q$ and the radical of the associated bilinear form $f$ (see \texttt{AssociatedBilinearForm} (\ref{AssociatedBilinearForm})), i.e.  
+\[Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.\]
+   
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@r := PolynomialRing( GF(8), 3 );|
   GF(2^3)[x_1,x_2,x_3]
@@ -1927,7 +1932,7 @@ a string
 
 
  The argument $f$ must be a form (and thus it belongs to \texttt{IsForm}). Given a quadratic or bilinear form \mbox{\texttt{\mdseries\slshape f}} of even dimension, this operation returns a string: ``square'' or
-``nonsquare''. More specifically, let $f$ be a from over $GF(q)$, and let $M$ be the Gram matrix of $f$. Define the \emph{discriminant} of $Q$ (n.b., \emph{quasideterminant} in \cite{Atlas}) as `square' if $det(M)$ is a square of $GF(q)$, and `non-square' otherwise. The discriminant is an invariant of
+``nonsquare''. More specifically, let $f$ be a from over $\mathrm{GF}(q)$, and let $M$ be the Gram matrix of $f$. Define the \emph{discriminant} of $Q$ (n.b., \emph{quasideterminant} in \cite{Atlas}) as `square' if $det(M)$  is a square of $\mathrm{GF}(q)$, and `non-square' otherwise. The discriminant is an invariant of
 nondegenerate orthogonal spaces over finite fields of odd order, up to
 isometry. Thus, discriminants can be used to delineate the isometry type of an
 orthogonal form in even (algebraic) dimension. The discriminant of a hermitian
@@ -2677,6 +2682,15 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}

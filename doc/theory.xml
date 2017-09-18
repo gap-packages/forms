@@ -59,7 +59,7 @@ uniquely an <M>n\times n</M> matrix <M>M</M> such that
 This matrix is also called the <E>Gram matrix</E> of <M>f</M>.
 Given a sesquilinear form <M>f</M>, we will denote its Gram matrix by
 <Alt Only="Text"><M>M_f.</M></Alt><Alt Only="LaTeX"><M>M_f.</M></Alt><Alt Only="HTML MathJax"><M>M_f.</M></Alt>
-<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>.</Alt>. In
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>.</Alt> In
 <Package>Forms</Package>, sesquilinear forms can be constructed using matrices
 or polynomials, where we always suppose that the basis of the vector space is the
 standard basis (i.e., the rows of the identity matrix).
@@ -122,7 +122,7 @@ its radical is trivial (and <E>degenerate</E> otherwise).
 <P/>Given a subspace <M>W</M>, we denote the 
 set of vectors of <M>V</M> orthogonal with all vectors of <M>W</M> by
 <Alt Only="Text"><M>W^\perp</M></Alt><Alt Only="LaTeX"><M>W^\perp</M></Alt><Alt Only="HTML MathJax"><M>W^\perp</M></Alt>
-<Alt Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>.
+<Alt Only="HTML noMathJax">W&lt;sup>&#8869;&lt;/sup></Alt>.
 We call a subspace <M>W</M> <E>totally isotropic</E><Index Key="Form"
 Subkey="sesquilinear">Totally Isotropic</Index> with respect to <M>f</M> if
 <M>W</M> is contained in <Alt Only="Text"><M>W^\perp</M></Alt><Alt Only="LaTeX"><M>W^\perp</M></Alt><Alt Only="HTML MathJax"><M>W^\perp</M></Alt>

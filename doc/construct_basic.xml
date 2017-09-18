@@ -124,19 +124,21 @@ defining field <A>field</A>. (See <Ref Sect="theory:sesquilinearforms"/> for mor
 <Section Label="sec:formsbypolynomial">
 <Heading>Constructing forms using a polynomial</Heading>
 Suppose that <M>f</M> is a sesquilinear form on an <M>n</M>-dimensional vectorspace. 
-Consider a vector <M>x</M> with coordinates <Alt
-Not="HTML"><M>x_1,\ldots,x_{n}</M></Alt><Alt
-Only="HTML">x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub></Alt> with <Alt
-Not="HTML"><M>x_i</M></Alt><Alt Only="HTML">x&lt;sub>i&lt;/sub></Alt>
+Consider a vector <M>x</M> with coordinates <Alt Only="Text"><M>x_1,\ldots,x_{n}</M></Alt>
+<Alt Only="LaTeX"><M>x_1,\ldots,x_{n}</M></Alt><Alt Only="HTML MathJax"><M>x_1,\ldots,x_{n}</M></Alt>
+<Alt Only="HTML noMathJax">x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub></Alt> with 
+<Alt Only="Text"><M>x_i</M></Alt><Alt Only="LaTeX"><M>x_i</M></Alt>
+<Alt Only="HTML MathJax"><M>x_i</M></Alt><Alt Only="HTML noMathJax">x&lt;sub>i&lt;/sub></Alt>
 indeterminates over the field. Then <M>f(x,x)</M> is a polynomial in <M>n</M> 
 indeterminates. When <M>f</M> is alternating, <M>f(x,x)</M> is identically zero, 
 but in all other cases, <M>f(x,x)</M> determines <M>f</M> completely.
 <P/>
 Conversely, suppose that <M>Q</M> is a quadratic form on an <M>n</M>-dimensional vectorspace. 
-Consider a vector <M>x</M> with coordinates <Alt
-Not="HTML"><M>x_1,\ldots,x_{n}</M></Alt><Alt
-Only="HTML">x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub></Alt> with <Alt
-Not="HTML"><M>x_i</M></Alt><Alt Only="HTML">x&lt;sub>i&lt;/sub></Alt>
+Consider a vector <M>x</M> with coordinates <Alt Only="Text"><M>x_1,\ldots,x_{n}</M></Alt>
+<Alt Only="LaTeX"><M>x_1,\ldots,x_{n}</M></Alt><Alt Only="HTML MathJax"><M>x_1,\ldots,x_{n}</M></Alt>
+<Alt Only="HTML noMathJax">x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub></Alt> with 
+<Alt Only="Text"><M>x_i</M></Alt><Alt Only="LaTeX"><M>x_i</M></Alt>
+<Alt Only="HTML MathJax"><M>x_i</M></Alt><Alt Only="HTML noMathJax">x&lt;sub>i&lt;/sub></Alt>
 indeterminates over the field. Then <M>Q(x)</M> is a polynomial in <M>n</M> 
 indeterminates, and <M>Q(x)</M> determines <M>Q</M> completely.
 <P/>
@@ -186,8 +188,9 @@ given field, and if not, an error message is returned. The output is a quadratic
 <Returns>an hermitian form</Returns>
 <Description>
 The argument <A>poly</A> must be a polynomial in the polynomial
-ring <A>r</A> defined over a finite field of square order <Alt
-Not="HTML"><M>q^2</M></Alt><Alt Only="HTML">q&lt;sup>2&lt;/sup></Alt>
+ring <A>r</A> defined over a finite field of square order 
+<Alt Only="Text"><M>q^2</M></Alt><Alt Only="LaTeX"><M>q^2</M></Alt>
+<Alt Only="HTML MathJax"><M>q^2</M></Alt><Alt Only="HTML noMathJax">q&lt;sup>2&lt;/sup></Alt>
 The (optional) last argument is the dimension
 for the underlying vector space of the resulting form, which
 by default is the number of indeterminates specified by <A>poly</A>. It is
@@ -281,16 +284,15 @@ vectors <M>v,w</M> in a vector space equipped with <M>Q</M>.
 <Returns>a finite field element</Returns>
 <Description>
 The argument <A>f</A> is either a sesquilinear or quadratic form
-defined over a finite field <M>GF(q)</M>. The other argument is
-a pair of vectors or matrices, or a single vector or matrix, which represent
-the bases of given subspaces of <Alt
-Not="HTML"><M>GF(q)^d</M></Alt><Alt Only="HTML">GF(q)&lt;sup>d&lt;/sup></Alt>.
+defined over a finite field &gfq;. The other argument is
+a pair of vectors or matrices, or a single vector or matrix. In case that <A>u</A> (and <A>v</A> when using three arguments) is a
+matrix, its rows represent a basis for the subspace (or subspaces) where <M>f</M> is evaluated in.
 This operation evaluates
 the form on the given vector or pair of vectors and returns an
 element in <M>GF(q)</M>. There is also an overloading
-of the operation <A>\^</A> where <M>(u,v)^f</M> represents
+of the operation <A>\^</A> where <F>(u,v)^f</F> represents
 <M>f(u,v)</M> in the case that <A>f</A> is sesquilinear, and
-<M>u^f</M> stands for <M>f(u)</M> in the quadratic case. So for convenience, the user
+<F>u^f</F> stands for <M>f(u)</M> in the quadratic case. So for convenience, the user
 may use this compressed version of this operation, which we show in the following example:
 <Example>
 <#Include SYSTEM "../examples/include/evalform.include"> 
@@ -536,11 +538,20 @@ The argument <M>f</M> must be a form (and thus it belongs to
 </Returns>
 <Description>
 The argument <M>f</M> must be a form (and thus it belongs to
-<C>IsForm</C>) on some vector space <M>V</M>. The radical of a form <M>f</M> 
+<C>IsForm</C>) on some vector space <M>V</M>. The radical of a sesquilinear form <M>f</M> 
 is the subspace consisting of vectors which are orthogonal to every vector, i.e.,
-<Alt Not="HTML"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in
-V\}.</Display></Alt><Alt Only="HTML"><Display>Rad(f) = {v &#8712; V | f(v,w) = 0
-for all w &#8712; V}.</Display></Alt>
+<Alt Only="Text"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
+<Alt Only="LaTeX"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>Rad(f) = {v &#8712; V | f(v,w) = 0 for all w &#8712; V}.&lt;/center></Alt>
+<P/>
+The <E>radical</E> of the quadratic form <M>Q</M>, is the intersection
+of the set of all singular vectors with relation to <M>Q</M> and the radical of
+the associated bilinear form <M>f</M> (see <Ref Oper="AssociatedBilinearForm"/>), i.e.
+<Alt Only="Text"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="LaTeX"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
 <Example>
 <#Include SYSTEM "../examples/include/radicalofform.include"> 
 </Example>
@@ -568,9 +579,10 @@ This method returns the polynomial associated with <A>f</A>, and if not already 
 The argument <M>f</M> must be a form (and thus it belongs to <C>IsForm</C>). Given a
 quadratic or bilinear form <A>f</A> of even dimension, this operation returns a string: 
 ``square'' or ``nonsquare''. More specifically, 
-let <M>f</M> be a from over <M>GF(q)</M>, and let <M>M</M> be the Gram matrix of <M>f</M>.
+let <M>f</M> be a from over &gfq;, and let <M>M</M> be the Gram matrix of <M>f</M>.
 Define the <E>discriminant</E> of <M>Q</M> (n.b., <E>quasideterminant</E> in
-<Cite Key="Atlas"/>) as `square' if <M>det(M)</M> is a square of <M>GF(q)</M>,
+<Cite Key="Atlas"/>) as `square' if <Alt Only="Text"><M>det(M)</M></Alt><Alt Only="LaTeX"><M>det(M)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{det}(M)</M></Alt><Alt Only="HTML noMathJax">det(M)</Alt> is a square of &gfq;,
 and `non-square' otherwise. The discriminant is an invariant of nondegenerate 
 orthogonal spaces over finite fields of odd order, up to isometry. 
 Thus, discriminants can be used to delineate the isometry
