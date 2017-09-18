@@ -5,8 +5,14 @@
     [<!ENTITY pg "\mathrm{PG}">
     <!ENTITY go "\mathrm{GO}">
     <!ENTITY gf "\mathrm{GF}">
+    <!ENTITY gl "\mathrm{GL}">
+    <!ENTITY rad "\mathrm{Rad}">
     <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
-    ]
+    <!ENTITY gldq "<Alt Only=&#34;Text&#34;><M>GL(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(d,q)</Alt>">
+    <!ENTITY radf "<Alt Only=&#34;Text&#34;><M>Rad(f)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&rad;(f)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&rad;(f)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Rad(f)</Alt>">
+    <!ENTITY vmodradf "<Alt Only=&#34;Text&#34;><M>V/Rad(f)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V/&rad;(f)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V/&rad;(f)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V/Rad(f)</Alt>">
+    <!ENTITY vmodradq "<Alt Only=&#34;Text&#34;><M>V/Rad(Q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V/&rad;(Q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V/&rad;(Q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V/Rad(Q)</Alt>">
+]
    >
 
 

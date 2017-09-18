@@ -309,7 +309,9 @@ x_1 x_2 + \ldots + x_{n-1}x_n
 Note that the dimension of the vector space <M>V</M> is necessarily even. We call
 <M>f</M> <E>hyperbolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). 
 It follows also that in this similarity class, there
-is only one isometry class. The Witt index of <M>f</M> equals <M>n/2</M>.
+is only one isometry class. The Witt index of <M>f</M> equals <Alt Only="Text"><M>n/2</M></Alt>
+<Alt Only="LaTeX"><M>\frac{n}{2}</M></Alt><Alt Only="HTML MathJax"><M>\frac{n}{2}</M></Alt>
+<Alt Only="HTML noMathJax"><M>n/2</M></Alt>.
 </Item>
 <Item>If the dimension of <M>U</M> is one, then necessarily the polynomial of <M>f</M>
 equals
@@ -343,19 +345,26 @@ x&lt;sub>3&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>)&lt;/center></Alt>
 which represents now a bilinear form that is <B>similar but not isometric</B> to
 the given one. Hence, the parabolic similarity class contains two isometry
-classes. The Witt index of <M>f</M> equals <M>(n-1)/2</M>.
+classes. The Witt index of <M>f</M> equals
+<Alt Only="Text"><M>(n-1)/2</M></Alt>
+<Alt Only="LaTeX"><M>\frac{n-1}{2}</M></Alt><Alt Only="HTML MathJax"><M>\frac{n-1}{2}</M></Alt>
+<Alt Only="HTML noMathJax"><M>(n-1)/2</M></Alt>.
 </Item>
 <Item>
 Suppose at last that the dimension of <M>U</M> is two. We may suppose that
 <M>U</M> is not a hyperbolic line. It is not too difficult to see that a suitable base change
 yields the polynomial
-<Alt Not="HTML"><Display>\mu x_1^2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n</Display></Alt>
-<Alt Only="HTML">&lt;center>&#956;x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +
+<Alt Only="Text"><Display>\mu x_1^2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="LaTeX"><Display>\mu x_1^2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML MathJax"><Display>\mu x_1^2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>&#956;x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +
 x&lt;sub>2&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>3&lt;/sub> x&lt;sub>4&lt;/sub> + ... + x&lt;sub>n&lt;font
 face="symbol">-&lt;/font>1&lt;/sub>x&lt;sub>n&lt;/sub>&lt;/center></Alt> for a
-non-square <Alt Not="HTML"><M>\mu \in F</M></Alt><Alt Only="HTML"><M>&#956; in
-F</M></Alt>, and the dimension of the vector space <M>V</M> is even. We call
-<M>f</M> <E>elliptic</E>. The Witt index of <M>f</M> equals <M>(n-2)/2</M>.
+non-square <M>\mu \in F</M>, and the dimension of the vector space <M>V</M> is even. We call
+<M>f</M> <E>elliptic</E>. The Witt index of <M>f</M> equals
+<Alt Only="Text"><M>(n-2)/2</M></Alt>
+<Alt Only="LaTeX"><M>\frac{n-2}{2}</M></Alt><Alt Only="HTML MathJax"><M>\frac{n-2}{2}</M></Alt>
+<Alt Only="HTML noMathJax"><M>(n-2)/2</M></Alt>.
 </Item>
 </List>
 </Subsection>
@@ -363,12 +372,12 @@ F</M></Alt>, and the dimension of the vector space <M>V</M> is even. We call
 <Subsection Label="morphisms:degenerate">
 <Heading>Degenerate forms</Heading>
 Suppose that <M>f</M> is a degenerate sesquilinear form on the vector space
-<M>V</M>, then <M>Rad(f)</M> is a non-trivial subspace of the vector space
+<M>V</M>, then &radf; is a non-trivial subspace of the vector space
 <M>V</M>. The vector space <M>V</M> can be written as the orthogonal direct sum
-of a subspace <M>W</M> and <M>Rad(f)</M>, and the restriction of <M>f</M> to
+of a subspace <M>W</M> and &radf;, and the restriction of <M>f</M> to
 <M>W</M> is a non-degenerate sesquilinear form on <M>W</M>. Hence, <M>f</M> is
 isometric with a sesquilinear form having Gram matrix
-<Alt Only="HTML">
+<Alt Only="HTML noMathJax">
 &lt;!-- matrix expression begin -->
 &lt;table style="color:#000">&lt;tr>
 &lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
@@ -385,9 +394,17 @@ isometric with a sesquilinear form having Gram matrix
 &lt;/tr>&lt;/table>
 &lt;!-- matrix expression end -->
 </Alt>
-<Alt Only="LaTeX">
+<Alt Only="HTML MathJax">
 <Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
 \right)</Display>
+</Alt>
+<Alt Only="LaTeX">
+    <Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
+        \right)</Display>
+</Alt>
+<Alt Only="Text">
+    <Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
+        \right)</Display>
 </Alt>
 where <M>M</M> is the Gram matrix of a non-degenerate sesquilinear form and
 <M>A,B</M> and <M>C</M> are appropriate zero matrices. As explained in Section <Ref
@@ -410,29 +427,31 @@ Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is an
 <E>isometry</E><Index>Isometry</Index> from the formed space <M>(V,f)</M> to the
 formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
 <Display>
-<Alt Not="HTML">f(v) = f'(\phi(v)).</Alt>
-<Alt Only="HTML">f(v) = f'(&#966;(v)).</Alt></Display>
-The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
-<E>similarity</E><Index>Similarity</Index> from the formed space <M>(V,f)</M> to
+<Alt Only="Text">f(v) = f'(\phi(v)).</Alt>
+<Alt Only="LaTeX">f(v) = f'(\phi(v)).</Alt>
+<Alt Only="HTML MathJax">f(v) = f'(\phi(v)).</Alt>
+<Alt Only="HTML noMathJax">f(v) = f'(&#966;(v)).</Alt></Display>
+The map <M>\phi</M> is a <E>similarity</E><Index>Similarity</Index>
+from the formed space <M>(V,f)</M> to
 a formed space <M>(W,g)</M> if for all <M>v,w</M> 
 in <M>V</M> we have 
 <Display>
-<Alt Not="HTML">f(v) = \lambda f'(\phi(v)).</Alt>
-<Alt Only="HTML">f(v) = &#955; (f'(&#966;(v)))</Alt>
+<Alt Only="Text">f(v) = \lambda f'(\phi(v)).</Alt>
+<Alt Only="LaTeX">f(v) = \lambda f'(\phi(v)).</Alt>
+<Alt Only="HTML MathJax">f(v) = \lambda f'(\phi(v)).</Alt>
+<Alt Only="HTML noMathJax">f(v) = &#955; (f'(&#966;(v)))</Alt>
 </Display>
-for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt>. Finally, the map <Alt Only="HTML">&#966;</Alt><Alt
-Not="HTML"><M>\phi</M></Alt>. is a
+for some non-zero <M>\lambda \in F</M>. Finally, the map <M>\phi</M> is a
 <E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
 <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M>
 we have
-<Display><Alt Not="HTML">
-f(v)=\lambda f'(\phi(v))^\alpha</Alt>
-<Alt Only="HTML">f(v) = &#955; f'(&#966;(v))^&#945;</Alt>
+<Display>
+<Alt Only="Text">f(v)=\lambda f'(\phi(v))^\alpha</Alt>
+<Alt Only="LaTeX">f(v)=\lambda f'(\phi(v))^\alpha</Alt>
+<Alt Only="HTML MathJax">f(v)=\lambda f'(\phi(v))^\alpha</Alt>
+<Alt Only="HTML noMathJax">f(v) = &#955; f'(&#966;(v))^&#945;</Alt>
 </Display>
-for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt> and a field automorphism <Alt
-Only="HTML">&#945;</Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.
+for some non-zero <M>\lambda \in F</M> and a field automorphism <M>\alpha</M> of <M>F</M>.
 <P/>
 Also in this case, one of the objectives of studying maps between formed vector spaces is the
 classification of quadratic forms of the same vector space <M>V</M>, where it
@@ -444,8 +463,8 @@ call a two dimensional vector space a <E>hyperbolic line</E> if it contains a
 non-zero vector such that <M>f(v) = 0</M>. It is proved (see Proposition 6.9 of 
 <Cite Key="Cameron"/>) that any two
 hyperbolic lines are isometric, and we choose as canonical representative the
-quadratic form with polynomial <Alt Not="HTML"><M>
-x_1 x_2</M></Alt><Alt Only="HTML">x&lt;sub>1&lt;/sub>x&lt;sub>2&lt;/sub></Alt>.
+quadratic form with polynomial <Alt Only="Text"><M>x_1 x_2</M></Alt><Alt Only="LaTeX"><M>x_1 x_2</M></Alt>
+<Alt Only="HTML MathJax"><M>x_1 x_2</M></Alt><Alt Only="HTML noMathJax">x&lt;sub>1&lt;/sub>x&lt;sub>2&lt;/sub></Alt>.
 As in the case of the orthogonal bilinear forms, it can be proved (see Theorem 6.10 of
  <Cite Key="Cameron"/>) that <M>(V,f)</M> can be written as the orthogonal
 direct sum of hyperbolic lines
@@ -456,10 +475,8 @@ the one in odd characteristic.
 <List><Item>If the dimension of <M>U</M> is zero, then <M>(V,f)</M> is the orthogonal direct
 sum of hyperbolic lines, and hence <M>(V,f)</M> is isometric to the formed
 space <M>(V,f')</M>, with polynomial 
-<Alt Not="HTML"><Display>
-x_1 x_2 + \ldots + x_{n-1}x_n,
-</Display></Alt>
-<Alt Only="HTML">&lt;center>x&lt;sub>1&lt;/sub> x&lt;sub>2&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
+<Alt Not="HTML noMathJax"><Display>x_1 x_2 + \ldots + x_{n-1}x_n,</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>x&lt;sub>1&lt;/sub> x&lt;sub>2&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>,&lt;/center></Alt>
 which is chosen as the canonical form. Note that the dimension of the
 vector space <M>V</M> is necessarily even. We call <M>f</M> <E>hyperbolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). It
@@ -468,14 +485,13 @@ The Witt index of <M>f</M> equals <M>n/2</M>.
 </Item>
 <Item>If the dimension of <M>U</M> is one, then necessarily the polynomial of <M>f</M>
 equals
-<Alt Not="HTML"><Display>
+<Alt Not="HTML noMathJax"><Display>
 \mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n
 </Display></Alt>
-<Alt Only="HTML">&lt;center>&#956; x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
+<Alt Only="HTML MathJax">&lt;center>&#956; x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
 x&lt;sub>3&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>&lt;/center></Alt>
-for some <Alt Not="HTML"><M>\mu \in F</M></Alt><Alt Only="HTML">&#956; in
-<M>F</M></Alt>, and the dimension of the vector space <M>V</M> is odd. We call
+for some <M>\mu \in F</M>, and the dimension of the vector space <M>V</M> is odd. We call
 <M>f</M> <E>parabolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). Since every element is a square in even
 characteristic, rescaling the first basis vector yields <Alt
 Not="HTML"><M>\mu=1</M></Alt><Alt Only="HTML">&#956;=1</Alt>. The Witt index of
@@ -504,9 +520,9 @@ each similarity class contains only one isometry class, which is different than
 in the odd characteristic case
 <P/>
 Suppose that <M>f</M> is a singular quadratic form on the <M>n</M>-dimensional
-vector space <M>V</M>, then <M>Rad(f)</M> is a non-trivial subspace of the
+vector space <M>V</M>, then &radf; is a non-trivial subspace of the
 vector space <M>V</M>. The vector space <M>V</M> can be written as the orthogonal
-direct sum of a subspace <M>W</M> and <M>Rad(f)</M>, and the restriction of
+direct sum of a subspace <M>W</M> and &radf;, and the restriction of
 <M>f</M> to <M>W</M> is a non-singular quadratic form on <M>W</M>. Hence,
 <M>f</M> is isometric with a quadratic form with one of the three above
 polynomials. The dimension of the maximal isotropic subspaces is the sum of the
@@ -515,9 +531,9 @@ Witt index and the dimension of the radical.
 <Subsection Label="morphisms:singular">
 <Heading>Singular forms</Heading>
 Suppose that <M>f</M> is a singular quadratic form on the vector space
-<M>V</M>, then <M>Rad(f)</M> is a non-trivial subspace of the vector space
+<M>V</M>, then &radf; is a non-trivial subspace of the vector space
 <M>V</M>. The vector space <M>V</M> can be written as the orthogonal direct sum
-of a subspace <M>W</M> and <M>Rad(f)</M>, and the restriction of <M>f</M> to
+of a subspace <M>W</M> and &radf;, and the restriction of <M>f</M> to
 <M>W</M> is a non-singular quadratic form on <M>W</M>. Hence, <M>f</M> is
 isometric with a quadratic form having Gram matrix
 <Alt Only="HTML">

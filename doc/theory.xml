@@ -4,9 +4,8 @@
                                                                    John Bamberg
                                                                and Jan De Beule
                                                            
-  Copyright (C) 2015, Ghent University
-  Copyright (C) 2015, Vrije Universiteit Brussel
-  Copyright (C) 2015, The University of Western Australia
+  Copyright (C) 2017, Vrije Universiteit Brussel
+  Copyright (C) 2017, The University of Western Australia
 
 This is the chapter of the documentation describing background theory of forms and preliminary examples.
 -->
@@ -113,8 +112,8 @@ symmetric relation. A vector <M>v</M> is called <E>isotropic</E><Index>isotropic
 The <E>radical</E><Index>Radical</Index> of <M>f</M> (n.b., <E>kernel</E> in <Cite Key="Atlas"/>) 
 is the subspace consisting of vectors which are orthogonal to every vector. That is,
 <Alt Only="Text"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
-<Alt Only="LaTeX"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
-<Alt Only="HTML MathJax"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="LaTeX"><Display>&rad;(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="HTML MathJax"><Display>&rad;(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
 <Alt Only="HTML noMathJax">&lt;center>Rad(f) = {v &#8712; V | f(v,w) = 0 for all w &#8712; V},&lt;/center></Alt>
 and we say that <M>f</M> is
 <E>non-degenerate</E><Index Key="Form" Subkey="sesquilinear">Non-degenerate</Index> if
@@ -164,13 +163,13 @@ of the <B>induced non-degenerate form</B> <M>g</M> when <M>f</M> is degenerate.
 <Caption>Posibilites for an orthogonal form <M>f</M> on a vector space <M>V</M></Caption>
 <HorLine/>
 <Row>
-  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item><M>V/Rad(f)</M> has even dimension, <M>g</M> has maximal Witt index</Item>
+  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item>&vmodradf; has even dimension, <M>g</M> has maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item><M>V/Rad(f)</M> has even dimension, <M>g</M> has non-maximal Witt index</Item>
+  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item>&vmodradf; has even dimension, <M>g</M> has non-maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item><M>V/Rad(f)</M> has odd dimension</Item>
+  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item>&vmodradf; has odd dimension</Item>
 </Row>
 <HorLine/>
 </Table>
@@ -368,8 +367,8 @@ if and only if they are orthogonal with respect to the associated bilinear form
 of the set of all singular vectors with relation to <M>Q</M> and the radical of
 the associated bilinear form <M>f</M>, i.e.
 <Alt Only="Text"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
-<Alt Only="LaTeX"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
-<Alt Only="HTML MathJax"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="LaTeX"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
 <Alt Only="HTML noMathJax">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
 We call a quadratic form <M>Q</M> <E>non-singular</E> if and only if the radical
 contains only the zero vector, and <E>singular</E> otherwise.
@@ -407,13 +406,13 @@ of the <B>induced non-singular form</B> <M>Q</M> when <M>Q'</M> is singular.
 <Caption>Posibilites for a quadratic form <M>Q</M> on a vector space <M>V</M></Caption>
 <HorLine/>
 <Row>
-  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item><M>V/Rad(Q)</M> has even dimension, <M>Q'</M> has maximal Witt index</Item>
+  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item>&vmodradq; has even dimension, <M>Q'</M> has maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item><M>V/Rad(Q)</M> has even dimension, <M>Q'</M> has non-maximal Witt index</Item>
+  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item>&vmodradq; has even dimension, <M>Q'</M> has non-maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item><M>V/Rad(Q)</M> has odd dimension</Item>
+  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item>&vmodradq; has odd dimension</Item>
 </Row>
 <HorLine/>
 </Table>

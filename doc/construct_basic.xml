@@ -3,9 +3,8 @@
                                                                   John Bamberg
                                                                and Jan De Beule
                                                                 
-  Copyright (C) 2015, The University of Western Australia
-  Copyright (C) 2015, Ghent University
-  Copyright (C) 2015, Vrije Universiteit Brussel
+  Copyright (C) 2017, The University of Western Australia
+  Copyright (C) 2017, Vrije Universiteit Brussel
 
 This is the chapter of the documentation describing all of the functions of forms.
 -->
@@ -517,7 +516,7 @@ has not specified a field on creation of a form, is the smallest
 field containing the entries or coefficients of the input (a matrix or polynomial).
 Having a particular defining field for a form can be very useful, for example,
 when one wants to find a change of basis from one form to another (isometric) form.
-In this case, one needs to know in which <M>GL(d,q)</M> the base-transition matrix
+In this case, one needs to know in which &gldq; the base-transition matrix
 should be taken.
 </Description>
 </ManSection>
@@ -541,16 +540,16 @@ The argument <M>f</M> must be a form (and thus it belongs to
 <C>IsForm</C>) on some vector space <M>V</M>. The radical of a sesquilinear form <M>f</M> 
 is the subspace consisting of vectors which are orthogonal to every vector, i.e.,
 <Alt Only="Text"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
-<Alt Only="LaTeX"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
-<Alt Only="HTML MathJax"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
+<Alt Only="LaTeX"><Display>&rad;(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>&rad;(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.</Display></Alt>
 <Alt Only="HTML noMathJax">&lt;center>Rad(f) = {v &#8712; V | f(v,w) = 0 for all w &#8712; V}.&lt;/center></Alt>
 <P/>
 The <E>radical</E> of the quadratic form <M>Q</M>, is the intersection
 of the set of all singular vectors with relation to <M>Q</M> and the radical of
 the associated bilinear form <M>f</M> (see <Ref Oper="AssociatedBilinearForm"/>), i.e.
 <Alt Only="Text"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
-<Alt Only="LaTeX"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
-<Alt Only="HTML MathJax"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="LaTeX"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
 <Alt Only="HTML noMathJax">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
 <Example>
 <#Include SYSTEM "../examples/include/radicalofform.include"> 
@@ -625,7 +624,9 @@ all invariant sesquilinear forms.
 </Example>
 Here is another example which shows that this procedure is suitable in some cases where
 using the <Package>MeatAxe</Package> is not applicable. Here, our matrix group is the group of similarities
-preserving a (hyperbolic) bilinear form on <M>GF(3)^6</M>.
+preserving a (hyperbolic) bilinear form on a 6-dimensional vector space over <Alt Only="Text"><M>GF(3)</M></Alt>
+<Alt Only="LaTeX"><M>&gf;(3)</M></Alt><Alt Only="HTML MathJax"><M>&gf;(3)</M></Alt>
+<Alt Only="HTML noMathJax"><M>GF(3)</M></Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/pres_sesforms2.include"> 
 </Example>

@@ -439,7 +439,7 @@ skew symmetric or a hermitian matrix. From now on, the notion of a
  Given a sesquilinear form $f$, two vectors $v$ and $w$ are \emph{orthogonal}\index{Orthogonal} with respect to $f$ if $f(v,w) = 0$. Note that the reflexivity makes orthogonality between two vectors a
 symmetric relation. A vector $v$ is called \emph{isotropic}\index{isotropic} if $f(v,v)=0$. The \emph{radical}\index{Radical} of $f$ (n.b., \emph{kernel} in \cite{Atlas}) is the subspace consisting of vectors which are orthogonal to every vector.
 That is,  
-\[Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},\]
+\[\mathrm{Rad}(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},\]
    and we say that $f$ is \emph{non-degenerate}\index{Form@Non-degenerate!sesquilinear} if its radical is trivial (and \emph{degenerate} otherwise). 
 
 Given a subspace $W$, we denote the set of vectors of $V$ orthogonal with all vectors of $W$ by $W^\perp$ . We call a subspace $W$ \emph{totally isotropic}\index{Form@Totally Isotropic!sesquilinear} with respect to $f$ if $W$ is contained in $W^\perp$ , i.e.  
@@ -460,13 +460,13 @@ as explained above, the Witt index refers to the Witt index of the \textsc{induc
 \begin{tabular}{l|l|l}\hline
 Hyperbolic&
 Orthogonal of + type&
-$V/Rad(f)$ has even dimension, $g$ has maximal Witt index\\
+$V/\mathrm{Rad}(f)$ has even dimension, $g$ has maximal Witt index\\
 Elliptic&
 Orthogonal of - type&
-$V/Rad(f)$ has even dimension, $g$ has non-maximal Witt index\\
+$V/\mathrm{Rad}(f)$ has even dimension, $g$ has non-maximal Witt index\\
 Parabolic&
 Orthogonal of o type&
-$V/Rad(f)$ has odd dimension\\
+$V/\mathrm{Rad}(f)$ has odd dimension\\
 \hline
 \end{tabular}\\[2mm]
 \textbf{Table: }Posibilites for an orthogonal form $f$ on a vector space $V$\end{center}
@@ -722,7 +722,7 @@ degenerate if and only if the associated bilinear form is degenerate.
 
  A vector $v$ is called \emph{singular} with relation to the quadratic form $Q$ if and only if $Q(v)=0$. two vectors $v$ and $w$ are \emph{orthogonal}\index{Form@Form!orthogonal} with respect to $Q$ if and only if they are orthogonal with respect to the associated bilinear
 form $f$. The \emph{radical} of the quadratic form $Q$, is the intersection of the set of all singular vectors with relation to $Q$ and the radical of the associated bilinear form $f$, i.e.  
-\[Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.\]
+\[\mathrm{Rad}(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in \mathrm{Rad}(f)\}.\]
    We call a quadratic form $Q$ \emph{non-singular} if and only if the radical contains only the zero vector, and \emph{singular} otherwise. 
 
  A subspace $W$ of the vector space is called \emph{totally singular} if and only if all vectors of $W$ are singular, i.e., $Q$ vanishes totally on $W$. Necessarily, a totally singular subspace is also totally isotropic with
@@ -741,13 +741,13 @@ explained above, the Witt index refers to the Witt index of the \textsc{induced 
 \begin{tabular}{l|l|l}\hline
 Hyperbolic&
 Orthogonal of + type&
-$V/Rad(Q)$ has even dimension, $Q'$ has maximal Witt index\\
+$V/\mathrm{Rad}(Q)$ has even dimension, $Q'$ has maximal Witt index\\
 Elliptic&
 Orthogonal of - type&
-$V/Rad(Q)$ has even dimension, $Q'$ has non-maximal Witt index\\
+$V/\mathrm{Rad}(Q)$ has even dimension, $Q'$ has non-maximal Witt index\\
 Parabolic&
 Orthogonal of o type&
-$V/Rad(Q)$ has odd dimension\\
+$V/\mathrm{Rad}(Q)$ has odd dimension\\
 \hline
 \end{tabular}\\[2mm]
 \textbf{Table: }Posibilites for a quadratic form $Q$ on a vector space $V$\end{center}
@@ -1838,7 +1838,7 @@ user has not specified a field on creation of a form, is the smallest field
 containing the entries or coefficients of the input (a matrix or polynomial).
 Having a particular defining field for a form can be very useful, for example,
 when one wants to find a change of basis from one form to another (isometric)
-form. In this case, one needs to know in which $GL(d,q)$ the base-transition matrix should be taken. }
+form. In this case, one needs to know in which $\mathrm{GL}(d,q)$ the base-transition matrix should be taken. }
 
  
 
@@ -1870,11 +1870,11 @@ The radical of the form \mbox{\texttt{\mdseries\slshape f}}
 
  The argument $f$ must be a form (and thus it belongs to \texttt{IsForm}) on some vector space $V$. The radical of a sesquilinear form $f$ is the subspace consisting of vectors which are orthogonal to every vector,
 i.e.,  
-\[Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.\]
+\[\mathrm{Rad}(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.\]
    
 
  The \emph{radical} of the quadratic form $Q$, is the intersection of the set of all singular vectors with relation to $Q$ and the radical of the associated bilinear form $f$ (see \texttt{AssociatedBilinearForm} (\ref{AssociatedBilinearForm})), i.e.  
-\[Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.\]
+\[\mathrm{Rad}(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in \mathrm{Rad}(f)\}.\]
    
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@r := PolynomialRing( GF(8), 3 );|
@@ -1991,7 +1991,7 @@ operation more than once to find all invariant sesquilinear forms.
 \end{Verbatim}
  Here is another example which shows that this procedure is suitable in some
 cases where using the \textsf{MeatAxe} is not applicable. Here, our matrix group is the group of similarities
-preserving a (hyperbolic) bilinear form on $GF(3)^6$. 
+preserving a (hyperbolic) bilinear form on a 6-dimensional vector space over  $\mathrm{GF}(3)$ . 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@a := [ [ -1, 0, 0, -1, 0, 1 ], [ 0, -1, -1, 0, 0, 1 ], |
   !gapprompt@>| !gapinput@       [ -1, 0, 0, 1, 0, 0 ],  [ 0, -1, 1, 0, 0, -1 ], |
@@ -2209,7 +2209,7 @@ x_1 x_2 + \ldots + x_{n-1}x_n
   
 \[x_1 x_2 + \ldots + x_{n-1}x_n\]
    Note that the dimension of the vector space $V$ is necessarily even. We call $f$ \emph{hyperbolic} (see also Section \ref{theory:sesquilinearforms}). It follows also that in this similarity class, there is only one isometry
-class. The Witt index of $f$ equals $n/2$. 
+class. The Witt index of $f$ equals  $\frac{n}{2}$ . 
 \item If the dimension of $U$ is one, then necessarily the polynomial of $f$ equals  
 \[\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n\]
    for some $\mu \in F$, and the dimension of the vector space $V$ is odd. We call $f$ \emph{parabolic} (see also Section \ref{theory:sesquilinearforms}). It is clear that if $\mu$ is a square in $F$, then rescaling the first basis vector yields a polynomial  
@@ -2217,11 +2217,11 @@ class. The Witt index of $f$ equals $n/2$.
    which we choose as the canonical form for this similarity class. If $\mu$ is a non-square, a rescaling of  $x_2,x_4,\ldots,x_{n-1}$   yields a polynomial  
 \[\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)\]
    which represents now a bilinear form that is \textsc{similar but not isometric} to the given one. Hence, the parabolic similarity class contains two isometry
-classes. The Witt index of $f$ equals $(n-1)/2$. 
+classes. The Witt index of $f$ equals  $\frac{n-1}{2}$ . 
 \item  Suppose at last that the dimension of $U$ is two. We may suppose that $U$ is not a hyperbolic line. It is not too difficult to see that a suitable base
-change yields the polynomial 
+change yields the polynomial  
 \[\mu x_1^2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n\]
-  for a non-square $\mu \in F$, and the dimension of the vector space $V$ is even. We call $f$ \emph{elliptic}. The Witt index of $f$ equals $(n-2)/2$. 
+   for a non-square $\mu \in F$, and the dimension of the vector space $V$ is even. We call $f$ \emph{elliptic}. The Witt index of $f$ equals  $\frac{n-2}{2}$ . 
 \end{itemize}
  }
 
@@ -2230,11 +2230,12 @@ change yields the polynomial
 \logpage{[ 5, 1, 4 ]}
 \hyperdef{L}{X79453E2B7DDE1412}{}
 {
-  Suppose that $f$ is a degenerate sesquilinear form on the vector space $V$, then $Rad(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $Rad(f)$, and the restriction of $f$ to $W$ is a non-degenerate sesquilinear form on $W$. Hence, $f$ is isometric with a sesquilinear form having Gram matrix  
+  Suppose that $f$ is a degenerate sesquilinear form on the vector space $V$, then $\mathrm{Rad}(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $\mathrm{Rad}(f)$, and the restriction of $f$ to $W$ is a non-degenerate sesquilinear form on $W$. Hence, $f$ is isometric with a sesquilinear form having Gram matrix   
+    
 \[\left( \begin{array}{cc} M & A \\ B & C \end{array}
-\right)\]
+        \right)\]
 
- where $M$ is the Gram matrix of a non-degenerate sesquilinear form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{theory:sesquilinearforms}, the form $f$ induces a non-degenerate form $g$ on the vector space $V/Rad(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{theory:sesquilinearforms}, the Witt index of the degenerate form $f$ is the Witt index of the non-degenerate inducedform $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
+  where $M$ is the Gram matrix of a non-degenerate sesquilinear form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{theory:sesquilinearforms}, the form $f$ induces a non-degenerate form $g$ on the vector space $V/Rad(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{theory:sesquilinearforms}, the Witt index of the degenerate form $f$ is the Witt index of the non-degenerate inducedform $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
 
  }
 
@@ -2244,11 +2245,11 @@ change yields the polynomial
 \hyperdef{L}{X87C0B98C8669A34A}{}
 {
   Consider two formed vector spaces $(V,f)$ and $(W,g)$ over the same field $F$, where both $f$ and $g$ are quadratic forms. Suppose that $\phi$ is a linear map from $V$ to $W$. The map $\phi$ is an \emph{isometry}\index{Isometry} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w$ in $V$ we have 
-\[ f(v) = f'(\phi(v)). \]
+\[  f(v) = f'(\phi(v)).  \]
  The map $\phi$ is a \emph{similarity}\index{Similarity} from the formed space $(V,f)$ to a formed space $(W,g)$ if for all $v,w$ in $V$ we have 
-\[ f(v) = \lambda f'(\phi(v)).  \]
- for some non-zero $\lambda \in F$. Finally, the map $\phi$. is a \emph{semi-similarity}\index{Semi-similarity} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w$ in $V$ we have 
-\[ f(v)=\lambda f'(\phi(v))^\alpha  \]
+\[  f(v) = \lambda f'(\phi(v)).   \]
+ for some non-zero $\lambda \in F$. Finally, the map $\phi$ is a \emph{semi-similarity}\index{Semi-similarity} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w$ in $V$ we have 
+\[  f(v)=\lambda f'(\phi(v))^\alpha   \]
  for some non-zero $\lambda \in F$ and a field automorphism $\alpha$ of $F$. 
 
  Also in this case, one of the objectives of studying maps between formed
@@ -2259,13 +2260,13 @@ Since there is a one-to-one relationship between quadratic forms in odd
 characteristic and orthogonal bilinear forms in odd characteristic, we suppose
 in this section that $f$ is a quadratic form in even characteristic. We call a two dimensional vector
 space a \emph{hyperbolic line} if it contains a non-zero vector such that $f(v) = 0$. It is proved (see Proposition 6.9 of \cite{Cameron}) that any two hyperbolic lines are isometric, and we choose as canonical
-representative the quadratic form with polynomial $ x_1 x_2$. As in the case of the orthogonal bilinear forms, it can be proved (see
+representative the quadratic form with polynomial $x_1 x_2$ . As in the case of the orthogonal bilinear forms, it can be proved (see
 Theorem 6.10 of \cite{Cameron}) that $(V,f)$ can be written as the orthogonal direct sum of hyperbolic lines and one
 subspace $U$ of dimension at most two. The behaviour of $f$ on the subspace $U$ determines the similarity class of $f$. The classification of quadratic forms in even characteristic is analogous to
 the one in odd characteristic. 
 \begin{itemize}
 \item If the dimension of $U$ is zero, then $(V,f)$ is the orthogonal direct sum of hyperbolic lines, and hence $(V,f)$ is isometric to the formed space $(V,f')$, with polynomial 
-\[ x_1 x_2 + \ldots + x_{n-1}x_n, \]
+\[x_1 x_2 + \ldots + x_{n-1}x_n,\]
   which is chosen as the canonical form. Note that the dimension of the vector
 space $V$ is necessarily even. We call $f$ \emph{hyperbolic} (see also Section \ref{theory:sesquilinearforms}). It follows also that in this similarity class, there is only one isometry
 class. The Witt index of $f$ equals $n/2$. 
@@ -2284,14 +2285,14 @@ similarity classes, which is analogous to the odd characteristic case, and
 each similarity class contains only one isometry class, which is different
 than in the odd characteristic case 
 
- Suppose that $f$ is a singular quadratic form on the $n$-dimensional vector space $V$, then $Rad(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $Rad(f)$, and the restriction of $f$ to $W$ is a non-singular quadratic form on $W$. Hence, $f$ is isometric with a quadratic form with one of the three above polynomials.
+ Suppose that $f$ is a singular quadratic form on the $n$-dimensional vector space $V$, then $\mathrm{Rad}(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $\mathrm{Rad}(f)$, and the restriction of $f$ to $W$ is a non-singular quadratic form on $W$. Hence, $f$ is isometric with a quadratic form with one of the three above polynomials.
 The dimension of the maximal isotropic subspaces is the sum of the Witt index
 and the dimension of the radical. 
 \subsection{\textcolor{Chapter }{Singular forms}}\label{morphisms:singular}
 \logpage{[ 5, 2, 1 ]}
 \hyperdef{L}{X7C738FBB80F533AC}{}
 {
-  Suppose that $f$ is a singular quadratic form on the vector space $V$, then $Rad(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $Rad(f)$, and the restriction of $f$ to $W$ is a non-singular quadratic form on $W$. Hence, $f$ is isometric with a quadratic form having Gram matrix  
+  Suppose that $f$ is a singular quadratic form on the vector space $V$, then $\mathrm{Rad}(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $\mathrm{Rad}(f)$, and the restriction of $f$ to $W$ is a non-singular quadratic form on $W$. Hence, $f$ is isometric with a quadratic form having Gram matrix  
 \[\left( \begin{array}{cc} M & A \\ B & C \end{array}
 \right)\]
 
@@ -2688,6 +2689,24 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
