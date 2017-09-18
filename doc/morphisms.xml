@@ -3,9 +3,8 @@
                                                                    John Bamberg
                                                                and Jan De Beule
                                                            
-  Copyright (C) 2015, The University of Western Australia
-  Copyright (C) 2015, Ghent University
-  Copyright (C) 2015, Vrije Universiteit Brussel
+  Copyright (C) 2017, The University of Western Australia
+  Copyright (C) 2017, Vrije Universiteit Brussel
 
 This is the chapter of the documentation describing all of the functions of forms.
 -->
@@ -26,34 +25,37 @@ sesquilinear form or a quadratic form on <M>V</M>, then we call the pair
 <Heading>Morphisms of sesquilinear forms</Heading>
 Consider two formed vector spaces <M>(V,f)</M> and <M>(W,g)</M> over the same
 field <M>F</M>, where both <M>f</M> and <M>g</M> are sesquilinear forms. Suppose
-that <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML"><M>&#966;</M></Alt> is a linear
-map from <M>V</M> to <M>W</M>. 
+that <M>\phi</M> is a linear map from <M>V</M> to <M>W</M>.
 
-The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML"><M>&#966;</M></Alt> is an <E>isometry</E><Index>Isometry</Index> from the formed
+The map <M>\phi</M> is an <E>isometry</E><Index>Isometry</Index> from the formed
 space <M>(V,f)</M> to the formed space 
-<M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
+<M>(W,g)</M> if for all <M>v,w \in V</M> we have
 <Display>
-<Alt Not="HTML">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML">f(v,w) = f'(&#966;(v),&#966;(w))</Alt></Display>
-The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML"><M>&#966;</M></Alt> is a <E>similarity</E><Index>Similarity</Index> from the
-formed space <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M>
-in <M>V</M> we have 
+<Alt Only="Text">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="LaTeX">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="HTML MathJax">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="HTML noMathJax">f(v,w) = f'(&#966;(v),&#966;(w))</Alt></Display>
+The map <M>\phi</M> is a <E>similarity</E><Index>Similarity</Index> from the
+formed space <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w \in V</M>
+we have
 <Display>
-<Alt Not="HTML">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML">f(v,w) = &#955; (f'(&#966;(v),&#966;(w)))</Alt>
+<Alt Only="Text">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="LaTeX">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="HTML MathJax">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="HTML noMathJax">f(v,w) = &#955; (f'(&#966;(v),&#966;(w)))</Alt>
 </Display>
-for some non-zero <Alt Only="HTML"><M>&#955;</M> in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt>. Finally, the map <Alt Only="HTML">&#966;</Alt><Alt
-Not="HTML"><M>\phi</M></Alt>. is a
+for some non-zero <M>\lambda \in F</M>. Finally, the map <M>\phi</M> is a
 <E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
 <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M>
 we have
 <Display>
-<Alt Not="HTML">f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Alt>
-<Alt Only="HTML">f(v,w) = &#955; f'(&#966;(v),&#966;(w))^&#945;</Alt></Display>
+<Alt Only="Text">f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Alt>
+<Alt Only="LaTeX">f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Alt>
+<Alt Only="HTML MathJax">f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Alt>
+<Alt Only="HTML noMathJax">f(v,w) = &#955; f'(&#966;(v),&#966;(w))&lt;sup>&#945;&lt;/sup></Alt></Display>
 for some non-zero <Alt Only="HTML"><M>&#955;</M> in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt> and a field automorphism <Alt
-Only="HTML"><M>&#945;</M></Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.
+Not="HTML"><M>\lambda \in F</M></Alt> and a field automorphism <M>\alpha</M>
+of <M>F</M>.
 <P/>
 One of the objectives of studying maps between formed vector spaces is the
 classification of sesquilinear forms on a vector space <M>V</M>, where it
@@ -89,17 +91,21 @@ The easiest cases are the hermitian and alternating cases.
 <Heading>Hermitian forms</Heading>
 We suppose that <M>f</M> is a non-degenerate hermitian form on a
 vector space <M>V</M> over the finite field <M>F</M>, with involutory field
-automorphism <Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt>.
-It can be proved (see <Cite Key="KleidmanLiebeck"/>) 
+automorphism <M>\alpha</M>. It can be proved (see <Cite Key="KleidmanLiebeck"/>)
 that any vector space equipped with a non-degenerate hermitian
-form <M>f</M> contains an orthogonal basis such that <Alt
-Not="HTML"><M>f(e_i,e_i)=1</M></Alt><Alt
-Only="HTML">f(e&lt;SUB>i&lt;/SUB>,e&lt;SUB>j&lt;/SUB>)=1</Alt> for
-each basisvector <Alt Not="HTML"><M>e_i</M></Alt><Alt
-Only="HTML">e&lt;SUB>i&lt;/SUB></Alt>. Hence <M>(V,f)</M> is isometric with <M>(V,f')</M>
+form <M>f</M> contains an orthogonal basis such that
+<Alt Only="Text"><M>f(e_i,e_i)=1</M></Alt><Alt Only="LaTeX"><M>f(e_i,e_i)=1</M></Alt>
+<Alt Only="HTML MathJax"><M>f(e_i,e_i)=1</M></Alt>
+<Alt Only="HTML noMathJax">f(e&lt;SUB>i&lt;/SUB>,e&lt;SUB>j&lt;/SUB>)=1</Alt> for
+each basisvector <Alt Only="Text"><M>e_i</M></Alt><Alt Only="LaTeX"><M>e_i</M></Alt>
+<Alt Only="HTML MathJax"><M>e_i</M></Alt><Alt Only="HTML noMathJax">e&lt;SUB>i&lt;/SUB></Alt>.
+Hence <M>(V,f)</M> is isometric with <M>(V,f')</M>
 with <M>f'</M> the non-degenerate hermitian form with the identity matrix over
-<M>F</M>. The Witt index of <M>f</M> equals <M>n/2</M> when <M>n</M> is even and
-<M>(n-1)/2</M> when <M>n</M> is odd.
+<M>F</M>. The Witt index of <M>f</M> equals <Alt Only="Text"><M>n/2</M></Alt><Alt Only="LaTeX"><M>\frac{n}/{2}</M></Alt>
+<Alt Only="HTML MathJax"><M>\frac{n}{2}</M></Alt><Alt Only="HTML noMathJax"><M>n/2</M></Alt> when <M>n</M> is even and
+<Alt Only="Text"><M>(n-1)/2</M></Alt><Alt Only="LaTeX"><M>\frac{n-1}/{2}</M></Alt>
+<Alt Only="HTML MathJax"><M>\frac{n-1}{2}</M></Alt><Alt Only="HTML noMathJax"><M>(n-1)/2</M></Alt>
+when <M>n</M> is odd.
 </Subsection>
 
 <Subsection Label="morphisms:alternating">
@@ -109,7 +115,13 @@ vector space <M>V</M> over a finite field <M>F</M>. As already mentioned in Sect
 <Ref Sect="theory:sesquilinearforms"/>, non-degenerate alternating forms only
 exist on even dimensional vector spaces. Restricting to a two dimensional
 vector space, it is clear immediately that the Gram matrix of <M>f</M> must be
-<Alt Only="HTML">&lt;!-- matrix expression begin -->
+<Alt Only="Text"><Display>\left( \begin{array}{cc}0 &amp; r \\ -r &amp; 0 \end{array}
+\right)</Display></Alt>
+<Alt Only="LaTeX"><Display>\left( \begin{array}{cc}0 &amp; r \\ -r &amp; 0 \end{array}
+\right)</Display></Alt>
+<Alt Only="HTML MathJax"><Display>\left( \begin{array}{cc}0 &amp; r \\ -r &amp; 0 \end{array}
+\right)</Display></Alt>
+<Alt Only="HTML noMathJax">
 &lt;table style="color:#000">&lt;tr>
 &lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
 &lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
@@ -123,9 +135,8 @@ vector space, it is clear immediately that the Gram matrix of <M>f</M> must be
 &lt;/tr>
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
-&lt;!-- matrix expression end --></Alt>
-<Alt Only="LaTeX"><M>\left( \begin{array}{cc}0 &amp; r \\ -r &amp; 0 \end{array}
-\right)</M></Alt>
+</Alt>
+
 for some non-zero <M>r \in F</M>. If we rescale one of the basisvectors, which
 induces an isometry, then we see that there always exists a basis such that
 <M>r=1</M>. We call a two dimensional vector space equipped with a non-degenerate
@@ -134,6 +145,16 @@ formed space <M>(V,f)</M> can be written as an orthogonal direct sum of symplect
 planes. Hence, up to isometry, there is only one non-degenerate alternating form
 of an even dimensional vector space, and we choose as canonical representative the
 alternating form with Gram matrix
+<Alt Only="Text"><Display>\left( \begin{array}{ccccccc}
+0 &amp; 1 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
+-1 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; -1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; -1 &amp; 0 \\
+\end{array} \right).</Display>
+</Alt>
 <Alt Only="LaTeX"><Display>\left( \begin{array}{ccccccc}
 0 &amp; 1 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 -1 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
@@ -144,8 +165,18 @@ alternating form with Gram matrix
 0 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; -1 &amp; 0 \\
 \end{array} \right).</Display>
 </Alt>
-<Alt Only="HTML">
-&lt;!-- matrix expression begin -->
+<Alt Only="HTML MathJax"><Display>\left( \begin{array}{ccccccc}
+0 &amp; 1 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
+-1 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; -1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; -1 &amp; 0 \\
+\end{array} \right).</Display>
+</Alt>
+<Alt Only="HTML noMathJax">
+<!-- matrix expression begin -->
 &lt;table style="color:#000">&lt;tr>
 &lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
 &lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
@@ -216,7 +247,9 @@ alternating form with Gram matrix
 &lt;/tr>&lt;/table>
 <!-- matrix expression end -->
 </Alt>
-The Witt index of <M>f</M> equals <M>n/2</M>.
+The Witt index of <M>f</M> equals <Alt Only="Text"><M>n/2</M></Alt>
+<Alt Only="LaTeX"><M>\frac{n}{2}</M></Alt><Alt Only="HTML MathJax"><M>\frac{n}{2}</M></Alt>
+<Alt Only="HTML noMathJax"><M>n/2</M></Alt>.
 </Subsection>
 
 <Subsection Label="morphisms:bilinear">
@@ -224,11 +257,11 @@ The Witt index of <M>f</M> equals <M>n/2</M>.
 We suppose that <M>f</M> is a non-degenerate symmetric bilinear form on a
 vector space <M>V</M> over a finite field <M>F</M> with odd characteristic. We
 call a two dimensional vector space a <E>hyperbolic line</E> if it contains a
-non-zero vector such that <M>f(v,v) = 0</M>. It is proved (see Proposition 6.9 of 
+non-zero vector <M>v</M> such that <M>f(v,v) = 0</M>. It is proved (see Proposition 6.9 of
 <Cite Key="Cameron"/>) that any two
 hyperbolic lines are isometric, and we choose as canonical representative the
 orthogonal form with Gram matrix
-<Alt Only="HTML">&lt;!-- matrix expression begin -->
+<Alt Only="HTML noMathJax">&lt;!-- matrix expression begin -->
 &lt;table style="color:#000">&lt;tr>
 &lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
 &lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
@@ -243,7 +276,11 @@ orthogonal form with Gram matrix
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
 &lt;!-- matrix expression end --></Alt>
+<Alt Only="Text"><Display>\left( \begin{array}{cc}0 &amp; 1 \\ 1 &amp; 0 \end{array}
+\right).</Display></Alt>
 <Alt Only="LaTeX"><Display>\left( \begin{array}{cc}0 &amp; 1 \\ 1 &amp; 0 \end{array}
+\right).</Display></Alt>
+<Alt Only="HTML MathJax"><Display>\left( \begin{array}{cc}0 &amp; 1 \\ 1 &amp; 0 \end{array}
 \right).</Display></Alt>
 <P/>
 It can be proved (see Theorem 6.10 of <Cite Key="Cameron"/>)
@@ -258,10 +295,16 @@ the Gram matrix.
 sum of hyperbolic lines, and hence <M>(V,f)</M> is isometric to the formed
 space <M>(V,f')</M>, where the Gram matrix of <M>f'</M> consists of blocks as
 described above. The chosen canonical form has polynomial
-<Alt Not="HTML"><Display>
+<Alt Only="Text"><Display>
 x_1 x_2 + \ldots + x_{n-1}x_n
 </Display></Alt>
-<Alt Only="HTML">&lt;center>x&lt;sub>1&lt;/sub> x&lt;sub>2&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
+<Alt Only="LaTeX"><Display>
+x_1 x_2 + \ldots + x_{n-1}x_n
+</Display></Alt>
+<Alt Only="Text"><Display>x_1 x_2 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="LaTeX"><Display>x_1 x_2 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML MathJax"><Display>x_1 x_2 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>x&lt;sub>1&lt;/sub> x&lt;sub>2&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>&lt;/center></Alt>
 Note that the dimension of the vector space <M>V</M> is necessarily even. We call
 <M>f</M> <E>hyperbolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). 
@@ -270,28 +313,32 @@ is only one isometry class. The Witt index of <M>f</M> equals <M>n/2</M>.
 </Item>
 <Item>If the dimension of <M>U</M> is one, then necessarily the polynomial of <M>f</M>
 equals
-<Alt Not="HTML"><Display>\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
-<Alt Only="HTML">&lt;center>&#956; x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
+<Alt Only="Text"><Display>\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="LaTeX"><Display>\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML MathJax"><Display>\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>&#956; x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
 x&lt;sub>3&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>&lt;/center></Alt>
-for some <Alt Not="HTML"><M>\mu \in F</M></Alt><Alt Only="HTML">&#956; in
-<M>F</M></Alt>, and the dimension of the vector space <M>V</M> is odd. We call
-<M>f</M> <E>parabolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). It is clear that if  <Alt
-Not="HTML"><M>\mu</M></Alt><Alt Only="HTML">&#956;</Alt> is a square in
-<M>F</M>, then rescaling the first basis vector yields a polynomial
-<Alt Not="HTML"><Display>x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
-<Alt Only="HTML">&lt;center>x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
+for some <M>\mu \in F</M>, and the dimension of the vector space <M>V</M> is odd. We call
+<M>f</M> <E>parabolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). It is clear that if <M>\mu</M>
+is a square in <M>F</M>, then rescaling the first basis vector yields a polynomial
+<Alt Only="Text"><Display>x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="LaTeX"><Display>x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML MathJax"><Display>x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
 x&lt;sub>3&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>&lt;/center></Alt>
 which we choose as the canonical form for this similarity class. If
-<Alt Not="HTML"><M>\mu</M></Alt><Alt Only="HTML"><M>&#956;</M></Alt>
-is a non-square, a rescaling of
-<Alt Not="HTML"><M>x_2,x_4,\ldots,x_{n-1}</M></Alt>
-<Alt Only="HTML">x&lt;sub>2&lt;/sub>,x&lt;sub>4&lt;/sub>,...,x&lt;sub>n&lt;font face="symbol">-&lt;/font
->1&lt;/sub></Alt>
-yields a polynomial
-<Alt Not="HTML"><Display>\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)</Display></Alt>
-<Alt Only="HTML">&lt;center>&#956;(x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
+<M>\mu</M> is a non-square, a rescaling of
+<Alt Only="Text"><M>x_2,x_4,\ldots,x_{n-1}</M></Alt>
+<Alt Only="LaTeX"><M>x_2,x_4,\ldots,x_{n-1}</M></Alt>
+<Alt Only="HTML MathJax"><M>x_2,x_4,\ldots,x_{n-1}</M></Alt>
+<Alt Only="HTML noMathJax">x&lt;sub>2&lt;/sub>,x&lt;sub>4&lt;/sub>,...,x&lt;sub>n&lt;font face="symbol">-&lt;/font
+>1&lt;/sub></Alt> yields a polynomial
+<Alt Only="Text"><Display>\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)</Display></Alt>
+<Alt Only="LaTeX"><Display>\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)</Display></Alt>
+<Alt Only="HTML MathJax"><Display>\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>&#956;(x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
 x&lt;sub>3&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>)&lt;/center></Alt>
 which represents now a bilinear form that is <B>similar but not isometric</B> to

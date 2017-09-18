@@ -99,7 +99,7 @@
 \vfill
 
 {\Huge  1.2.5 \mbox{}}\\[1cm]
-{August 2017\mbox{}}\\[1cm]
+{September 2017\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{John Bamberg    \mbox{}}}\\
 {\Large \textbf{Jan De Beule    \mbox{}}}\\
@@ -115,7 +115,7 @@
 Stirling Highway, Crawley WA 6009, Perth, Western Australia \end{minipage}
 }\\
 {\mbox{}\\
-\small \noindent \textbf{Jan De Beule    }  Email: \href{mailto://Jan.De.Beule@vub.ac.be} {\texttt{Jan.De.Beule@vub.ac.be}}\\
+\small \noindent \textbf{Jan De Beule    }  Email: \href{mailto://jan@debeule.eu} {\texttt{jan@debeule.eu}}\\
   Homepage: \href{http://www.debeule.eu} {\texttt{http://www.debeule.eu}}\\
   Address: \begin{minipage}[t]{8cm}\noindent
  Department of Mathematics, Vrije Universiteit Brussel, Pleinlaan 2, B--1050
@@ -2118,12 +2118,12 @@ quadratic forms. The reader can find more in the texts: Cameron \cite{Cameron}, 
 \logpage{[ 5, 1, 0 ]}
 \hyperdef{L}{X784D3B338055EC9D}{}
 {
-  Consider two formed vector spaces $(V,f)$ and $(W,g)$ over the same field $F$, where both $f$ and $g$ are sesquilinear forms. Suppose that $\phi$ is a linear map from $V$ to $W$. The map $\phi$ is an \emph{isometry}\index{Isometry} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w$ in $V$ we have 
-\[ f(v,w) = f'(\phi(v), \phi(w)). \]
- The map $\phi$ is a \emph{similarity}\index{Similarity} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w$ in $V$ we have 
-\[ f(v,w) = \lambda f'(\phi(v), \phi(w)).  \]
- for some non-zero $\lambda \in F$. Finally, the map $\phi$. is a \emph{semi-similarity}\index{Semi-similarity} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w$ in $V$ we have 
-\[ f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha \]
+  Consider two formed vector spaces $(V,f)$ and $(W,g)$ over the same field $F$, where both $f$ and $g$ are sesquilinear forms. Suppose that $\phi$ is a linear map from $V$ to $W$. The map $\phi$ is an \emph{isometry}\index{Isometry} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w \in V$ we have 
+\[  f(v,w) = f'(\phi(v), \phi(w)).  \]
+ The map $\phi$ is a \emph{similarity}\index{Similarity} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w \in V$ we have 
+\[  f(v,w) = \lambda f'(\phi(v), \phi(w)).   \]
+ for some non-zero $\lambda \in F$. Finally, the map $\phi$ is a \emph{semi-similarity}\index{Semi-similarity} from the formed space $(V,f)$ to the formed space $(W,g)$ if for all $v,w$ in $V$ we have 
+\[  f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha  \]
  for some non-zero $\lambda \in F$ and a field automorphism $\alpha$ of $F$. 
 
  One of the objectives of studying maps between formed vector spaces is the
@@ -2154,7 +2154,7 @@ alternating cases.
 \logpage{[ 5, 1, 1 ]}
 \hyperdef{L}{X807E16A383D2E04C}{}
 {
-  We suppose that $f$ is a non-degenerate hermitian form on a vector space $V$ over the finite field $F$, with involutory field automorphism $\alpha$. It can be proved (see \cite{KleidmanLiebeck}) that any vector space equipped with a non-degenerate hermitian form $f$ contains an orthogonal basis such that $f(e_i,e_i)=1$ for each basisvector $e_i$. Hence $(V,f)$ is isometric with $(V,f')$ with $f'$ the non-degenerate hermitian form with the identity matrix over $F$. The Witt index of $f$ equals $n/2$ when $n$ is even and $(n-1)/2$ when $n$ is odd. }
+  We suppose that $f$ is a non-degenerate hermitian form on a vector space $V$ over the finite field $F$, with involutory field automorphism $\alpha$. It can be proved (see \cite{KleidmanLiebeck}) that any vector space equipped with a non-degenerate hermitian form $f$ contains an orthogonal basis such that $f(e_i,e_i)=1$   for each basisvector $e_i$ . Hence $(V,f)$ is isometric with $(V,f')$ with $f'$ the non-degenerate hermitian form with the identity matrix over $F$. The Witt index of $f$ equals $\frac{n}/{2}$  when $n$ is even and $\frac{n-1}/{2}$  when $n$ is odd. }
 
  
 \subsection{\textcolor{Chapter }{Alternating forms}}\label{morphisms:alternating}
@@ -2163,13 +2163,15 @@ alternating cases.
 {
   We suppose that $f$ is a non-degenerate alternating bilinear form on a vector space $V$ over a finite field $F$. As already mentioned in Section \ref{theory:sesquilinearforms}, non-degenerate alternating forms only exist on even dimensional vector
 spaces. Restricting to a two dimensional vector space, it is clear immediately
-that the Gram matrix of $f$ must be  $\left( \begin{array}{cc}0 & r \\ -r & 0 \end{array}
-\right)$ for some non-zero $r \in F$. If we rescale one of the basisvectors, which induces an isometry, then we
+that the Gram matrix of $f$ must be  
+\[\left( \begin{array}{cc}0 & r \\ -r & 0 \end{array}
+\right)\]
+   for some non-zero $r \in F$. If we rescale one of the basisvectors, which induces an isometry, then we
 see that there always exists a basis such that $r=1$. We call a two dimensional vector space equipped with a non-degenerate
 alternating form a \emph{symplectic hyperbolic line}, and it is proved (see Theorem 6.7 of \cite{Cameron}) that the formed space $(V,f)$ can be written as an orthogonal direct sum of symplectic hyperbolic planes.
 Hence, up to isometry, there is only one non-degenerate alternating form of an
 even dimensional vector space, and we choose as canonical representative the
-alternating form with Gram matrix 
+alternating form with Gram matrix  
 \[\left( \begin{array}{ccccccc}
 0 & 1 & 0 & 0 & \ldots & 0 & 0 \\ 
 -1 & 0 & 0 & 0 & \ldots & 0 & 0 \\
@@ -2180,18 +2182,18 @@ alternating form with Gram matrix
 0 & 0 & 0 & 0 & \ldots & -1 & 0 \\
 \end{array} \right).\]
 
-  The Witt index of $f$ equals $n/2$. }
+   The Witt index of $f$ equals  $\frac{n}{2}$ . }
 
  
 \subsection{\textcolor{Chapter }{Bilinear forms}}\label{morphisms:bilinear}
 \logpage{[ 5, 1, 3 ]}
 \hyperdef{L}{X7F1255F77B6874E3}{}
 {
-  We suppose that $f$ is a non-degenerate symmetric bilinear form on a vector space $V$ over a finite field $F$ with odd characteristic. We call a two dimensional vector space a \emph{hyperbolic line} if it contains a non-zero vector such that $f(v,v) = 0$. It is proved (see Proposition 6.9 of \cite{Cameron}) that any two hyperbolic lines are isometric, and we choose as canonical
-representative the orthogonal form with Gram matrix  
+  We suppose that $f$ is a non-degenerate symmetric bilinear form on a vector space $V$ over a finite field $F$ with odd characteristic. We call a two dimensional vector space a \emph{hyperbolic line} if it contains a non-zero vector $v$ such that $f(v,v) = 0$. It is proved (see Proposition 6.9 of \cite{Cameron}) that any two hyperbolic lines are isometric, and we choose as canonical
+representative the orthogonal form with Gram matrix   
 \[\left( \begin{array}{cc}0 & 1 \\ 1 & 0 \end{array}
 \right).\]
- 
+  
 
  It can be proved (see Theorem 6.10 of \cite{Cameron}) that the formed space $(V,f)$ can be written as the orthogonal direct sum of hyperbolic lines and one
 subspace $U$ of dimension at most two. The behaviour of $f$ on the subspace $U$ determines the similarity class of $f$. We describe the three occurring cases, to describe the chosen canonical
@@ -2200,17 +2202,21 @@ form, we use the polynomial rather than the Gram matrix.
  
 \begin{itemize}
 \item If the dimension of $U$ is zero, then $(V,f)$ is the orthogonal direct sum of hyperbolic lines, and hence $(V,f)$ is isometric to the formed space $(V,f')$, where the Gram matrix of $f'$ consists of blocks as described above. The chosen canonical form has
-polynomial 
-\[ x_1 x_2 + \ldots + x_{n-1}x_n \]
-  Note that the dimension of the vector space $V$ is necessarily even. We call $f$ \emph{hyperbolic} (see also Section \ref{theory:sesquilinearforms}). It follows also that in this similarity class, there is only one isometry
+polynomial  
+\[
+x_1 x_2 + \ldots + x_{n-1}x_n
+\]
+  
+\[x_1 x_2 + \ldots + x_{n-1}x_n\]
+   Note that the dimension of the vector space $V$ is necessarily even. We call $f$ \emph{hyperbolic} (see also Section \ref{theory:sesquilinearforms}). It follows also that in this similarity class, there is only one isometry
 class. The Witt index of $f$ equals $n/2$. 
-\item If the dimension of $U$ is one, then necessarily the polynomial of $f$ equals 
+\item If the dimension of $U$ is one, then necessarily the polynomial of $f$ equals  
 \[\mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n\]
-  for some $\mu \in F$, and the dimension of the vector space $V$ is odd. We call $f$ \emph{parabolic} (see also Section \ref{theory:sesquilinearforms}). It is clear that if $\mu$ is a square in $F$, then rescaling the first basis vector yields a polynomial 
+   for some $\mu \in F$, and the dimension of the vector space $V$ is odd. We call $f$ \emph{parabolic} (see also Section \ref{theory:sesquilinearforms}). It is clear that if $\mu$ is a square in $F$, then rescaling the first basis vector yields a polynomial  
 \[x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n\]
-  which we choose as the canonical form for this similarity class. If $\mu$ is a non-square, a rescaling of $x_2,x_4,\ldots,x_{n-1}$  yields a polynomial 
+   which we choose as the canonical form for this similarity class. If $\mu$ is a non-square, a rescaling of  $x_2,x_4,\ldots,x_{n-1}$   yields a polynomial  
 \[\mu (x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n)\]
-  which represents now a bilinear form that is \textsc{similar but not isometric} to the given one. Hence, the parabolic similarity class contains two isometry
+   which represents now a bilinear form that is \textsc{similar but not isometric} to the given one. Hence, the parabolic similarity class contains two isometry
 classes. The Witt index of $f$ equals $(n-1)/2$. 
 \item  Suppose at last that the dimension of $U$ is two. We may suppose that $U$ is not a hyperbolic line. It is not too difficult to see that a suitable base
 change yields the polynomial 
@@ -2682,17 +2688,6 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}

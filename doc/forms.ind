@@ -5,7 +5,7 @@
   \indexspace
 
   \item \texttt  {BaseChangeHomomorphism}, \hyperpage{44}
-  \item \texttt  {BaseChangeToCanonical}, \hyperpage{43}
+  \item \texttt  {BaseChangeToCanonical}, \hyperpage{44}
   \item \texttt  {BaseField}, \hyperpage{34}
   \item \texttt  {BilinearFormByMatrix}, \hyperpage{21}
   \item \texttt  {BilinearFormByPolynomial}, \hyperpage{24}
@@ -110,7 +110,7 @@
 
   \indexspace
 
-  \item \texttt  {ScalarOfSimilarity}, \hyperpage{45}
+  \item \texttt  {ScalarOfSimilarity}, \hyperpage{46}
   \item Semi-similarity, \hyperpage{39}, \hyperpage{42}
   \item Semilinear, \hyperpage{10}
   \item Similarity, \hyperpage{39}, \hyperpage{42}
