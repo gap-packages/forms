@@ -101,9 +101,9 @@ each basisvector <Alt Only="Text"><M>e_i</M></Alt><Alt Only="LaTeX"><M>e_i</M></
 <Alt Only="HTML MathJax"><M>e_i</M></Alt><Alt Only="HTML noMathJax">e&lt;SUB>i&lt;/SUB></Alt>.
 Hence <M>(V,f)</M> is isometric with <M>(V,f')</M>
 with <M>f'</M> the non-degenerate hermitian form with the identity matrix over
-<M>F</M>. The Witt index of <M>f</M> equals <Alt Only="Text"><M>n/2</M></Alt><Alt Only="LaTeX"><M>\frac{n}/{2}</M></Alt>
+<M>F</M>. The Witt index of <M>f</M> equals <Alt Only="Text"><M>n/2</M></Alt><Alt Only="LaTeX"><M>\frac{n}{2}</M></Alt>
 <Alt Only="HTML MathJax"><M>\frac{n}{2}</M></Alt><Alt Only="HTML noMathJax"><M>n/2</M></Alt> when <M>n</M> is even and
-<Alt Only="Text"><M>(n-1)/2</M></Alt><Alt Only="LaTeX"><M>\frac{n-1}/{2}</M></Alt>
+<Alt Only="Text"><M>(n-1)/2</M></Alt><Alt Only="LaTeX"><M>\frac{n-1}{2}</M></Alt>
 <Alt Only="HTML MathJax"><M>\frac{n-1}{2}</M></Alt><Alt Only="HTML noMathJax"><M>(n-1)/2</M></Alt>
 when <M>n</M> is odd.
 </Subsection>
@@ -481,37 +481,44 @@ space <M>(V,f')</M>, with polynomial
 which is chosen as the canonical form. Note that the dimension of the
 vector space <M>V</M> is necessarily even. We call <M>f</M> <E>hyperbolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). It
 follows also that in this similarity class, there is only one isometry class.
-The Witt index of <M>f</M> equals <M>n/2</M>.
+The Witt index of <M>f</M> equals <Alt Only="Text"><M>n/2</M></Alt><Alt Only="LaTeX"><M>\frac{n}{2}</M></Alt>
+<Alt Only="HTML MathJax"><M>\frac{n}{2}</M></Alt><Alt Only="HTML noMathJax"><M>n/2</M></Alt>.
 </Item>
 <Item>If the dimension of <M>U</M> is one, then necessarily the polynomial of <M>f</M>
 equals
 <Alt Not="HTML noMathJax"><Display>
 \mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n
 </Display></Alt>
-<Alt Only="HTML MathJax">&lt;center>&#956; x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
+<Alt Only="HTML noMathJax">&lt;center>&#956; x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>2&lt;/sub>
 x&lt;sub>3&lt;/sub> + ... + x&lt;sub>n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>x&lt;sub>n&lt;/sub>&lt;/center></Alt>
 for some <M>\mu \in F</M>, and the dimension of the vector space <M>V</M> is odd. We call
 <M>f</M> <E>parabolic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). Since every element is a square in even
-characteristic, rescaling the first basis vector yields <Alt
-Not="HTML"><M>\mu=1</M></Alt><Alt Only="HTML">&#956;=1</Alt>. The Witt index of
-<M>f</M> equals <M>(n-1)/2</M>.
+characteristic, rescaling the first basis vector yields
+<M>\mu=1</M> The Witt index of <M>f</M> equals <Alt Only="Text"><M>(n-1)/2</M></Alt><Alt Only="LaTeX"><M>\frac{n-1}{2}</M></Alt>
+<Alt Only="HTML MathJax"><M>\frac{n-1}{2}</M></Alt><Alt Only="HTML noMathJax"><M>(n-1)/2</M></Alt>.
 </Item>
 <Item>
 Suppose at last that the dimension of <M>U</M> is two. We may suppose that
 <M>U</M> is not a hyperbolic line. It is not difficult to see that a suitable base change
-yields the polynomial <Alt Not="HTML"><Display>
+yields the polynomial <Alt Not="HTML noMathJax"><Display>
 d x_1^2 + x_1x_2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n
-</Display></Alt><Alt Only="HTML">&lt;center>d
+</Display></Alt><Alt Only="HTML noMathJax">&lt;center>d
 x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>1&lt;/sub>x&lt;sub>2&lt;/sub> +
 x&lt;sub>2&lt;/sub>&lt;sup>2&lt;/sup> + x&lt;sub>3&lt;/sub> x&lt;sub>4&lt;/sub> + ... + x&lt;sub>n&lt;font
 face="symbol">-&lt;/font>1&lt;/sub>x&lt;sub>n&lt;/sub>&lt;/center></Alt> for an
-element of category 1, this is, an element <M>d</M> such that <M>T(d)=1</M> with
-<M>T</M> the trace map from <M>F</M> to <M>GF(2)</M>. Furthermore, an easy
-argument shows that an appropriate base change allows to choose any element of
+element of category 1, this is, an element <M>d</M> such that <Alt Only="Text"><M>Tr(d)=1</M></Alt>
+<Alt Only="LaTeX"><M>\mathrm{Tr}(d)=1</M></Alt><Alt Only="HTML MathJax"><M>\mathrm{Tr}(d)=1</M></Alt>
+<Alt Only="HTML noMathJax"><M>Tr(d)=1</M></Alt> with
+<Alt Only="Text"><M>Tr</M></Alt><Alt Only="LaTeX"><M>\mathrm{Tr}</M></Alt><Alt Only="HTML MathJax"><M>\mathrm{Tr}</M></Alt>
+<Alt Only="HTML noMathJax"><M>Tr(d)</M></Alt> the trace map from <M>F</M> to
+<Alt Only="Text"><M>GF(2)</M></Alt><Alt Only="LaTeX"><M>\mathrm{GF}(2)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{GF}(2)</M></Alt><Alt Only="HTML noMathJax"><M>GF(2)</M></Alt>.
+Furthermore, an easy argument shows that an appropriate base change allows to choose any element of
 category 1 for <M>d</M>. It follows also that the dimension of the vector space
 <M>V</M> is even. We call <M>f</M> <E>elliptic</E> (see also Section <Ref Sect="theory:sesquilinearforms"/>). 
-The Witt index of <M>f</M> equals <M>(n-2)/2</M>.
+The Witt index of <M>f</M> equals <Alt Only="Text"><M>(n-2)/2</M></Alt><Alt Only="LaTeX"><M>\frac{n-2}{2}</M></Alt>
+<Alt Only="HTML MathJax"><M>\frac{n-2}{2}</M></Alt><Alt Only="HTML noMathJax"><M>(n-2)/2</M></Alt>.
 </Item>
 </List>
 Hence, non-singular quadratic forms in even characteristic come in three
@@ -536,7 +543,7 @@ Suppose that <M>f</M> is a singular quadratic form on the vector space
 of a subspace <M>W</M> and &radf;, and the restriction of <M>f</M> to
 <M>W</M> is a non-singular quadratic form on <M>W</M>. Hence, <M>f</M> is
 isometric with a quadratic form having Gram matrix
-<Alt Only="HTML">
+<Alt Only="HTML noMathJax">
 &lt;!-- matrix expression begin -->
 &lt;table style="color:#000">&lt;tr>
 &lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
@@ -553,14 +560,22 @@ isometric with a quadratic form having Gram matrix
 &lt;/tr>&lt;/table>
 &lt;!-- matrix expression end -->
 </Alt>
-<Alt Only="LaTeX">
+<Alt Only="HTML MathJax">
 <Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
 \right)</Display>
+</Alt>
+<Alt Only="LaTeX">
+    <Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
+        \right)</Display>
+</Alt>
+<Alt Only="Text">
+    <Display>\left( \begin{array}{cc} M &amp; A \\ B &amp; C \end{array}
+        \right)</Display>
 </Alt>
 where <M>M</M> is the Gram matrix of a non-singular quadratic form and
 <M>A,B</M> and <M>C</M> are appropriate zero matrices. As explained in Section <Ref
 Sect="quadforms"/>, the form <M>f</M> induces a non-singular form <M>g</M>
-on the vector space <M>V/Rad(f)</M>. The computed matrix <M>M</M> can be taken as Gram matrix
+on the vector space &vmodradf;. The computed matrix <M>M</M> can be taken as Gram matrix
 for the form <M>g</M>. As defined in Section <Ref Sect="quadforms"/>, the
 Witt index of the singular form <M>f</M> is the Witt index of the non-singular induced form <M>g</M>.
 The dimension of the maximal isotropic subspaces with relation to <M>f</M> is the sum of
@@ -590,12 +605,12 @@ from a basis of the underlying vector space of <A>f</A> to another basis.
 
 <ManSection>
 <Oper Name="BaseChangeHomomorphism" Arg="b, gf"/>
-<Returns>the inner automorphism of GL(d,q) associated
+<Returns>the inner automorphism of &gldq; associated
 to the transition matrix <A>b</A>.</Returns>
 <Description>
 The argument <A>b</A> must be an invertible matrix of size <M>d</M> over
 the finite field <A>gf</A> of order <M>q</M>. This method returns the inner automorphism
-of <M>GL(d,q)</M> induces by conjugation by <M>b</M>.
+of &gldq; induces by conjugation by <M>b</M>.
 <Example>
 <#Include SYSTEM "../examples/include/basechangehom.include"> 
 </Example>
@@ -626,8 +641,8 @@ which is the returned form.
 Recall that a similarity of a form <M>f</M> on a vector space <M>V</M>, is a
 linear transformation <M>g</M> of <M>V</M> where there exists some nonzero 
 scalar <M>c</M> such that for all <M>v,w</M> in <M>V</M>,
-<Alt Not="HTML"><M>f(u^g,v^g) = c f(u,v).</M></Alt><Alt
-Only="HTML"><Display>
+<Alt Not="HTML noMathJax"><Display>f(u^g,v^g) = c f(u,v).</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>
 f(u&lt;sup>g&lt;/sup>,v&lt;sup>g&lt;/sup>) = c f(u,v)</Display></Alt>
 This operation finds for a particular matrix <A>M</A>, giving rise to
 a similarity of the sesquilinear form <A>form</A>, the said scalar <M>c</M>.

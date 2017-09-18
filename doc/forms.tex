@@ -2154,7 +2154,7 @@ alternating cases.
 \logpage{[ 5, 1, 1 ]}
 \hyperdef{L}{X807E16A383D2E04C}{}
 {
-  We suppose that $f$ is a non-degenerate hermitian form on a vector space $V$ over the finite field $F$, with involutory field automorphism $\alpha$. It can be proved (see \cite{KleidmanLiebeck}) that any vector space equipped with a non-degenerate hermitian form $f$ contains an orthogonal basis such that $f(e_i,e_i)=1$   for each basisvector $e_i$ . Hence $(V,f)$ is isometric with $(V,f')$ with $f'$ the non-degenerate hermitian form with the identity matrix over $F$. The Witt index of $f$ equals $\frac{n}/{2}$  when $n$ is even and $\frac{n-1}/{2}$  when $n$ is odd. }
+  We suppose that $f$ is a non-degenerate hermitian form on a vector space $V$ over the finite field $F$, with involutory field automorphism $\alpha$. It can be proved (see \cite{KleidmanLiebeck}) that any vector space equipped with a non-degenerate hermitian form $f$ contains an orthogonal basis such that $f(e_i,e_i)=1$   for each basisvector $e_i$ . Hence $(V,f)$ is isometric with $(V,f')$ with $f'$ the non-degenerate hermitian form with the identity matrix over $F$. The Witt index of $f$ equals $\frac{n}{2}$  when $n$ is even and $\frac{n-1}{2}$  when $n$ is odd. }
 
  
 \subsection{\textcolor{Chapter }{Alternating forms}}\label{morphisms:alternating}
@@ -2269,16 +2269,16 @@ the one in odd characteristic.
 \[x_1 x_2 + \ldots + x_{n-1}x_n,\]
   which is chosen as the canonical form. Note that the dimension of the vector
 space $V$ is necessarily even. We call $f$ \emph{hyperbolic} (see also Section \ref{theory:sesquilinearforms}). It follows also that in this similarity class, there is only one isometry
-class. The Witt index of $f$ equals $n/2$. 
+class. The Witt index of $f$ equals $\frac{n}{2}$ . 
 \item If the dimension of $U$ is one, then necessarily the polynomial of $f$ equals 
 \[ \mu x_1^2 + x_2 x_3 + \ldots + x_{n-1}x_n \]
   for some $\mu \in F$, and the dimension of the vector space $V$ is odd. We call $f$ \emph{parabolic} (see also Section \ref{theory:sesquilinearforms}). Since every element is a square in even characteristic, rescaling the first
-basis vector yields $\mu=1$. The Witt index of $f$ equals $(n-1)/2$. 
+basis vector yields $\mu=1$ The Witt index of $f$ equals $\frac{n-1}{2}$ . 
 \item  Suppose at last that the dimension of $U$ is two. We may suppose that $U$ is not a hyperbolic line. It is not difficult to see that a suitable base
 change yields the polynomial 
 \[ d x_1^2 + x_1x_2 + x_2^2 + x_3 x_4 + \ldots + x_{n-1}x_n \]
- for an element of category 1, this is, an element $d$ such that $T(d)=1$ with $T$ the trace map from $F$ to $GF(2)$. Furthermore, an easy argument shows that an appropriate base change allows
-to choose any element of category 1 for $d$. It follows also that the dimension of the vector space $V$ is even. We call $f$ \emph{elliptic} (see also Section \ref{theory:sesquilinearforms}). The Witt index of $f$ equals $(n-2)/2$. 
+ for an element of category 1, this is, an element $d$ such that  $\mathrm{Tr}(d)=1$  with $\mathrm{Tr}$  the trace map from $F$ to $\mathrm{GF}(2)$ . Furthermore, an easy argument shows that an appropriate base change allows
+to choose any element of category 1 for $d$. It follows also that the dimension of the vector space $V$ is even. We call $f$ \emph{elliptic} (see also Section \ref{theory:sesquilinearforms}). The Witt index of $f$ equals $\frac{n-2}{2}$ . 
 \end{itemize}
  Hence, non-singular quadratic forms in even characteristic come in three
 similarity classes, which is analogous to the odd characteristic case, and
@@ -2292,11 +2292,12 @@ and the dimension of the radical.
 \logpage{[ 5, 2, 1 ]}
 \hyperdef{L}{X7C738FBB80F533AC}{}
 {
-  Suppose that $f$ is a singular quadratic form on the vector space $V$, then $\mathrm{Rad}(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $\mathrm{Rad}(f)$, and the restriction of $f$ to $W$ is a non-singular quadratic form on $W$. Hence, $f$ is isometric with a quadratic form having Gram matrix  
+  Suppose that $f$ is a singular quadratic form on the vector space $V$, then $\mathrm{Rad}(f)$ is a non-trivial subspace of the vector space $V$. The vector space $V$ can be written as the orthogonal direct sum of a subspace $W$ and $\mathrm{Rad}(f)$, and the restriction of $f$ to $W$ is a non-singular quadratic form on $W$. Hence, $f$ is isometric with a quadratic form having Gram matrix   
+    
 \[\left( \begin{array}{cc} M & A \\ B & C \end{array}
-\right)\]
+        \right)\]
 
- where $M$ is the Gram matrix of a non-singular quadratic form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{quadforms}, the form $f$ induces a non-singular form $g$ on the vector space $V/Rad(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{quadforms}, the Witt index of the singular form $f$ is the Witt index of the non-singular induced form $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
+  where $M$ is the Gram matrix of a non-singular quadratic form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{quadforms}, the form $f$ induces a non-singular form $g$ on the vector space $V/\mathrm{Rad}(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{quadforms}, the Witt index of the singular form $f$ is the Witt index of the non-singular induced form $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
 
  }
 
@@ -2352,11 +2353,11 @@ is a canonical representative, as described in Section \ref{morphisms:sesquiline
 \label{BaseChangeHomomorphism}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
-the inner automorphism of GL(d,q) associated to the transition matrix \mbox{\texttt{\mdseries\slshape b}}.
+the inner automorphism of $\mathrm{GL}(d,q)$ associated to the transition matrix \mbox{\texttt{\mdseries\slshape b}}.
 
 
 
- The argument \mbox{\texttt{\mdseries\slshape b}} must be an invertible matrix of size $d$ over the finite field \mbox{\texttt{\mdseries\slshape gf}} of order $q$. This method returns the inner automorphism of $GL(d,q)$ induces by conjugation by $b$. 
+ The argument \mbox{\texttt{\mdseries\slshape b}} must be an invertible matrix of size $d$ over the finite field \mbox{\texttt{\mdseries\slshape gf}} of order $q$. This method returns the inner automorphism of $\mathrm{GL}(d,q)$ induces by conjugation by $b$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gl:=GL(3,3);|
   GL(3,3)
@@ -2447,7 +2448,9 @@ a finite field element
 
 
 
- Recall that a similarity of a form $f$ on a vector space $V$, is a linear transformation $g$ of $V$ where there exists some nonzero scalar $c$ such that for all $v,w$ in $V$, $f(u^g,v^g) = c f(u,v).$ This operation finds for a particular matrix \mbox{\texttt{\mdseries\slshape M}}, giving rise to a similarity of the sesquilinear form \mbox{\texttt{\mdseries\slshape form}}, the said scalar $c$. 
+ Recall that a similarity of a form $f$ on a vector space $V$, is a linear transformation $g$ of $V$ where there exists some nonzero scalar $c$ such that for all $v,w$ in $V$, 
+\[f(u^g,v^g) = c f(u,v).\]
+  This operation finds for a particular matrix \mbox{\texttt{\mdseries\slshape M}}, giving rise to a similarity of the sesquilinear form \mbox{\texttt{\mdseries\slshape form}}, the said scalar $c$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gram := [ [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], |
   !gapprompt@>| !gapinput@  [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], |
@@ -2689,13 +2692,6 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
