@@ -14,10 +14,7 @@ syntax: glob
 ./doc/forms.pnr
 ./doc/forms.tex
 ./doc/forms.toc
-./doc/manual.dvi
-./doc/manual.lab
-./doc/manual.pdf
-./doc/manual.ps
-./doc/manual.six
-./doc/manual.js
-
+./doc/manual.*
+./doc/*.css
+./doc/*.js
+./doc/chooser.html
