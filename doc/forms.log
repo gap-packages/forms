@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.5)  19 SEP 2017 09:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.12)  19 SEP 2017 10:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -919,11 +919,11 @@ Chapter 5.
 ] [53
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2751.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2751.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2746.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2746.
  (./forms.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2751.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2751.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2746.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2746.
 
 Package rerunfilecheck Info: File `forms.out' has not changed.
 (rerunfilecheck)             Checksum: 2DE8D5CD87E3D0ACDB5207A6FDF1724A;2060.
@@ -933,11 +933,11 @@ Package rerunfilecheck Info: File `forms.brf' has not changed.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2751.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2746.
  ) 
 Here is how much of TeX's memory you used:
  7530 strings out of 493089
- 109769 string characters out of 6134842
+ 109769 string characters out of 6134841
  192939 words of memory out of 5000000
  10650 multiletter control sequences out of 15000+600000
  85744 words of font info for 113 fonts, out of 8000000 for 9000
