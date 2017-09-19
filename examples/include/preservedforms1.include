@@ -1,0 +1,12 @@
+gap> group := GO(-1,4,4);
+GO(-1,4,4)
+gap> pres_forms := PreservedForms(group);
+[ &lt; quadratic form > ]
+gap> group := GO(1,6,9);
+GO(+1,6,9)
+gap> pres_forms := PreservedForms(group);
+[ &lt; quadratic form > ]
+gap> group := SU(4,16);
+SU(4,16)
+gap> pres_forms := PreservedForms(group);
+[ &lt; hermitian form > ]

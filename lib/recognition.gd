@@ -37,7 +37,7 @@ DeclareGlobalFunction( "PossibleClassicalForms" );
 #############################################################################
 
 DeclareOperation( "PreservedSesquilinearForms", [ IsMatrixGroup ] );
-DeclareOperation( "PreservedForm", [ IsMatrixGroup ] );
+DeclareOperation( "PreservedForms", [ IsMatrixGroup ] ); #made plural by jdb on 19/9/2017
 DeclareOperation( "ScalarOfSimilarity", [ IsMatrix, IsSesquilinearForm ]);
 
 InfoForms := NewInfoClass("InfoForms");;

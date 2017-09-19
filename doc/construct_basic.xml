@@ -636,6 +636,23 @@ preserving a (hyperbolic) bilinear form on a 6-dimensional vector space over <Al
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="PreservedForms" Arg="group"/>
+<Returns>a list of forms
+</Returns>
+<Description>
+The argument <A>group</A> is a matrix group. The function uses random methods
+to find all of the bilinear, unitary or quadratic forms preserved by <A>group</A> (the
+trivial form is also a possibility) up to a scalar. Since the procedure relies on a pseudo-random
+generator, the user may need to execute the operation more than once to find
+all invariant sesquilinear forms. Note that when possible, a quadratic form will be given.
+<Example>
+<#Include SYSTEM "../examples/include/preservedforms1.include">
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section Label="trivialform">

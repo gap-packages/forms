@@ -854,14 +854,15 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
 
   #############################################################################
 ##
-#F  PreservedForm( <grp> )
+#F  PreservedForms( <grp> )
 ##
 ##    returns (i) quadratic form if it has one, 
 ##            (ii) a sesquilinear form otherwise
 ##
 ##  This operation replaces the deprecated PreservedSesquilinearForm
+##     made plural by jdb on 19/09/2017
 ##
-InstallMethod( PreservedForm, [ IsMatrixGroup ],
+InstallMethod( PreservedForms, [ IsMatrixGroup ],
   function( grp )
     local   forms, field, i, g, qq, c, module,  invariantforms,  
             dmodule, fmodule, form, y, newform, newforms;
@@ -951,15 +952,19 @@ InstallMethod( PreservedForm, [ IsMatrixGroup ],
 		  newform := QuadraticFormByMatrix(y[4], field);
 		  Info(InfoForms, 1, Concatenation("preserved up to the following scalars: ", String(y[3])) );
 		  Info(InfoForms, 1, y[1] );
-       elif y[1] = "symplectic" then 
+          Add( newforms, newform );
+       elif y[1] = "symplectic" then
           newform := BilinearFormByMatrix(y[2], field);
+          Add( newforms, newform );
        elif y[1] = "unitary" then
           newform := HermitianFormByMatrix(y[2], field);
+          Add( newforms, newform );
        elif y[1] = "linear" then
           i := Size(One(g));
 	      newform := BilinearFormByMatrix( NullMat(i,i,field), field );
+          Add( newforms, newform );
        fi;
     od;
 
-    return newform;
+    return newforms;
 end );

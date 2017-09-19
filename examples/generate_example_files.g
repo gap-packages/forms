@@ -27,9 +27,9 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
             "isometriccanonicalform", "quadformfields", "orthogonaltovector",
             "istotallysingular", "istotallyisotropic", "isisotropicvector",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
-            "trivialform_prop", "wittindex", "typeofform"];
+            "trivialform_prop", "wittindex", "typeofform", "orthogonaltovector"];
 
-files := ["orthogonaltovector"];
+files := ["preservedforms1"];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/forms/examples/gap"
