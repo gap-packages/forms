@@ -371,7 +371,7 @@ form we adopt in \textsf{Forms} for an alternating form is
 \section{\textcolor{Chapter }{What is the form preserved by this group?}}\logpage{[ 2, 3, 0 ]}
 \hyperdef{L}{X78638D21797AC9A0}{}
 {
-  Here we start with a matrix group which is available in GAP, namely $GO(5,5)$. We then conjugate this group by an element of $GL(5,5)$, and then we find the forms left invariant by this copy of $GO(5,5)$ (which we expect to be a symmetric bilinear form). 
+  Here we start with a matrix group which is available in GAP, namely $\mathrm{GO}(5,5)$ . We then conjugate this group by an element of $\mathrm{GL}(5,5)$ , and then we find the forms left invariant by this copy of $\mathrm{GO}(5,5)$  (which we expect to be a symmetric bilinear form). 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@go := GO(5, 5);|
   GO(0,5,5)
@@ -410,7 +410,9 @@ and quadratic forms. The reader can find more in the texts: Cameron \cite{Camero
 \logpage{[ 3, 1, 0 ]}
 \hyperdef{L}{X874CD5E0802FEB50}{}
 {
-  A \emph{sesquilinear form}\index{Form@Form!sesquilinear} on an $n$-dimensional vector space $V$ over a field $F$, is a map $f$ from $V\times V$ to $F$ which is linear in the first coordinate, but semilinear\index{Semilinear} in the second coordinate; that is, there is a field automorphism $\alpha$ (the \emph{companion automorphism}\index{Companion Automorphism} of $f$) such that     for all $v,w \in V$ and $\lambda \in F$. If $\alpha$ is the identity, then $f$ is \emph{bilinear}\index{Form@Form!bilinear}. 
+  A \emph{sesquilinear form}\index{Form@Form!sesquilinear} on an $n$-dimensional vector space $V$ over a field $F$, is a map $f$ from $V\times V$ to $F$ which is linear in the first coordinate, but semilinear\index{Semilinear} in the second coordinate; that is, there is a field automorphism $\alpha$ (the \emph{companion automorphism}\index{Companion Automorphism} of $f$) such that  
+\[f(v,\lambda w)=\lambda^\alpha f(v,w),\]
+   for all $v,w \in V$ and $\lambda \in F$. If $\alpha$ is the identity, then $f$ is \emph{bilinear}\index{Form@Form!bilinear}. 
 
  A bilinear form is \emph{reflexive}\index{Form@Form!reflexive} if $f(v,w)=0 \Rightarrow f(w,v)=0$ for all $v,w \in V$. A bilinear form is \emph{symmetric}\index{Form@Form!symmetric} if $f(v,w)=f(w,v)$ for all $v,w \in V$. It is clear that a symmetric bilinear form is reflexive. A bilinear form is \emph{alternating}\index{Form@Form!alternating} if $f(v,v)=0$ for all $v \in V$. Using the linearity to compute $f(v+w,v+w)$, we see that an alternating form is also reflexive. When the characteristic
 of the field differs from 2, an alternating form $f$ can also be characterised as $f(v,w) = -f(w,v)$ for all $v,w \in V$. It can be proved (see Chapter 7 of \cite{Taylor}) that symmetric and alternating bilinear forms are the only reflexive
@@ -1508,15 +1510,57 @@ version of this operation, which we show in the following example:
 {\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{OrthogonalSubspaceMat({\mdseries\slshape form, v})\index{OrthogonalSubspaceMat@\texttt{OrthogonalSubspaceMat}}
 \label{OrthogonalSubspaceMat}
 }\hfill{\scriptsize (operation)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{OrthogonalSubspaceMat({\mdseries\slshape form, mat})\index{OrthogonalSubspaceMat@\texttt{OrthogonalSubspaceMat}}
+\label{OrthogonalSubspaceMat}
+}\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
-a base of the subspace orthogonal to the given vector with relation to the
-given form
+a base of the subspace orthogonal to the given vector or subspace with
+relation to the given form
 
 
 
- The argument \mbox{\texttt{\mdseries\slshape form}} is a sesquilinear or quadratic form. The operation returns a base of the
-subspace orthogonal to the given vector \mbox{\texttt{\mdseries\slshape v}} with relation to the sesquilinear \mbox{\texttt{\mdseries\slshape form}} or with relation to the associated bilinear form of the quadratic form \mbox{\texttt{\mdseries\slshape form}} 
+ The argument \mbox{\texttt{\mdseries\slshape form}} is a sesquilinear or quadratic form. For a given vector \mbox{\texttt{\mdseries\slshape v}}, this operation returns a base of the subspace orthogonal to \mbox{\texttt{\mdseries\slshape v}} with relation to the sesquilinear \mbox{\texttt{\mdseries\slshape form}} or with relation to the associated bilinear form of the quadratic form \mbox{\texttt{\mdseries\slshape form}}. For a given matrix \mbox{\texttt{\mdseries\slshape mat}}, this operation returns a base of the subspace orthogonal to the subspace
+spanned by the rows of \mbox{\texttt{\mdseries\slshape mat}} with relation to the sesquilinear \mbox{\texttt{\mdseries\slshape form}} or with relation to the associated bilinear form of the quadratic form \mbox{\texttt{\mdseries\slshape form}} 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@mat := [[0,0,0,-2],[0,0,-3,0],[0,3,0,0],[2,0,0,0]]*Z(7)^0;|
+  [ [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^4, 0*Z(7) ], 
+    [ 0*Z(7), Z(7), 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ] ]
+  !gapprompt@gap>| !gapinput@form := BilinearFormByMatrix(mat);|
+  < bilinear form >
+  !gapprompt@gap>| !gapinput@v := [0*Z(7),Z(7)^0,Z(7)^3,Z(7)^5];|
+  [ 0*Z(7), Z(7)^0, Z(7)^3, Z(7)^5 ]
+  !gapprompt@gap>| !gapinput@vperp := OrthogonalSubspaceMat(form,v);|
+  [ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ Z(7)^0, 0*Z(7), Z(7)^0, 0*Z(7) ], 
+    [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ]
+  !gapprompt@gap>| !gapinput@List(vperp,x->[x,v]^form);|
+  [ 0*Z(7), 0*Z(7), 0*Z(7) ]
+  !gapprompt@gap>| !gapinput@sub := [[1,1,0,0],[0,0,1,2]]*Z(7)^0;|
+  [ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^0, Z(7)^2 ] ]
+  !gapprompt@gap>| !gapinput@subperp := OrthogonalSubspaceMat(form,sub);|
+  [ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^4, Z(7)^0 ] ]
+  !gapprompt@gap>| !gapinput@List(subperp,x->List(sub,y->[x,y]^form));|
+  [ [ 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7) ] ]
+  !gapprompt@gap>| !gapinput@mat := [[1,0,0],[0,0,1],[0,0,0]]*Z(2)^0;|
+  [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ], 
+    [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+  !gapprompt@gap>| !gapinput@form := QuadraticFormByMatrix(mat);|
+  < quadratic form >
+  !gapprompt@gap>| !gapinput@v := [Z(2)^0,Z(2)^0,0*Z(2)];|
+  [ Z(2)^0, Z(2)^0, 0*Z(2) ]
+  !gapprompt@gap>| !gapinput@vperp := OrthogonalSubspaceMat(form,v);|
+  [ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
+      3> ]
+  !gapprompt@gap>| !gapinput@bil_form := AssociatedBilinearForm(form);|
+  < bilinear form >
+  !gapprompt@gap>| !gapinput@List(vperp,x->[x,v]^bil_form);|
+  [ 0*Z(2), 0*Z(2) ]
+  !gapprompt@gap>| !gapinput@sub := [[1,0,1],[1,0,0]]*Z(2)^0;|
+  [ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2) ] ]
+  !gapprompt@gap>| !gapinput@subperp := OrthogonalSubspaceMat(form,sub);|
+  [ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
+      3> ]
+  !gapprompt@gap>| !gapinput@List(subperp,x->List(sub,y->[x,y]^bil_form));|
+  [ [ 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
    
 \end{Verbatim}
  }
@@ -2235,7 +2279,7 @@ change yields the polynomial
 \[\left( \begin{array}{cc} M & A \\ B & C \end{array}
         \right)\]
 
-  where $M$ is the Gram matrix of a non-degenerate sesquilinear form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{theory:sesquilinearforms}, the form $f$ induces a non-degenerate form $g$ on the vector space $V/Rad(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{theory:sesquilinearforms}, the Witt index of the degenerate form $f$ is the Witt index of the non-degenerate inducedform $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
+  where $M$ is the Gram matrix of a non-degenerate sesquilinear form and $A,B$ and $C$ are appropriate zero matrices. As explained in Section \ref{theory:sesquilinearforms}, the form $f$ induces a non-degenerate form $g$ on the vector space $V/\mathrm{Rad}(f)$. The computed matrix $M$ can be taken as Gram matrix for the form $g$. As defined in Section \ref{theory:sesquilinearforms}, the Witt index of the degenerate form $f$ is the Witt index of the non-degenerate inducedform $g$. The dimension of the maximal isotropic subspaces with relation to $f$ is the sum of the Witt index and the dimension of the radical. }
 
  }
 
@@ -2487,7 +2531,7 @@ the Witt index of the form \mbox{\texttt{\mdseries\slshape f}}.
 
  The argument \mbox{\texttt{\mdseries\slshape f}} is a sesquilinear or quadratic form on the vector space $V$. When \mbox{\texttt{\mdseries\slshape f}} is degenerate, respectively singular, its Witt index is defined as the Witt
 index of the induced non-degenerate, respectively non-singular form on the
-vector space $V/Rad(f)$, see Sections \ref{theory:sesquilinearforms} and \ref{quadforms}. 
+vector space $V/\mathrm{Rad}(f)$, see Sections \ref{theory:sesquilinearforms} and \ref{quadforms}. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@mat := [[0,0,1,0,0],[0,0,0,0,0],[-1,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]*Z(7)^0;|
   [ [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
@@ -2544,7 +2588,7 @@ true or false.
 
  The argument \mbox{\texttt{\mdseries\slshape f}} is a sesquilinear or quadratic form on the vector space $V$. This operation returns \mbox{\texttt{\mdseries\slshape true}} is and only if \mbox{\texttt{\mdseries\slshape f}} is elliptic; that is, it is orthogonal of minus type, or in other words, has
 even dimension and non-maximal Witt index (see Section \ref{morphisms:bilinear} for sesquilinear forms and Section \ref{morphisms:quadratic} for quadratic forms). If \mbox{\texttt{\mdseries\slshape f}} is degenerate, respectively singular, then this operation refers to the inuced
-non-degenerate, respectively non-singular form induced on the vector space $V/Rad(f)$. }
+non-degenerate, respectively non-singular form induced on the vector space $V/\mathrm{Rad}(f)$. }
 
  
 
@@ -2561,7 +2605,7 @@ true or false.
 
  The argument \mbox{\texttt{\mdseries\slshape f}} is a sesquilinear or quadratic form on the vector space $V$. This operation returns \mbox{\texttt{\mdseries\slshape true}} is and only if \mbox{\texttt{\mdseries\slshape f}} is parabolic; that is, it is orthogonal of neutral type, or in other words, it
 has odd dimension (see Section \ref{morphisms:bilinear} for sesquilinear forms and Section \ref{morphisms:quadratic} for quadratic forms). If \mbox{\texttt{\mdseries\slshape f}} is degenerate, respectively singular, then this operation refers to the inuced
-non-degenerate, respectively non-singular form induced on the vector space $V/Rad(f)$. }
+non-degenerate, respectively non-singular form induced on the vector space $V/\mathrm{Rad}(f)$. }
 
  
 
@@ -2578,7 +2622,7 @@ true or false.
 
  The argument \mbox{\texttt{\mdseries\slshape f}} is a sesquilinear or quadratic form on the vector space $V$. This operation returns \mbox{\texttt{\mdseries\slshape true}} is and only if \mbox{\texttt{\mdseries\slshape f}} is hyperbolic; that is, it is orthogonal of plus type, or in other words, has
 even dimension and maximal Witt index (see Section \ref{morphisms:bilinear} for sesquilinear forms and Section \ref{morphisms:quadratic} for quadratic forms). If \mbox{\texttt{\mdseries\slshape f}} is degenerate, respectively singular, then this operation refers to the inuced
-non-degenerate, respectively non-singular form induced on the vector space $V/Rad(f)$. }
+non-degenerate, respectively non-singular form induced on the vector space $V/\mathrm{Rad}(f)$. }
 
  
 
@@ -2692,13 +2736,6 @@ operation rely on \texttt{IsParabolicForm}, \texttt{IsHyperbolicForm} and \textt
 
 \printindex
 
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
-\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}

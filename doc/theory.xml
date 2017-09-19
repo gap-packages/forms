@@ -28,7 +28,7 @@ automorphism <M>\alpha</M><!--<Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML
 (the <E>companion automorphism</E><Index>Companion
 Automorphism</Index> of <M>f</M>) such that
 <Alt Only="Text"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
-<Alt Only="Latex"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
+<Alt Only="LaTeX"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
 <Alt Only="HTML MathJax"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
 <Alt Only="HTML noMathJax"><Display>f(v,&#955;w)=&#955;&lt;sup>&#945;&lt;/sup>f(v,w),</Display></Alt>
 for all <M>v,w \in V</M> and <M>\lambda \in F</M>.

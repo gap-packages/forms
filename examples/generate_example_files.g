@@ -29,6 +29,8 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
             "trivialform_prop", "wittindex", "typeofform"];
 
+files := ["orthogonaltovector"];
+
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/forms/examples/gap"
 #preambledir = directory where 'preamble_sws.g is found' :  ".../pkg/forms/examples"
@@ -56,7 +58,7 @@ cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"examples\/output\"\)
 #Exec("which gap4r4"); #for UNIX only
 
 gapstart := "gap4r8"; #might be different on your computer
-gap := Filename(Directory("/usr/bin/"),gapstart);
+gap := Filename(Directory("/usr/local/bin/"),gapstart);
 
 for filename in files do
   Print("Now converting file: ", filename, "\n");

@@ -305,13 +305,17 @@ may use this compressed version of this operation, which we show in the followin
 <Heading>Orthogonality, totally isotropic subspaces, and totally singular subspaces</Heading>
 <ManSection>
 <Oper Name="OrthogonalSubspaceMat" Arg="form, v"/>
-<Returns>a base of the subspace orthogonal to the given vector with relation to
-the given form</Returns> 
+<Oper Name="OrthogonalSubspaceMat" Arg="form, mat"/>
+<Returns>a base of the subspace orthogonal to the given vector or subspace
+with relation to the given form</Returns>
 <Description>
-The argument <A>form</A> is a sesquilinear or quadratic form. The operation
-returns a base of the subspace orthogonal to the given vector <A>v</A> with
+The argument <A>form</A> is a sesquilinear or quadratic form. For a given vector <A>v</A>,
+this operation returns a base of the subspace orthogonal to <A>v</A> with
 relation to the sesquilinear <A>form</A> or with relation to the associated
-bilinear form of the quadratic form <A>form</A>
+bilinear form of the quadratic form <A>form</A>. For a given matrix <A>mat</A>,
+this operation returns a base of the subspace orthogonal to the subspace spanned
+by the rows of <A>mat</A> with relation to the sesquilinear <A>form</A> or with relation to the
+associated bilinear form of the quadratic form <A>form</A>
 <Example>
 <#Include SYSTEM "../examples/include/orthogonaltovector.include"> 
 </Example>

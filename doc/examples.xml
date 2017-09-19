@@ -143,10 +143,15 @@ f(x,y)=x&lt;sub>1&lt;/sub>y&lt;sub>2&lt;/sub>&lt;font face="symbol">-&lt;/font
 <Section>
 <Heading>What is the form preserved by this group?</Heading>
 Here we start with a matrix group which is available in GAP,
-namely <M>GO(5,5)</M>. We then conjugate this group by an
-element of <M>GL(5,5)</M>, and then we find the forms left
-invariant by this copy of <M>GO(5,5)</M> (which we expect to
-be a symmetric bilinear form).
+namely <Alt Only="Text"><M>GO(5,5)</M></Alt><Alt Only="LaTeX"><M>\mathrm{GO}(5,5)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{GO}(5,5)</M></Alt><Alt Only="HTML noMathJax"><M>GO(5,5)</M></Alt>.
+We then conjugate this group by an
+element of <Alt Only="Text"><M>GL(5,5)</M></Alt><Alt Only="LaTeX"><M>\mathrm{GL}(5,5)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{GL}(5,5)</M></Alt><Alt Only="HTML noMathJax"><M>GL(5,5)</M></Alt>,
+and then we find the forms left invariant by this copy
+of <Alt Only="Text"><M>GO(5,5)</M></Alt><Alt Only="LaTeX"><M>\mathrm{GO}(5,5)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{GO}(5,5)</M></Alt><Alt Only="HTML noMathJax"><M>GO(5,5)</M></Alt>
+(which we expect to be a symmetric bilinear form).
 <Example>
 <#Include SYSTEM "../examples/include/preservedform.include"> 
 </Example>

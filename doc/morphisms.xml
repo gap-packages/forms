@@ -409,7 +409,7 @@ isometric with a sesquilinear form having Gram matrix
 where <M>M</M> is the Gram matrix of a non-degenerate sesquilinear form and
 <M>A,B</M> and <M>C</M> are appropriate zero matrices. As explained in Section <Ref
 Sect="theory:sesquilinearforms"/>, the form <M>f</M> induces a non-degenerate form <M>g</M>
-on the vector space <M>V/Rad(f)</M>. The computed matrix <M>M</M> can be taken as Gram matrix
+on the vector space &vmodradf;. The computed matrix <M>M</M> can be taken as Gram matrix
 for the form <M>g</M>. As defined in Section <Ref Sect="theory:sesquilinearforms"/>, the
 Witt index of the degenerate form <M>f</M> is the Witt index of the non-degenerate inducedform <M>g</M>.
 The dimension of the maximal isotropic subspaces with relation to <M>f</M> is the sum of
@@ -659,7 +659,7 @@ a similarity of the sesquilinear form <A>form</A>, the said scalar <M>c</M>.
 <Description>
 The argument <A>f</A> is a sesquilinear or quadratic form on the vector space <M>V</M>.
 When <A>f</A> is degenerate, respectively singular, its Witt index is defined as the Witt index of the
-induced non-degenerate, respectively non-singular form on the vector space <M>V/Rad(f)</M>, see Sections
+induced non-degenerate, respectively non-singular form on the vector space &vmodradf;, see Sections
 <Ref Sect="theory:sesquilinearforms"/> and <Ref Sect="quadforms"/>.
 <Example>
 <#Include SYSTEM "../examples/include/wittindex.include">
@@ -679,7 +679,7 @@ and non-maximal Witt index (see Section <Ref
 Sect="morphisms:bilinear"/> for sesquilinear forms and Section <Ref
 Sect="morphisms:quadratic"/> for quadratic forms). If <A>f</A> is degenerate, respectively singular,
 then this operation refers to the inuced non-degenerate, respectively non-singular form induced on the
-vector space <M>V/Rad(f)</M>.
+vector space &vmodradf;.
 </Description>
 </ManSection>
 
@@ -694,7 +694,7 @@ it is orthogonal of neutral type, or in other words, it has odd dimension (see S
 Sect="morphisms:bilinear"/> for sesquilinear forms and Section <Ref
 Sect="morphisms:quadratic"/> for quadratic forms). If <A>f</A> is degenerate, respectively singular,
 then this operation refers to the inuced non-degenerate, respectively non-singular form induced on the
-vector space <M>V/Rad(f)</M>.
+vector space &vmodradf;.
 
 </Description>
 </ManSection>
@@ -711,7 +711,7 @@ and maximal Witt index (see Section <Ref
 Sect="morphisms:bilinear"/> for sesquilinear forms and Section <Ref
 Sect="morphisms:quadratic"/> for quadratic forms). If <A>f</A> is degenerate, respectively singular,
 then this operation refers to the inuced non-degenerate, respectively non-singular form induced on the
-vector space <M>V/Rad(f)</M>.
+vector space &vmodradf;.
 </Description>
 </ManSection>
 
