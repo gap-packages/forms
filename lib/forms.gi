@@ -4,9 +4,8 @@
 ##                                                              John Bamberg
 ##                                                              Jan De Beule
 ##
-##  Copyright 2015, Ghent University
-##  Copyright 2016, Vrije Universiteit Brussel
-##  Copyright 2016, The University of Western Austalia
+##  Copyright 2017, Vrije Universiteit Brussel
+##  Copyright 2017, The University of Western Austalia
 ##
 ##  Implementation of quadratic and sesquilinear forms
 ##

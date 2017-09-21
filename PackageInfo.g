@@ -11,7 +11,7 @@ SetPackageInfo( rec(
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
   Version := "1.2.5",
-  Date := "15/09/2017",
+  Date := "21/09/2017",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -79,7 +79,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.8",
-  NeededOtherPackages := [["GAPDoc", ">= 1.5.1"]],
+  NeededOtherPackages := [["GAPDoc", ">= 1.6"]],
   SuggestedOtherPackages := [],
   ExternalConditions := []),
 

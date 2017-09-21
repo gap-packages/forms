@@ -4,9 +4,8 @@
 ##                                                              John Bamberg
 ##                                                              Jan De Beule
 ##
-##  Copyright 2015, Ghent University
-##  Copyright 2015, Vrije Universiteit Brussel
-##  Copyright 2015, The University of Western Austalia
+##  Copyright 2017, Vrije Universiteit Brussel
+##  Copyright 2017, The University of Western Austalia
 ##
 ##  Declaration matter for quadratic and sesquilinear forms
 ##

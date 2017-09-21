@@ -4,9 +4,8 @@
 ##                                                              John Bamberg
 ##                                                              Jan De Beule
 ##                                                              Frank Celler
-##  Copyright 2016, Vrije Universiteit Brussel
-##  Copyright 2012, Ghent University
-##  Copyright 2016, The University of Western Austalia
+##  Copyright 2017, Vrije Universiteit Brussel
+##  Copyright 2017, The University of Western Austalia
 ##  Copyright (C) 1996,  Lehrstuhl D fuer Mathematik, RWTH Aachen, Germany
 ##
 ##  This file contains functions to compute sesquilinear forms invariant under
