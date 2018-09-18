@@ -17,7 +17,11 @@
 
 BindGlobal( "FormFamily", NewFamily( "FormFamily" ) );
 DeclareCategory( "IsForm", IsAttributeStoringRep );
-DeclareRepresentation( "IsFormRep", IsForm, [ "matrix", "basefield", "type" ] );
+
+# jdb 18/09/18 dealing with the evaluation of subspaces of a projective space under forms,
+# it seems logical to add a "vectorspace" field to a Forms object upon creation. This
+# will make life much easier when incorporating the necessary checks. 
+DeclareRepresentation( "IsFormRep", IsForm, [ "matrix", "basefield", "type", "vectorspace" ] );
 
 DeclareCategory( "IsQuadraticForm", IsForm );
 DeclareCategoryCollections( "IsQuadraticForm" );
@@ -205,6 +209,7 @@ DeclareOperation( "EvaluateForm", [ IsTrivialForm,
 DeclareOperation( "EvaluateForm", [ IsSesquilinearForm, IsFFECollColl, IsFFECollColl]);
 DeclareOperation( "EvaluateForm", [ IsTrivialForm, IsFFECollColl, IsFFECollColl]);
 DeclareOperation( "EvaluateForm", [ IsQuadraticForm, IsVector and IsFFECollection]);
+DeclareOperation( "EvaluateForm", [ IsQuadraticForm, IsFFECollColl]);
 DeclareOperation( "EvaluateForm", [ IsTrivialForm, IsVector and IsFFECollection]);
 
 DeclareOperation("OrthogonalSubspaceMat", [IsForm, IsVector and IsFFECollection]);
