@@ -3,8 +3,8 @@
                                                                   John Bamberg
                                                                and Jan De Beule
                                                                 
-  Copyright (C) 2017, The University of Western Australia
-  Copyright (C) 2017, Vrije Universiteit Brussel
+  Copyright (C) 2018, The University of Western Australia
+  Copyright (C) 2018, Vrije Universiteit Brussel
 
 This is the chapter of the documentation describing all of the functions of forms.
 -->
@@ -601,17 +601,33 @@ will result in an error message.
 </Section>
 
 <Section Label="recognition">
-<Heading>Recognition of sesquilinear forms preserved by a classical group</Heading>
+<Heading>Recognition of forms preserved by a classical group</Heading>
 
 In this section, we describe a function that was initially developed by Frank Celler
 (and which has now been adapted to <Package>Forms</Package>) for the recognition of
-sesquilinear forms left invariant by a matrix group. More importantly, we should
+quadratic and sesquilinear forms left invariant by a matrix group. More importantly, we should
 stress that this routine differs to that already offered by the <Package>MeatAxe</Package> 
 in that it finds sesquilinear forms preserved up to <B>scalars</B>. Eventually, the procedure used
 for finding preserved sesquilinear forms does use the <Package>MeatAxe</Package> but 
 in some cases it can rule out the existence of preserved forms without calling
 the <Package>MeatAxe</Package>. For more information on the algorithm, please see 
 <Cite Key="CLGNNPP"/>.
+
+<ManSection>
+<Oper Name="PreservedForms" Arg="group"/>
+<Returns>a list of forms
+</Returns>
+<Description>
+The argument <A>group</A> is a matrix group. The function uses random methods
+to find all of the bilinear, unitary or quadratic forms preserved by <A>group</A> (the
+trivial form is also a possibility) up to a scalar. Since the procedure relies on a pseudo-random
+generator, the user may need to execute the operation more than once to find
+all invariant sesquilinear forms. Note that when possible, a quadratic form will be given.
+<Example>
+<#Include SYSTEM "../examples/include/preservedforms1.include">
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="PreservedSesquilinearForms" Arg="group"/>
@@ -638,17 +654,17 @@ preserving a (hyperbolic) bilinear form on a 6-dimensional vector space over <Al
 </ManSection>
 
 <ManSection>
-<Oper Name="PreservedForms" Arg="group"/>
+<Oper Name="PreservedQuadraticForms" Arg="group"/>
 <Returns>a list of forms
 </Returns>
 <Description>
 The argument <A>group</A> is a matrix group. The function uses random methods
-to find all of the bilinear, unitary or quadratic forms preserved by <A>group</A> (the
-trivial form is also a possibility) up to a scalar. Since the procedure relies on a pseudo-random
+to find all of the quadratic forms preserved by <A>group</A> up to a scalar.
+Since the procedure relies on a pseudo-random
 generator, the user may need to execute the operation more than once to find
-all invariant sesquilinear forms. Note that when possible, a quadratic form will be given.
+all invariant sesquilinear forms.
 <Example>
-<#Include SYSTEM "../examples/include/preservedforms1.include">
+<#Include SYSTEM "../examples/include/pres_quadform.include">
 </Example>
 </Description>
 </ManSection>

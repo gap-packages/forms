@@ -23,13 +23,13 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
             "quadformbymatrix", "hermitianformbymatrix", "bilformbypoly", "quadformbypoly",
             "hermitianformbypoly", "quadformbybilform", "bilformbyquadform", "assocbilform",
             "evalform", "radicalofform", "polyofform", "discofform", "pres_sesforms1",
-            "pres_sesforms2", "basechangehom", "basechangetocanonical",
+            "pres_sesforms2", "pres_quadform", "basechangehom", "basechangetocanonical",
             "isometriccanonicalform", "quadformfields", "orthogonaltovector",
             "istotallysingular", "istotallyisotropic", "isisotropicvector",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
             "trivialform_prop", "wittindex", "typeofform", "orthogonaltovector"];
 
-files := ["preservedforms1"];
+files := ["pres_quadform"];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/forms/examples/gap"
@@ -41,7 +41,7 @@ homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("forms","examples/gap")[1];
 preambledir := DirectoriesPackageLibrary("forms","examples/")[1];
 outputdir := DirectoriesPackageLibrary("forms","examples/output")[1];
-gap := Filename(Directory("/usr/bin/"),"gap4r7");
+gap := Filename(Directory("/usr/local/bin/"),"gap4r9");
 #paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
 paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L forms.ws"," -o 4G"]," ");
@@ -57,7 +57,7 @@ cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"examples\/output\"\)
 
 #Exec("which gap4r4"); #for UNIX only
 
-gapstart := "gap4r8"; #might be different on your computer
+gapstart := "gap4r9"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
 
 for filename in files do

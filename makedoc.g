@@ -7,15 +7,9 @@
 ## tree. Under decent operating systems, you need sufficient permissions to do.
 ## Executing this is NOT necessary for the installation of the package "forms".
 
-# probably not necessary since GAPDoc is autoloading:
-LoadPackage("GAPDoc");
-
-#initialize the directory /doc/ directory in the package tree
-docdir := DirectoriesPackageLibrary("forms","doc")[1];
-
-MakeGAPDocDoc(docdir, "forms", [], "Forms", "MathJax");
-
-GAPDocManualLab("forms");
-
-quit;
+if fail = LoadPackage("AutoDoc", ">= 2016.01.21") then
+    Error("AutoDoc 2016.01.21 or newer is required");
+fi;
+AutoDoc("forms");
+QUIT;
 
