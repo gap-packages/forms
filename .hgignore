@@ -18,3 +18,5 @@ syntax: glob
 ./doc/*.css
 ./doc/*.js
 ./doc/chooser.html
+./tmp
+tmp.json

@@ -40,4 +40,9 @@ fi;
 end;
 
 # Set the name of the package here
+Print("EXecuting this file\n");
+
 TestMyPackage( "forms" );
+
+QUIT_GAP(0);
+
