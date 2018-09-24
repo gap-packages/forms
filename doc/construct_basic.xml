@@ -626,6 +626,12 @@ all invariant sesquilinear forms. Note that when possible, a quadratic form will
 <Example>
 <#Include SYSTEM "../examples/include/preservedforms1.include">
 </Example>
+The next example demonstrates the impact of randomized methods on the number of preserved forms
+returned. For the particular matrix group, two preserved forms are returned after four calls of
+the operation.
+<Example>
+<#Include SYSTEM "../examples/include/preservedforms2.include">
+</Example>
 </Description>
 </ManSection>
 
