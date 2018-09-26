@@ -94,6 +94,8 @@ into GAPInfo.RootPaths in version 1.2.4. More tests have been added to reach a b
 Due to these tests, a bug in one of the methods for <C>EvaluateForm</C> was discovered and fixed.
 Alexander Konovalov noted that we used the deprecated <F>ReadTest</F> in our test files. This has
 been changed to <F>Test</F>. Finally some LaTeX issues were resolved in the documentation.
+<P/>In verions 1.2.5, some small changes were made to the recognition part.
+Some new examples in the documentation explain better the functionality.
 </Section>
 <!-- ############################################################ -->
 
