@@ -1,5 +1,15 @@
-<?xml version="1.2.3" encoding="UTF-8"?>
+<!--
 
+  forms.xml          'Forms' package documentation
+                                                                  John Bamberg
+                                                                  Jan De Beule
+ 
+  Copyright (C) 2018, The University of Western Australia
+  Copyright (C) 2018, Vrije Universiteit Brussel
+
+-->
+
+<?xml version="1.2.3" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
     [<!ENTITY pg "\mathrm{PG}">
@@ -17,17 +27,6 @@
 
 
 <?LaTeX ExtraPreamble="\usepackage{url}"?>
-
-<!--
-
-  forms.xml          'Forms' package documentation    
-                                                                  John Bamberg
-                                                                  Jan De Beule
-                                                                
-  Copyright (C) 2018, The University of Western Australia
-  Copyright (C) 2018, Vrije Universiteit Brussel
-
--->
 
 <Book Name="Forms">
 
