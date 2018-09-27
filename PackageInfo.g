@@ -11,7 +11,7 @@ SetPackageInfo( rec(
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
   Version := "1.2.5",
-  Date := "18/09/2018",
+  Date := "27/09/2018",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
