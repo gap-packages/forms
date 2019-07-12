@@ -659,7 +659,7 @@ InstallMethod( PolynomialOfForm, "for a bilinear form",
     return poly;
   end );
 
-InstallMethod( BaseField, "for a form", [IsForm],
+InstallOtherMethod( BaseField, "for a form", [IsForm],
   function( f )
     return f!.basefield;
   end );
