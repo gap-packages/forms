@@ -1,4 +1,3 @@
-syntax: glob
 ./doc/chap*
 ./examples/output/*
 ./tst/output/*
