@@ -101,6 +101,12 @@ Autoload := false,
 
 TestFile := "tst/testall.g",
 
+IssueTrackerURL := "https://github.com/gap-packages/forms/issues",
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/forms",
+),
+
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
 CommunicatedBy := "Leonard Soicher (London)",
