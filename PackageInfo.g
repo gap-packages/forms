@@ -12,6 +12,7 @@ SetPackageInfo( rec(
   Subtitle := "Sesquilinear and Quadratic",
   Version := "1.2.5",
   Date := "27/09/2018",
+License := "GPL-2.0-or-later",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
