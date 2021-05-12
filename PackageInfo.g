@@ -76,17 +76,15 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Forms - Sesquilinear and Quadratic",
-  Autoload  := true),
+),
 
 Dependencies := rec(
   GAP := ">=4.8",
-  NeededOtherPackages := [["GAPDoc", ">= 1.6"]],
+  NeededOtherPackages := [],
   SuggestedOtherPackages := [],
   ExternalConditions := []),
 
-AvailabilityTest := function()
-    return true;
-  end,
+AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation( 
   "---------------------------------------------------------------------\n",
@@ -97,8 +95,6 @@ BannerString := Concatenation(
         " (", ~.Persons[2].WWWHome, ")\n",
    "For help, type: ?Forms \n",
   "---------------------------------------------------------------------\n" ),
-
-Autoload := false,
 
 TestFile := "tst/testall.g",
 
