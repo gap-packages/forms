@@ -14,3 +14,4 @@
 
 ReadPackage("forms", "lib/forms.gi");
 ReadPackage("forms", "lib/recognition.gi");
+ReadPackage("forms", "lib/classic.gi");

@@ -1,0 +1,157 @@
+#@local is_equal, q, F, d, es, e, g, stored, pi, permmat, form, gg, F2
+
+gap> START_TEST( "Forms: classic.tst" );
+
+# Provide an auxiliary function (until GAP's '=' gets fast).
+gap> is_equal:= function( G1, G2 )
+>      return IsSubset( G1, GeneratorsOfGroup( G2 ) ) and
+>             IsSubset( G2, GeneratorsOfGroup( G1 ) );
+>    end;;
+
+# Test the creation of orthogonal groups.
+gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
+>      F:= GF(q);
+>      for d in [ 3 .. 5 ] do
+>        if IsEvenInt( d ) then
+>          es:= [ -1, 1 ];
+>        else
+>          es:= [ 0 ];
+>        fi;
+>        for e in es do
+>          # GO(e,d,q)
+>          g:= GeneralOrthogonalGroup( e, d, q );
+>          stored:= InvariantQuadraticForm( g ).matrix;
+>          pi:= PermutationMat( (1,2,3), d, F );
+>          permmat:= pi * stored * TransposedMat( pi );
+>          form:= QuadraticFormByMatrix( stored, F );
+>          gg:= GeneralOrthogonalGroup( e, d, q, permmat );
+>          if not ( is_equal( g, GeneralOrthogonalGroup( g ) ) and
+>                   ( is_equal( g, GeneralOrthogonalGroup( stored ) ) or
+>                     BaseDomain( stored ) <> F ) and
+>                   is_equal( g, GeneralOrthogonalGroup( form ) ) and
+>                   is_equal( g, GeneralOrthogonalGroup( e, d, q, g ) ) and
+>                   is_equal( g, GeneralOrthogonalGroup( e, d, q, stored ) ) and
+>                   is_equal( g, GeneralOrthogonalGroup( e, d, q, form ) ) and
+>                   is_equal( g, GeneralOrthogonalGroup( e, d, F, g ) ) and
+>                   is_equal( g, GeneralOrthogonalGroup( e, d, F, stored ) ) and
+>                   is_equal( g, GeneralOrthogonalGroup( e, d, F, form ) ) and
+>                   IsSubset( gg, GeneratorsOfGroup( gg ) ) and
+>                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
+>            Error( "problem with GO(", e, ",", d, ",", q, ")" );
+>          fi;
+>          # SO(e,d,q)
+>          g:= SpecialOrthogonalGroup( e, d, q );
+>          stored:= InvariantQuadraticForm( g ).matrix;
+>          pi:= PermutationMat( (1,2,3), d, F );
+>          permmat:= pi * stored * TransposedMat( pi );
+>          form:= QuadraticFormByMatrix( stored, F );
+>          gg:= SpecialOrthogonalGroup( e, d, q, permmat );
+>          if not ( is_equal( g, SpecialOrthogonalGroup( g ) ) and
+>                   ( is_equal( g, SpecialOrthogonalGroup( stored ) ) or
+>                     BaseDomain( stored ) <> F ) and
+>                   is_equal( g, SpecialOrthogonalGroup( form ) ) and
+>                   is_equal( g, SpecialOrthogonalGroup( e, d, q, g ) ) and
+>                   is_equal( g, SpecialOrthogonalGroup( e, d, q, stored ) ) and
+>                   is_equal( g, SpecialOrthogonalGroup( e, d, q, form ) ) and
+>                   is_equal( g, SpecialOrthogonalGroup( e, d, F, g ) ) and
+>                   is_equal( g, SpecialOrthogonalGroup( e, d, F, stored ) ) and
+>                   is_equal( g, SpecialOrthogonalGroup( e, d, F, form ) ) and
+>                   IsSubset( gg, GeneratorsOfGroup( gg ) ) and
+>                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
+>            Error( "problem with SO(", e, ",", d, ",", q, ")" );
+>          fi;
+>          # Omega(e,d,q)
+>          g:= Omega( e, d, q );
+>          stored:= InvariantQuadraticForm( g ).matrix;
+>          pi:= PermutationMat( (1,2,3), d, F );
+>          permmat:= pi * stored * TransposedMat( pi );
+>          form:= QuadraticFormByMatrix( stored, F );
+>          gg:= Omega( e, d, q, permmat );
+>          if not ( is_equal( g, Omega( g ) ) and
+>                   ( is_equal( g, Omega( stored ) ) or
+>                     BaseDomain( stored ) <> F ) and
+>                   is_equal( g, Omega( form ) ) and
+>                   is_equal( g, Omega( e, d, q, g ) ) and
+>                   is_equal( g, Omega( e, d, q, stored ) ) and
+>                   is_equal( g, Omega( e, d, q, form ) ) and
+>                   IsSubset( gg, GeneratorsOfGroup( gg ) ) and
+>                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
+>            Error( "problem with Omega(", e, ",", d, ",", q, ")" );
+>          fi;
+>        od;
+>      od;
+>    od;
+
+# Test the creation of unitary groups.
+gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
+>      F:= GF(q);
+>      F2:= GF(q^2);
+>      for d in [ 2 .. 8 ] do
+>        # GU(d,q)
+>        g:= GeneralUnitaryGroup( d, q );
+>        stored:= InvariantSesquilinearForm( g ).matrix;
+>        pi:= PermutationMat( (1,2), d, F );
+>        permmat:= pi * stored * TransposedMat( pi );
+>        form:= HermitianFormByMatrix( stored, F2 );
+>        gg:= GeneralUnitaryGroup( d, q, permmat );
+>        if not ( is_equal( g, GeneralUnitaryGroup( g ) ) and
+>                 ( is_equal( g, GeneralUnitaryGroup( stored ) ) or
+>                   BaseDomain( stored ) <> F ) and
+>                 is_equal( g, GeneralUnitaryGroup( form ) ) and
+>                 is_equal( g, GeneralUnitaryGroup( d, q, g ) ) and
+>                 is_equal( g, GeneralUnitaryGroup( d, q, stored ) ) and
+>                 is_equal( g, GeneralUnitaryGroup( d, q, form ) ) and
+>                 IsSubset( gg, GeneratorsOfGroup( gg ) ) and
+>                 IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
+>          Error( "problem with GU(", d, ",", q, ")" );
+>        fi;
+>        # SU(d,q)
+>        g:= SpecialUnitaryGroup( d, q );
+>        stored:= InvariantSesquilinearForm( g ).matrix;
+>        pi:= PermutationMat( (1,2), d, F );
+>        permmat:= pi * stored * TransposedMat( pi );
+>        form:= HermitianFormByMatrix( stored, F2 );
+>        gg:= SpecialUnitaryGroup( d, q, permmat );
+>        if not ( is_equal( g, SpecialUnitaryGroup( g ) ) and
+>                 ( is_equal( g, SpecialUnitaryGroup( stored ) ) or
+>                   BaseDomain( stored ) <> F ) and
+>                 is_equal( g, SpecialUnitaryGroup( form ) ) and
+>                 is_equal( g, SpecialUnitaryGroup( d, q, g ) ) and
+>                 is_equal( g, SpecialUnitaryGroup( d, q, stored ) ) and
+>                 is_equal( g, SpecialUnitaryGroup( d, q, form ) ) and
+>                 IsSubset( gg, GeneratorsOfGroup( gg ) ) and
+>                 IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
+>          Error( "problem with SU(", d, ",", q, ")" );
+>        fi;
+>      od;
+>    od;
+
+# Test the creation of symplectic groups.
+gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
+>      F:= GF(q);
+>      for d in [ 2, 4 .. 8 ] do
+>        g:= SymplecticGroup( d, q );
+>        stored:= InvariantBilinearForm( g ).matrix;
+>        pi:= PermutationMat( (1,2), d, F );
+>        permmat:= pi * stored * TransposedMat( pi );
+>        form:= BilinearFormByMatrix( stored, F );
+>        gg:= SymplecticGroup( d, q, permmat );
+>        if not ( is_equal( g, SymplecticGroup( g ) ) and
+>                 ( is_equal( g, SymplecticGroup( stored ) ) or
+>                   BaseDomain( stored ) <> F ) and
+>                 is_equal( g, SymplecticGroup( form ) ) and
+>                 is_equal( g, SymplecticGroup( d, q, g ) ) and
+>                 is_equal( g, SymplecticGroup( d, q, stored ) ) and
+>                 is_equal( g, SymplecticGroup( d, q, form ) ) and
+>                 is_equal( g, SymplecticGroup( d, F, g ) ) and
+>                 is_equal( g, SymplecticGroup( d, F, stored ) ) and
+>                 is_equal( g, SymplecticGroup( d, F, form ) ) and
+>                 IsSubset( gg, GeneratorsOfGroup( gg ) ) and
+>                 IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
+>          Error( "problem with Sp(", d, ",", q, ")" );
+>        fi;
+>      od;
+>    od;
+
+##
+gap> STOP_TEST( "classic.tst" );
