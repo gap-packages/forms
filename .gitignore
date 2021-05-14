@@ -1,6 +1,7 @@
 ./doc/chap*
 ./examples/output/*
 ./tst/output/*
+./doc/chap*
 ./doc/forms.aux
 ./doc/forms.bbl
 ./doc/forms.blg
