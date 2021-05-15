@@ -18,7 +18,7 @@
 InstallMethod( \=, "for two forms",
   [IsTrivialForm and IsFormRep, IsTrivialForm and IsFormRep],
   function( a, b )
-    if a!.basefield <> b!.basefield then 
+    if a!.basefield <> b!.basefield then
        return false;
     fi;
     return true;
@@ -28,7 +28,7 @@ InstallMethod( \=, "for two forms",
   [IsForm and IsFormRep, IsForm and IsFormRep],
   function( a, b )
     local aa, bb, i;
-    if a!.basefield <> b!.basefield then 
+    if a!.basefield <> b!.basefield then
        return false;
     fi;
     if a!.type <> b!.type then
@@ -36,7 +36,7 @@ InstallMethod( \=, "for two forms",
     fi;
     aa := a!.matrix;
     bb := b!.matrix;
-    if Size(aa) <> Size(bb) then 
+    if Size(aa) <> Size(bb) then
        return false;
     fi;
 
@@ -45,7 +45,7 @@ InstallMethod( \=, "for two forms",
     od;
     return true;
   end );
-  
+
 #############################################################################
 # Constructor methods
 # Form-by-matrix methods
@@ -70,14 +70,14 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
       fi;
       if IsHermitianMatrix(m,f) then
         Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
-	    return el;
+        return el;
       else
         Error("Given matrix does not define a hermitian form\n" );
-      fi;   
+      fi;
     elif string = "symplectic" then
       if IsSymplecticMatrix(m,f) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
-	    return el;
+        return el;
       else
         Error("Given matrix does not define a symplectic form\n" );
       fi;
@@ -87,7 +87,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
       fi;
       if IsOrthogonalMatrix(m) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
-	    return el;
+        return el;
       else
         Error("Given matrix does not define an orthogonal form\n" );
       fi;
@@ -97,7 +97,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
       fi;
       if (IsOrthogonalMatrix(m) and (not IsSymplecticMatrix(m))) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
-	    return el;
+        return el;
       else
         Error("Given matrix does not define a pseudo-form\n" );
       fi;
@@ -126,19 +126,19 @@ InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
     if IsZero(m) then
        el := rec( matrix := m, basefield := f, type := "trivial", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
- 	   return el;
+       return el;
     elif IsSymplecticMatrix(m,f) then
        el := rec( matrix := m, basefield := f, type := "symplectic", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
-	   return el;
-    elif (IsOrthogonalMatrix(m) and IsOddInt(Size(f))) then 
+       return el;
+    elif (IsOrthogonalMatrix(m) and IsOddInt(Size(f))) then
        el := rec( matrix := m, basefield := f, type := "orthogonal", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
- 	   return el;
+       return el;
     elif (IsOrthogonalMatrix(m) and IsEvenInt(Size(f))) then
        el := rec( matrix := m, basefield := f, type := "pseudo", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
- 	   return el; 
+       return el;
     else
        Error("Invalid Gram matrix\n");
     fi;
@@ -180,7 +180,7 @@ end );
 #O QuadraticFormByMatrixOp( <m>, <f> ): constructor not for users.
 #  Analoguous to BilinearFormByMatrixOp
 # <f> finite field, <m> matrix over <f>.
-# <m> is always "Forms_RESET" to an upper triangle matrix. 
+# <m> is always "Forms_RESET" to an upper triangle matrix.
 # zero matrix is allowed, then the trivial form is returned.
 ##
 InstallMethod( QuadraticFormByMatrixOp, "for a ffe matrix and a field",
@@ -258,28 +258,28 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
        return el;
     else
        Error("Given matrix does not define a hermitian form\n" );
-    fi;   
+    fi;
   end );
 
 #############################################################################
-#O UpperTriangleMatrixByPolynomialForForm( <pol>,<ff>,<int>,<list>), 
+#O UpperTriangleMatrixByPolynomialForForm( <pol>,<ff>,<int>,<list>),
 # <ff>: fin field, <pol>: polynomial over <ff>, <n>: size of the matrix to
 # construct; <list>: used variables in <pol>.
 # not for users, creates a Gram matrix from a given polynomial to construct a
 # quadratic form, and also an orthogonal bilinear form in odd characteristic.
 ##
-InstallMethod( UpperTriangleMatrixByPolynomialForForm, 
+InstallMethod( UpperTriangleMatrixByPolynomialForForm,
                       [IsPolynomial, IsField, IsInt, IsList],
-  function(poly, gf, n, varlist)  
+  function(poly, gf, n, varlist)
     local vars, mat, i, j, vals, der;
-    
-   ## UpperTriangleMatrixByPolynomialForForm returns an upper triangular 
-   ## matrix in all cases. It can be used for quadratic forms (all chars) 
-   ## and symmetric bilinear forms (odd char). This is not a restriction, 
+
+   ## UpperTriangleMatrixByPolynomialForForm returns an upper triangular
+   ## matrix in all cases. It can be used for quadratic forms (all chars)
+   ## and symmetric bilinear forms (odd char). This is not a restriction,
    ## since in even char, we have no orthogonal bilinear forms, as by
-   ## convention, symmetric bilinear forms in odd char, hermitian forms (all char) 
+   ## convention, symmetric bilinear forms in odd char, hermitian forms (all char)
    ## and quadratic forms (all char) can be constructed using polynomials.
-   ##  Extermely important: the polynomial of a symmetric bilinear form is 
+   ##  Extermely important: the polynomial of a symmetric bilinear form is
    ##  NOT the polynomial of the associated quadratic form!
 
     mat := NullMat(n, n, gf);
@@ -305,18 +305,18 @@ InstallMethod( UpperTriangleMatrixByPolynomialForForm,
     vars := ShallowCopy(varlist);
     if vars*mat*vars <> poly then
       Error( "<poly> should be a homogeneous polynomial over GF(q)");
-    fi; 
+    fi;
     return mat;
 end);
 
 #############################################################################
-#O GramMatrixByPolynomialForHermitianForm( <pol>,<ff>,<int>,<list>), 
+#O GramMatrixByPolynomialForHermitianForm( <pol>,<ff>,<int>,<list>),
 # <ff>: fin field, <pol>: polynomial over <ff>, <n>: size of the matrix to
 # construct; <list>: used variables in <pol>.
 # not for users, creates a Gram matrix from a given polynomial to construct a
-# hermitian form. 
+# hermitian form.
 ##
-InstallMethod( GramMatrixByPolynomialForHermitianForm, 
+InstallMethod( GramMatrixByPolynomialForHermitianForm,
                      [IsPolynomial, IsField, IsInt, IsList],
   function(poly, gf, n, varlist)
     local vars, varst, q, t, a, polarity, i, j, vals, der;
@@ -389,7 +389,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
        SetPolynomialOfForm(form, pol);
        return form;
     else
-       Error("No other forms than quadratic, orthogonal or hermitian can be specified by polynomials\n"); 
+       Error("No other forms than quadratic, orthogonal or hermitian can be specified by polynomials\n");
     fi;
   end );
 #
@@ -406,7 +406,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
           Error("No orthogonal form can be associated with a quadratic polynomial in even characteristic\n");
        else
           mat := UpperTriangleMatrixByPolynomialForForm(pol,gf,n,vars);
-      	  form := FormByMatrix(mat,gf,"orthogonal");
+          form := FormByMatrix(mat,gf,"orthogonal");
           SetPolynomialOfForm(form, pol);
           return form;
        fi;
@@ -421,7 +421,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
        SetPolynomialOfForm(form, pol);
        return form;
     else
-       Error("No forms other than quadratic, orthogonal or hermitian can be specified by polynomials\n"); 
+       Error("No forms other than quadratic, orthogonal or hermitian can be specified by polynomials\n");
     fi;
   end );
 #
@@ -430,8 +430,8 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
 #############################################################################
 #O BilinearFormByPolynomial( <pol>, <ring>, <int>): constructor for users.
 #  <ring>: polynomial ring over finite field, <po>: polyniomial in <ring>, <int>:
-#  desired dimension of the vectorspace on which the form acts. 
-#  an error is returned by UpperTriangleMatrixByPolynomialForForm if the given 
+#  desired dimension of the vectorspace on which the form acts.
+#  an error is returned by UpperTriangleMatrixByPolynomialForForm if the given
 #  <pol> is not suitable to define a bilinear form
 #  zero <pol > is allowed, then the trivial form is returned.
 ##
@@ -462,7 +462,7 @@ InstallMethod( BilinearFormByPolynomial, "for a polynomial over a field, and a d
 #############################################################################
 #O BilinearFormByPolynomial( <pol>, <ring> ): constructor for users.
 #  <ring>: polynomial ring over finite field, <po>: polyniomial in <ring>
-#  dimension is the length of variables in <ring>. 
+#  dimension is the length of variables in <ring>.
 ##
 InstallMethod( BilinearFormByPolynomial,  "no dimension",
   [IsPolynomial, IsFiniteFieldPolynomialRing],
@@ -475,8 +475,8 @@ InstallMethod( BilinearFormByPolynomial,  "no dimension",
 #############################################################################
 #O HermitianFormByPolynomial( <pol>, <ring>, <int>): constructor for users.
 #  <ring>: polynomial ring over finite field, <po>: polyniomial in <ring>, <int>:
-#  desired dimension of the vectorspace on which the form acts. 
-#  an error is returned by GramMatrixByPolynomialForHermitianForm if the given 
+#  desired dimension of the vectorspace on which the form acts.
+#  an error is returned by GramMatrixByPolynomialForHermitianForm if the given
 #  <pol> is not suitable to define a hermitian form
 #  zero <pol > is allowed, then the trivial form is returned.
 ##
@@ -505,7 +505,7 @@ InstallMethod( HermitianFormByPolynomial, "for a polynomial over a field, and a 
 #############################################################################
 #O HermitianFormByPolynomial( <pol>, <ring> ): constructor for users.
 #  <ring>: polynomial ring over finite field, <pol>: polyniomial in <ring>
-#  dimension is the length of variables in <ring>. 
+#  dimension is the length of variables in <ring>.
 ##
 InstallMethod( HermitianFormByPolynomial,  "no dimension",
   [IsPolynomial, IsFiniteFieldPolynomialRing],
@@ -518,8 +518,8 @@ InstallMethod( HermitianFormByPolynomial,  "no dimension",
 #############################################################################
 #O QuadraticFormByPolynomial( <pol>, <ring>, <int>): constructor for users.
 #  <ring>: polynomial ring over finite field, <po>: polyniomial in <ring>, <int>:
-#  desired dimension of the vectorspace on which the form acts. 
-#  an error is returned by UpperTriangleMatrixByPolynomialForForm if the given 
+#  desired dimension of the vectorspace on which the form acts.
+#  an error is returned by UpperTriangleMatrixByPolynomialForForm if the given
 #  <pol> is not suitable to define a quadratic form
 #  zero <pol > is allowed, then the trivial form is returned.
 ##
@@ -539,7 +539,7 @@ InstallMethod( QuadraticFormByPolynomial,
 #############################################################################
 #O QuadraticFormByPolynomial( <pol>, <ring> ): constructor for users.
 #  <ring>: polynomial ring over finite field, <pol>: polyniomial in <ring>
-#  dimension is the length of variables in <ring>. 
+#  dimension is the length of variables in <ring>.
 ##
 InstallMethod( QuadraticFormByPolynomial,  "no dimension",
   [IsPolynomial, IsFiniteFieldPolynomialRing],
@@ -564,11 +564,11 @@ InstallMethod( BilinearFormByQuadraticForm, [IsQuadraticForm],
     ## very important: we use the relation 2Q(v) = f(v,v)
     local m, gf;
     m := f!.matrix;
-    gf := f!.basefield; 
+    gf := f!.basefield;
     if IsEvenInt( Size(gf) ) then
       Error( "No orthogonal bilinear form can be associated with a quadratic form in even characteristic");
     else
-      return BilinearFormByMatrix((m+TransposedMat(m))/(One(gf)*2),gf); 
+      return BilinearFormByMatrix((m+TransposedMat(m))/(One(gf)*2),gf);
     fi;
   end );
 
@@ -582,13 +582,13 @@ InstallMethod( QuadraticFormByBilinearForm, [IsBilinearForm],
     ## very important: we use the relation 2Q(v) = f(v,v)
     local m, gf;
     m := f!.matrix;
-    gf := f!.basefield; 
+    gf := f!.basefield;
     if IsEvenInt( Size(gf) ) then
        Error( "No quadratic form can be associated to a symmetric form in even characteristic");
     elif IsAlternatingForm(f) then
       Error( "No quadratic form can be associated properly to an alternating form" );
     else
-      return QuadraticFormByMatrix(m,gf); 
+      return QuadraticFormByMatrix(m,gf);
     fi;
   end );
 
@@ -601,7 +601,7 @@ InstallMethod( PolynomialOfForm, "for a trivial form",
   function(f)
     ## returns zero polynomial of the corresponding polynomialring.
     local gf, d, r;
-    gf := f!.basefield; 
+    gf := f!.basefield;
     d := Length(f!.matrix);
     r := PolynomialRing(gf,d);
     return Zero(r);
@@ -614,7 +614,7 @@ InstallMethod( PolynomialOfForm, "for a quadratic form",
     ## the Gram matrix of f.
     local m, gf, d, r, indets, poly;
     m := f!.matrix;
-    gf := f!.basefield; 
+    gf := f!.basefield;
     d := Length(m);
     r := PolynomialRing(gf,d);
     indets := IndeterminatesOfPolynomialRing(r);
@@ -622,13 +622,13 @@ InstallMethod( PolynomialOfForm, "for a quadratic form",
     return poly;
   end );
 
-InstallMethod( PolynomialOfForm, "for a hermitian form", 
+InstallMethod( PolynomialOfForm, "for a hermitian form",
   [IsHermitianForm],
   function(f)
     ## This method finds the polynomial associated to
     ## the Gram matrix of f.
     local m, gf, d, r, indets, poly, q;
-    gf := f!.basefield; 
+    gf := f!.basefield;
     q := Sqrt(Size(gf));
     m := f!.matrix;
     d := Length(m);
@@ -644,11 +644,11 @@ InstallMethod( PolynomialOfForm, "for a bilinear form",
     ## This method finds the polynomial associated to
     ## the Gram matrix of f. For a symplectic form, we
     ## get the 0 polynomial.
-    ## Very important: for an orthogonal form, the polynomial is 
+    ## Very important: for an orthogonal form, the polynomial is
     ## NOT the polynomial of the associated quadratic form.
     local m, gf, d, r, indets, poly;
     m := f!.matrix;
-    gf := f!.basefield; 
+    gf := f!.basefield;
     d := Length(m);
     if IsEvenInt( Size(gf) ) then
        Error( "No polynomial can be (naturally) associated to a bilinear form in even characteristic");
@@ -713,7 +713,7 @@ InstallMethod( RadicalOfFormBaseMat, [IsQuadraticForm],
     gf := f!.basefield;
     d := Size(m);
     null := NullspaceMat( m );
-    if IsEvenInt(Size(gf)) then 
+    if IsEvenInt(Size(gf)) then
       null := Filtered(SubspaceNC(gf^d,null), x -> IsZero(x^f)); #find vectors vanishing under f
     fi;
     null := Filtered(null,x-> not IsZero(x));
@@ -743,14 +743,14 @@ InstallMethod( RadicalOfForm, "for a quadratic form",
     gf := f!.basefield;
     d := Size(m);
     null := NullspaceMat( m );
-    if IsEvenInt(Size(gf)) then 
+    if IsEvenInt(Size(gf)) then
       null := Filtered(SubspaceNC(gf^d,null), x -> IsZero(x^f)); #find vectors vanishing under f
     fi;
     null := Filtered(null,x-> not IsZero(x));
     return Subspace( gf^d, null );
   end );
 
-InstallMethod( RadicalOfForm, "for a trivial form", 
+InstallMethod( RadicalOfForm, "for a trivial form",
   [IsTrivialForm],
   function( f )
     local m, null, gf, d;
@@ -834,7 +834,7 @@ InstallMethod( DiscriminantOfForm, [ IsTrivialForm ],
 #  see package documentation for more information.
 ####
 
-InstallMethod( IsDegenerateForm, [IsSesquilinearForm], 
+InstallMethod( IsDegenerateForm, [IsSesquilinearForm],
   function( f )
     return not IsTrivial( RadicalOfForm( f ) );
   end );
@@ -843,7 +843,7 @@ InstallMethod( IsSingularForm, [IsQuadraticForm],
   function( f )
     return not IsTrivial( RadicalOfForm( f ) );
   end );
-  
+
 InstallMethod( IsSingularForm, [IsTrivialForm], #new in 1.2.1
   function( f )
   return true;
@@ -855,7 +855,7 @@ InstallMethod( IsDegenerateForm, [IsQuadraticForm],
     return not IsTrivial( RadicalOfForm( AssociatedBilinearForm( f ) ) );
   end );
 
-InstallMethod( IsDegenerateForm, [IsTrivialForm], 
+InstallMethod( IsDegenerateForm, [IsTrivialForm],
   function( f )
     return true;
   end );
@@ -905,7 +905,7 @@ end );
 
 InstallMethod( IsSymmetricForm, [IsBilinearForm],
   function( f )
-    return IsOrthogonalMatrix( f!.matrix );  
+    return IsOrthogonalMatrix( f!.matrix );
  end );
 
 InstallMethod( IsSymmetricForm, [IsHermitianForm],
@@ -1039,9 +1039,9 @@ InstallMethod( BaseChangeToCanonical, "for a sesquilinear form",
       SetIsParabolicForm(f,b[3]=1);
       SetIsHyperbolicForm(f,b[3]=2);
       return b[1];
-    elif IsSymplecticForm(f) then 
+    elif IsSymplecticForm(f) then
       b := BaseChangeSymplectic(m, gf);
-      SetWittIndex(f, b[2]/2 ); 
+      SetWittIndex(f, b[2]/2 );
       return b[1];
     elif string = "hermitian" then
       b := BaseChangeHermitian(m, gf);
@@ -1092,7 +1092,7 @@ InstallOtherMethod( \^, "for a FFE vector and a trivial Frobenius automorphism",
     return v;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed GF2 vector and a Frobenius automorphism",
   [ IsVector and IsFFECollection and IsGF2VectorRep, IsFrobeniusAutomorphism ],
   function( v, f )
@@ -1102,14 +1102,14 @@ InstallOtherMethod( \^,
     return w;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed GF2 vector and a trivial Frobenius automorphism",
   [ IsVector and IsFFECollection and IsGF2VectorRep, IsMapping and IsOne ],
   function( v, f )
     return v;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed 8bit vector and a Frobenius automorphism",
   [ IsVector and IsFFECollection and Is8BitVectorRep, IsFrobeniusAutomorphism ],
   function( v, f )
@@ -1119,7 +1119,7 @@ InstallOtherMethod( \^,
     return w;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed 8bit vector and a trivial Frobenius automorphism",
   [ IsVector and IsFFECollection and Is8BitVectorRep, IsMapping and IsOne ],
   function( v, f )
@@ -1138,7 +1138,7 @@ InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
     return m;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed GF2 matrix and a Frobenius automorphism",
   [ IsMatrix and IsFFECollColl and IsGF2MatrixRep, IsFrobeniusAutomorphism ],
   function( m, f )
@@ -1153,14 +1153,14 @@ InstallOtherMethod( \^,
     return l;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed GF2 matrix and a trivial Frobenius automorphism",
   [ IsMatrix and IsFFECollColl and IsGF2MatrixRep, IsMapping and IsOne ],
   function( m, f )
     return m;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed 8bit matrix and a Frobenius automorphism",
   [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsFrobeniusAutomorphism ],
   function( m, f )
@@ -1176,7 +1176,7 @@ InstallOtherMethod( \^,
     return l;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed 8bit matrix and a trivial Frobenius automorphism",
   [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsMapping and IsOne ],
   function( m, f )
@@ -1190,7 +1190,7 @@ InstallOtherMethod( \^,
 InstallOtherMethod( \^, "for a pair of FFE vectors and a sesquilinear form",
   [ IsVectorList and IsFFECollColl, IsBilinearForm ],
   function( pair, f )
-    if Size(pair) <> 2 then 
+    if Size(pair) <> 2 then
        Error("The first argument must be a pair of vectors");
     fi;
     return pair[1] * f!.matrix * pair[2];
@@ -1199,7 +1199,7 @@ InstallOtherMethod( \^, "for a pair of FFE vectors and a sesquilinear form",
 InstallOtherMethod( \^, "for a pair of FFE matrices and a sesquilinear form",
   [ IsFFECollCollColl, IsBilinearForm ],
   function( pair, f )
-    if Size(pair) <> 2 then 
+    if Size(pair) <> 2 then
        Error("The first argument must be a pair of vectors");
     fi;
     return pair[1] * f!.matrix * TransposedMat(pair[2]);
@@ -1209,14 +1209,14 @@ InstallOtherMethod( \^, "for a pair of FFE vectors and an hermitian form",
   [ IsVectorList and IsFFECollColl, IsHermitianForm ],
   function( pair, f )
     local frob,hh,bf,p;
-    if Size(pair) <> 2 then 
+    if Size(pair) <> 2 then
        Error("The first argument must be a pair of vectors");
     fi;
     bf := f!.basefield;
-	p := Characteristic(bf);
-	hh := LogInt(Size(bf),p)/2;
-	#frob := FrobeniusAutomorphism(f!.basefield); #here was a mistake!
-	frob := FrobeniusAutomorphism(bf)^hh; 
+    p := Characteristic(bf);
+    hh := LogInt(Size(bf),p)/2;
+    #frob := FrobeniusAutomorphism(f!.basefield); #here was a mistake!
+    frob := FrobeniusAutomorphism(bf)^hh;
     return pair[1] * f!.matrix * (pair[2]^frob);
   end );
 
@@ -1224,21 +1224,21 @@ InstallOtherMethod( \^, "for a pair of FFE matrices and an hermitian form",
   [ IsFFECollCollColl, IsHermitianForm ],
   function( pair, f )
     local frob,hh,bf,p;
-    if Size(pair) <> 2 then 
+    if Size(pair) <> 2 then
        Error("The first argument must be a pair of vectors");
     fi;
     bf := f!.basefield;
-	p := Characteristic(bf);
-	hh := LogInt(Size(bf),p)/2;
-	#frob := FrobeniusAutomorphism(f!.basefield);  #here was a mistake, noticed by using fining.
-	frob := FrobeniusAutomorphism(bf)^hh; 
-	return pair[1] * f!.matrix * (TransposedMat(pair[2])^frob);
+    p := Characteristic(bf);
+    hh := LogInt(Size(bf),p)/2;
+    #frob := FrobeniusAutomorphism(f!.basefield);  #here was a mistake, noticed by using fining.
+    frob := FrobeniusAutomorphism(bf)^hh;
+    return pair[1] * f!.matrix * (TransposedMat(pair[2])^frob);
   end );
 
 InstallOtherMethod( \^, "for a pair of FFE matrices and a trivial form", #new in 1.2.1
   [ IsVectorList and IsFFECollColl, IsTrivialForm ],
   function( pair, f )
-    if Size(pair) <> 2 then 
+    if Size(pair) <> 2 then
        Error("The first argument must be a pair of vectors or a vector");
     fi;
     return Zero(BaseField(f));
@@ -1305,9 +1305,9 @@ InstallMethod( PrintObj, [ IsHermitianForm ],
     if HasPolynomialOfForm( f ) then
        Print("Polynomial: ", PolynomialOfForm, "\n");
     fi;
-    if HasWittIndex( f ) then 
+    if HasWittIndex( f ) then
        Print("Witt Index: ", WittIndex(f), "\n");
-    fi;        
+    fi;
   end );
 
 InstallMethod( Display, [ IsHermitianForm ],
@@ -1316,16 +1316,16 @@ InstallMethod( Display, [ IsHermitianForm ],
     Print("Gram Matrix:\n");
     Display(f!.matrix);
     if HasPolynomialOfForm( f ) then
-       Print("Polynomial: "); 
+       Print("Polynomial: ");
        Display(PolynomialOfForm(f));
        Print("\n");
     fi;
-    if HasWittIndex( f ) then 
+    if HasWittIndex( f ) then
        Print("Witt Index: ", WittIndex(f), "\n");
     fi;
   end);
 
-InstallMethod( ViewObj, [ IsQuadraticForm ], 
+InstallMethod( ViewObj, [ IsQuadraticForm ],
   function( f )
     local string;
     string := ["< "];
@@ -1362,10 +1362,10 @@ InstallMethod( PrintObj, [ IsQuadraticForm ],
           Add(string,"Non-singular ");
        fi;
     fi;
-    if HasIsEllipticForm( f ) or 
+    if HasIsEllipticForm( f ) or
        HasIsHyperbolicForm( f ) or
        HasIsParabolicForm( f ) then
-       
+
        if IsEllipticForm( f ) then
           Add(string,"Elliptic ");
        elif IsHyperbolicForm( f ) then
@@ -1381,7 +1381,7 @@ InstallMethod( PrintObj, [ IsQuadraticForm ],
      if HasPolynomialOfForm( f ) then
         Print("Polynomial: ", PolynomialOfForm(f), "\n");
      fi;
-     if HasWittIndex( f ) then 
+     if HasWittIndex( f ) then
         Print("Witt Index: ", WittIndex(f), "\n");
      fi;
   end );
@@ -1397,10 +1397,10 @@ InstallMethod( Display,  [ IsQuadraticForm ],
           Add(string,"Non-singular ");
        fi;
     fi;
-    if HasIsEllipticForm( f ) or 
+    if HasIsEllipticForm( f ) or
        HasIsHyperbolicForm( f ) or
        HasIsParabolicForm( f ) then
-       
+
        if IsEllipticForm( f ) then
           Add(string,"Elliptic ");
        elif IsHyperbolicForm( f ) then
@@ -1415,11 +1415,11 @@ InstallMethod( Display,  [ IsQuadraticForm ],
     Print("Gram Matrix:\n");
     Display(f!.matrix);
     if HasPolynomialOfForm( f ) then
-       Print("Polynomial: "); 
+       Print("Polynomial: ");
        Display(PolynomialOfForm(f));
        Print("\n");
     fi;
-    if HasWittIndex( f ) then 
+    if HasWittIndex( f ) then
        Print("Witt Index: ", WittIndex(f), "\n");
     fi;
   end );
@@ -1436,10 +1436,10 @@ InstallMethod( ViewObj, [ IsBilinearForm ],
       fi;
     fi;
     if HasIsOrthogonalForm(f) then
-      if HasIsEllipticForm( f ) or 
+      if HasIsEllipticForm( f ) or
          HasIsHyperbolicForm( f ) or
          HasIsParabolicForm( f ) then
-         
+
          if IsEllipticForm( f ) then
             Add(string,"elliptic bilinear ");
          elif IsHyperbolicForm( f ) then
@@ -1478,7 +1478,7 @@ InstallMethod( PrintObj, [ IsBilinearForm ],
       fi;
     fi;
     if HasIsOrthogonalForm(f) then
-       if HasIsEllipticForm( f ) or 
+       if HasIsEllipticForm( f ) or
           HasIsHyperbolicForm( f ) or
           HasIsParabolicForm( f ) then
         if IsEllipticForm( f ) then
@@ -1509,7 +1509,7 @@ InstallMethod( PrintObj, [ IsBilinearForm ],
     if HasPolynomialOfForm( f ) then
        Print("Polynomial: ", PolynomialOfForm(f), "\n");
     fi;
-    if HasWittIndex( f ) then 
+    if HasWittIndex( f ) then
        Print("Witt Index: ", WittIndex(f), "\n");
     fi;
   end );
@@ -1526,10 +1526,10 @@ InstallMethod( Display, [ IsBilinearForm ],
        fi;
     fi;
     if HasIsOrthogonalForm(f) then
-       if HasIsEllipticForm( f ) or 
+       if HasIsEllipticForm( f ) or
           HasIsHyperbolicForm( f ) or
           HasIsParabolicForm( f ) then
-        
+
           if IsEllipticForm( f ) then
              Add(string,"Elliptic bilinear ");
           elif IsHyperbolicForm( f ) then
@@ -1557,11 +1557,11 @@ InstallMethod( Display, [ IsBilinearForm ],
     Print("Gram Matrix:\n");
     Display(f!.matrix);
     if HasPolynomialOfForm( f ) then
-       Print("Polynomial: "); 
+       Print("Polynomial: ");
        Display(PolynomialOfForm(f));
        Print("\n");
     fi;
-    if HasWittIndex( f ) then 
+    if HasWittIndex( f ) then
        Print("Witt Index: ", WittIndex(f), "\n");
     fi;
   end );
@@ -1597,7 +1597,7 @@ InstallGlobalFunction(Forms_SUM_OF_SQUARES,
         stop := true;
       else
         i := i + 1;
-      fi;  
+      fi;
     until stop;
     return [v1,v2];
   end );
@@ -1642,7 +1642,7 @@ InstallGlobalFunction(Forms_DIFF_2_S,
   function(start,stop,n,q)
     local i,P,one;
     i := start;
-    P := IdentityMat(n,GF(q)); 
+    P := IdentityMat(n,GF(q));
     one := Z(q)^0;
     while i < stop do
       P[i][i] := one / 2;
@@ -1681,8 +1681,8 @@ InstallGlobalFunction(Forms_RESET,
       B[i][i] := t;
     od;
     A := A + B;
-    for i in [2..n] do  
-      for j in [1..i-1] do 
+    for i in [2..n] do
+      for j in [1..i-1] do
         A[i][j] := t;
       od;
     od;
@@ -1767,24 +1767,24 @@ InstallMethod( IsOrthogonalMatrix, [IsFFECollColl],
 
 InstallMethod( IsHermitianMatrix, [IsFFECollColl, IsField],
   function(m,f)
-    local t,n; 
+    local t,n;
     t := Sqrt(Size(f));
     n := Length(m);
     return m=Forms_HERM_CONJ(m,n,t);
   end );
 
 #############################################################################
-# Main Base-change operations 
+# Main Base-change operations
 # (helping methods for BaseChangeToCanonical, not for the users):
 #############################################################################
 #O BaseChangeOrthogonalBilinear( <mat>, <f> )
 #  <f>: finite field, <mat>: matrix over <f>
-# output: [D,r,w]; D = base change matrix, 
+# output: [D,r,w]; D = base change matrix,
 #                r = number of non zero rows in D*mat*TransposedMat(D)
 #                using r, it follows immediately whether the form is degenerate
 #                w = character (0=elliptic, 2=hyperbolic, 1=parabolic).
 ##
-InstallMethod( BaseChangeOrthogonalBilinear, 
+InstallMethod( BaseChangeOrthogonalBilinear,
     [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
   function(mat, gf)
     local row,i,j,k,A,b,c,d,P,D,dummy,r,w,s,v,v1,v2,
@@ -1799,9 +1799,9 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     row := 0;
     stop := false;
     primroot := Z(q);
-    one := One(GF(q)); 
+    one := One(GF(q));
 
-    repeat       
+    repeat
 
     # We search for an element different from zero on
     # the main diagonal from row + 1 onwards
@@ -1829,7 +1829,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         i := 1 + row;
         dummy := false;
         while i <= n and dummy = false do
-          k := i + 1; 
+          k := i + 1;
           while k <= nplus1 and dummy = false do
             if IsZero(A[i][k]) then
                k := k + 1;
@@ -1851,7 +1851,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         # Otherwise: Go and fetch...
         # Put it on A[row+1,row+2]
 
-        elif i = row + 1 then 
+        elif i = row + 1 then
           P := Forms_SWR(row+2,k,nplus1);
           A := P*A*P;
           D := P*D;
@@ -1877,15 +1877,15 @@ InstallMethod( BaseChangeOrthogonalBilinear,
       if not stop then
         P := IdentityMat(nplus1, gf);
         for i in [row+2..nplus1] do
-           P[i][row+1] := -A[i][row+1] * A[row+1][row+1]^-1;  
+           P[i][row+1] := -A[i][row+1] * A[row+1][row+1]^-1;
         od;
         A := P*A*TransposedMat(P);
         D := P*D;
         row := row + 1;
       fi;
     until row = n or stop;
-   
-    # Count how many variables are used.    
+
+    # Count how many variables are used.
 
     if not stop then
       if not IsZero( A[nplus1][nplus1] ) then
@@ -1924,10 +1924,10 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         i := i + 1;
         s := s + 1;
       fi;
-    od; 
+    od;
     if IsEvenInt( LogFFE(A[r][r], primroot) ) then
        s := s + 1;
-    fi; 
+    fi;
 
     # We do the form x_0^2 + ... + x_s^2 + v(x_s+1^2 + ... + x_r^2)
     # with v not quadratic.
@@ -1943,12 +1943,12 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     D := P*D;
 
     # We keep as much quadratic part as we can:
-    
+
     s := s - 1;
     r := r - 1;
-    
+
     # We write first v=v1^2 + v2^2
-    
+
     dummy := Forms_SUM_OF_SQUARES(v,q);
     v1 := dummy[1];
     v2 := dummy[2];
@@ -1994,10 +1994,10 @@ InstallMethod( BaseChangeOrthogonalBilinear,
           until i = r + 1;
           D := P*D;
           s := r - 1;
-        fi; 
-      fi; 
-    fi; 
-    
+        fi;
+      fi;
+    fi;
+
     # Towards standard forms (uses the standard proof of
     # the classification of quadratic forms):
 
@@ -2020,18 +2020,18 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             P := Forms_DIFF_2_S(3,r+1,nplus1,q);
             D := P*D;
             w := 0;
-          fi; 
-        fi; 
-      else  
+          fi;
+        fi;
+      else
         if q mod 4 = 1 then
-          if 1 < r then  
+          if 1 < r then
             P := Forms_SWR(2,r+1,nplus1);
             D := P*D;
             P := Forms_REDUCE2(3,r+1,nplus1,q);
             D := P*D;
           fi;
           w := 0;
-        else 
+        else
           if ((r-1)/2) mod 2 <> 0 then
             P := Forms_SWR(4,r+1,nplus1);
             D := P*D;
@@ -2058,22 +2058,22 @@ InstallMethod( BaseChangeOrthogonalBilinear,
               P := Forms_REDUCE4(3,r+1,nplus1,q);
             else
               P := IdentityMat(nplus1,gf);
-            fi;  
+            fi;
             b := primroot^(LogFFE(-v,primroot)/2);
             P[1][1] := (1/2)*one;
             P[2][1] := (1/2)*one;
             P[1][2] := -1/(2*b);
             P[2][2] := 1/(2*b);
-            D := P*D;              
+            D := P*D;
             if 1 < r then
               P := Forms_DIFF_2_S(3,r+1,nplus1,q);
               D := P*D;
             fi;
             w := 2;
-          fi; 
-        fi; 
-      fi; 
-    elif r <> 0 then 
+          fi;
+        fi;
+      fi;
+    elif r <> 0 then
       w := 1;
       if q mod 4 = 1 then
         P := Forms_REDUCE2(2,r+1,nplus1,q);
@@ -2107,11 +2107,11 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             i := i + 2;
           od;
           D := P*D;
-        fi; 
-      fi; 
-    else 
+        fi;
+      fi;
+    else
       w := 1;
-    fi; 
+    fi;
 
     return [D,r,w];
 end);
@@ -2119,19 +2119,19 @@ end);
 #############################################################################
 #O BaseChangeOrthogonalQuadratic( <mat>, <f> )
 #  <f>: finite field, <mat>: matrix over <f>
-# output: [D,r,w]; D = base change matrix, 
+# output: [D,r,w]; D = base change matrix,
 #                r = number of non zero rows in D*mat*TransposedMat(D)
 #                using r, it follows immediately whether the form is degenerate
 #                w = character (0=elliptic, 2=hyperbolic, 1=parabolic).
 ##
 InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
-    function(mat, gf)  
+    function(mat, gf)
     local A,r,w,row,dummy,i,j,h,D,P,t,a,b,c,d,e,s,
       zeros,posr,posk,nplus1,control,q,zero,one,n;
     # n is the projective dimension
     nplus1 := Size(mat);
     n := nplus1-1;
-    r := nplus1;   
+    r := nplus1;
     q := Size(gf);
     row := 1;
     zero := Zero(gf);
@@ -2141,7 +2141,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
     zeros := [];
     for i in [1..nplus1] do
       zeros[i] := zero;
-    od;      
+    od;
     h := Length(Factors(q));
     while row + 2 <= r do
       if not IsZero( A[row][row] ) then
@@ -2160,10 +2160,10 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
 
         if control then
           P := Forms_SWR(row,i,nplus1);
-          A := P*A*P;   
+          A := P*A*P;
           D := P*D;
           A := Forms_RESET(A,nplus1,q);
-          
+
         # Otherwise: look in other places.
 
         else
@@ -2174,11 +2174,11 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             while j <= r and dummy do
               if not IsZero( A[i][j] ) then
                 posr := i;
-                posk := j;   
+                posk := j;
                 dummy := false;
               else
                 j := j + 1;
-              fi; 
+              fi;
             od;
             i := i + 1;
           od;
@@ -2219,13 +2219,13 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             P := IdentityMat(nplus1,gf);
             t := A[row+1][row+2];
             P[row][row+2] := A[row][row+1]/t;
-            P[row+2][row+2] := 1/t;  
+            P[row+2][row+2] := 1/t;
             if row + 3 <= nplus1 then
               for i in [row+3..nplus1] do
                 P[i][row+2] := A[row+1][i]/t;
               od;
             fi;
-            A := P*A*TransposedMat(P);   
+            A := P*A*TransposedMat(P);
             A := Forms_RESET(A,nplus1,q);
             D := P*D;
             # A has now that special form a_11*X_1^2+X_1*X_2 + G(X_0,X_2,...,X_n);
@@ -2236,10 +2236,10 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             A := P*A*TransposedMat(P);
             A := Forms_RESET(A,nplus1,q);
             D := P*D;
-            #A [row][row] is now 0 
+            #A [row][row] is now 0
           fi;
-        fi; 
-      fi; 
+        fi;
+      fi;
       # check for zero row
       dummy := true;
       i := row + 1;
@@ -2279,7 +2279,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         od;
         D := P*D;
         A := P*A*TransposedMat(P);
-        A := Forms_RESET(A,nplus1,q);  
+        A := Forms_RESET(A,nplus1,q);
         P := IdentityMat(nplus1,GF(q));
         for i in [row+1..nplus1] do
           P[i][row] := A[row+1][i];
@@ -2288,11 +2288,11 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         A := P*A*TransposedMat(P);
         A := Forms_RESET(A,nplus1,q);
         row := row + 2;
-      fi;  
+      fi;
     od;
     # Now there can be at most two variables left.
     # Case by case:
-    
+
     if r = row then
        if IsZero(A[row][row]) then
           r := r - 1;
@@ -2305,22 +2305,22 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           P := Forms_PERM_VAR(nplus1,r);
           D := P*D;
           w := 1;
-       fi;  
+       fi;
     else
-       a := A[row][row];   
-       b := A[row][row+1];  
+       a := A[row][row];
+       b := A[row][row+1];
        c := A[row+1][row+1];
-       t := zero; 
+       t := zero;
        if a = t then
           if b = t then
-             if c = t then 
+             if c = t then
              r := r - 2;
              w := 2;
           else
              P := IdentityMat(nplus1, gf);
              P[r][r] := 1/Forms_SQRT2(c,q);
              D := P*D;
-             P := Forms_PERM_VAR(nplus1,r); 
+             P := Forms_PERM_VAR(nplus1,r);
              D := P*D;
              r := r - 1;
              w := 1;
@@ -2339,14 +2339,14 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           w := 2;
         fi;
       else #a <> t
-        if b = t then   
+        if b = t then
           if c = t then
             P := IdentityMat(nplus1, gf);
             P[r-1][r-1] := 1/Forms_SQRT2(a,q);
-            D := P*D;  
+            D := P*D;
             P := Forms_PERM_VAR(nplus1,r-1);
             D := P*D;
-            r := r - 1; 
+            r := r - 1;
           else
             P := IdentityMat(nplus1, gf);
             P[r-1][r-1] := 1/Forms_SQRT2(a,q);
@@ -2391,23 +2391,23 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               if e <> d then
                  a := Forms_QUAD_EQ(d+e,q,h);
                  P := IdentityMat(nplus1, gf);
-                 P[2][1] := a; 
+                 P[2][1] := a;
                  D := P*D;
               fi;
               w := 0;
-            fi;   
+            fi;
           fi;
         fi;
       fi;
     fi;
-    r := r - 1;    
+    r := r - 1;
     return [D,r,w];
 end );
 
 #############################################################################
 #O  BaseChangeHermitian( <mat>, <field> )
 # input: Gram matrix of a hermitian form, field
-# output: [D,r]; D = base change matrix, 
+# output: [D,r]; D = base change matrix,
 #                r = number of non zero rows in D*mat*TransposedMat(D)
 #                using r, it follows immediately whether the form is degenerate
 ##
@@ -2448,7 +2448,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
         i := 1 + row;
         dummy := false;
         while i <= n and dummy = false do
-          k := i + 1; 
+          k := i + 1;
           while k <= nplus1 and dummy = false do
             if IsZero( A[i][k] ) then
                k := k + 1;
@@ -2477,7 +2477,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
           A := P*A*TransposedMat(P);
           D := P*D;
         fi;
-        
+
         if not stop then
           b := Z(q)*(A[row+2][row+1])^-1;
           P := IdentityMat(nplus1, gf);
@@ -2485,7 +2485,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
           A := P*A*Forms_HERM_CONJ(P,nplus1,t);
           D := P*D;
         fi;
-      fi;    
+      fi;
 
       if not stop then
         P := IdentityMat(nplus1, gf);
@@ -2498,7 +2498,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
       fi;
     until row = n or stop;
 
-   # Count how many variables have been used 
+   # Count how many variables have been used
 
     if not stop then
       if not IsZero(A[nplus1][nplus1]) then
@@ -2538,7 +2538,7 @@ InstallGlobalFunction( BaseChangeSymplectic_blockchange,
    bb := IdentityMat(d, f);
 
    ## diagpos is the position of the top left corner of the block
-   ## on the diagonal of m 
+   ## on the diagonal of m
    diagpos := 2 * i - 1;
    c1 := bb[diagpos];
 
@@ -2560,7 +2560,7 @@ InstallGlobalFunction( BaseChangeSymplectic_blockchange,
    fi;
 end );
 
-InstallGlobalFunction( BaseChangeSymplectic_cleanup, 
+InstallGlobalFunction( BaseChangeSymplectic_cleanup,
   function(m, f, i)
     local e, j, d;
     d := Size(m);
@@ -2578,7 +2578,7 @@ InstallGlobalFunction( BaseChangeSymplectic_cleanup,
 ##
 #O  BaseChangeSymplectic( <mat>, <field> )
 # input: Gram matrix of a symplectic form, field
-# output: [D,r]; D = base change matrix, 
+# output: [D,r]; D = base change matrix,
 #                r = number of non zero rows in D*mat*TransposedMat(D)
 #                using r, the Witt index of the non-degenerate part can be computed.
 ##
@@ -2597,9 +2597,9 @@ InstallMethod( BaseChangeSymplectic, [IsMatrix and IsFFECollColl, IsField and Is
       a := BaseChangeSymplectic_blockchange(newm, f, blocknr);
 
   # when a=fail, then only degeneracy is left and the base transition is complete
- 
+
       if a=fail then
-        return [basechange,2*(blocknr-1)]; 
+        return [basechange,2*(blocknr-1)];
                 #the second entry is the number of non-zero rows after basechange
       fi;
       newm := a * newm * TransposedMat(a);
@@ -2610,18 +2610,18 @@ InstallMethod( BaseChangeSymplectic, [IsMatrix and IsFFECollColl, IsField and Is
          basechange := e * basechange;
       fi;
    od;
-   return [basechange,2*blocknr]; 
+   return [basechange,2*blocknr];
           #the second entry is the number of non-zero rows after basechange
  end );
 
 #############################################################################
 # Other Operations:
 #############################################################################
-  
+
 InstallMethod( BaseChangeHomomorphism, [ IsMatrix and IsFFECollColl, IsField ],
   function( b, gf )
   ## This function returns an intertwiner of the general linear group
-  ## induced by changing the basis of its underlying vector space 
+  ## induced by changing the basis of its underlying vector space
 
     local gl, invb, hom;
     if IsZero(Determinant(b)) then
@@ -2629,7 +2629,7 @@ InstallMethod( BaseChangeHomomorphism, [ IsMatrix and IsFFECollColl, IsField ],
     fi;
     invb := Inverse( b );
     gl := GeneralLinearGroup(Size(b), gf);
-    hom := InnerAutomorphismNC( gl, invb); 
+    hom := InnerAutomorphismNC( gl, invb);
     return hom;
   end );
 
@@ -2640,18 +2640,18 @@ InstallMethod( BaseChangeHomomorphism, [ IsMatrix and IsFFECollColl, IsField ],
 # input: bilinear form
 # output <r>. r = number of non zero rows in D*mat*TransposedMat(D) =: witt index
 #             (in fact only when form is non-degenerate).
-# note: calling this attribute will also set properties like 
+# note: calling this attribute will also set properties like
 #         IsElliptic,..., and BaseChangeCanonical
 ##
 InstallMethod( WittIndex, "for a bilinear form",
   [IsBilinearForm and IsFormRep],
   function(f)
     local string, b;
-    string := f!.type; 
+    string := f!.type;
     if IsSymplecticForm(f) then
        b := BaseChangeSymplectic(f!.matrix, f!.basefield);
        SetBaseChangeToCanonical(f, b[1]);
-       return (b[2]/2);   
+       return (b[2]/2);
     elif IsOrthogonalForm(f) then
        b := BaseChangeOrthogonalBilinear(f!.matrix, f!.basefield);
        SetIsEllipticForm(f,b[3]=0);
@@ -2705,7 +2705,7 @@ InstallMethod( WittIndex, "for a hermitian form",
     local gram, gf, b;
     gram := f!.matrix;
     gf := f!.basefield;
-    b := BaseChangeHermitian(gram, gf); 
+    b := BaseChangeHermitian(gram, gf);
       #returns [D,r] with r = non-zero rows - 1 after base change
     SetBaseChangeToCanonical(f, b[1]);
     return Int( (b[2]+1)/2 );
@@ -2943,7 +2943,7 @@ end );
 #############################################################################
 #A  IsometricCanonicalForm( <form> )
 # input: trivial form
-# output: trivial form 
+# output: trivial form
 ##
 InstallMethod( IsometricCanonicalForm, "for trivial forms",
   [IsTrivialForm],
@@ -2952,11 +2952,11 @@ InstallMethod( IsometricCanonicalForm, "for trivial forms",
 end );
 
 #############################################################################
-# Evaluation Methods (for users): 
+# Evaluation Methods (for users):
 #############################################################################
 
 InstallMethod( EvaluateForm,  "for a bilinear form and a pair of vectors",
-  [IsBilinearForm and IsFormRep, 
+  [IsBilinearForm and IsFormRep,
         IsVector and IsFFECollection, IsVector and IsFFECollection],
   function(f,v,w)
     return v*f!.matrix*w;
@@ -2971,15 +2971,15 @@ end );
 # jdb 20/01/2016: here was a bug, there is no method for  w^t, w a GF(q) vector
 # t just a natural number! Bugfix: look at the method for \^
 InstallMethod( EvaluateForm, "for an hermitian form and a pair of vectors",
-  [IsHermitianForm and IsFormRep,         
+  [IsHermitianForm and IsFormRep,
         IsVector and IsFFECollection, IsVector and IsFFECollection],
   function(f,v,w)
     local gf,t,p,hh,frob;
     #t := Sqrt(Size(gf));
     #return v*f!.matrix*(w^t); # here was the mistake.
     gf := f!.basefield;
-	p := Characteristic(gf);
-	hh := LogInt(Size(gf),p)/2;
+    p := Characteristic(gf);
+    hh := LogInt(Size(gf),p)/2;
     frob := FrobeniusAutomorphism(gf)^hh;
     return v*f!.matrix*(w^frob);
 end );
@@ -2994,7 +2994,7 @@ InstallMethod( EvaluateForm,  "for an hermitian form and a pair of matrices",
     m := Size(wCONJ); n := Size(wCONJ[1]);
     for i in [1..m] do
       for j in [1..n] do
-        wCONJ[i][j] := wCONJ[i][j]^t; 
+        wCONJ[i][j] := wCONJ[i][j]^t;
       od;
     od;
     return v*f!.matrix*wCONJ;
@@ -3014,7 +3014,7 @@ InstallMethod( EvaluateForm,
     end );
 
 InstallMethod( EvaluateForm,  "for trivial forms and a pair of vectors",
-  [IsTrivialForm, 
+  [IsTrivialForm,
         IsVector and IsFFECollection, IsVector and IsFFECollection],
   function(f,v,w)
     return Zero(BaseField(f));
@@ -3033,7 +3033,7 @@ InstallMethod( EvaluateForm, "for trivial forms",
 end );
 
 #############################################################################
-# Methods to compute orthogonal subspaces to a given subspace wrt 
+# Methods to compute orthogonal subspaces to a given subspace wrt
 # sesquilinear forms (for users).
 #############################################################################
 #############################################################################
@@ -3108,7 +3108,7 @@ InstallMethod(OrthogonalSubspaceMat,
 end );
 
 #############################################################################
-# Methods to compute orthogonal subspaces to a given subspace wrt 
+# Methods to compute orthogonal subspaces to a given subspace wrt
 # quadratic forms (for users). Remember the subtle difference between
 # orthogonality and singularity for subspaces.
 #############################################################################
@@ -3124,7 +3124,7 @@ InstallMethod(OrthogonalSubspaceMat,
   local bilf;
   bilf := AssociatedBilinearForm(f);
   return OrthogonalSubspaceMat(bilf,v); #note that this call will perform dim
-end );					#checks
+end );                  #checks
 
 #############################################################################
 #O OrthogonalSubspaceMat( <form>, <sub> ) <form>: quad. form.
@@ -3137,7 +3137,7 @@ InstallMethod(OrthogonalSubspaceMat,
   local bilf;
   bilf := AssociatedBilinearForm(f);
   return OrthogonalSubspaceMat(bilf,sub); #note that this call will perform dim
-end );					#checks
+end );                  #checks
 
 #############################################################################
 # Methods for IsIsotropicVector and IsTotallyIsotropicSubspace for sesquilinear
@@ -3167,10 +3167,10 @@ InstallMethod(IsTotallyIsotropicSubspace,
     if f!.type = "hermitian" then
        #return IsZero( (sub^CompanionAutomorphism( f )) * mat * TransposedMat(sub) );
        #the next line replaces the previous one, repairing a bug found by John Bamberg.
-	   return IsZero( sub * mat * TransposedMat(sub^CompanionAutomorphism( f )) );
-	else 
-       return IsZero( sub * mat * TransposedMat(sub) ); 
-    fi;  
+       return IsZero( sub * mat * TransposedMat(sub^CompanionAutomorphism( f )) );
+    else
+       return IsZero( sub * mat * TransposedMat(sub) );
+    fi;
 end );
 
 #############################################################################

@@ -20,7 +20,7 @@ DeclareCategory( "IsForm", IsAttributeStoringRep );
 
 # jdb 18/09/18 dealing with the evaluation of subspaces of a projective space under forms,
 # it seems logical to add a "vectorspace" field to a Forms object upon creation. This
-# will make life much easier when incorporating the necessary checks. 
+# will make life much easier when incorporating the necessary checks.
 DeclareRepresentation( "IsFormRep", IsForm, [ "matrix", "basefield", "type", "vectorspace" ] );
 
 DeclareCategory( "IsQuadraticForm", IsForm );
@@ -38,40 +38,40 @@ DeclareCategoryCollections( "IsHermitianForm" );
 DeclareCategory( "IsTrivialForm", IsForm );
 DeclareCategoryCollections( "IsTrivialForm" );
 
-BindGlobal( "QuadraticFormFamily", 
-            NewFamily( "QuadraticFormFamily", IsObject, IsQuadraticForm ) );  
+BindGlobal( "QuadraticFormFamily",
+            NewFamily( "QuadraticFormFamily", IsObject, IsQuadraticForm ) );
 BindGlobal( "QuadraticFormCollFamily", CollectionsFamily(QuadraticFormFamily) );
-BindGlobal( "QuadraticFormType", 
+BindGlobal( "QuadraticFormType",
             NewType( QuadraticFormFamily, IsQuadraticForm and IsFormRep) );
 
-BindGlobal( "SesquilinearFormFamily", 
-            NewFamily( "SesquilinearFormFamily", IsObject, IsSesquilinearForm ) );	
+BindGlobal( "SesquilinearFormFamily",
+            NewFamily( "SesquilinearFormFamily", IsObject, IsSesquilinearForm ) );
 BindGlobal( "SesquilinearFormCollFamily", CollectionsFamily(SesquilinearFormFamily) );
-BindGlobal( "SesquilinearFormType", 
+BindGlobal( "SesquilinearFormType",
             NewType( SesquilinearFormFamily, IsSesquilinearForm and IsFormRep) );
 
-BindGlobal( "BilinearFormFamily", 
-            NewFamily( "BilinearFormFamily", IsObject, IsBilinearForm ) );	    
+BindGlobal( "BilinearFormFamily",
+            NewFamily( "BilinearFormFamily", IsObject, IsBilinearForm ) );
 BindGlobal( "BilinearFormCollFamily", CollectionsFamily(BilinearFormFamily) );
-BindGlobal( "BilinearFormType", 
+BindGlobal( "BilinearFormType",
             NewType( BilinearFormFamily, IsBilinearForm and IsFormRep) );
 
-BindGlobal( "HermitianFormFamily", 
-            NewFamily( "HermitianFormFamily", IsObject, IsHermitianForm ) );	    
+BindGlobal( "HermitianFormFamily",
+            NewFamily( "HermitianFormFamily", IsObject, IsHermitianForm ) );
 BindGlobal( "HermitianFormCollFamily", CollectionsFamily(HermitianFormFamily) );
-BindGlobal( "HermitianFormType", 
+BindGlobal( "HermitianFormType",
             NewType( HermitianFormFamily, IsHermitianForm and IsFormRep) );
 
-BindGlobal( "TrivialFormFamily", 
-            NewFamily( "TrivialFormFamily", IsObject, IsTrivialForm ) );	    
+BindGlobal( "TrivialFormFamily",
+            NewFamily( "TrivialFormFamily", IsObject, IsTrivialForm ) );
 BindGlobal( "TrivialFormCollFamily", CollectionsFamily(TrivialFormFamily) );
-BindGlobal( "TrivialFormType", 
+BindGlobal( "TrivialFormType",
             NewType( TrivialFormFamily, IsTrivialForm and IsFormRep) );
 
 #############################################################################
 # Constructor operations:
 #############################################################################
-				    
+
 ## the user probably won't use this one. it will not be documented.
 DeclareOperation( "FormByMatrix", [IsMatrix and IsFFECollColl, IsField, IsString] );
 DeclareOperation( "BilinearFormByMatrixOp", [IsMatrix and IsFFECollColl, IsField] );
@@ -79,57 +79,57 @@ DeclareOperation( "QuadraticFormByMatrixOp", [IsMatrix and IsFFECollColl, IsFiel
 
 ## For the users...
 DeclareOperation( "BilinearFormByMatrix", [IsMatrix and IsFFECollColl, IsField] );
-DeclareOperation( "BilinearFormByMatrix", [IsMatrix and IsFFECollColl] ); 
+DeclareOperation( "BilinearFormByMatrix", [IsMatrix and IsFFECollColl] );
 DeclareOperation( "HermitianFormByMatrix", [IsMatrix and IsFFECollColl, IsField] );
 DeclareOperation( "QuadraticFormByMatrix", [IsMatrix and IsFFECollColl, IsField] );
-DeclareOperation( "QuadraticFormByMatrix", [IsMatrix and IsFFECollColl] ); 
+DeclareOperation( "QuadraticFormByMatrix", [IsMatrix and IsFFECollColl] );
 
 ## the user probably won't use this one. it will not be documented.
-DeclareOperation( "FormByPolynomial", 
+DeclareOperation( "FormByPolynomial",
                       [IsPolynomial, IsField, IsInt, IsList, IsString] );
 ## For the users...
-DeclareOperation( "FormByPolynomial", 
+DeclareOperation( "FormByPolynomial",
                       [IsPolynomial, IsFiniteFieldPolynomialRing, IsInt, IsString] );
 
-DeclareOperation( "BilinearFormByPolynomial", 
+DeclareOperation( "BilinearFormByPolynomial",
                       [ IsPolynomial, IsFiniteFieldPolynomialRing, IsInt ] );
-DeclareOperation( "QuadraticFormByPolynomial", 
+DeclareOperation( "QuadraticFormByPolynomial",
                       [ IsPolynomial, IsFiniteFieldPolynomialRing, IsInt ] );
-DeclareOperation( "HermitianFormByPolynomial", 
-                      [ IsPolynomial, IsFiniteFieldPolynomialRing, IsInt ] );	
+DeclareOperation( "HermitianFormByPolynomial",
+                      [ IsPolynomial, IsFiniteFieldPolynomialRing, IsInt ] );
 
 ## if no dimension is specified, then we use a natural default (i.e.,
 ## the dimension is just the number of indeterminates)
 ## see forms.gi for more information.
-DeclareOperation( "BilinearFormByPolynomial", 
+DeclareOperation( "BilinearFormByPolynomial",
                       [ IsPolynomial, IsFiniteFieldPolynomialRing] );
-DeclareOperation( "QuadraticFormByPolynomial", 
+DeclareOperation( "QuadraticFormByPolynomial",
                       [ IsPolynomial, IsFiniteFieldPolynomialRing] );
-DeclareOperation( "HermitianFormByPolynomial", 
-                      [ IsPolynomial, IsFiniteFieldPolynomialRing] );		     
+DeclareOperation( "HermitianFormByPolynomial",
+                      [ IsPolynomial, IsFiniteFieldPolynomialRing] );
 
 ## exploring the nice connections between bilinear and quadratic forms...
-DeclareOperation( "BilinearFormByQuadraticForm", 
+DeclareOperation( "BilinearFormByQuadraticForm",
                       [ IsQuadraticForm ] );
 
-DeclareOperation( "QuadraticFormByBilinearForm", 
+DeclareOperation( "QuadraticFormByBilinearForm",
                       [ IsBilinearForm ] );
 
 ## helper operations, also not meant for users -> not documented.
 ## computing the Gram matrix from a polynomial...
-DeclareOperation( "UpperTriangleMatrixByPolynomialForForm",                   
+DeclareOperation( "UpperTriangleMatrixByPolynomialForForm",
                       [IsPolynomial, IsField, IsInt, IsList] );
-DeclareOperation( "GramMatrixByPolynomialForHermitianForm", 
+DeclareOperation( "GramMatrixByPolynomialForHermitianForm",
                       [IsPolynomial, IsField, IsInt, IsList] );
 
 ## computing base changes. See package documentation for information.
-DeclareOperation( "BaseChangeOrthogonalBilinear", 
+DeclareOperation( "BaseChangeOrthogonalBilinear",
                       [IsMatrix and IsFFECollColl, IsField and IsFinite] );
-DeclareOperation( "BaseChangeOrthogonalQuadratic", 
+DeclareOperation( "BaseChangeOrthogonalQuadratic",
                       [IsMatrix and IsFFECollColl, IsField and IsFinite] );
-DeclareOperation( "BaseChangeSymplectic", 
+DeclareOperation( "BaseChangeSymplectic",
                       [IsMatrix and IsFFECollColl, IsField and IsFinite] );
-DeclareOperation( "BaseChangeHermitian",  
+DeclareOperation( "BaseChangeHermitian",
                       [IsMatrix and IsFFECollColl, IsField and IsFinite] );
 
 #############################################################################
@@ -149,7 +149,7 @@ DeclareGlobalFunction( "Forms_C1" ); #DeclareGlobalFunction( "C1" );
 DeclareGlobalFunction( "Forms_QUAD_EQ" ); #DeclareGlobalFunction( "QUAD_EQ");
 DeclareGlobalFunction( "Forms_HERM_CONJ" ); #DeclareGlobalFunction( "HERM_CONJ" );
 DeclareGlobalFunction( "BaseChangeSymplectic_blockchange" ); #a name clash is inprobable, so we leave these unchanged.
-DeclareGlobalFunction( "BaseChangeSymplectic_cleanup" ); 
+DeclareGlobalFunction( "BaseChangeSymplectic_cleanup" );
 
 #############################################################################
 # Operations to check input (most likely not for the user):
@@ -170,8 +170,8 @@ DeclareOperation("RadicalOfFormBaseMat", [IsForm]); #not documented
 DeclareAttribute( "GramMatrix", IsForm );
 DeclareAttribute( "CompanionAutomorphism", IsSesquilinearForm );
 DeclareAttribute( "RadicalOfForm", IsForm );
-DeclareAttribute( "BaseChangeToCanonical", IsForm ); 
-DeclareAttribute( "WittIndex", IsForm ); 
+DeclareAttribute( "BaseChangeToCanonical", IsForm );
+DeclareAttribute( "WittIndex", IsForm );
 DeclareAttribute( "IsometricCanonicalForm", IsForm );
 DeclareAttribute( "DiscriminantOfForm", IsForm );
 DeclareAttribute( "PolynomialOfForm", IsForm );
@@ -183,14 +183,14 @@ DeclareAttribute( "TypeOfForm", IsQuadraticForm);
 
 ## Properties
 DeclareProperty( "IsReflexiveForm", IsForm );
-DeclareProperty( "IsAlternatingForm", IsForm ); 
-DeclareProperty( "IsSymmetricForm", IsForm ); 
+DeclareProperty( "IsAlternatingForm", IsForm );
+DeclareProperty( "IsSymmetricForm", IsForm );
 
-DeclareProperty( "IsDegenerateForm", IsForm ); 
-DeclareProperty( "IsSingularForm", IsQuadraticForm ); 
+DeclareProperty( "IsDegenerateForm", IsForm );
+DeclareProperty( "IsSingularForm", IsQuadraticForm );
 DeclareProperty( "IsSingularForm", IsTrivialForm );  #new in 1.2.1
 
-DeclareProperty( "IsOrthogonalForm", IsForm ); 
+DeclareProperty( "IsOrthogonalForm", IsForm );
 DeclareProperty( "IsPseudoForm", IsForm );
 DeclareProperty( "IsSymplecticForm", IsForm );
 
@@ -202,9 +202,9 @@ DeclareProperty( "IsHyperbolicForm", IsForm );
 DeclareOperation( "BaseChangeHomomorphism", [ IsMatrix and IsFFECollColl, IsField ] );
 
 #changed all declarations below on 23/2/9.
-DeclareOperation( "EvaluateForm", [ IsSesquilinearForm, 
+DeclareOperation( "EvaluateForm", [ IsSesquilinearForm,
        IsVector and IsFFECollection, IsVector and IsFFECollection]);
-DeclareOperation( "EvaluateForm", [ IsTrivialForm, 
+DeclareOperation( "EvaluateForm", [ IsTrivialForm,
        IsVector and IsFFECollection, IsVector and IsFFECollection]);
 DeclareOperation( "EvaluateForm", [ IsSesquilinearForm, IsFFECollColl, IsFFECollColl]);
 DeclareOperation( "EvaluateForm", [ IsTrivialForm, IsFFECollColl, IsFFECollColl]);

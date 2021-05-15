@@ -4,7 +4,7 @@
 ##                                                              John Bamberg
 ##                                                              Jan De Beule
 ##                                                              Frank Celler
-##                      
+##
 ##  Copyright 2017, Vrije Universiteit Brussel
 ##  Copyright 2017, The University of Western Austalia
 ##  Copyright 1996,  Lehrstuhl D fuer Mathematik, RWTH Aachen, Germany
@@ -12,7 +12,7 @@
 ##  This file contains the declarations (functions and operations)
 ##  for the recognition code.
 ##
-##  *** Bamberg and De Beule are very grateful to Frank Celler for 
+##  *** Bamberg and De Beule are very grateful to Frank Celler for
 ##  generously providing the bulk of this code.  ***
 ##
 #############################################################################
