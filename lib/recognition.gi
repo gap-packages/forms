@@ -228,27 +228,28 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsDual,
 ##
 InstallGlobalFunction( ClassicalForms_Signum2,
   function( field, form, quad )
-    local base, avoid, i, d, j, c, k, x, sgn, pol;
+    local dim, base, avoid, i, d, j, c, k, x, sgn, pol;
 
     # compute a new basis,  such that the symmetric form is standard
     base :=OneOp(form);
-    form:=List(form,ShallowCopy);
+    form:=MutableCopyMat(form);
     avoid := [];
-    for i  in [ 1 .. Length(form)-1 ]  do
+    dim := NrRows(form);
+    for i  in [ 1 .. dim-1 ]  do
 
         # find first non zero entry
         d:=1;
-        while d in avoid or IsZero(form[i][d])  do
+        while d in avoid or IsZero(form[i,d])  do
             d:=d+1;
         od;
         Add(avoid, d);
 
         # clear all other entries in this row & column
-        for j  in [d+1..Length(form)]  do
-            c := form[i][j]/form[i][d];
+        for j  in [d+1..dim]  do
+            c := form[i,j]/form[i,d];
             if c <> Zero(field)  then
-                for k  in [ i .. Length(form) ]  do
-                    form[k][j] := form[k][j] - c*form[k][d];
+                for k  in [ i .. dim ]  do
+                    form[k,j] := form[k,j] - c*form[k,d];
                 od;
                 AddRowVector(form[j],form[d],c);
                 AddRowVector(base[j],base[d],c);
@@ -259,9 +260,9 @@ InstallGlobalFunction( ClassicalForms_Signum2,
     # reshuffle base
     c := [];
     j := [];
-    for i  in [ 1 .. Length(form) ]  do
+    for i  in [ 1 .. dim ]  do
         if not i in j  then
-            k := form[i][avoid[i]];
+            k := form[i,avoid[i]];
             Add( c, base[i]/k );
             Add( c, base[avoid[i]] );
             Add( j, avoid[i] );
@@ -272,7 +273,7 @@ InstallGlobalFunction( ClassicalForms_Signum2,
     # and try to fix the quadratic form (this is not really necessary)
     x   := X(field);
     sgn := 1;
-    for i  in [ 1, 3 .. Length(form)-1 ]  do
+    for i  in [ 1, 3 .. dim-1 ]  do
         c := base[i] * quad * base[i];
         if IsZero(c)  then
             c := base[i+1] * quad * base[i+1];
@@ -309,7 +310,7 @@ InstallGlobalFunction( ClassicalForms_Signum,
     local sgn, det, sqr;
 
     # if dimension is odd,  the signum must be 0
-    if Length(form) mod 2 = 1  then
+    if NrRows(form) mod 2 = 1  then
         return [ 0 ];
 
     # hard case: characteristic is 2
@@ -320,7 +321,7 @@ InstallGlobalFunction( ClassicalForms_Signum,
     # easy case
     det := DeterminantMat(form);
     sqr := LogFFE( det, PrimitiveRoot(field)) mod 2 = 0;
-    if (Length(form)*(Size(field)-1)/4) mod 2 = 0  then
+    if (NrRows(form)*(Size(field)-1)/4) mod 2 = 0  then
         if sqr  then
             sgn := +1;
         else
@@ -344,7 +345,7 @@ end );
 ##
 InstallGlobalFunction( ClassicalForms_QuadraticForm2,
  function( field, form, gens, scalars )
-    local H, i, j, e, b, y, x, r, l;
+    local dim, H, i, j, e, b, y, x, r, l;
 
     # raise an error if char is not two
     if Characteristic(field) <> 2  then
@@ -353,9 +354,10 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
 
     # construct the upper half of the form
     H := ZeroOp(form);
-    for i  in [ 1 .. Length(form) ]  do
-        for j  in [ i+1 .. Length(form) ]  do
-            H[i][j] := form[i][j];
+    dim := NrRows(form);
+    for i  in [ 1 .. dim ]  do
+        for j  in [ i+1 .. dim ]  do
+            H[i,j] := form[i,j];
         od;
     od;
 
@@ -373,22 +375,22 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
         r := x*H*TransposedMat(x)+H;
 
         # check <r>
-        for i  in [ 1 .. Length(form) ]  do
-            for j  in [ i+1 .. Length(form) ]  do
-                if not IsZero(r[i][j]+r[j][i]) then
+        for i  in [ 1 .. dim ]  do
+            for j  in [ i+1 .. dim ]  do
+                if not IsZero(r[i,j]+r[j,i]) then
                     return false;
                 fi;
             od;
         od;
 
         # and now the diagonals
-        for i  in [ 1 .. Length(form)  ]  do
+        for i  in [ 1 .. dim  ]  do
             l := [];
-            for j  in [ 1 .. Length(form) ]  do
-                l[j] := x[i][j]^2;
+            for j  in [ 1 .. dim ]  do
+                l[j] := x[i,j]^2;
             od;
             l[i] := l[i]+1;
-            Add( b, r[i][i] );
+            Add( b, r[i,i] );
             Add( e, l );
         od;
     od;
@@ -396,8 +398,8 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
     # and return a solution
     e := SolutionMat( TransposedMat(e), b );
     if e <> fail  then
-        for i  in [ 1 .. Length(form) ]  do
-            H[i][i] := e[i];
+        for i  in [ 1 .. dim ]  do
+            H[i,i] := e[i];
         od;
         return ImmutableMatrix(field,H);
     else
@@ -421,10 +423,10 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm,
 
     # use upper half
     H := ZeroOp(form);
-    for i  in [ 1 .. Length(form) ]  do
-        H[i][i] := form[i][i]/2;
-        for j  in [ i+1 .. Length(form) ]  do
-            H[i][j] := form[i][j];
+    for i  in [ 1 .. NrRows(form) ]  do
+        H[i,i] := form[i,i]/2;
+        for j  in [ i+1 .. NrRows(form) ]  do
+            H[i,j] := form[i,j];
         od;
     od;
     return H;
@@ -458,7 +460,7 @@ ClassicalForms_InvariantFormDual := function( module, dmodule )
     q        := Size(field);
     for i  in MTX.Generators(module)  do
         m := i * form * TransposedMat(i) * iform;
-        a := m[1][1];
+        a := m[1,1];
         if m <> a*identity  then
             Info(InfoForms, 1,
                 "form is not invariant under all generators\n" );
@@ -513,9 +515,9 @@ end;
 TransposedFrobeniusMat := function( mat, qq )
     local   i,  j;
     mat:=MutableTransposedMat(mat);
-    for i  in [ 1 .. Length(mat) ]  do
-        for j  in [ 1 .. Length(mat[i]) ]  do
-            mat[i][j] := mat[i][j]^qq;
+    for i  in [ 1 .. NrRows(mat) ]  do
+        for j  in [ 1 .. NrCols(mat) ]  do
+            mat[i,j] := mat[i,j]^qq;
         od;
     od;
     return mat;
@@ -539,7 +541,7 @@ local   F,  k,  dim,  mats,  dmats,  qq,  i,  j,  l;
     for i  in [ 1 .. Length(mats) ]  do
       for j  in [ 1 .. dim ]  do
         for l  in [ 1 .. dim ]  do
-          dmats[i][j][l] := mats[i][l][j]^qq;
+          dmats[i][j,l] := mats[i][l,j]^qq;
         od;
       od;
       dmats[i]:=ImmutableMatrix(F,dmats[i]);
@@ -570,7 +572,7 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     q  := Size(field);
     qq := Characteristic(field)^(LogInt(q,Characteristic(field))/2);
     k  := PositionNonZero(form[1]);
-    a  := form[1][k] / form[k][1]^qq;
+    a  := form[1,k] / form[k,1]^qq;
     a := NthRoot(field,a,(1-qq) mod (q-1));
     if a = fail then
       return false;
@@ -585,7 +587,7 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     root     := PrimitiveRoot(field);
     for i  in MTX.Generators(module)  do
         m := i * form * TransposedFrobeniusMat(i,qq) * iform;
-        a := m[1][1];
+        a := m[1,1];
         if m <> a*identity  then
             Info(InfoForms, 1,
                  "form is not invariant under all generators\n" );
@@ -596,9 +598,9 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     od;
 
     # check the type of form
-    for i  in [ 1 .. Length(form) ]  do
-        for j  in [ 1 .. Length(form) ]  do
-            if form[i][j]^qq <> form[j][i]  then
+    for i  in [ 1 .. NrRows(form) ]  do
+        for j  in [ 1 .. NrRows(form) ]  do
+            if form[i,j]^qq <> form[j,i]  then
                 Info(InfoForms, 1, "unknown form\n" );
                 return [ "unknown", "frobenius", form, scalars ];
             fi;
@@ -847,7 +849,7 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
 
     m := EvaluateForm(form, g, g);
     pos := PositionNonZero( m[1] );
-    scalar := m[1][pos] / gram[1][pos];
+    scalar := m[1,pos] / gram[1,pos];
     return scalar;
   end );
 

@@ -34,7 +34,7 @@ examples are included.
 
 If typing "LoadPackage("forms");" results in the error message "fail", then
 probably the dependencies are not satisfied. Forms has only two dependencies, it
-requires GAP version at least 4.4 and it requires the package "GAPDoc" version
+requires GAP version at least 4.9 and it requires the package "GAPDoc" version
 at least 0.99. 
 
 You can get the latest version of GAPDoc at the website
