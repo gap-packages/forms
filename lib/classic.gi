@@ -9,34 +9,6 @@
 
 #############################################################################
 ##
-#F  PowerTransposedMat( <mat>, <q> )
-##
-##  Return the matrix which has at position (i,j) the entry <mat>[j,i]^<q>.
-##
-BindGlobal( "PowerTransposedMat", function( mat, q )
-    local nrows, ncols, result, i, j;
-
-    nrows:= NumberRows( mat );
-    ncols:= NumberColumns( mat );
-    if IsPlistRep( mat ) then
-#TODO: Provide 'NewZeroMatrix' for this case.
-      result:= NullMat( ncols, nrows, BaseDomain( mat ) );
-    else
-      result:= NewZeroMatrix( ConstructingFilter( mat ), BaseDomain( mat ),
-                              ncols, nrows );
-    fi;
-    for i in [ 1 .. nrows ] do
-      for j in [ 1 .. ncols ] do
-        result[j,i]:= mat[i,j]^q;
-      od;
-    od;
-
-    return result;
-    end );
-
-
-#############################################################################
-##
 #O  GeneralOrthogonalGroupCons( <filter>, <form> )
 #O  GeneralOrthogonalGroupCons( <filter>, <e>, <d>, <q>, <form> )
 #O  GeneralOrthogonalGroupCons( <filter>, <e>, <d>, <R>, <form> )
@@ -410,9 +382,10 @@ InstallMethod( SpecialOrthogonalGroupCons,
 
 #############################################################################
 ##
-#O  OmegaCons( <filt>, <form> )
+#O  OmegaCons( <filt>, [<e>, <d>, <q>, ]<form> )
 #O  Omega( [<filt>, ]<form> )
 #O  Omega( [<filt>, ][<e>, ]<d>, <q>, <form> )
+#O  Omega( [<filt>, ][<e>, ]<d>, <R>, <form> )
 ##
 ##  'Omega' is an operation hat is defined in the GAP library.
 ##  Thus we have to declare the variants involving a quadratic form,
@@ -426,7 +399,6 @@ Perform(
     [ IsMatrixObj, IsQuadraticForm, IsGroup and HasInvariantQuadraticForm ],
     function( obj )
       DeclareConstructor( "OmegaCons", [ IsGroup, obj ] );
-      DeclareConstructor( "OmegaCons", [ IsGroup, IsPosInt, IsPosInt, obj ] );
       DeclareConstructor( "OmegaCons", [ IsGroup, IsInt, IsPosInt, IsPosInt, obj ] );
 
       DeclareOperation( "Omega", [ obj ] );
@@ -439,17 +411,33 @@ Perform(
       InstallMethod( Omega, [ IsPosInt, IsPosInt, obj ],
         { d, q, x } -> OmegaCons( IsMatrixGroup, 0, d, q, x ) );
 
+      DeclareOperation( "Omega", [ IsPosInt, IsRing, obj ] );
+      InstallMethod( Omega, [ IsPosInt, IsField and IsFinite, obj ],
+        { d, R, x } -> OmegaCons( IsMatrixGroup, 0, d, Size( R ), x ) );
+
       DeclareOperation( "Omega", [ IsFunction, IsPosInt, IsPosInt, obj ] );
       InstallMethod( Omega, [ IsFunction, IsPosInt, IsPosInt, obj ],
         { filt, d, q, x } -> OmegaCons( filt, 0, d, q, x ) );
+
+      DeclareOperation( "Omega", [ IsFunction, IsPosInt, IsRing, obj ] );
+      InstallMethod( Omega, [ IsFunction, IsPosInt, IsField and IsFinite, obj ],
+        { filt, d, R, x } -> OmegaCons( filt, 0, d, Size( R ), x ) );
 
       DeclareOperation( "Omega", [ IsInt, IsPosInt, IsPosInt, obj ] );
       InstallMethod( Omega, [ IsInt, IsPosInt, IsPosInt, obj ],
         { e, d, q, x } -> OmegaCons( IsMatrixGroup, e, d, q, x ) );
 
+      DeclareOperation( "Omega", [ IsInt, IsPosInt, IsRing, obj ] );
+      InstallMethod( Omega, [ IsInt, IsPosInt, IsField and IsFinite, obj ],
+        { e, d, R, x } -> OmegaCons( IsMatrixGroup, e, d, Size( R ), x ) );
+
       DeclareOperation( "Omega", [ IsFunction, IsInt, IsPosInt, IsPosInt, obj ] );
       InstallMethod( Omega, [ IsFunction, IsInt, IsPosInt, IsPosInt, obj ],
         OmegaCons );
+
+      DeclareOperation( "Omega", [ IsFunction, IsInt, IsPosInt, IsRing, obj ] );
+      InstallMethod( Omega, [ IsFunction, IsInt, IsPosInt, IsField and IsFinite, obj ],
+        { filt, e, d, R, x } -> OmegaCons( filt, e, d, Size( R ), x ) );
     end );
 
 
@@ -677,8 +665,8 @@ InstallMethod( GeneralUnitaryGroupCons,
     wanted:= HermitianFormByMatrix( stored, GF(q^2) );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
-    if mat1 * form!.matrix * PowerTransposedMat( mat1, q ) <>
-       mat2 * stored * PowerTransposedMat( mat2, q ) then
+    if mat1 * form!.matrix * TransposedFrobeniusMat( mat1, q ) <>
+       mat2 * stored * TransposedFrobeniusMat( mat2, q ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
     mat:= mat2^-1 * mat1;
@@ -808,8 +796,8 @@ InstallMethod( SpecialUnitaryGroupCons,
     wanted:= HermitianFormByMatrix( stored, GF(q^2) );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
-    if mat1 * form!.matrix * PowerTransposedMat( mat1, q ) <>
-       mat2 * stored * PowerTransposedMat( mat2, q ) then
+    if mat1 * form!.matrix * TransposedFrobeniusMat( mat1, q ) <>
+       mat2 * stored * TransposedFrobeniusMat( mat2, q ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
     mat:= mat2^-1 * mat1;

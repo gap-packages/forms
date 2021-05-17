@@ -39,6 +39,16 @@ gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
 >                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
 >            Error( "problem with GO(", e, ",", d, ",", q, ")" );
 >          fi;
+>          if e = 0 then
+>            if not ( is_equal( g, GeneralOrthogonalGroup( d, q, g ) ) and
+>                     is_equal( g, GeneralOrthogonalGroup( d, q, stored ) ) and
+>                     is_equal( g, GeneralOrthogonalGroup( d, q, form ) ) and
+>                     is_equal( g, GeneralOrthogonalGroup( d, F, g ) ) and
+>                     is_equal( g, GeneralOrthogonalGroup( d, F, stored ) ) and
+>                     is_equal( g, GeneralOrthogonalGroup( d, F, form ) ) ) then
+>              Error( "problem with GO(", d, ",", q, ")" );
+>            fi;
+>          fi;
 >          # SO(e,d,q)
 >          g:= SpecialOrthogonalGroup( e, d, q );
 >          stored:= InvariantQuadraticForm( g ).matrix;
@@ -60,6 +70,16 @@ gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
 >                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
 >            Error( "problem with SO(", e, ",", d, ",", q, ")" );
 >          fi;
+>          if e = 0 then
+>            if not ( is_equal( g, SpecialOrthogonalGroup( d, q, g ) ) and
+>                     is_equal( g, SpecialOrthogonalGroup( d, q, stored ) ) and
+>                     is_equal( g, SpecialOrthogonalGroup( d, q, form ) ) and
+>                     is_equal( g, SpecialOrthogonalGroup( d, F, g ) ) and
+>                     is_equal( g, SpecialOrthogonalGroup( d, F, stored ) ) and
+>                     is_equal( g, SpecialOrthogonalGroup( d, F, form ) ) ) then
+>              Error( "problem with SO(", d, ",", q, ")" );
+>            fi;
+>          fi;
 >          # Omega(e,d,q)
 >          g:= Omega( e, d, q );
 >          stored:= InvariantQuadraticForm( g ).matrix;
@@ -74,9 +94,22 @@ gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
 >                   is_equal( g, Omega( e, d, q, g ) ) and
 >                   is_equal( g, Omega( e, d, q, stored ) ) and
 >                   is_equal( g, Omega( e, d, q, form ) ) and
+>                   is_equal( g, Omega( e, d, F, g ) ) and
+>                   is_equal( g, Omega( e, d, F, stored ) ) and
+>                   is_equal( g, Omega( e, d, F, form ) ) and
 >                   IsSubset( gg, GeneratorsOfGroup( gg ) ) and
 >                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
 >            Error( "problem with Omega(", e, ",", d, ",", q, ")" );
+>          fi;
+>          if e = 0 then
+>            if not ( is_equal( g, Omega( d, q, g ) ) and
+>                     is_equal( g, Omega( d, q, stored ) ) and
+>                     is_equal( g, Omega( d, q, form ) ) and
+>                     is_equal( g, Omega( d, F, g ) ) and
+>                     is_equal( g, Omega( d, F, stored ) ) and
+>                     is_equal( g, Omega( d, F, form ) ) ) then
+>              Error( "problem with Omega", d, ",", q, ")" );
+>            fi;
 >          fi;
 >        od;
 >      od;
