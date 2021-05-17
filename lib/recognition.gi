@@ -9,9 +9,9 @@
 ##  Copyright (C) 1996,  Lehrstuhl D fuer Mathematik, RWTH Aachen, Germany
 ##
 ##  This file contains functions to compute sesquilinear forms invariant under
-##  matrix groups.  
+##  matrix groups.
 ##
-##  *** Bamberg and De Beule are very grateful to Frank Celler for 
+##  *** Bamberg and De Beule are very grateful to Frank Celler for
 ##  generously providing the bulk of this code.  ***
 ##
 #############################################################################
@@ -37,7 +37,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
     Minv := M^-1;
     tM := Trace(M); tMi := Trace(Minv)^qq; # Frobenius of trace
     if (IsZero(tM) and not IsZero(tMi)) or
-       (not IsZero(tM) and IsZero(tMi)) then 
+       (not IsZero(tM) and IsZero(tMi)) then
         return false;
     fi;
 
@@ -52,7 +52,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
     i0 := I*t;
 
     if not IsZero(tM) and not IsZero(tMi) then
-	return [i0, tM/tMi];
+        return [i0, tM/tMi];
     fi;
 
     # compute gcd representation
@@ -64,7 +64,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
 
     # check: $\forall_i: \bar c_{d-i}c_0=c_i\lambda^i$
     if ForAny([1..Length(I)-1],x->l[x]<>a^QuoInt(I[x],i0)) then
-        Info( InfoForms, 1, 
+        Info( InfoForms, 1,
          "characteristic polynomial does not reveal scalar\n" );
       return false;
     fi;
@@ -72,7 +72,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
     # compute a square root of <alpha>
     a:=NthRoot(F,a,(qq+1)*i0);
     if a=fail then
-        Info( InfoForms, 1, 
+        Info( InfoForms, 1,
         "characteristic polynomial does not reveal scalar\n" );
       return false;
     fi;
@@ -98,8 +98,8 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsFrobenius,
         m1 := PseudoRandom(grp);
         a1 := ClassicalForms_ScalarMultipleFrobenius(field,m1);
         if IsList(a1) and a1[1]=1 then
-	        a1:=a1[2];
-	        Add(gens, m1*a1^-1);
+            a1:=a1[2];
+            Add(gens, m1*a1^-1);
         fi;
     od;
     new := GModuleByMats( gens, field );
@@ -113,7 +113,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsFrobenius,
                 m1 := PseudoRandom(grp);
                 a1 := ClassicalForms_ScalarMultipleFrobenius(field,m1);
             until IsList(a1) and a1[1]=1;
-	     a1:=a1[2];
+            a1:=a1[2];
             Add( gens, m1*a1^-1 );
         od;
 
@@ -144,7 +144,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleDual,
 
     Minv := M^-1;
     if Trace(M) = z and Trace(Minv) <> z or
-       Trace(M) <> z and Trace(Minv) = z then 
+       Trace(M) <> z and Trace(Minv) = z then
         return false;
     fi;
     # make sure that <d> and <d>-i both occur
@@ -165,7 +165,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleDual,
 
     # check: $\forall_i: c_{d-i}c_0=c_i\lambda^i
     if ForAny([1..Length(I)-1],x->(l[x]<>a^QuoInt(I[x],i0))) then
-        Info( InfoForms, 1, 
+        Info( InfoForms, 1,
           "characteristic polynomial does not reveal scalar\n" );
       return false;
     fi;
@@ -198,8 +198,8 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsDual,
         m1 := PseudoRandom(grp);
         a1 := ClassicalForms_ScalarMultipleDual(field,m1);
         if IsList(a1) and a1[1]=1 then
-	        a1:=a1[2];
-	        Add(gens, m1*a1^-1);
+            a1:=a1[2];
+            Add(gens, m1*a1^-1);
         fi;
     od;
     new := GModuleByMats( gens, field );
@@ -213,7 +213,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsDual,
                 m1 := PseudoRandom(grp);
                 a1 := ClassicalForms_ScalarMultipleDual(field,m1);
             until IsList(a1) and a1[1]=1;
-	        a1:=a1[2];
+            a1:=a1[2];
             Add(gens, m1*a1^-1);
         od;
         new := GModuleByMats( gens, field );
@@ -239,7 +239,7 @@ InstallGlobalFunction( ClassicalForms_Signum2,
         # find first non zero entry
         d:=1;
         while d in avoid or IsZero(form[i][d])  do
-	        d:=d+1;
+            d:=d+1;
         od;
         Add(avoid, d);
 
@@ -250,8 +250,8 @@ InstallGlobalFunction( ClassicalForms_Signum2,
                 for k  in [ i .. Length(form) ]  do
                     form[k][j] := form[k][j] - c*form[k][d];
                 od;
-		        AddRowVector(form[j],form[d],c);
-		        AddRowVector(base[j],base[d],c);
+                AddRowVector(form[j],form[d],c);
+                AddRowVector(base[j],base[d],c);
             fi;
         od;
     od;
@@ -436,7 +436,7 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm,
 #F  ClassicalForms_InvariantFormDual( <module>, <dmodule> )
 ##
 ClassicalForms_InvariantFormDual := function( module, dmodule )
-    local   hom,  scalars,  form,  iform,  identity,  field,  root,  
+    local   hom,  scalars,  form,  iform,  identity,  field,  root,
             q,  i,  m,  a,  quad,  sgn;
 
     # <dmodule> acts absolutely irreducible without scalars
@@ -460,11 +460,11 @@ ClassicalForms_InvariantFormDual := function( module, dmodule )
         m := i * form * TransposedMat(i) * iform;
         a := m[1][1];
         if m <> a*identity  then
-            Info(InfoForms, 1, 
+            Info(InfoForms, 1,
                 "form is not invariant under all generators\n" );
             return false;
         fi;
-	    a := NthRoot(field,a,2);
+        a := NthRoot(field,a,2);
         Add( scalars, a );
     od;
 
@@ -538,9 +538,9 @@ local   F,  k,  dim,  mats,  dmats,  qq,  i,  j,  l;
     qq    := Characteristic(F) ^ ( k / 2 );
     for i  in [ 1 .. Length(mats) ]  do
       for j  in [ 1 .. dim ]  do
-	for l  in [ 1 .. dim ]  do
-	  dmats[i][j][l] := mats[i][l][j]^qq;
-	od;
+        for l  in [ 1 .. dim ]  do
+          dmats[i][j][l] := mats[i][l][j]^qq;
+        od;
       od;
       dmats[i]:=ImmutableMatrix(F,dmats[i]);
     od;
@@ -551,7 +551,7 @@ end;
 
 
 ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
-    local   fro,  hom,  form,  q,  qq,  k,  a,  scalars,  iform,  
+    local   fro,  hom,  form,  q,  qq,  k,  a,  scalars,  iform,
             identity,  field,  root,  i,  m,  j;
 
     # <fmodule> acts absolutely irreducible without scalars
@@ -587,7 +587,7 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
         m := i * form * TransposedFrobeniusMat(i,qq) * iform;
         a := m[1][1];
         if m <> a*identity  then
-            Info(InfoForms, 1, 
+            Info(InfoForms, 1,
                  "form is not invariant under all generators\n" );
             return false;
         fi;
@@ -628,41 +628,41 @@ InstallGlobalFunction(PossibleClassicalForms,
     grp   := arg[1];
     g     := arg[2];
     if Length(arg) = 3 then
-	forms := arg[3];
+        forms := arg[3];
     else forms := rec();
          forms.maybeDual := true;
          f := DefaultFieldOfMatrixGroup(grp);
-    	   forms.field := f;
+         forms.field := f;
          forms.maybeFrobenius := DegreeOverPrimeField(f) mod 2 = 0;
     fi;
 
-    c := CharacteristicPolynomial(g); 
+    c := CharacteristicPolynomial(g);
     c := CoefficientsOfUnivariatePolynomial(c);
 
-    d := DimensionOfMatrixGroup(grp); 
+    d := DimensionOfMatrixGroup(grp);
     f := forms.field;
     z := Zero(f);
     q := Size(f);
     Minv := g^-1;
-    tM := Trace(g); tMi := Trace(Minv); 
+    tM := Trace(g); tMi := Trace(Minv);
 
     if forms.maybeFrobenius then
         qq := Characteristic(f)^(DegreeOverPrimeField(f)/2);
-	  tMi := tMi^qq;               # Frobenius of trace
+        tMi := tMi^qq;               # Frobenius of trace
     fi;
 
     if (IsZero(tM) and not IsZero(tMi)) or
-       (not IsZero(tM) and IsZero(tMi)) then 
-	forms.maybeFrobenius := false;
-	forms.maybeDual := false;
+       (not IsZero(tM) and IsZero(tMi)) then
+        forms.maybeFrobenius := false;
+        forms.maybeDual := false;
         return false;
     fi;
 
     I := Filtered( [0 .. d],  x -> (not IsZero(c[x+1]) ));
     # make sure that <d> and <d>-i both occur
     if ForAny( I, x ->  IsZero(c[d-x+1]) )  then
-	forms.maybeFrobenius := false;
-	forms.maybeDual := false;
+        forms.maybeFrobenius := false;
+        forms.maybeDual := false;
         return false;
     fi;
     Add(I,q-1);
@@ -672,32 +672,32 @@ InstallGlobalFunction(PossibleClassicalForms,
     i0:=I*t;
 
     if not IsZero(tM) and not IsZero(tMi) then
-	return [i0, tM/tMi];
+        return [i0, tM/tMi];
     fi;
 
 
-    if forms.maybeDual  then 
-	    a  := c[1];
-	    l  := List( [1..Length(I)-1], 
-			x ->(a*c[d-I[x]+1]/c[I[x]+1]) );
-	    g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
-	    if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
-		forms.maybeDual := false;
-	    fi;
+    if forms.maybeDual  then
+        a  := c[1];
+        l  := List( [1..Length(I)-1],
+                    x ->(a*c[d-I[x]+1]/c[I[x]+1]) );
+        g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
+            forms.maybeDual := false;
+        fi;
     fi;
     if forms.maybeFrobenius  then
-	    a  := c[1];
-	    l  := List([1..Length(I)-1], x ->
-	               (a*c[d-I[x]+1]^qq/c[I[x]+1]));
-	    g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
-	    if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
-	        forms.maybeFrobenius := false;
-	    fi;
+        a  := c[1];
+        l  := List([1..Length(I)-1], x ->
+                   (a*c[d-I[x]+1]^qq/c[I[x]+1]));
+        g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
+            forms.maybeFrobenius := false;
+        fi;
     fi;
     if forms.maybeDual = false and forms.maybeFrobenius = false then
-	return false;
+        return false;
     else
-	return true;
+        return true;
     fi;
 end);
 
@@ -725,7 +725,7 @@ end);
     # set the possibilities
 #    forms.maybeDual      := true;
 #    forms.maybeFrobenius := DegreeOverPrimeField(field) mod 2 = 0;
- 
+
 #    if forms.maybeFrobenius  then
 #        qq := Characteristic(field)^(DegreeOverPrimeField(field)/2);
 #    fi;
@@ -737,11 +737,11 @@ end);
 #           PossibleClassicalForms( grp, g, forms );
 #        fi;
 #    od;
-  
-    # if all forms are excluded then we are finished 
+
+    # if all forms are excluded then we are finished
 #    if not forms.maybeDual and not forms.maybeFrobenius  then
 #       i := Size(One(g));
-#	 return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
+#        return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
 #    fi;
 
     # <grp> must act absolutely irreducibly
@@ -782,7 +782,7 @@ end);
 #            forms.maybeFrobenius := false;
 #        fi;
 #    fi;
-    # if all forms are excluded then we are finished 
+    # if all forms are excluded then we are finished
 #    if not forms.maybeDual and not forms.maybeFrobenius  then
 #            Add( forms.invariantforms, [ "linear" ] );
 #    fi;
@@ -802,7 +802,7 @@ end);
 #          Add( newforms, newform );
 #       elif y[1] = "linear" then
 #          i := Size(One(g));
-#	      newform := BilinearFormByMatrix( NullMat(i,i,field), field );
+#          newform := BilinearFormByMatrix( NullMat(i,i,field), field );
 #          Add( newforms, newform );
 #       fi;
 #    od;
@@ -836,15 +836,15 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
     if not ForAll(Flat(g), t -> t in form!.basefield) then
        Error("fields are incompatible");
     fi;
- 
-    ## check that g is invertible 
-    if IsZero(Determinant(g)) then 
+
+    ## check that g is invertible
+    if IsZero(Determinant(g)) then
        Error("g must be invertible");
     fi;
-    
+
     ## now check to see if g is a similarity, and then
     ## determine the scalar
-    
+
     m := EvaluateForm(form, g, g);
     pos := PositionNonZero( m[1] );
     scalar := m[1][pos] / gram[1][pos];
@@ -860,11 +860,11 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
 ##
 InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
   function( grp )
-    local   forms, field, i, g, qq, c, module,  invariantforms,  
+    local   forms, field, i, g, qq, c, module,  invariantforms,
             dmodule, fmodule, form, y, newform, newforms;
     field := DefaultFieldOfMatrixGroup(grp);
 
-    forms := rec();   
+    forms := rec();
     forms.field := field;
     forms.invariantforms := [];
     forms.maybeDual      := false;
@@ -883,23 +883,23 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
 
     # We first perform some inexpensive tests with a few random elements
     for i in [1 .. 8]  do
-        g := PseudoRandom(grp); 
-        if forms.maybeDual or forms.maybeFrobenius  then 
+        g := PseudoRandom(grp);
+        if forms.maybeDual or forms.maybeFrobenius  then
            PossibleClassicalForms( grp, g, forms );
         fi;
     od;
 
-    # if all forms are excluded then we are finished 
+    # if all forms are excluded then we are finished
     if not forms.maybeDual and not forms.maybeFrobenius  then
-       i := Size(One(g));
-	 return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
+        i := Size(One(g));
+        return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
     fi;
 
     # <grp> must act absolutely irreducibly
-    if not MTX.IsAbsolutelyIrreducible(module)  then	
+    if not MTX.IsAbsolutelyIrreducible(module)  then
         Error("Currently the use of MeatAxe requires the module to be absolutely irreducible");
         #Info( InfoForms, 1,  "grp not absolutely irreducible\n" );
-        #return []; 
+        #return [];
     fi;
 
     # try to find generators without scalars
@@ -934,7 +934,7 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
             forms.maybeFrobenius := false;
         fi;
     fi;
-    # if all forms are excluded then we are finished 
+    # if all forms are excluded then we are finished
     if not forms.maybeDual and not forms.maybeFrobenius  then
             Add( forms.invariantforms, [ "linear" ] );
     fi;
@@ -960,9 +960,9 @@ InstallMethod( PreservedForms,
     forms := PreservedFormsOp(grp);
     for y in forms!.invariantforms do
        if y[1] in ["orthogonalplus", "orthogonalminus", "orthogonalcircle"] then
-		  newform := QuadraticFormByMatrix(y[4], field);
-		  Info(InfoForms, 1, Concatenation("preserved up to the following scalars: ", String(y[3])) );
-		  Info(InfoForms, 1, y[1] );
+          newform := QuadraticFormByMatrix(y[4], field);
+          Info(InfoForms, 1, Concatenation("preserved up to the following scalars: ", String(y[3])) );
+          Info(InfoForms, 1, y[1] );
           Add( newforms, newform );
        elif y[1] = "symplectic" then
           newform := BilinearFormByMatrix(y[2], field);
@@ -972,7 +972,7 @@ InstallMethod( PreservedForms,
           Add( newforms, newform );
        elif y[1] = "linear" then
           i := Size(One(grp));
-	      newform := BilinearFormByMatrix( NullMat(i,i,field), field );
+          newform := BilinearFormByMatrix( NullMat(i,i,field), field );
           Add( newforms, newform );
        fi;
     od;
