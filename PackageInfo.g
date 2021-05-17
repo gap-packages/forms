@@ -33,7 +33,6 @@ Persons := [
     Email         := "bamberg@maths.uwa.edu.au",
     WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
     PostalAddress := Concatenation( [
-                       "John Bamberg\n",
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
                        "35 Stirling Highway\n",
@@ -50,7 +49,6 @@ Persons := [
     Email         := "jan@debeule.eu",
     WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
-                       "Jan De Beule\n",
                        "Department of Mathematics\n",
                        "Vrije Universiteit Brussel\n",
                        "Pleinlaan 2\n",
@@ -107,7 +105,19 @@ SourceRepository := rec(
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
 CommunicatedBy := "Leonard Soicher (London)",
-AcceptDate := "03/2009"
+AcceptDate := "03/2009",
+
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+            "&copyright; 2018 by the authors<P/>\n\n",
+            "This package may be distributed under the terms and conditions ",
+            "of the GNU Public License Version 2 or (at your option) any later version.\n"
+            ),
+    )
+),
+
 
 ));
 
