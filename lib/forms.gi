@@ -731,7 +731,7 @@ InstallMethod( RadicalOfForm, "for a sesquilinear form",
     gf := f!.basefield;
     d := Size(m);
     null := NullspaceMat( m );
-    return Subspace( gf^d, null );
+    return Subspace( gf^d, null, "basis" );
   end );
 
 InstallMethod( RadicalOfForm, "for a quadratic form",
@@ -758,7 +758,7 @@ InstallMethod( RadicalOfForm, "for a trivial form",
     gf := f!.basefield;
     d := Size(m);
     null := NullspaceMat( m );
-    return Subspace( gf^d, null );
+    return Subspace( gf^d, null, "basis" );
   end );
 
 InstallMethod( DiscriminantOfForm, [ IsQuadraticForm ],
