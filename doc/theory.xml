@@ -211,14 +211,14 @@ In the next example, the chosen matrix is somewhat special. Together with the co
 automorphism, it determines a hermitian sesquilinear form. Without the companion
 automorphism, it determines an alternating bilinear form.
 
-<Example>
+<Example><![CDATA[
 gap> mat := [[0*Z(5),0*Z(5),0*Z(25),Z(25)^3],[0*Z(5),0*Z(5),Z(25)^3,0*Z(25)],
 >         [0*Z(5),-Z(25)^3,0*Z(5),0*Z(5)],[-Z(25)^3,0*Z(5),0*Z(25),0*Z(25)]];
 [ [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5^2)^3 ], [ 0*Z(5), 0*Z(5), Z(5^2)^3, 0*Z(5) ], 
   [ 0*Z(5), Z(5^2)^15, 0*Z(5), 0*Z(5) ], 
   [ Z(5^2)^15, 0*Z(5), 0*Z(5), 0*Z(5) ] ]
 gap> form := HermitianFormByMatrix(mat,GF(25));
-&lt; hermitian form >
+< hermitian form >
 gap> Display(form);
 Hermitian form
 Gram Matrix:
@@ -230,7 +230,7 @@ z = Z(25)
 gap> WittIndex(form);
 2
 gap> form2 := BilinearFormByMatrix(mat,GF(25));
-&lt; bilinear form >
+< bilinear form >
 gap> Display(form2);
 Bilinear form
 Gram Matrix:
@@ -257,13 +257,13 @@ Gram Matrix:
  . . . 1
  . . 4 .
 Witt Index: 2
-</Example>
+]]></Example>
 We continue the previous example by exploring a little bit the sesquilinear form
 <A>form</A>, and hence demonstrate some of the functionality of the
 <Package>Forms</Package> package. Eventually, we find a 2-dimensional totally
 isotropic subspace, which lets us conclude that the Witt index of <M>form</M> is at
 least 2, which is confirmed afterwards by calling the appropriate function.
-<Example>
+<Example><![CDATA[
 gap> V := GF(25)^4;
 ( GF(5^2)^4 )
 gap> u := [Z(5)^0,Z(5^2)^11,Z(5)^3,Z(5^2)^13 ];
@@ -295,12 +295,12 @@ gap> [u,w]^form;
 gap> [v,w]^form;
 0*Z(5)
 gap> s := Subspace(V,[v,u,w]);
-&lt;vector space over GF(5^2), with 3 generators>
+<vector space over GF(5^2), with 3 generators>
 gap> Dimension(s);
 2
 gap> WittIndex(form);
 2
-</Example>
+]]></Example>
 </Subsection>
 </Section>
 
