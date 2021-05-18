@@ -182,28 +182,103 @@ with particular aspects of this package. All the functionality for sesquilinear 
 in detail in the next chapter.
 <P/>
 We try to construct a bilinear form...
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex1.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[1,0,0],[0,1,4],[1,2,1]]*Z(5)^0;
+[ [ Z(5)^0, 0*Z(5), 0*Z(5) ], [ 0*Z(5), Z(5)^0, Z(5)^2 ], 
+  [ Z(5)^0, Z(5), Z(5)^0 ] ]
+gap> form := BilinearFormByMatrix(mat,GF(5));
+Error, Invalid Gram matrix
+ called from
+BilinearFormByMatrixOp( MutableCopyMat( m ), f 
+ ) at ./pkg/forms/lib/forms.gi:164 called from
+<function "unknown">( <arguments> )
+ called from read-eval loop at line 8 of *stdin*
+you can 'return;' to continue
+]]></Example>
 It is clear that the matrix used is not defining a reflexive bilinear form,
 which causes the system to generate the error message. 
 <P/>
 We construct now a reflexive bilinear form. We investigate also the radical of the
 form.
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex2.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,-1]]*Z(9)^0;
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3) ] ]
+gap> form := BilinearFormByMatrix(mat,GF(9));
+< bilinear form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+ 1 . . .
+ . 1 . .
+ . . 1 .
+ . . . 2
+gap> IsReflexiveForm(form);
+true
+gap> IsSymmetricForm(form);
+true
+gap> IsAlternatingForm(form);
+false
+gap> r := RadicalOfForm(form);
+<vector space over GF(3^2), with 0 generators>
+gap> Dimension(r);
+0
+]]></Example>
 <P/>
 Degenerate forms are allowed. As an example we construct an alternating bilinear
 form on an odd dimensional vector space.
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex3.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[0,0,-2],[0,0,1],[2,-1,0]]*Z(7)^0;
+[ [ 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^0 ], 
+  [ Z(7)^2, Z(7)^3, 0*Z(7) ] ]
+gap> form := BilinearFormByMatrix(mat,GF(7));
+< bilinear form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+ . . 5
+ . . 1
+ 2 6 .
+gap> IsSymmetricForm(form);
+false
+gap> IsAlternatingForm(form);
+true
+gap> r := RadicalOfForm(form);
+<vector space over GF(7), with 1 generators>
+gap> Dimension(r);
+1
+]]></Example>
 When the characteristic of the field equals two, alternating forms are also
 symmetric. We construct an example.
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex4.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[0,1,0,0,0,0],[1,0,0,0,0,0],[0,0,0,0,0,1],
+>         [0,0,0,0,1,0],[0,0,0,1,0,0],[0,0,1,0,0,0]]*Z(16)^0;
+[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap> form := BilinearFormByMatrix(mat,GF(16));
+< bilinear form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+ . 1 . . . .
+ 1 . . . . .
+ . . . . . 1
+ . . . . 1 .
+ . . . 1 . .
+ . . 1 . . .
+gap> IsSymmetricForm(form);
+true
+gap> IsAlternatingForm(form);
+true
+gap> IsDegenerateForm(form);
+false
+gap> WittIndex(form);
+3
+]]></Example>
 
 To define a hermitian form, we need a matrix and the companion automorphism. Since
 this automorphism has order 2, it exists and is unique if the ground field has square order.
@@ -433,24 +508,117 @@ for quadratic forms will be listed in detail in the next chapter.
 The user can construct quadratic forms using any matrix (provided it has the
 right dimension). The Gram matrix is always stored as an upper triangle matrix,
 as explained above.
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex6.include"> 
-</Example>
+<Example><![CDATA[
+gap> V := GF(4)^3;                           
+( GF(2^2)^3 )
+gap> mat := [[Z(2^2)^2,Z(2^2),Z(2^2)^2],[Z(2^2)^2,Z(2)^0,Z(2)^0],
+>         [0*Z(2),Z(2)^0,0*Z(2)]];
+[ [ Z(2^2)^2, Z(2^2), Z(2^2)^2 ], [ Z(2^2)^2, Z(2)^0, Z(2)^0 ], 
+  [ 0*Z(2), Z(2)^0, 0*Z(2) ] ]
+gap> qform := QuadraticFormByMatrix(mat, GF(4));
+< quadratic form >
+gap> Display( qform );
+Quadratic form
+Gram Matrix:
+z = Z(4)
+ z^2   1 z^2
+   .   1   .
+   .   .   .
+gap> PolynomialOfForm( qform );
+Z(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2
+]]></Example>
 In the previous example, we saw how we used a polynomial to display a
 quadratic form. Conversely, <Package>Forms</Package> allows the user to
 construct (quadratic) forms using a polynomial.
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex7.include"> 
-</Example>
+<Example><![CDATA[
+gap> r := PolynomialRing(GF(8),4);
+GF(2^3)[x_1,x_2,x_3,x_4]
+gap> poly := r.1*r.2+r.3*r.4;
+x_1*x_2+x_3*x_4
+gap> qform := QuadraticFormByPolynomial(poly, r);
+< quadratic form >
+gap> Display(qform);
+Quadratic form
+Gram Matrix:
+ . 1 . .
+ . . . .
+ . . . 1
+ . . . .
+Polynomial: x_1*x_2+x_3*x_4
+
+gap> RadicalOfForm(qform);
+<vector space over GF(2^3), with 0 generators>
+]]></Example>
 We construct now two different quadratic forms with the same associated bilinear form.
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex8.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[Z(16)^3,1,0,0],[0,Z(16)^5,0,0],
+>              [0,0,Z(16)^3,1],[0,0,0,Z(16)^12]]*Z(16)^0;
+[ [ Z(2^4)^3, Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2^4)^3, Z(2)^0 ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2^4)^12 ] 
+ ]
+gap> qform := QuadraticFormByMatrix(mat,GF(16));
+< quadratic form >
+gap> Display( qform );
+Quadratic form
+Gram Matrix:
+z = Z(16)
+  z^3    1    .    .
+    .  z^5    .    .
+    .    .  z^3    1
+    .    .    . z^12
+gap> mat2 := [[Z(16)^7,1,0,0],[0,0,0,0],
+>              [0,0,Z(16)^2,1],[0,0,0,Z(16)^9]]*Z(16)^0;
+[ [ Z(2^4)^7, Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2^4)^2, Z(2)^0 ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2^4)^9 ] ]
+gap> qform2 := QuadraticFormByMatrix(mat2, GF(16));
+< quadratic form >
+gap> Display( qform2 );
+Quadratic form
+Gram Matrix:
+z = Z(16)
+  z^7    1    .    .
+    .    .    .    .
+    .    .  z^2    1
+    .    .    .  z^9
+gap> biform := AssociatedBilinearForm( qform2 );
+< bilinear form >
+gap> Display( biform );
+Bilinear form
+Gram Matrix:
+ . 1 . .
+ 1 . . .
+ . . . 1
+ . . 1 .
+]]></Example>
 We end with an example of a non-singular quadratic form with a degenerate
 associated bilinear form.
-<Example>
-<#Include SYSTEM "../examples/include/bg_th_ex9.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [ [ Z(2^2), Z(2^2), Z(2^2), Z(2^2), Z(2^2) ], 
+>    [ 0*Z(2), Z(2^2), Z(2^2)^2, 0*Z(2), Z(2)^0 ], 
+>    [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ], 
+>    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], 
+>    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ];;
+gap> qform := QuadraticFormByMatrix(mat,GF(4));
+< quadratic form >
+gap> IsSingularForm(qform);
+false
+gap> IsDegenerateForm(qform);
+#I  Testing degeneracy of the *associated bilinear form*
+true
+gap> biform := AssociatedBilinearForm(qform);
+< bilinear form >
+gap> Display(biform);
+Bilinear form
+Gram Matrix:
+z = Z(4)
+   . z^1 z^1 z^1 z^1
+ z^1   . z^2   .   1
+ z^1 z^2   .   1   1
+ z^1   .   1   .   1
+ z^1   1   1   1   .
+gap> IsDegenerateForm(biform);
+true
+]]></Example>
 
 </Subsection>
 </Section>

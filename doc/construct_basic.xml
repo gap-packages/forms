@@ -67,9 +67,52 @@ is returned. The output is a bilinear form (i.e., an object in
 <C>IsBilinearForm</C>) with Gram matrix <A>matrix</A> and defining field
 <A>field</A>. (See <Ref Sect="theory:sesquilinearforms"/> for more on bilinear
 forms).
-<Example>
-<#Include SYSTEM "../examples/include/bilformbymatrix.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := IdentityMat(4, GF(9));
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap> form := BilinearFormByMatrix(mat,GF(9));
+< bilinear form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+ 1 . . .
+ . 1 . .
+ . . 1 .
+ . . . 1
+gap> mat := [[0*Z(2),Z(16)^12,0*Z(2),Z(4)^2,Z(16)^13],
+>    [Z(16)^12,0*Z(2),0*Z(2),Z(16)^11,Z(16)],
+>    [0*Z(2),0*Z(2),0*Z(2),Z(4)^2,Z(16)^3],
+>    [Z(4)^2,Z(16)^11,Z(4)^2,0*Z(2),Z(16)^3],
+>    [Z(16)^13,Z(16),Z(16)^3,Z(16)^3,0*Z(2) ]];
+[ [ 0*Z(2), Z(2^4)^12, 0*Z(2), Z(2^2)^2, Z(2^4)^13 ], 
+  [ Z(2^4)^12, 0*Z(2), 0*Z(2), Z(2^4)^11, Z(2^4) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2^2)^2, Z(2^4)^3 ], 
+  [ Z(2^2)^2, Z(2^4)^11, Z(2^2)^2, 0*Z(2), Z(2^4)^3 ], 
+  [ Z(2^4)^13, Z(2^4), Z(2^4)^3, Z(2^4)^3, 0*Z(2) ] ]
+gap> form := BilinearFormByMatrix(mat,GF(16));
+< bilinear form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+z = Z(16)
+    . z^12    . z^10 z^13
+ z^12    .    . z^11  z^1
+    .    .    . z^10  z^3
+ z^10 z^11 z^10    .  z^3
+ z^13  z^1  z^3  z^3    .
+gap> mat := [[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]]*Z(7)^0;
+[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ], [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ] ]
+gap> form := BilinearFormByMatrix(mat);
+< bilinear form >
+gap> WittIndex(form);
+1
+gap> form := BilinearFormByMatrix(mat,GF(49));
+< bilinear form >
+gap> WittIndex(form);
+2
+]]></Example>
 </Description>
 </ManSection>
 
@@ -86,14 +129,52 @@ matrix determines a quadratic form, but the Gram matrix is recomputed so that it
 is an upper triangle matrix. The output is a quadratic form (i.e., an object in
 <C>IsQuadraticForm</C>) with defining field <A>field</A>. (See <Ref
 Sect="quadforms"/> for more on bilinear forms).
-<Example>
-<#Include SYSTEM "../examples/include/quadformbymatrix.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[1,0,0,0],[0,3,0,0],[0,0,0,6],[0,0,6,0]]*Z(7)^0;
+[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [ 0*Z(7), Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^3 ], [ 0*Z(7), 0*Z(7), Z(7)^3, 0*Z(7) ] ]
+gap> form := QuadraticFormByMatrix(mat,GF(7));
+< quadratic form >
+gap> Display(form);
+Quadratic form
+Gram Matrix:
+ 1 . . .
+ . 3 . .
+ . . . 5
+ . . . .
+gap> gf := GF(2^2);
+GF(2^2)
+gap> mat := InvariantQuadraticForm( SO(-1, 4, 4) )!.matrix;
+[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2^2)^2, Z(2)^0 ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2^2)^2 ] ]
+gap> form := QuadraticFormByMatrix( mat, gf );
+< quadratic form >
+gap> Display(form);
+Quadratic form
+Gram Matrix:
+z = Z(4)
+   .   1   .   .
+   .   .   .   .
+   .   . z^2   1
+   .   .   . z^2
+]]></Example>
 The following example shows how using the argument <A>field</A> has influence on
 the properties of the constructed form.
-<Example>
-<#Include SYSTEM "../examples/include/quadformfields.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := 
+> [[Z(2)^0,Z(2)^0,0*Z(2),0*Z(2)],[0*Z(2),Z(2)^0,0*Z(2),0*Z(2)], 
+>  [0*Z(2),0*Z(2),0*Z(2),Z(2)^0],[0*Z(2),0*Z(2),0*Z(2),0*Z(2)]];
+[ [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap> form := QuadraticFormByMatrix(mat);
+< quadratic form >
+gap> WittIndex(form);
+1
+gap> form := QuadraticFormByMatrix(mat,GF(4));
+< quadratic form >
+gap> WittIndex(form);
+2
+]]></Example>
 </Description>
 </ManSection>
 
@@ -110,9 +191,34 @@ sesquilinear forms, it is checked whether the matrix is a hermitian matrix, and 
 not, an error message is returned. The output is a hermitian sesquilinear form (i.e., an object in
 <C>IsHermitianForm</C>) with Gram matrix <A>matrix</A> and
 defining field <A>field</A>. (See <Ref Sect="theory:sesquilinearforms"/> for more on hermitian forms).
-<Example>
-<#Include SYSTEM "../examples/include/hermitianformbymatrix.include"> 
-</Example>
+<Example><![CDATA[
+gap> gf := GF(3^2);
+GF(3^2)
+gap> mat := IdentityMat(4, gf);
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap> form := HermitianFormByMatrix( mat, gf );
+< hermitian form >
+gap> Display(form);
+Hermitian form
+Gram Matrix:
+ 1 . . .
+ . 1 . .
+ . . 1 .
+ . . . 1
+gap> mat := [[Z(11)^0,0*Z(11),0*Z(11)],[0*Z(11),0*Z(11),Z(11)],
+>     [0*Z(11),Z(11),0*Z(11)]];
+[ [ Z(11)^0, 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), Z(11) ], 
+  [ 0*Z(11), Z(11), 0*Z(11) ] ]
+gap> form := HermitianFormByMatrix(mat,GF(121));
+< hermitian form >
+gap> Display(form);
+Hermitian form
+Gram Matrix:
+  1  .  .
+  .  .  2
+  .  2  .
+]]></Example>
 </Description>
 </ManSection>
 </Section>
@@ -153,9 +259,38 @@ given field, and if not, an error message is returned. It is not possible to
 construct a nontrivial bilinear form from a polynomial in even characteristic. The output is 
 a bilinear (orthogonal) form in the category <C>IsBilinearForm</C>. 
 (See <Ref Sect="theory:sesquilinearforms"/> for more on bilinear forms).
-<Example>
-<#Include SYSTEM "../examples/include/bilformbypoly.include"> 
-</Example>
+<Example><![CDATA[
+gap> r := PolynomialRing( GF(11), 4);
+GF(11)[x_1,x_2,x_3,x_4]
+gap> vars := IndeterminatesOfPolynomialRing( r );
+[ x_1, x_2, x_3, x_4 ]
+gap> pol := vars[1]*vars[2]+vars[3]*vars[4];
+x_1*x_2+x_3*x_4
+gap> form := BilinearFormByPolynomial(pol, r, 4);
+< bilinear form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+  .  6  .  .
+  6  .  .  .
+  .  .  .  6
+  .  .  6  .
+Polynomial: x_1*x_2+x_3*x_4
+
+gap> r := PolynomialRing(GF(4),2);
+GF(2^2)[x_1,x_2]
+gap> pol := r.1*r.2;
+x_1*x_2
+gap> form := BilinearFormByPolynomial(pol,r);
+Error, No orthogonal form can be associated with a quadratic polynomial in even chara\
+cteristic
+ called from
+BilinearFormByPolynomial( pol, pring, n 
+ ) at ./pkg/forms/lib/forms.gi:470 called from
+<function "unknown">( <arguments> )
+ called from read-eval loop at line 14 of *stdin*
+you can 'return;' to continue
+]]></Example>
 </Description>
 </ManSection>
 
@@ -170,9 +305,31 @@ by default is the number of indeterminates specified by <A>poly</A>. It is
 checked whether the polynomial is a homogeneous polynomial of degree two over the
 given field, and if not, an error message is returned. The output is a quadratic form in the category
 <C>IsQuadraticForm</C>. (See <Ref Sect="quadforms"/> for more on quadratic forms).
-<Example>
-<#Include SYSTEM "../examples/include/quadformbypoly.include"> 
-</Example>
+<Example><![CDATA[
+gap> r := PolynomialRing( GF(8), 3);
+GF(2^3)[x_1,x_2,x_3]
+gap> poly := r.1^2 + r.2^2 + r.3^2;
+x_1^2+x_2^2+x_3^2
+gap> form := QuadraticFormByPolynomial(poly, r);
+< quadratic form >
+gap> RadicalOfForm(form);
+<vector space over GF(2^3), with 63 generators>
+gap> r := PolynomialRing(GF(9),4);
+GF(3^2)[x_1,x_2,x_3,x_4]
+gap> poly := Z(3)^2*r.1^2+r.2^2+r.3*r.4;
+x_1^2+x_2^2+x_3*x_4
+gap> qform := QuadraticFormByPolynomial(poly,r);
+< quadratic form >
+gap> Display(qform);
+Quadratic form
+Gram Matrix:
+ 1 . . .
+ . 1 . .
+ . . . 1
+ . . . .
+Polynomial: x_1^2+x_2^2+x_3*x_4
+
+]]></Example>
 </Description>
 </ManSection>
 
@@ -191,9 +348,26 @@ checked whether the polynomial is a homogeneous polynomial of degree <M>q+1</M>,
 and if not, an error message is returned. The output
 is a hermitian form in the category <C>IsHermitianForm</C>.
 (See <Ref Sect="theory:sesquilinearforms"/> for more on hermitian forms).
-<Example>
-<#Include SYSTEM "../examples/include/hermitianformbypoly.include"> 
-</Example>
+<Example><![CDATA[
+gap> r := PolynomialRing( GF(9), 4);
+GF(3^2)[x_1,x_2,x_3,x_4]
+gap> vars := IndeterminatesOfPolynomialRing( r );
+[ x_1, x_2, x_3, x_4 ]
+gap> poly := vars[1]*vars[2]^3+vars[1]^3*vars[2]+
+>              vars[3]*vars[4]^3+vars[3]^3*vars[4];
+x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3
+gap> form := HermitianFormByPolynomial(poly,r);
+< hermitian form >
+gap> Display(form);
+Hermitian form
+Gram Matrix:
+ . 1 . .
+ 1 . . .
+ . . . 1
+ . . 1 .
+Polynomial: x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3
+
+]]></Example>
 </Description>
 </ManSection>
 
@@ -224,9 +398,50 @@ in <C>IsQuadraticForm</C>), such that <M>Q(v) = form(v,v)</M> for all vectors
 <M>v</M> in a vector space equipped with <M>form</M>. An error is returned when the 
 characteristic of the field is even, or
 when <M>form</M> is not orthogonal.
-<Example>
-<#Include SYSTEM "../examples/include/quadformbybilform.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [ [ Z(3^2)^7, Z(3)^0, Z(3^2)^2, 0*Z(3), Z(3^2)^5 ], 
+>    [ Z(3)^0, Z(3^2)^7, Z(3^2)^6, Z(3^2)^5, Z(3^2)^2 ], 
+>    [ Z(3^2)^2, Z(3^2)^6, Z(3^2)^7, Z(3^2)^2, Z(3^2)^2 ], 
+>    [ 0*Z(3), Z(3^2)^5, Z(3^2)^2, Z(3^2)^6, Z(3^2)^7 ], 
+>    [ Z(3^2)^5, Z(3^2)^2, Z(3^2)^2, Z(3^2)^7, Z(3) ] ];
+[ [ Z(3^2)^7, Z(3)^0, Z(3^2)^2, 0*Z(3), Z(3^2)^5 ], 
+  [ Z(3)^0, Z(3^2)^7, Z(3^2)^6, Z(3^2)^5, Z(3^2)^2 ], 
+  [ Z(3^2)^2, Z(3^2)^6, Z(3^2)^7, Z(3^2)^2, Z(3^2)^2 ], 
+  [ 0*Z(3), Z(3^2)^5, Z(3^2)^2, Z(3^2)^6, Z(3^2)^7 ], 
+  [ Z(3^2)^5, Z(3^2)^2, Z(3^2)^2, Z(3^2)^7, Z(3) ] ]
+gap> form := BilinearFormByMatrix(mat,GF(9));
+< bilinear form >
+gap> Q := QuadraticFormByBilinearForm(form);
+< quadratic form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+z = Z(9)
+ z^7   1 z^2   . z^5
+   1 z^7 z^6 z^5 z^2
+ z^2 z^6 z^7 z^2 z^2
+   . z^5 z^2 z^6 z^7
+ z^5 z^2 z^2 z^7   2
+gap> Display(Q);
+Quadratic form
+Gram Matrix:
+z = Z(9)
+ z^7   2 z^6   . z^1
+   . z^7 z^2 z^1 z^6
+   .   . z^7 z^6 z^6
+   .   .   . z^6 z^3
+   .   .   .   .   2
+gap> Set(List(GF(9)^5),x->[x,x]^form=x^Q);
+[ true ]
+gap> PolynomialOfForm(form);
+Z(3^2)^7*x_1^2-x_1*x_2+Z(3^2)^6*x_1*x_3+Z(3^2)*x_1*x_5+Z(3^2)^7*x_2^2+Z(3^2)^2\
+*x_2*x_3+Z(3^2)*x_2*x_4+Z(3^2)^6*x_2*x_5+Z(3^2)^7*x_3^2+Z(3^2)^6*x_3*x_4+Z(3^2\
+)^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2
+gap> PolynomialOfForm(Q);
+Z(3^2)^7*x_1^2-x_1*x_2+Z(3^2)^6*x_1*x_3+Z(3^2)*x_1*x_5+Z(3^2)^7*x_2^2+Z(3^2)^2\
+*x_2*x_3+Z(3^2)*x_2*x_4+Z(3^2)^6*x_2*x_5+Z(3^2)^7*x_3^2+Z(3^2)^6*x_3*x_4+Z(3^2\
+)^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2
+]]></Example>
 Note that the given bilinear form <A>form</A> is <B>not</B> the
 associated bilinear form of the constructed quadratic form <M>Q</M>, according to
 the definition in Section <Ref Sect="quadforms"/>. We can construct the associated
@@ -242,9 +457,36 @@ bilinear forms by using <Ref Oper="AssociatedBilinearForm"/>.
 <C>IsQuadraticForm</C>). The output is the orthogonal bilinear form <M>f</M> (an object
 in <C>IsBilinearForm</C>), such that <M>f(v,v) = Q(v)</M> for all vectors
 <M>v</M> in a vector space equipped with <M>Q</M>. An error is returned when the characteristic of the field is even.
-<Example>
-<#Include SYSTEM "../examples/include/bilformbyquadform.include"> 
-</Example>
+<Example><![CDATA[
+gap> r := PolynomialRing(GF(9),4);
+GF(3^2)[x_1,x_2,x_3,x_4]
+gap> poly := -r.1*r.2+Z(3^2)*r.3^2+r.4^2;
+-x_1*x_2+Z(3^2)*x_3^2+x_4^2
+gap> qform := QuadraticFormByPolynomial(poly,r);
+< quadratic form >
+gap> Display( qform );
+Quadratic form
+Gram Matrix:
+z = Z(9)
+   .   2   .   .
+   .   .   .   .
+   .   . z^1   .
+   .   .   .   1
+Polynomial: -x_1*x_2+Z(3^2)*x_3^2+x_4^2
+
+gap> form := BilinearFormByQuadraticForm( qform );
+< bilinear form >
+gap> Display(form);
+Bilinear form
+Gram Matrix:
+z = Z(9)
+   .   1   .   .
+   1   .   .   .
+   .   . z^1   .
+   .   .   .   1
+gap> Set(GF(9)^4, x -> [x,x]^form = x^qform);
+[ true ]
+]]></Example>
 Note that the constructed bilinear form <M>f</M> is <B>not</B> the
 associated bilinear form of the given quadratic form <M>Q</M>, according to
 the definition in Section <Ref Sect="quadforms"/>. We can construct the associated
@@ -262,9 +504,25 @@ in <C>IsBilinearForm</C>), as defined in Section <Ref Sect="quadforms"/>, i.e.
 the bilinear form <M>f</M> such that <M>f(v,w) = Q(v+w)-Q(v)-Q(w)</M> for all
 vectors <M>v,w</M> in a vector space equipped with <M>Q</M>. 
 (See <Ref Sect="quadforms"/> for more on quadratic forms).
-<Example>
-<#Include SYSTEM "../examples/include/assocbilform.include"> 
-</Example>
+<Example><![CDATA[
+gap> r:= PolynomialRing(GF(121),6);
+GF(11^2)[x_1,x_2,x_3,x_4,x_5,x_6]
+gap> poly := r.1*r.5-r.2*r.6+r.3*r.4;
+x_1*x_5-x_2*x_6+x_3*x_4
+gap> form := QuadraticFormByPolynomial(poly,r);
+< quadratic form >
+gap> aform := AssociatedBilinearForm(form);
+< bilinear form >
+gap> Display(aform);
+Bilinear form
+Gram Matrix:
+  .  .  .  .  1  .
+  .  .  .  .  . 10
+  .  .  .  1  .  .
+  .  .  1  .  .  .
+  1  .  .  .  .  .
+  . 10  .  .  .  .
+]]></Example>
 </Description>
 </ManSection>
 </Section>
@@ -286,9 +544,29 @@ of the operation <A>\^</A> where <F>(u,v)^f</F> represents
 <M>f(u,v)</M> in the case that <A>f</A> is sesquilinear, and
 <F>u^f</F> stands for <M>f(u)</M> in the quadratic case. So for convenience, the user
 may use this compressed version of this operation, which we show in the following example:
-<Example>
-<#Include SYSTEM "../examples/include/evalform.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[Z(8),0,0,0],[0,0,Z(8)^4,0],[0,0,0,1],[0,0,0,0]]*Z(8)^0;;
+gap> form := QuadraticFormByMatrix(mat,GF(8));
+< quadratic form >
+gap> u := [ Z(2^3)^4, Z(2^3)^4, Z(2)^0, Z(2^3)^3 ];
+[ Z(2^3)^4, Z(2^3)^4, Z(2)^0, Z(2^3)^3 ]
+gap> EvaluateForm( form, u );
+Z(2^3)^6
+gap> u^form;
+Z(2^3)^6
+gap> gram := [[0,0,0,0,0,2],[0,0,0,0,2,0],[0,0,0,1,0,0],
+>               [0,0,1,0,0,0],[0,2,0,0,0,0],[2,0,0,0,0,0]]*Z(3)^0;;
+gap> form := BilinearFormByMatrix(gram,GF(3));
+< bilinear form >
+gap> u := [ [ Z(3)^0, 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ], 
+>   [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0, Z(3), 0*Z(3) ] ];;
+gap> v := [ [ Z(3)^0, 0*Z(3), Z(3)^0, Z(3), 0*Z(3), Z(3) ], 
+>   [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3), Z(3), Z(3) ] ];;
+gap> EvaluateForm( form, u, v);
+[ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ]
+gap> [u,v]^form;
+[ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ]
+]]></Example>
 </Description>
 </ManSection>
 
@@ -309,9 +587,47 @@ bilinear form of the quadratic form <A>form</A>. For a given matrix <A>mat</A>,
 this operation returns a base of the subspace orthogonal to the subspace spanned
 by the rows of <A>mat</A> with relation to the sesquilinear <A>form</A> or with relation to the
 associated bilinear form of the quadratic form <A>form</A>
-<Example>
-<#Include SYSTEM "../examples/include/orthogonaltovector.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[0,0,0,-2],[0,0,-3,0],[0,3,0,0],[2,0,0,0]]*Z(7)^0;
+[ [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^4, 0*Z(7) ], 
+  [ 0*Z(7), Z(7), 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ] ]
+gap> form := BilinearFormByMatrix(mat);
+< bilinear form >
+gap> v := [0*Z(7),Z(7)^0,Z(7)^3,Z(7)^5];
+[ 0*Z(7), Z(7)^0, Z(7)^3, Z(7)^5 ]
+gap> vperp := OrthogonalSubspaceMat(form,v);
+[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ Z(7)^0, 0*Z(7), Z(7)^0, 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ]
+gap> List(vperp,x->[x,v]^form);
+[ 0*Z(7), 0*Z(7), 0*Z(7) ]
+gap> sub := [[1,1,0,0],[0,0,1,2]]*Z(7)^0;
+[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^0, Z(7)^2 ] ]
+gap> subperp := OrthogonalSubspaceMat(form,sub);
+[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^4, Z(7)^0 ] ]
+gap> List(subperp,x->List(sub,y->[x,y]^form));
+[ [ 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7) ] ]
+gap> mat := [[1,0,0],[0,0,1],[0,0,0]]*Z(2)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap> form := QuadraticFormByMatrix(mat);
+< quadratic form >
+gap> v := [Z(2)^0,Z(2)^0,0*Z(2)];
+[ Z(2)^0, Z(2)^0, 0*Z(2) ]
+gap> vperp := OrthogonalSubspaceMat(form,v);
+[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
+    3> ]
+gap> bil_form := AssociatedBilinearForm(form);
+< bilinear form >
+gap> List(vperp,x->[x,v]^bil_form);
+[ 0*Z(2), 0*Z(2) ]
+gap> sub := [[1,0,1],[1,0,0]]*Z(2)^0;
+[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2) ] ]
+gap> subperp := OrthogonalSubspaceMat(form,sub);
+[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
+    3> ]
+gap> List(subperp,x->List(sub,y->[x,y]^bil_form));
+[ [ 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
+]]></Example>
 </Description>
 </ManSection>
 
@@ -321,9 +637,35 @@ associated bilinear form of the quadratic form <A>form</A>
 <Description>
 The operation return <A>true</A> if and only if <A>v</A> is isotropic with
 relation to the sesquilinear or quadratic form <A>form</A>.
-<Example>
-<#Include SYSTEM "../examples/include/isisotropicvector.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[1,0,0,0],[0,-1,0,0],[0,0,0,1],[0,0,1,0]]*Z(41)^0;
+[ [ Z(41)^0, 0*Z(41), 0*Z(41), 0*Z(41) ], 
+  [ 0*Z(41), Z(41)^20, 0*Z(41), 0*Z(41) ], 
+  [ 0*Z(41), 0*Z(41), 0*Z(41), Z(41)^0 ], 
+  [ 0*Z(41), 0*Z(41), Z(41)^0, 0*Z(41) ] ]
+gap> form := BilinearFormByMatrix(mat);
+< bilinear form >
+gap> v := [1,1,0,0]*Z(41)^0;
+[ Z(41)^0, Z(41)^0, 0*Z(41), 0*Z(41) ]
+gap> IsIsotropicVector(form,v);
+true
+gap> mat := [[1,0,0,0,0],[0,0,0,0,1],[0,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0]]*Z(8)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap> form := QuadraticFormByMatrix(mat);
+< quadratic form >
+gap> v1 := [1,0,0,0,0]*Z(8)^0;
+[ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ]
+gap> v2 := [0,1,0,0,0]*Z(8)^0;
+[ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ]
+gap> IsIsotropicVector(form,v1);
+true
+gap> IsIsotropicVector(form,v2);
+true
+]]></Example>
 </Description>
 </ManSection>
 
@@ -335,9 +677,28 @@ The operation return <A>true</A> if and only if <A>v</A> is singular with
 relation to the quadratic form <A>form</A>. Note that only when the
 characteristic of the field is odd, the singular vectors with relation to a
 quadratic form are the isotropic vectors with relation to its associated form.
-<Example>
-<#Include SYSTEM "../examples/include/issingularvector.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[1,0,0,0,0],[0,0,0,0,1],[0,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0]]*Z(8)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap> form := QuadraticFormByMatrix(mat);
+< quadratic form >
+gap> v1 := [1,0,0,0,0]*Z(8)^0;
+[ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ]
+gap> v2 := [0,1,0,0,0]*Z(8)^0;
+[ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ]
+gap> IsSingularVector(form,v1);
+false
+gap> IsSingularVector(form,v2);
+true
+gap> IsIsotropicVector(form,v1);
+true
+gap> IsIsotropicVector(form,v2);
+true
+]]></Example>
 </Description>
 </ManSection>
 
@@ -351,9 +712,31 @@ relation to the sesquilinear or quadratic form <A>form</A>. Note that when
 <A>form</A> is a quadratic form, it is checked whether <A>sub</A> generates a
 subspace that is totally isotropic with relation to the associated bilinear form
 of <A>form</A>.
-<Example>
-<#Include SYSTEM "../examples/include/istotallyisotropic.include">
-</Example>
+<Example><![CDATA[
+gap> mat := [[1,0,0,0],[0,-1,0,0],[0,0,0,1],[0,0,1,0]]*Z(7)^0;
+[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [ 0*Z(7), Z(7)^3, 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ], [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ] ]
+gap> form := BilinearFormByMatrix(mat);
+< bilinear form >
+gap> sub:= [[Z(7)^0,0*Z(7),Z(7)^0,Z(7)],[0*Z(7),Z(7)^0,Z(7)^0,Z(7)^4]];
+[ [ Z(7)^0, 0*Z(7), Z(7)^0, Z(7) ], [ 0*Z(7), Z(7)^0, Z(7)^0, Z(7)^4 ] ]
+gap> IsTotallyIsotropicSubspace(form,sub);
+true
+gap> mat := IdentityMat(6,GF(2));
+[ <a GF2 vector of length 6>, <a GF2 vector of length 6>, 
+  <a GF2 vector of length 6>, <a GF2 vector of length 6>, 
+  <a GF2 vector of length 6>, <a GF2 vector of length 6> ]
+gap> form := HermitianFormByMatrix(mat,GF(4));
+< hermitian form >
+gap> sub := [[Z(2)^0,0*Z(2),0*Z(2),Z(2)^0,Z(2)^0,Z(2)^0], 
+>   [0*Z(2),Z(2)^0,0*Z(2),Z(2^2)^2,Z(2^2),Z(2)^0], 
+>   [0*Z(2),0*Z(2),Z(2)^0,Z(2)^0,Z(2^2),Z(2^2)^2]];
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ], 
+  [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2^2)^2, Z(2^2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2^2), Z(2^2)^2 ] ]
+gap> IsTotallyIsotropicSubspace(form,sub);
+true
+]]></Example>
 </Description>
 </ManSection>
 
@@ -367,9 +750,22 @@ relation to quadratic form <A>form</A>. Note that only when the
 characteristic of the field is odd, the totally singular subspaces of given
 dimension <M>n</M> with relation to a quadratic form are exactly the totally
 isotropic subspaces of dimension <M>n</M> with relation to its associated form.
-<Example>
-<#Include SYSTEM "../examples/include/istotallysingular.include">
-</Example>
+<Example><![CDATA[
+gap> mat := [[1,0,0,0,0],[0,0,0,0,1],[0,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0]]*Z(8)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap> form := QuadraticFormByMatrix(mat);
+< quadratic form >
+gap> sub := [[Z(2)^0,0*Z(2),Z(2^3)^6,Z(2^3),Z(2^3)^3],
+>        [0*Z(2),Z(2)^0,Z(2^3)^6,Z(2^3)^2,Z(2^3)]];
+[ [ Z(2)^0, 0*Z(2), Z(2^3)^6, Z(2^3), Z(2^3)^3 ], 
+  [ 0*Z(2), Z(2)^0, Z(2^3)^6, Z(2^3)^2, Z(2^3) ] ]
+gap> IsTotallySingularSubspace(form,sub);
+true
+]]></Example>
 </Description>
 </ManSection>
 
@@ -548,9 +944,18 @@ the associated bilinear form <M>f</M> (see <Ref Oper="AssociatedBilinearForm"/>)
 <Alt Only="LaTeX"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
 <Alt Only="HTML MathJax"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
 <Alt Only="HTML noMathJax">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
-<Example>
-<#Include SYSTEM "../examples/include/radicalofform.include"> 
-</Example>
+<Example><![CDATA[
+gap> r := PolynomialRing( GF(8), 3 );
+GF(2^3)[x_1,x_2,x_3]
+gap> poly := r.1^2 + r.2 * r.3;
+x_1^2+x_2*x_3
+gap> form := QuadraticFormByPolynomial( poly, r );
+< quadratic form >
+gap> r := RadicalOfForm( form );
+<vector space over GF(2^3), with 0 generators>
+gap> Dimension(r);
+0
+]]></Example>
 </Description>
 </ManSection>
 
@@ -562,9 +967,17 @@ The argument <A>f</A> must be a form (and thus it belongs to
 <C>IsForm</C>). All forms, except for bilinear forms in even characteristic, have
 an associated polynomial defining a quadratic or hermitian form (see <Ref Sect="theory:sesquilinearforms"/> and <Ref Sect="quadforms"/>).
 This method returns the polynomial associated with <A>f</A>, and if not already bound, stores it as a property of <A>f</A>.
-<Example> 
-<#Include SYSTEM "../examples/include/polyofform.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [ [ Z(8) , 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+>  [ 0*Z(2), Z(2)^0, Z(2^3)^5, 0*Z(2), 0*Z(2) ], 
+>  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+>  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
+>  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ];;
+gap> form := QuadraticFormByMatrix(mat,GF(8));
+< quadratic form >
+gap> PolynomialOfForm(form);
+Z(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5
+]]></Example>
 </Description>
 </ManSection>
 
@@ -585,9 +998,13 @@ Thus, discriminants can be used to delineate the isometry
 type of an orthogonal form in even (algebraic) dimension. The discriminant of a
 hermitian form is not defined, and applying this operation on a hermitian form,
 will result in an error message.
-<Example>
-<#Include SYSTEM "../examples/include/discofform.include"> 
-</Example>
+<Example><![CDATA[
+gap> gram := InvariantQuadraticForm(GO(-1,4,5))!.matrix;;
+gap> qform := QuadraticFormByMatrix(gram, GF(5));
+< quadratic form >
+gap> DiscriminantOfForm( qform );
+"nonsquare"
+]]></Example>
 </Description>
 </ManSection>
 
@@ -616,15 +1033,48 @@ to find all of the bilinear, unitary or quadratic forms preserved by <A>group</A
 trivial form is also a possibility) up to a scalar. Since the procedure relies on a pseudo-random
 generator, the user may need to execute the operation more than once to find
 all invariant sesquilinear forms. Note that when possible, a quadratic form will be given.
-<Example>
-<#Include SYSTEM "../examples/include/preservedforms1.include">
-</Example>
+<Example><![CDATA[
+gap> group := GO(-1,4,4);
+GO(-1,4,4)
+gap> pres_forms := PreservedForms(group);
+[ < quadratic form > ]
+gap> group := GO(1,6,9);
+GO(+1,6,9)
+gap> pres_forms := PreservedForms(group);
+[ < quadratic form > ]
+gap> group := SU(4,16);
+SU(4,16)
+gap> pres_forms := PreservedForms(group);
+[ < hermitian form > ]
+]]></Example>
 The next example demonstrates the impact of randomized methods on the number of preserved forms
 returned. For the particular matrix group, two preserved forms are returned after four calls of
 the operation.
-<Example>
-<#Include SYSTEM "../examples/include/preservedforms2.include">
-</Example>
+<Example><![CDATA[
+gap> gens := [
+>   [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+>     [ 0*Z(5), 0*Z(5), Z(5)^3, Z(5^2)^21 ],
+>     [ 0*Z(5), Z(5), Z(5), Z(5^2)^3 ], 
+>     [ 0*Z(5), Z(5^2)^21, Z(5^2)^15, Z(5)^2 ] ], 
+>   [ [ Z(5)^3, Z(5^2)^7, Z(5^2)^16, Z(5^2)^15 ], 
+>     [ 0*Z(5), Z(5)^0, Z(5^2)^4, Z(5)^3 ], 
+>     [ Z(5^2)^22, Z(5^2)^10, Z(5^2)^21, Z(5)^2 ], 
+>     [ Z(5^2)^7, Z(5^2)^23, Z(5^2)^9, Z(5^2)^11 ] ], 
+>   [ [ 0*Z(5), Z(5^2), 0*Z(5), 0*Z(5) ], 
+>     [ Z(5^2)^5, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+>     [ 0*Z(5), 0*Z(5), Z(5)^0, Z(5^2)^4 ], 
+>     [ 0*Z(5), 0*Z(5), Z(5^2)^20, Z(5)^2 ] ] ];;
+gap> group := Group(gens);
+<matrix group with 3 generators>
+gap> PreservedForms(group);
+[ < quadratic form > ]
+gap> PreservedForms(group);
+[ < quadratic form > ]
+gap> PreservedForms(group);
+[ < quadratic form > ]
+gap> PreservedForms(group);
+[ < quadratic form > ]
+]]></Example>
 </Description>
 </ManSection>
 
@@ -638,17 +1088,48 @@ to find all of the bilinear or unitary forms preserved by <A>group</A> (the
 trivial form is also a possibility) up to a scalar. Since the procedure relies on a pseudo-random
 generator, the user may need to execute the operation more than once to find
 all invariant sesquilinear forms.
-<Example>
-<#Include SYSTEM "../examples/include/pres_sesforms1.include"> 
-</Example>
+<Example><![CDATA[
+gap> g := SU(4,3);
+SU(4,3)
+gap> forms := PreservedSesquilinearForms(g);
+[ < hermitian form > ]
+gap> Display( forms[1] );
+Hermitian form
+Gram Matrix:
+ . . . 2
+ . . 2 .
+ . 2 . .
+ 2 . . .
+]]></Example>
 Here is another example which shows that this procedure is suitable in some cases where
 using the <Package>MeatAxe</Package> is not applicable. Here, our matrix group is the group of similarities
 preserving a (hyperbolic) bilinear form on a 6-dimensional vector space over <Alt Only="Text"><M>GF(3)</M></Alt>
 <Alt Only="LaTeX"><M>&gf;(3)</M></Alt><Alt Only="HTML MathJax"><M>&gf;(3)</M></Alt>
 <Alt Only="HTML noMathJax"><M>GF(3)</M></Alt>.
-<Example>
-<#Include SYSTEM "../examples/include/pres_sesforms2.include"> 
-</Example>
+<Example><![CDATA[
+gap> a := [ [ -1, 0, 0, -1, 0, 1 ], [ 0, -1, -1, 0, 0, 1 ], 
+>        [ -1, 0, 0, 1, 0, 0 ],  [ 0, -1, 1, 0, 0, -1 ], 
+>        [ 0, 0, 0, 0, 0, -1 ], [ 0, -1, -1, 1, 1, 1 ] ] * One(GF(3));;
+gap> b := [ [ 1, -1, 1, -1, 1, -1 ], [ 1, 1, -1, 1, 1, 0 ], 
+>        [ -1, 0, 1, 0, 0, 0 ], [ 0, -1, 0, 0, 0, 1 ], 
+>        [ 1, 1, 1, 1, 1, 1 ], [ -1, 1, 1, 1, -1, 0 ] ] * One(GF(3));;
+gap> g := Group( a, b );
+<matrix group with 2 generators>
+gap> forms := PreservedSesquilinearForms( g );
+[ < bilinear form > ]
+gap> Display( forms[1] );
+Bilinear form
+Gram Matrix:
+ . 1 . . . .
+ 1 . . . . .
+ . . . 1 . .
+ . . 1 . . .
+ . . . . . 1
+ . . . . 1 .
+gap> m := GModuleByMats( [a,b], GF(3) );;
+gap> usemeataxe := MTX.InvariantBilinearForm(m);
+fail
+]]></Example>
 </Description>
 </ManSection>
 
@@ -662,9 +1143,16 @@ to find all of the quadratic forms preserved by <A>group</A> up to a scalar.
 Since the procedure relies on a pseudo-random
 generator, the user may need to execute the operation more than once to find
 all invariant sesquilinear forms.
-<Example>
-<#Include SYSTEM "../examples/include/pres_quadform.include">
-</Example>
+<Example><![CDATA[
+gap> group := GO(-1,4,8);
+GO(-1,4,8)
+gap> pres_forms := PreservedQuadraticForms(group);
+[ < quadratic form > ]
+gap> group := GO(1,6,9);
+GO(+1,6,9)
+gap> pres_forms := PreservedQuadraticForms(group);
+[ < quadratic form > ]
+]]></Example>
 </Description>
 </ManSection>
 
@@ -678,9 +1166,27 @@ form mapping all vectors, couples of vectors respectively, to the zero element
 of their basefield. As mentioned in Section <Ref Sect="sec:filters"/>,
 <Package>Forms</Package> allows the construction of an object in the Category
 <C>IsTrivialForm</C>.
-<Example>
-<#Include SYSTEM "../examples/include/trivialform.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[0,0,0],[0,0,0],[0,0,0]]*Z(7)^0;
+[ [ 0*Z(7), 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7) ] ]
+gap> form1 := BilinearFormByMatrix(mat,GF(7));
+< trivial form >
+gap> form2 := QuadraticFormByMatrix(mat,GF(7));
+< trivial form >
+gap> form1 = form2;
+true
+gap> IsQuadraticForm(form1);
+false
+gap> IsSesquilinearForm(form1);
+false
+gap> mat := [[0,0],[0,0]]*Z(4)^0;
+[ [ 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
+gap> form3 := BilinearFormByMatrix(mat,GF(4));
+< trivial form >
+gap> form3 = form1;
+false
+]]></Example>
  
 As we have seen by the above example, there is only one trivial form for a given
 vector space over a finite field, and such a trivial form can result from the
@@ -688,16 +1194,54 @@ construction of a quadratic form or a sesquilinear form, but the trivial form
 itself is none of these, although it can behave as a sesquilinear or a quadratic
 form, depending on its arguments. 
 
-<Example>
-<#Include SYSTEM "../examples/include/trivialform2.include"> 
-</Example>
+<Example><![CDATA[
+gap> 
+gap> mat := [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]*Z(3)^0;
+[ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ]
+gap> form := BilinearFormByMatrix(mat,GF(3));
+< trivial form >
+gap> v := Random(GF(3)^4);
+[ Z(3), Z(3), 0*Z(3), Z(3) ]
+gap> [v,v]^form;
+0*Z(3)
+gap> v^form;
+0*Z(3)
+]]></Example>
  
 The attributes and properties described in Section <Ref Sect="properties"/> are
 all applicable to trivial forms.
 
-<Example>
-<#Include SYSTEM "../examples/include/trivialform_prop.include"> 
-</Example>
+<Example><![CDATA[
+gap> mat := [[0,0,0],[0,0,0],[0,0,0]]*Z(11)^0;
+[ [ 0*Z(11), 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), 0*Z(11) ], 
+  [ 0*Z(11), 0*Z(11), 0*Z(11) ] ]
+gap> form := QuadraticFormByMatrix(mat,GF(121));
+< trivial form >
+gap> IsReflexiveForm(form);
+true
+gap> IsAlternatingForm(form);
+true
+gap> IsSymmetricForm(form);
+true
+gap> IsOrthogonalForm(form);
+false
+gap> IsPseudoForm(form);
+false
+gap> IsSymplecticForm(form);
+true
+gap> IsDegenerateForm(form);
+true
+gap> IsSingularForm(form);
+true
+gap> BaseField(form);
+GF(11^2)
+gap> GramMatrix(form);
+[ [ 0*Z(11), 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), 0*Z(11) ], 
+  [ 0*Z(11), 0*Z(11), 0*Z(11) ] ]
+gap> RadicalOfForm(form);
+<vector space over GF(11^2), with 3 generators>
+]]></Example>
  
 </Section>
 
