@@ -282,14 +282,9 @@ GF(2^2)[x_1,x_2]
 gap> pol := r.1*r.2;
 x_1*x_2
 gap> form := BilinearFormByPolynomial(pol,r);
-Error, No orthogonal form can be associated with a quadratic polynomial in even chara\
-cteristic
- called from
-BilinearFormByPolynomial( pol, pring, n 
- ) at ./pkg/forms/lib/forms.gi:470 called from
-<function "unknown">( <arguments> )
- called from read-eval loop at line 14 of *stdin*
-you can 'return;' to continue
+Error, No orthogonal form can be associated with a quadratic polynomial in eve\
+n characteristic
+
 ]]></Example>
 </Description>
 </ManSection>
@@ -1195,14 +1190,12 @@ itself is none of these, although it can behave as a sesquilinear or a quadratic
 form, depending on its arguments. 
 
 <Example><![CDATA[
-gap> 
 gap> mat := [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]*Z(3)^0;
 [ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ]
 gap> form := BilinearFormByMatrix(mat,GF(3));
 < trivial form >
-gap> v := Random(GF(3)^4);
-[ Z(3), Z(3), 0*Z(3), Z(3) ]
+gap> v := Random(GF(3)^4);;
 gap> [v,v]^form;
 0*Z(3)
 gap> v^form;

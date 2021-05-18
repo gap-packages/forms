@@ -912,10 +912,7 @@ gap> form := BilinearFormByMatrix(mat,GF(8));
 gap> IsDegenerateForm(form);
 false
 gap> TypeOfForm(form);
-Error, <f> is a pseudo form and has no defined type called from
-<function "unknown">( <arguments> )
- called from read-eval loop at line 30 of *stdin*
-you can 'return;' to continue
+Error, <f> is a pseudo form and has no defined type
 ]]></Example>
 
 </Description>
