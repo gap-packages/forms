@@ -1,10 +1,10 @@
 #@local is_equal, q, F, d, es, e, g, stored, pi, permmat, form, gg, F2
 
-gap> START_TEST( "Forms: classic.tst" );
+gap> START_TEST( "Forms: classic_self_contained.tst" );
 
 # Test the methods for constructing classical groups w.r.t. prescribed forms,
-# by calling the global functions in the GAP library that delegate to these
-# methods.  Thus we also test these functions.
+# but without assuming that the global functions in the GAP library
+# already delegate to these methods.
 
 # Provide an auxiliary function (until GAP's '=' gets fast).
 gap> is_equal:= function( G1, G2 )
@@ -28,30 +28,20 @@ gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
 >          pi:= PermutationMat( (1,2,3), d, F );
 >          permmat:= pi * stored * TransposedMat( pi );
 >          form:= QuadraticFormByMatrix( stored, F );
->          gg:= GeneralOrthogonalGroup( e, d, q, permmat );
->          if not ( is_equal( g, GeneralOrthogonalGroup( g ) ) and
->                   ( is_equal( g, GeneralOrthogonalGroup( stored ) ) or
+>          gg:= GeneralOrthogonalGroupCons( IsMatrixGroup, e, d, q, permmat );
+>          if not ( is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, g ) ) and
+>                   ( is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, stored ) ) or
 >                     BaseDomain( stored ) <> F ) and
->                   is_equal( g, GeneralOrthogonalGroup( form ) ) and
->                   is_equal( g, GeneralOrthogonalGroup( e, d, q, g ) ) and
->                   is_equal( g, GeneralOrthogonalGroup( e, d, q, stored ) ) and
->                   is_equal( g, GeneralOrthogonalGroup( e, d, q, form ) ) and
->                   is_equal( g, GeneralOrthogonalGroup( e, d, F, g ) ) and
->                   is_equal( g, GeneralOrthogonalGroup( e, d, F, stored ) ) and
->                   is_equal( g, GeneralOrthogonalGroup( e, d, F, form ) ) and
+>                   is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, form ) ) and
+>                   is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, e, d, q, g ) ) and
+>                   is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, e, d, q, stored ) ) and
+>                   is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, e, d, q, form ) ) and
+>                   is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, e, d, F, g ) ) and
+>                   is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, e, d, F, stored ) ) and
+>                   is_equal( g, GeneralOrthogonalGroupCons( IsMatrixGroup, e, d, F, form ) ) and
 >                   IsSubset( gg, GeneratorsOfGroup( gg ) ) and
 >                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
->            Error( "problem with GO(", e, ",", d, ",", q, ")" );
->          fi;
->          if e = 0 then
->            if not ( is_equal( g, GeneralOrthogonalGroup( d, q, g ) ) and
->                     is_equal( g, GeneralOrthogonalGroup( d, q, stored ) ) and
->                     is_equal( g, GeneralOrthogonalGroup( d, q, form ) ) and
->                     is_equal( g, GeneralOrthogonalGroup( d, F, g ) ) and
->                     is_equal( g, GeneralOrthogonalGroup( d, F, stored ) ) and
->                     is_equal( g, GeneralOrthogonalGroup( d, F, form ) ) ) then
->              Error( "problem with GO(", d, ",", q, ")" );
->            fi;
+>            Error( "problem with GeneralOrthogonalGroupCons( IsMatrixGroup, ", e, ",", d, ",", q, ")" );
 >          fi;
 >          # SO(e,d,q)
 >          g:= SpecialOrthogonalGroup( e, d, q );
@@ -59,30 +49,20 @@ gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
 >          pi:= PermutationMat( (1,2,3), d, F );
 >          permmat:= pi * stored * TransposedMat( pi );
 >          form:= QuadraticFormByMatrix( stored, F );
->          gg:= SpecialOrthogonalGroup( e, d, q, permmat );
->          if not ( is_equal( g, SpecialOrthogonalGroup( g ) ) and
->                   ( is_equal( g, SpecialOrthogonalGroup( stored ) ) or
+>          gg:= SpecialOrthogonalGroupCons( IsMatrixGroup, e, d, q, permmat );
+>          if not ( is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, g ) ) and
+>                   ( is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, stored ) ) or
 >                     BaseDomain( stored ) <> F ) and
->                   is_equal( g, SpecialOrthogonalGroup( form ) ) and
->                   is_equal( g, SpecialOrthogonalGroup( e, d, q, g ) ) and
->                   is_equal( g, SpecialOrthogonalGroup( e, d, q, stored ) ) and
->                   is_equal( g, SpecialOrthogonalGroup( e, d, q, form ) ) and
->                   is_equal( g, SpecialOrthogonalGroup( e, d, F, g ) ) and
->                   is_equal( g, SpecialOrthogonalGroup( e, d, F, stored ) ) and
->                   is_equal( g, SpecialOrthogonalGroup( e, d, F, form ) ) and
+>                   is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, form ) ) and
+>                   is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, e, d, q, g ) ) and
+>                   is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, e, d, q, stored ) ) and
+>                   is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, e, d, q, form ) ) and
+>                   is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, e, d, F, g ) ) and
+>                   is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, e, d, F, stored ) ) and
+>                   is_equal( g, SpecialOrthogonalGroupCons( IsMatrixGroup, e, d, F, form ) ) and
 >                   IsSubset( gg, GeneratorsOfGroup( gg ) ) and
 >                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
->            Error( "problem with SO(", e, ",", d, ",", q, ")" );
->          fi;
->          if e = 0 then
->            if not ( is_equal( g, SpecialOrthogonalGroup( d, q, g ) ) and
->                     is_equal( g, SpecialOrthogonalGroup( d, q, stored ) ) and
->                     is_equal( g, SpecialOrthogonalGroup( d, q, form ) ) and
->                     is_equal( g, SpecialOrthogonalGroup( d, F, g ) ) and
->                     is_equal( g, SpecialOrthogonalGroup( d, F, stored ) ) and
->                     is_equal( g, SpecialOrthogonalGroup( d, F, form ) ) ) then
->              Error( "problem with SO(", d, ",", q, ")" );
->            fi;
+>            Error( "problem with SpecialOrthogonalGroupCons( IsMatrixGroup, ", e, ",", d, ",", q, ")" );
 >          fi;
 >          # Omega(e,d,q)
 >          g:= Omega( e, d, q );
@@ -130,17 +110,17 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >        pi:= PermutationMat( (1,2), d, F );
 >        permmat:= pi * stored * TransposedMat( pi );
 >        form:= HermitianFormByMatrix( stored, F2 );
->        gg:= GeneralUnitaryGroup( d, q, permmat );
->        if not ( is_equal( g, GeneralUnitaryGroup( g ) ) and
->                 ( is_equal( g, GeneralUnitaryGroup( stored ) ) or
+>        gg:= GeneralUnitaryGroupCons( IsMatrixGroup, d, q, permmat );
+>        if not ( is_equal( g, GeneralUnitaryGroupCons( IsMatrixGroup, g ) ) and
+>                 ( is_equal( g, GeneralUnitaryGroupCons( IsMatrixGroup, stored ) ) or
 >                   BaseDomain( stored ) <> F ) and
->                 is_equal( g, GeneralUnitaryGroup( form ) ) and
->                 is_equal( g, GeneralUnitaryGroup( d, q, g ) ) and
->                 is_equal( g, GeneralUnitaryGroup( d, q, stored ) ) and
->                 is_equal( g, GeneralUnitaryGroup( d, q, form ) ) and
+>                 is_equal( g, GeneralUnitaryGroupCons( IsMatrixGroup, form ) ) and
+>                 is_equal( g, GeneralUnitaryGroupCons( IsMatrixGroup, d, q, g ) ) and
+>                 is_equal( g, GeneralUnitaryGroupCons( IsMatrixGroup, d, q, stored ) ) and
+>                 is_equal( g, GeneralUnitaryGroupCons( IsMatrixGroup, d, q, form ) ) and
 >                 IsSubset( gg, GeneratorsOfGroup( gg ) ) and
 >                 IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
->          Error( "problem with GU(", d, ",", q, ")" );
+>          Error( "problem with GeneralUnitaryGroupCons( IsMatrixGroup, ", d, ",", q, ")" );
 >        fi;
 >        # SU(d,q)
 >        g:= SpecialUnitaryGroup( d, q );
@@ -148,17 +128,17 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >        pi:= PermutationMat( (1,2), d, F );
 >        permmat:= pi * stored * TransposedMat( pi );
 >        form:= HermitianFormByMatrix( stored, F2 );
->        gg:= SpecialUnitaryGroup( d, q, permmat );
->        if not ( is_equal( g, SpecialUnitaryGroup( g ) ) and
->                 ( is_equal( g, SpecialUnitaryGroup( stored ) ) or
+>        gg:= SpecialUnitaryGroupCons( IsMatrixGroup, d, q, permmat );
+>        if not ( is_equal( g, SpecialUnitaryGroupCons( IsMatrixGroup, g ) ) and
+>                 ( is_equal( g, SpecialUnitaryGroupCons( IsMatrixGroup, stored ) ) or
 >                   BaseDomain( stored ) <> F ) and
->                 is_equal( g, SpecialUnitaryGroup( form ) ) and
->                 is_equal( g, SpecialUnitaryGroup( d, q, g ) ) and
->                 is_equal( g, SpecialUnitaryGroup( d, q, stored ) ) and
->                 is_equal( g, SpecialUnitaryGroup( d, q, form ) ) and
+>                 is_equal( g, SpecialUnitaryGroupCons( IsMatrixGroup, form ) ) and
+>                 is_equal( g, SpecialUnitaryGroupCons( IsMatrixGroup, d, q, g ) ) and
+>                 is_equal( g, SpecialUnitaryGroupCons( IsMatrixGroup, d, q, stored ) ) and
+>                 is_equal( g, SpecialUnitaryGroupCons( IsMatrixGroup, d, q, form ) ) and
 >                 IsSubset( gg, GeneratorsOfGroup( gg ) ) and
 >                 IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
->          Error( "problem with SU(", d, ",", q, ")" );
+>          Error( "problem with SpecialUnitaryGroupCons( IsMatrixGroup, ", d, ",", q, ")" );
 >        fi;
 >      od;
 >    od;
@@ -172,23 +152,23 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >        pi:= PermutationMat( (1,2), d, F );
 >        permmat:= pi * stored * TransposedMat( pi );
 >        form:= BilinearFormByMatrix( stored, F );
->        gg:= SymplecticGroup( d, q, permmat );
->        if not ( is_equal( g, SymplecticGroup( g ) ) and
->                 ( is_equal( g, SymplecticGroup( stored ) ) or
+>        gg:= SymplecticGroupCons( IsMatrixGroup, d, q, permmat );
+>        if not ( is_equal( g, SymplecticGroupCons( IsMatrixGroup, g ) ) and
+>                 ( is_equal( g, SymplecticGroupCons(IsMatrixGroup,  stored ) ) or
 >                   BaseDomain( stored ) <> F ) and
->                 is_equal( g, SymplecticGroup( form ) ) and
->                 is_equal( g, SymplecticGroup( d, q, g ) ) and
->                 is_equal( g, SymplecticGroup( d, q, stored ) ) and
->                 is_equal( g, SymplecticGroup( d, q, form ) ) and
->                 is_equal( g, SymplecticGroup( d, F, g ) ) and
->                 is_equal( g, SymplecticGroup( d, F, stored ) ) and
->                 is_equal( g, SymplecticGroup( d, F, form ) ) and
+>                 is_equal( g, SymplecticGroupCons( IsMatrixGroup, form ) ) and
+>                 is_equal( g, SymplecticGroupCons( IsMatrixGroup, d, q, g ) ) and
+>                 is_equal( g, SymplecticGroupCons( IsMatrixGroup, d, q, stored ) ) and
+>                 is_equal( g, SymplecticGroupCons( IsMatrixGroup, d, q, form ) ) and
+>                 is_equal( g, SymplecticGroupCons( IsMatrixGroup, d, F, g ) ) and
+>                 is_equal( g, SymplecticGroupCons( IsMatrixGroup, d, F, stored ) ) and
+>                 is_equal( g, SymplecticGroupCons( IsMatrixGroup, d, F, form ) ) and
 >                 IsSubset( gg, GeneratorsOfGroup( gg ) ) and
 >                 IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
->          Error( "problem with Sp(", d, ",", q, ")" );
+>          Error( "problem with SymplecticGroupCons( IsMatrixGroup, ", d, ",", q, ")" );
 >        fi;
 >      od;
 >    od;
 
 ##
-gap> STOP_TEST( "classic.tst" );
+gap> STOP_TEST( "classic_self_contained.tst" );
