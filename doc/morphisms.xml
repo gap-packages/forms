@@ -588,14 +588,16 @@ the Witt index and the dimension of the radical.
 
 <ManSection>
 <Attr Name="BaseChangeToCanonical" Arg="f"/>
-<Returns>a transition matrix <A>b</A> from one basis to another</Returns>
+<Returns>a transition matrix <M>b</M> from one basis to another</Returns>
 <Description>
 The argument <A>f</A> is a sesquilinear or quadratic form.
 For every isometry class of forms, there is a canonical
-representative, as described in Section <Ref Sect="morphisms:sesquilinear"/>. If <A>M</A> is
+representative, as described in Section <Ref Sect="morphisms:sesquilinear"/>. If <M>M</M> is
 the Gram matrix of the form <A>f</A>, then this method returns an invertible
-matrix <A>b</A> such that <A>b * M * TransposedMat(b)</A> is
-the Gram matrix of the canonical representative. That is, <A>b</A> is the <E>transition matrix</E>
+matrix <M>b</M> such that <M>b M</M> <C>TransposedMat</C><M>(b)</M>
+(or <M>b M</M> <C>TransposedFrobeniusMat</C><M>(b, q)</M> for suitable <M>q</M>
+if <A>f</A> is a hermitian form) is
+the Gram matrix of the canonical representative. That is, <M>b</M> is the <E>transition matrix</E>
 from a basis of the underlying vector space of <A>f</A> to another basis.
 <Example>
 <#Include SYSTEM "../examples/include/basechangetocanonical.include"> 

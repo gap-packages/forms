@@ -25,7 +25,6 @@ are listed, along with their basic attributes and properties.
 <Filt Name="IsSesquilinearForm" Type="Category"/>
 <Filt Name="IsQuadraticForm" Type="Category"/>
 <Filt Name="IsForm" Type="Category"/>
-<Filt Name="IsForm" Type="Category"/>
 <Filt Name="IsTrivialForm" Type="Category"/>
 <Description>The categories <C>IsBilinearForm</C> and <C>IsHermitianForm</C> are
 categories for bilinear and hermitian forms, respectively. They are disjoint and
@@ -53,8 +52,7 @@ the base field and a string describing the ``type'' of the form.</Description>
 <Section Label="sec:formsbymatrix">
 <Heading>Constructing forms using a matrix</Heading>
 <ManSection>
-<Oper Name="BilinearFormByMatrix" Arg="matrix, field"/>
-<Oper Name="BilinearFormByMatrix" Arg="matrix"/>
+<Oper Name="BilinearFormByMatrix" Arg="matrix[, field]"/>
 <Returns>a bilinear form</Returns>
 <Description>
 The argument <A>matrix</A> must be a symmetric, or skew-symmetric, square matrix
@@ -76,8 +74,7 @@ forms).
 </ManSection>
 
 <ManSection>
-<Oper Name="QuadraticFormByMatrix" Arg="matrix, field"/>
-<Oper Name="QuadraticFormByMatrix" Arg="matrix"/>
+<Oper Name="QuadraticFormByMatrix" Arg="matrix[, field]"/>
 <Returns>a quadratic form</Returns>
 <Description>
 The argument <A>matrix</A> must be a square matrix over the finite field
@@ -102,7 +99,7 @@ the properties of the constructed form.
 
 <ManSection>
 <Oper Name="HermitianFormByMatrix" Arg="matrix, field"/>
-<Returns>a quadratic form</Returns>
+<Returns>a hermitian sesquilinear form</Returns>
 <Description>
 The argument <A>matrix</A> must be a hermitian square matrix over
 the finite field <A>field</A>, and <A>field</A> has square order. 
@@ -144,8 +141,7 @@ indeterminates, and <M>Q(x)</M> determines <M>Q</M> completely.
 <Package>Forms</Package> provides functionality to construct bilinear, hermitian and 
 quadratic forms using an appropriate polynomial.
 <ManSection>
-<Oper Name="BilinearFormByPolynomial" Arg="poly, r, n"/>
-<Oper Name="BilinearFormByPolynomial" Arg="poly, r"/>
+<Oper Name="BilinearFormByPolynomial" Arg="poly, r[, n]"/>
 <Returns>a bilinear form</Returns>
 <Description>
 The argument <A>poly</A> must be a polynomial in the polynomial
@@ -164,8 +160,7 @@ a bilinear (orthogonal) form in the category <C>IsBilinearForm</C>.
 </ManSection>
 
 <ManSection>
-<Oper Name="QuadraticFormByPolynomial" Arg="poly, r, n"/>
-<Oper Name="QuadraticFormByPolynomial" Arg="poly, r"/>
+<Oper Name="QuadraticFormByPolynomial" Arg="poly, r[, n]"/>
 <Returns>a quadratic form</Returns>
 <Description>
 The argument <A>poly</A> must be a polynomial in the polynomial
@@ -182,8 +177,7 @@ given field, and if not, an error message is returned. The output is a quadratic
 </ManSection>
 
 <ManSection>
-<Oper Name="HermitianFormByPolynomial" Arg="poly, r, n"/>
-<Oper Name="HermitianFormByPolynomial" Arg="poly, r"/>
+<Oper Name="HermitianFormByPolynomial" Arg="poly, r[, n]"/>
 <Returns>an hermitian form</Returns>
 <Description>
 The argument <A>poly</A> must be a polynomial in the polynomial
@@ -278,8 +272,7 @@ vectors <M>v,w</M> in a vector space equipped with <M>Q</M>.
 <Section Label="evaluate">
 <Heading>Evaluating forms</Heading>
 <ManSection>
-<Oper Name="EvaluateForm" Arg="f, u, v"/>
-<Oper Name="EvaluateForm" Arg="f, u"/>
+<Oper Name="EvaluateForm" Arg="f, u[, v]"/>
 <Returns>a finite field element</Returns>
 <Description>
 The argument <A>f</A> is either a sesquilinear or quadratic form
@@ -304,8 +297,8 @@ may use this compressed version of this operation, which we show in the followin
 <Section Label="ortho">
 <Heading>Orthogonality, totally isotropic subspaces, and totally singular subspaces</Heading>
 <ManSection>
-<Oper Name="OrthogonalSubspaceMat" Arg="form, v"/>
-<Oper Name="OrthogonalSubspaceMat" Arg="form, mat"/>
+<Oper Name="OrthogonalSubspaceMat" Arg="form, v" Label="for a vector"/>
+<Oper Name="OrthogonalSubspaceMat" Arg="form, mat" Label="for a matrix"/>
 <Returns>a base of the subspace orthogonal to the given vector or subspace
 with relation to the given form</Returns>
 <Description>
