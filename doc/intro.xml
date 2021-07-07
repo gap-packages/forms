@@ -66,7 +66,7 @@ of your browser to UTF-8.
 <List>
 <Item>Find <Package>Forms</Package> on the Packages section of the GAP-website: <Homepage>http://www.gap-system.org/Packages/forms.html</Homepage>.</Item>
 <Item>Find <Package>Forms</Package> on its homepage: <Homepage>http://cage.ugent.be/geometry/forms.php</Homepage>.</Item>
-<Item>Report bugs, questions and issues on the <Package>Forms</Package> issue tracker: <Homepage>https://bitbucket.org/jdebeule/forms/issues</Homepage></Item>
+<Item>Report bugs, questions and issues on the <Package>Forms</Package> issue tracker: <Homepage>https://github.com/gap-packages/forms/issues</Homepage></Item>
 </List>
 </Section>
 
