@@ -4,8 +4,8 @@
                                                                   John Bamberg
                                                                   Jan De Beule
  
-  Copyright (C) 2018, The University of Western Australia
-  Copyright (C) 2018, Vrije Universiteit Brussel
+  Copyright (C) 2021, The University of Western Australia
+  Copyright (C) 2021, Vrije Universiteit Brussel
 
 -->
 
@@ -61,10 +61,10 @@ Belgium
 <Homepage>http://www.debeule.eu</Homepage>
 </Author>
   
-<Date>September 2018</Date>
+<Date>July 2021</Date>
 
 <Copyright>
-  &copyright; 2018 by the authors<P/>
+  &copyright; 2021 by the authors<P/>
 
   This package may be distributed under the terms and conditions of the
   GNU Public License Version 2 or higher.

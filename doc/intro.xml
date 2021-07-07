@@ -5,8 +5,8 @@
                                                                and Jan De Beule
                                                                   
 
-  Copyright (C) 2018, The University of Western Australia
-  Copyright (C) 2018, Vrije Universiteit Brussel
+  Copyright (C) 2021, The University of Western Australia
+  Copyright (C) 2021, Vrije Universiteit Brussel
 
 This chapter gives a short introduction to the package.
 
@@ -96,6 +96,7 @@ Alexander Konovalov noted that we used the deprecated <F>ReadTest</F> in our tes
 been changed to <F>Test</F>. Finally some LaTeX issues were resolved in the documentation.
 <P/>In verions 1.2.5, some small changes were made to the recognition part.
 Some new examples in the documentation explain better the functionality.
+<P/>Version 1.2.6 is an intermediate update. It contains a number of corrections/additions suggested/implemented by Thomas Breuer and Max Horn, including an extension of some GAP library functions to create classical matrix groups. These additions are not yet documented. 
 </Section>
 <!-- ############################################################ -->
 
