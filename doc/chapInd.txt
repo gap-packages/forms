@@ -1,0 +1,82 @@
+  
+  
+  [1XIndex[101X
+  
+  [2XAssociatedBilinearForm[102X 4.4-3 
+  [2XBaseChangeHomomorphism[102X 5.3-2 
+  [2XBaseChangeToCanonical[102X 5.3-1 
+  [2XBaseField[102X 4.7-9 
+  [2XBilinearFormByMatrix[102X 4.2-1 
+  [2XBilinearFormByPolynomial[102X 4.3-1 
+  [2XBilinearFormByQuadraticForm[102X 4.4-2 
+  Companion Automorphism 3.1 
+  [2XDiscriminantOfForm[102X 4.7-13 
+  [2XEvaluateForm[102X 4.5-1 
+  Form, alternating 3.1 
+      Alternating 4.7-2 
+      bilinear 3.1 
+      elliptic 3.1  3.2 
+      hermitian 3.1 
+      hyperbolic 3.1  3.2 
+      orthogonal 3.1  3.2  4.7-4 
+      parabolic 3.1  3.2 
+      pseudo 3.1  4.7-5 
+  Quadratic Form, quadratic 3.2 
+  Form, reflexive 3.1 
+      Reflexive 4.7-1 
+  Non-degenerate, sesquilinear 3.1 
+  Totally Isotropic, sesquilinear 3.1 
+  Witt Index, sesquilinear 3.1 
+  Form, sesquilinear 3.1 
+      symmetric 3.1 
+      Symmetric 4.7-3 
+      symplectic 3.1  4.7-6 
+  [2XGramMatrix[102X 4.7-10 
+  [2XHermitianFormByMatrix[102X 4.2-3 
+  [2XHermitianFormByPolynomial[102X 4.3-3 
+  [2XIsAlternatingForm[102X 4.7-2 
+  [2XIsBilinearForm[102X 4.1-1 
+  [2XIsDegenerateForm[102X 4.7-7 
+  [2XIsEllipticForm[102X 5.3-6 
+  [2XIsForm[102X 4.1-1 
+  [2XIsFormRep[102X 4.1-2 
+  [2XIsHermitianForm[102X 4.1-1 
+  [2XIsHyperbolicForm[102X 5.3-8 
+  [2XIsIsotropicVector[102X 4.6-2 
+  [2XIsometricCanonicalForm[102X 5.3-3 
+  Isometry 5.1  5.2 
+  [2XIsOrthogonalForm[102X 4.7-4 
+  isotropic 3.1 
+  [2XIsParabolicForm[102X 5.3-7 
+  [2XIsPseudoForm[102X 4.7-5 
+  [2XIsQuadraticForm[102X 4.1-1 
+  [2XIsReflexiveForm[102X 4.7-1 
+  [2XIsSesquilinearForm[102X 4.1-1 
+  [2XIsSingularForm[102X 4.7-8 
+  [2XIsSingularVector[102X 4.6-3 
+  [2XIsSymmetricForm[102X 4.7-3 
+  [2XIsSymplecticForm[102X 4.7-6 
+  [2XIsTotallyIsotropicSubspace[102X 4.6-4 
+  [2XIsTotallySingularSubspace[102X 4.6-5 
+  [2XIsTrivialForm[102X 4.1-1 
+  Orthogonal 3.1 
+  [2XOrthogonalSubspaceMat[102X, for a matrix 4.6-1 
+      for a vector 4.6-1 
+  [2XPolynomialOfForm[102X 4.7-12 
+  [2XPreservedForms[102X 4.8-1 
+  [2XPreservedQuadraticForms[102X 4.8-3 
+  [2XPreservedSesquilinearForms[102X 4.8-2 
+  [2XQuadraticFormByBilinearForm[102X 4.4-1 
+  [2XQuadraticFormByMatrix[102X 4.2-2 
+  [2XQuadraticFormByPolynomial[102X 4.3-2 
+  Radical 3.1 
+  [2XRadicalOfForm[102X 4.7-11 
+  [2XScalarOfSimilarity[102X 5.3-4 
+  Semi-similarity 5.1  5.2 
+  Semilinear 3.1 
+  Similarity 5.1  5.2 
+  [2XTypeOfForm[102X 5.3-9 
+  [2XWittIndex[102X 5.3-5 
+  
+  
+  -------------------------------------------------------

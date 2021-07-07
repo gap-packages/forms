@@ -1,0 +1,590 @@
+  
+  [1X3 [33X[0;0YBackground Theory on Forms[133X[101X
+  
+  [33X[0;0YIn  this chapter we give a very brief overview of the theory of sesquilinear
+  and quadratic forms. The reader can find more in the texts: Cameron [Cam00],
+  Taylor [Tay92], Aschbacher [Asc00], or Kleidman and Liebeck [KL90].[133X
+  
+  
+  [1X3.1 [33X[0;0YSesquilinear forms[133X[101X
+  
+  [33X[0;0YA  [13Xsesquilinear form[113X on an [22Xn[122X-dimensional vector space [22XV[122X over a field [22XF[122X, is a
+  map [22Xf[122X from [22XV× V[122X to [22XF[122X which is linear in the first coordinate, but semilinear
+  in  the  second  coordinate;  that  is, there is a field automorphism [22Xα[122X (the
+  [13Xcompanion automorphism[113X of [22Xf[122X) such that[133X
+  
+  
+  [24X[33X[0;6Yf(v,\lambda w)=\lambda^\alpha f(v,w),[133X
+  
+  [124X
+  
+  [33X[0;0Yfor all [22Xv,w ∈ V[122X and [22Xλ ∈ F[122X. If [22Xα[122X is the identity, then [22Xf[122X is [13Xbilinear[113X.[133X
+  
+  [33X[0;0YA  bilinear  form  is  [13Xreflexive[113X  if  [22Xf(v,w)=0 ⇒ f(w,v)=0[122X for all [22Xv,w ∈ V[122X. A
+  bilinear  form  is  [13Xsymmetric[113X  if [22Xf(v,w)=f(w,v)[122X for all [22Xv,w ∈ V[122X. It is clear
+  that  a symmetric bilinear form is reflexive. A bilinear form is [13Xalternating[113X
+  if [22Xf(v,v)=0[122X for all [22Xv ∈ V[122X. Using the linearity to compute [22Xf(v+w,v+w)[122X, we see
+  that  an  alternating form is also reflexive. When the characteristic of the
+  field  differs  from  2,  an alternating form [22Xf[122X can also be characterised as
+  [22Xf(v,w)  =  -f(w,v)[122X  for  all  [22Xv,w  ∈  V[122X.  It can be proved (see Chapter 7 of
+  [Tay92])  that  symmetric  and  alternating  bilinear  forms  are  the  only
+  reflexive bilinear forms.[133X
+  
+  [33X[0;0YFor a given sesquilinear form [22Xf[122X, the choice of the basis determines uniquely
+  an [22Xn× n[122X matrix [22XM[122X such that [22Xf(v, w) = v M w^α}^T.[122X[133X
+  
+  [33X[0;0YThis  matrix  is also called the [13XGram matrix[113X of [22Xf[122X. Given a sesquilinear form
+  [22Xf[122X,  we  will denote its Gram matrix by [22XM_f.[122X In [5XForms[105X, sesquilinear forms can
+  be  constructed  using matrices or polynomials, where we always suppose that
+  the  basis  of the vector space is the standard basis (i.e., the rows of the
+  identity matrix).[133X
+  
+  [33X[0;0YOne  proves easily that a bilinear form [22Xf[122X is symmetric if and only if [22XM_f[122X is
+  a  symmetric  matrix,  i.e.,  [22XM_f^T=M_f,[122X  and  that  a  bilinear  form  [22Xf[122X is
+  alternating  if and only if [22XM_f[122X is a skew symmetric matrix, i.e., [22XM_f^T=-M_f[122X
+  .  When  the characteristic of the field is two, the condition that [22Xf(v,v)=0[122X
+  for all [22Xv ∈ V[122X implies [22XM_f^T=M_f[122X [12Xand[112X [22X(M_ii)=0[122X for all [22Xi[122X (and where the matrix
+  [22XM_f = (M_ij)[122X ). Since any skew symmetric odd dimensional matrix is singular,
+  it  follows  that  an alternating form of an odd dimensional vector space is
+  degenerate.[133X
+  
+  [33X[0;0YA  sesquilinear  form [22Xf[122X is [13Xhermitian[113X (n.b., [13Xconjugate-symmetric[113X in [CCN+85])
+  if  [22Xf(v,w)=f(w,v)^α[122X  holds  for  all vectors [22Xv,w[122X, with [22Xα[122X an involutory field
+  automorphism  only  dependent  on  [22Xf[122X.  Again, it can be easily proved that a
+  sesquilinear  form  [22Xf[122X  is  hermitian  if  and only if [22XM_f^T = M_f^α[122X (i.e., a
+  hermitian  matix).  It  is  proved (see Chapter 7 of [Tay92]) that hermitian
+  forms  are  the  only  reflexive  sesquilinear  forms that are not bilinear.
+  Hence,  in  general,  all  reflexive  sesquilinear forms are known, they are
+  either  hermitian  or  bilinear,  and  in  the  latter case, they are either
+  symmetric or alternating (again, see Chapter 7 of [Tay92]).[133X
+  
+  [33X[0;0YIn  [5XForms[105X, only the construction of [12Xreflexive[112X sesquilinear forms is allowed.
+  An   error  message  will  be  displayed  if  any  attempt  to  construct  a
+  non-reflexive  sesquilinear  form is made. As a consequence, the Gram Matrix
+  of  a  sesquilinear  form  is  always  a  symmetric,  a  skew symmetric or a
+  hermitian  matrix.  From  now on, the notion of a ``sesquilinear form'' will
+  always refer to a ``reflexive sesquilinear form''.[133X
+  
+  [33X[0;0YGiven a sesquilinear form [22Xf[122X, two vectors [22Xv[122X and [22Xw[122X are [13Xorthogonal[113X with respect
+  to  [22Xf[122X  if  [22Xf(v,w) = 0[122X. Note that the reflexivity makes orthogonality between
+  two  vectors  a  symmetric  relation.  A  vector  [22Xv[122X  is  called [13Xisotropic[113X if
+  [22Xf(v,v)=0[122X.  The  [13Xradical[113X  of  [22Xf[122X  (n.b.,  [13Xkernel[113X  in [CCN+85]) is the subspace
+  consisting of vectors which are orthogonal to every vector. That is,[133X
+  
+  
+  [24X[33X[0;6YRad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},[133X
+  
+  [124X
+  
+  [33X[0;0Yand  we  say  that  [22Xf[122X  is  [13Xnon-degenerate[113X  if  its  radical  is trivial (and
+  [13Xdegenerate[113X otherwise).[133X
+  
+  [33X[0;0YGiven  a  subspace  [22XW[122X, we denote the set of vectors of [22XV[122X orthogonal with all
+  vectors of [22XW[122X by [22XW^perp[122X . We call a subspace [22XW[122X [13Xtotally isotropic[113X with respect
+  to [22Xf[122X if [22XW[122X is contained in [22XW^perp[122X , i.e.[133X
+  
+  
+  [24X[33X[0;6Yf(v,w) = 0,\, \forall v,w \in W.[133X
+  
+  [124X
+  
+  [33X[0;0YSuppose that [22Xf[122X is a non-degenerate sesquilinear form. The [13XWitt index[113X of [22Xf[122X is
+  the maximum dimension of a totally isotropic subspace with respect to [22Xf[122X.[133X
+  
+  [33X[0;0YLet  [22Xf[122X  be  a  sesquilinear  form on [22XV(n,q)[122X, with radical [22XR[122X, a [22Xk[122X-dimensional
+  subspace  of  [22XV(n,q)[122X,  [22X0  ≤ k ≤ n[122X. Then [22Xf[122X induces a non-degenerate form [22Xg[122X on
+  [22XV/R[122X.  When  [22Xdim(R)=0[122X,  then  [22Xg=f[122X  and  [22Xf[122X  is non-degenerate. Notice that all
+  totally  isotropic  subspaces  of  maximal  dimension of a degenerate form [22Xf[122X
+  contain  the radical of [22Xf[122X. In [5XForms[105X, the notion Witt index will [12Xalways refer
+  to  the  induced  non-degenerate  form[112X  [22Xg[122X. Hence, given a degenerate form [22Xf[122X,
+  computing  its  Witt index will return the Witt index of the induced form [22Xg[122X.
+  [12XThis  also  holds  for  the notions elliptic, parabolic and hyperbolic for a
+  bilinear form, which are notions defined using the Witt index, see below[112X.[133X
+  
+  [33X[0;0YWe  end  this  section  with  a short description of the conventions used in
+  [5XForms[105X  for  the notions orthogonal, symplectic, pseudo, hyperbolic, elliptic
+  and  parabolic. We call a form [22Xf[122X [13Xsymplectic[113X if and only if [22Xf[122X is alternating.
+  When  the characteristic of the field is odd, we call a form [22Xf[122X [13Xorthogonal[113X if
+  and  only  [22Xf[122X is symmetric, and when the characteristic of the field is even,
+  we  call  a form [22Xf[122X [13Xpseudo[113X if and only if [22Xf[122X is symmetric but not alternating.
+  This  terminology  is related to the theory of polar spaces, and in the case
+  of  orthogonal  forms, we adopt the terms [13Xhyperbolic[113X, [13Xelliptic[113X and [13Xparabolic[113X
+  for  the  three different isometry types of orthogonal forms. From the point
+  of  view  of  matrix groups, these three types correspond as follows. Recall
+  that,  as  explained  above,  the Witt index refers to the Witt index of the
+  [12Xinduced non-degenerate form[112X [22Xg[122X when [22Xf[122X is degenerate.[133X
+  
+        ───────────┬──────────────────────┬──────────────────────────────────────────────────────────  
+        Hyperbolic │ Orthogonal of + type │ [22XV/Rad(f)[122X has even dimension, [22Xg[122X has maximal Witt index       
+        Elliptic   │ Orthogonal of - type │ [22XV/Rad(f)[122X has even dimension, [22Xg[122X has non-maximal Witt index   
+        Parabolic  │ Orthogonal of o type │ [22XV/Rad(f)[122X has odd dimension                                  
+        ───────────┴──────────────────────┴──────────────────────────────────────────────────────────  
+  
+       [1XTable:[101X Posibilites for an orthogonal form [22Xf[122X on a vector space [22XV[122X
+  
+  
+  
+  [1X3.1-1 [33X[0;0YExamples[133X[101X
+  
+  [33X[0;0YThe  examples we present in this section do not demonstrate the entire suite
+  of  operations  entailed  in  [5XForms[105X.  They are intended to allow the user to
+  become   familiar   with   particular  aspects  of  this  package.  All  the
+  functionality  for  sesquilinear  forms will be listed in detail in the next
+  chapter.[133X
+  
+  [33X[0;0YWe try to construct a bilinear form...[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0],[0,1,4],[1,2,1]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), 0*Z(5) ], [ 0*Z(5), Z(5)^0, Z(5)^2 ], [128X[104X
+    [4X[28X  [ Z(5)^0, Z(5), Z(5)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(5));[127X[104X
+    [4X[28XError, Invalid Gram matrix[128X[104X
+    [4X[28X called from[128X[104X
+    [4X[28XBilinearFormByMatrixOp( MutableCopyMat( m ), f [128X[104X
+    [4X[28X ) at ./pkg/forms/lib/forms.gi:164 called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 8 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit; [127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIt  is clear that the matrix used is not defining a reflexive bilinear form,
+  which causes the system to generate the error message.[133X
+  
+  [33X[0;0YWe  construct now a reflexive bilinear form. We investigate also the radical
+  of the form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,-1]]*Z(9)^0;[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(9));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(form);[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X . . 1 .[128X[104X
+    [4X[28X . . . 2[128X[104X
+    [4X[25Xgap>[125X [27XIsReflexiveForm(form);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSymmetricForm(form);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsAlternatingForm(form);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xr := RadicalOfForm(form);[127X[104X
+    [4X[28X<vector space over GF(3^2), with 0 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDimension(r);[127X[104X
+    [4X[28X0 [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YDegenerate  forms  are  allowed.  As  an example we construct an alternating
+  bilinear form on an odd dimensional vector space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,-2],[0,0,1],[2,-1,0]]*Z(7)^0;[127X[104X
+    [4X[28X[ [ 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^2, Z(7)^3, 0*Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(7));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(form);[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . . 5[128X[104X
+    [4X[28X . . 1[128X[104X
+    [4X[28X 2 6 .[128X[104X
+    [4X[25Xgap>[125X [27XIsSymmetricForm(form);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsAlternatingForm(form);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xr := RadicalOfForm(form);[127X[104X
+    [4X[28X<vector space over GF(7), with 1 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDimension(r);[127X[104X
+    [4X[28X1 [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWhen  the characteristic of the field equals two, alternating forms are also
+  symmetric. We construct an example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,1,0,0,0,0],[1,0,0,0,0,0],[0,0,0,0,0,1],[127X[104X
+    [4X[25X>[125X [27X        [0,0,0,0,1,0],[0,0,0,1,0,0],[0,0,1,0,0,0]]*Z(16)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(16));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(form);[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . . . .[128X[104X
+    [4X[28X 1 . . . . .[128X[104X
+    [4X[28X . . . . . 1[128X[104X
+    [4X[28X . . . . 1 .[128X[104X
+    [4X[28X . . . 1 . .[128X[104X
+    [4X[28X . . 1 . . .[128X[104X
+    [4X[25Xgap>[125X [27XIsSymmetricForm(form);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsAlternatingForm(form);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsDegenerateForm(form);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
+    [4X[28X3 [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YTo define a hermitian form, we need a matrix and the companion automorphism.
+  Since  this  automorphism has order 2, it exists and is unique if the ground
+  field  has  square order. In the next example, the chosen matrix is somewhat
+  special. Together with the companion automorphism, it determines a hermitian
+  sesquilinear  form.  Without  the  companion  automorphism, it determines an
+  alternating bilinear form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0*Z(5),0*Z(5),0*Z(25),Z(25)^3],[0*Z(5),0*Z(5),Z(25)^3,0*Z(25)],[127X[104X
+    [4X[25X>[125X [27X        [0*Z(5),-Z(25)^3,0*Z(5),0*Z(5)],[-Z(25)^3,0*Z(5),0*Z(25),0*Z(25)]];[127X[104X
+    [4X[28X[ [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5^2)^3 ], [ 0*Z(5), 0*Z(5), Z(5^2)^3, 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), Z(5^2)^15, 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ Z(5^2)^15, 0*Z(5), 0*Z(5), 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := HermitianFormByMatrix(mat,GF(25));[127X[104X
+    [4X[28X< hermitian form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(form);[127X[104X
+    [4X[28XHermitian form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28Xz = Z(25)[128X[104X
+    [4X[28X    .    .    .  z^3[128X[104X
+    [4X[28X    .    .  z^3    .[128X[104X
+    [4X[28X    . z^15    .    .[128X[104X
+    [4X[28X z^15    .    .    .[128X[104X
+    [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xform2 := BilinearFormByMatrix(mat,GF(25));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(form2);[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28Xz = Z(25)[128X[104X
+    [4X[28X    .    .    .  z^3[128X[104X
+    [4X[28X    .    .  z^3    .[128X[104X
+    [4X[28X    . z^15    .    .[128X[104X
+    [4X[28X z^15    .    .    .[128X[104X
+    [4X[25Xgap>[125X [27XIsAlternatingForm(form2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(IsometricCanonicalForm(form));[127X[104X
+    [4X[28XHermitian form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X . . 1 .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28XWitt Index: 2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(IsometricCanonicalForm(form2));[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X 4 . . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . 4 .[128X[104X
+    [4X[28XWitt Index: 2[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  continue the previous example by exploring a little bit the sesquilinear
+  form  [3Xform[103X,  and  hence  demonstrate  some of the functionality of the [5XForms[105X
+  package.  Eventually,  we  find  a 2-dimensional totally isotropic subspace,
+  which  lets  us conclude that the Witt index of [22Xform[122X is at least 2, which is
+  confirmed afterwards by calling the appropriate function.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XV := GF(25)^4;[127X[104X
+    [4X[28X( GF(5^2)^4 )[128X[104X
+    [4X[25Xgap>[125X [27Xu := [Z(5)^0,Z(5^2)^11,Z(5)^3,Z(5^2)^13 ];[127X[104X
+    [4X[28X[ Z(5)^0, Z(5^2)^11, Z(5)^3, Z(5^2)^13 ][128X[104X
+    [4X[25Xgap>[125X [27X[u,u]^form;[127X[104X
+    [4X[28X0*Z(5)[128X[104X
+    [4X[25Xgap>[125X [27Xv := [Z(5)^0,Z(5^2)^5,Z(5^2),Z(5^2)^13 ];[127X[104X
+    [4X[28X[ Z(5)^0, Z(5^2)^5, Z(5^2), Z(5^2)^13 ][128X[104X
+    [4X[25Xgap>[125X [27X[v,v]^form;                                     [127X[104X
+    [4X[28X0*Z(5)[128X[104X
+    [4X[25Xgap>[125X [27X[u,v]^form;[127X[104X
+    [4X[28XZ(5^2)^7[128X[104X
+    [4X[25Xgap>[125X [27X([v,u]^form)^5;[127X[104X
+    [4X[28XZ(5^2)^7[128X[104X
+    [4X[25Xgap>[125X [27Xw := [Z(5^2)^21,Z(5^2)^19,Z(5^2)^4,Z(5)^3 ];[127X[104X
+    [4X[28X[ Z(5^2)^21, Z(5^2)^19, Z(5^2)^4, Z(5)^3 ][128X[104X
+    [4X[25Xgap>[125X [27X[w,w]^form;[127X[104X
+    [4X[28XZ(5)[128X[104X
+    [4X[25Xgap>[125X [27Xv := [Z(5)^0,Z(5^2)^10,Z(5^2)^15,Z(5^2)^3 ];[127X[104X
+    [4X[28X[ Z(5)^0, Z(5^2)^10, Z(5^2)^15, Z(5^2)^3 ][128X[104X
+    [4X[25Xgap>[125X [27Xu := [Z(5)^3,Z(5^2)^9,Z(5^2)^4,Z(5^2)^16 ];[127X[104X
+    [4X[28X[ Z(5)^3, Z(5^2)^9, Z(5^2)^4, Z(5^2)^16 ][128X[104X
+    [4X[25Xgap>[125X [27Xw := [Z(5)^2,Z(5^2)^9,Z(5^2)^23,Z(5^2)^11 ];[127X[104X
+    [4X[28X[ Z(5)^2, Z(5^2)^9, Z(5^2)^23, Z(5^2)^11 ][128X[104X
+    [4X[25Xgap>[125X [27X[u,v]^form;[127X[104X
+    [4X[28X0*Z(5)[128X[104X
+    [4X[25Xgap>[125X [27X[u,w]^form;[127X[104X
+    [4X[28X0*Z(5)[128X[104X
+    [4X[25Xgap>[125X [27X[v,w]^form;[127X[104X
+    [4X[28X0*Z(5)[128X[104X
+    [4X[25Xgap>[125X [27Xs := Subspace(V,[v,u,w]);[127X[104X
+    [4X[28X<vector space over GF(5^2), with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDimension(s);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XWittIndex(form);[127X[104X
+    [4X[28X2[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YQuadratic forms[133X[101X
+  
+  [33X[0;0YA [13Xquadratic form[113X on an [22Xn[122X-dimensional vector space [22XV[122X over a field [22XF[122X, is a map
+  [22XQ[122X from [22XV[122X to [22XF[122X satisfying the following two conditions:[133X
+  
+  
+  [24X[33X[0;6YQ(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,[133X
+  
+  [124X
+  
+  [33X[0;0Yand, the map [22Xf[122X defined from [22XV× V[122X to [22XF[122X as follows,[133X
+  
+  
+  [24X[33X[0;6Yf(v,w) := Q(v+w) - Q(v) - Q(w),[133X
+  
+  [124X
+  
+  [33X[0;0Yis a bilinear form on [22XV[122X. From this definition it follows that [22Xf(v,v) = Q(2v)
+  - 2Q(v) = 2Q(v)[122X.[133X
+  
+  [33X[0;0YThe  associated  bilinear  form  [22Xf[122X  (which  is called the [13Xpolar form[113X of [22XQ[122X in
+  [CCN+85]) is clearly reflexive. When the characteristic of the field is odd,
+  it is clear that [22Xf[122X is a symmetric bilinear form. The equation [22Xf(v,v) = 2Q(v)[122X
+  allows  us  to  reconstruct  the  quadratic form from the bilinear form, and
+  hence  there  is  a  one-to-one  correspondence  between quadratic forms and
+  symmetric bilinear forms. When the characteristic of the field equals 2, the
+  bilinear  form  [22Xf[122X  is  alternating  (from the fact that [22Xf(v,v) = 2Q(v) = 0[122X).
+  Note,  however,  that  different  quadratic  forms  can  determine  the same
+  alternating form.[133X
+  
+  [33X[0;0YAs  in  the  case  of  sesquilinear  forms,  we will associate a matrix to a
+  quadratic form. Chosing a basis of the vector space [22XV[122X, it is clear that an [22Xn
+  ×  n[122X  matrix  determines  the  quadratic form completely. In [5XForms[105X, the [13XGram
+  matrix[113X of a quadratic form is always an upper triangle matrix [22XM[122X, such that[133X
+  
+  
+  [24X[33X[0;6YQ(v) = vMv^T,[133X
+  
+  [124X
+  
+  [33X[0;0Ywhere  the basis of [22XV[122X is the standard basis. Although the Gram matrix stored
+  with  the  quadratic  form  is  always an upper triangle matrix, the user is
+  allowed  to  use any matrix to define the quadratic form, since any matrix [22XM[122X
+  defines  a  quadratic  form  [22XQ(v)  :=  vMv^T[122X  .  During the construction, an
+  appopriate  upper triangle matrix is computed and stored as the Gram matrix.
+  So the Gram matrix of the associated bilinear form is [22XM+M^T[122X.[133X
+  
+  [33X[0;0YThe   associated   bilinear  form  could  be  used  to  define  the  notions
+  ``isotropic'',  ``totally isotropic'' and ``non-degenerate'', however, under
+  these restrictions the geometry of quadratic forms in even characteristic is
+  lost.  In  most  of  the  literature,  these  notions  refer  indeed  to the
+  associated  bilinear  form,  and  the  notion of ``singularity'' is added to
+  regain the geometrical structure.[133X
+  
+  [33X[0;0YIn  [5XForms[105X,  we use the above described approach. This means that a vector is
+  isotropic  if  and  only  if  it is isotropic with respect to the associated
+  bilinear  form. A subspace is totally isotropic if and only if it is totally
+  isotropic  with  respect  to  the  associated bilinear form, and we call the
+  quadratic  form  degenerate  if  and only if the associated bilinear form is
+  degenerate.[133X
+  
+  [33X[0;0YA  vector  [22Xv[122X is called [13Xsingular[113X with relation to the quadratic form [22XQ[122X if and
+  only  if [22XQ(v)=0[122X. two vectors [22Xv[122X and [22Xw[122X are [13Xorthogonal[113X with respect to [22XQ[122X if and
+  only  if they are orthogonal with respect to the associated bilinear form [22Xf[122X.
+  The  [13Xradical[113X  of the quadratic form [22XQ[122X, is the intersection of the set of all
+  singular  vectors  with  relation  to  [22XQ[122X  and  the radical of the associated
+  bilinear form [22Xf[122X, i.e.[133X
+  
+  
+  [24X[33X[0;6YRad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.[133X
+  
+  [124X
+  
+  [33X[0;0YWe  call a quadratic form [22XQ[122X [13Xnon-singular[113X if and only if the radical contains
+  only the zero vector, and [13Xsingular[113X otherwise.[133X
+  
+  [33X[0;0YA  subspace  [22XW[122X of the vector space is called [13Xtotally singular[113X if and only if
+  all vectors of [22XW[122X are singular, i.e., [22XQ[122X vanishes totally on [22XW[122X. Necessarily, a
+  totally  singular  subspace  is  also totally isotropic with relation to the
+  associated  bilinear  form  [22Xf[122X,  but  the  converse  is  only  true  when the
+  characteristic of the field is odd.[133X
+  
+  [33X[0;0YSuppose  now that [22XQ[122X is a non-singular quadratic form. The [13XWitt index[113X of [22XQ[122X is
+  the maximum dimension of a totally singular subspace with respect to [22XQ[122X.[133X
+  
+  [33X[0;0YLet  [22XQ[122X  be  a  quadratic  form  on  [22XV(n,q)[122X,  with radical [22XR[122X, a [22Xk[122X-dimensional
+  subspace of [22XV(n,q)[122X, [22X0 ≤ k ≤ n[122X. Then [22XQ[122X induces a non-singular form [22XQ'[122X on [22XV/R[122X.
+  When  [22Xdim(R)=0[122X,  then  [22XQ=Q'[122X  and  [22XQ[122X is non-singular. Notice that all totally
+  singular  subspaces  of  maximal  dimension of a singular form [22XQ[122X contain the
+  radical  of  [22XQ[122X.  In  [5XForms[105X,  the  notion Witt index will [12Xalways refer to the
+  induced  non-singular form[112X [22XQ'[122X. Hence, given a singular form [22XQ[122X, computing its
+  Witt  index  will  return  the  Witt index of the induced form [22XQ'[122X. [12XThis also
+  holds  for  the  notions  elliptic, parabolic and hyperbolic for a quadratic
+  form, which are notions defined using the Witt index, see below[112X.[133X
+  
+  [33X[0;0YThe terminology[13Xhyperbolic[113X, [13Xelliptic[113X and [13Xparabolic[113X is also used for quadratic
+  forms,  and  is defined analogously as for the bilinear forms using the Witt
+  index.  Also  in the case of quadratic forms, this terminology is related to
+  the  theory of polar spaces. Recall that, as explained above, the Witt index
+  refers  to  the  Witt  index  of  the [12Xinduced non-singular form[112X [22XQ[122X when [22XQ'[122X is
+  singular.[133X
+  
+        ───────────┬──────────────────────┬───────────────────────────────────────────────────────────  
+        Hyperbolic │ Orthogonal of + type │ [22XV/Rad(Q)[122X has even dimension, [22XQ'[122X has maximal Witt index       
+        Elliptic   │ Orthogonal of - type │ [22XV/Rad(Q)[122X has even dimension, [22XQ'[122X has non-maximal Witt index   
+        Parabolic  │ Orthogonal of o type │ [22XV/Rad(Q)[122X has odd dimension                                   
+        ───────────┴──────────────────────┴───────────────────────────────────────────────────────────  
+  
+       [1XTable:[101X Posibilites for a quadratic form [22XQ[122X on a vector space [22XV[122X
+  
+  
+  [33X[0;0YFrom  the above definitions, it follows that, when the characteristic of the
+  field  differs from 2, a quadratic form [22XQ[122X is non-singular if and only if its
+  associated bilinear form [22Xf[122X is non-degenerate. When the characteristic of the
+  field  is  2,  one can easily construct non-singular quadratic forms, with a
+  degenerate  associated  bilinear  form.  We  will  give  an  example of this
+  situation in the next section.[133X
+  
+  
+  [1X3.2-1 [33X[0;0YExamples[133X[101X
+  
+  [33X[0;0YWe construct some quadratic forms to demonstrate some funcionality of [5XForms[105X.
+  As  in  the previous example section, they are intended to allow the user to
+  gain  some  familiarity.  All  the functionality for quadratic forms will be
+  listed in detail in the next chapter.[133X
+  
+  [33X[0;0YThe user can construct quadratic forms using any matrix (provided it has the
+  right  dimension).  The  Gram  matrix  is always stored as an upper triangle
+  matrix, as explained above.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XV := GF(4)^3;                           [127X[104X
+    [4X[28X( GF(2^2)^3 )[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[Z(2^2)^2,Z(2^2),Z(2^2)^2],[Z(2^2)^2,Z(2)^0,Z(2)^0],[127X[104X
+    [4X[25X>[125X [27X        [0*Z(2),Z(2)^0,0*Z(2)]];[127X[104X
+    [4X[28X[ [ Z(2^2)^2, Z(2^2), Z(2^2)^2 ], [ Z(2^2)^2, Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xqform := QuadraticFormByMatrix(mat, GF(4));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( qform );[127X[104X
+    [4X[28XQuadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28Xz = Z(4)[128X[104X
+    [4X[28X z^2   1 z^2[128X[104X
+    [4X[28X   .   1   .[128X[104X
+    [4X[28X   .   .   .[128X[104X
+    [4X[25Xgap>[125X [27XPolynomialOfForm( qform );[127X[104X
+    [4X[28XZ(2^2)^2*x_1^2+x_1*x_2+Z(2^2)^2*x_1*x_3+x_2^2 [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  previous  example,  we  saw  how  we used a polynomial to display a
+  quadratic  form.  Conversely, [5XForms[105X allows the user to construct (quadratic)
+  forms using a polynomial.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialRing(GF(8),4);[127X[104X
+    [4X[28XGF(2^3)[x_1,x_2,x_3,x_4][128X[104X
+    [4X[25Xgap>[125X [27Xpoly := r.1*r.2+r.3*r.4;[127X[104X
+    [4X[28Xx_1*x_2+x_3*x_4[128X[104X
+    [4X[25Xgap>[125X [27Xqform := QuadraticFormByPolynomial(poly, r);[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(qform);[127X[104X
+    [4X[28XQuadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28XPolynomial: x_1*x_2+x_3*x_4[128X[104X
+    [4X[25Xgap>[125X [27XRadicalOfForm(qform);[127X[104X
+    [4X[28X<vector space over GF(2^3), with 0 generators> [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  construct  now  two  different  quadratic forms with the same associated
+  bilinear form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[Z(16)^3,1,0,0],[0,Z(16)^5,0,0],[127X[104X
+    [4X[25X>[125X [27X             [0,0,Z(16)^3,1],[0,0,0,Z(16)^12]]*Z(16)^0;[127X[104X
+    [4X[28X[ [ Z(2^4)^3, Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2^4)^3, Z(2)^0 ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2^4)^12 ] [128X[104X
+    [4X[28X ][128X[104X
+    [4X[25Xgap>[125X [27Xqform := QuadraticFormByMatrix(mat,GF(16));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( qform );[127X[104X
+    [4X[28XQuadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28Xz = Z(16)[128X[104X
+    [4X[28X  z^3    1    .    .[128X[104X
+    [4X[28X    .  z^5    .    .[128X[104X
+    [4X[28X    .    .  z^3    1[128X[104X
+    [4X[28X    .    .    . z^12[128X[104X
+    [4X[25Xgap>[125X [27Xmat2 := [[Z(16)^7,1,0,0],[0,0,0,0],[127X[104X
+    [4X[25X>[125X [27X             [0,0,Z(16)^2,1],[0,0,0,Z(16)^9]]*Z(16)^0;[127X[104X
+    [4X[28X[ [ Z(2^4)^7, Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2^4)^2, Z(2)^0 ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2^4)^9 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xqform2 := QuadraticFormByMatrix(mat2, GF(16));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( qform2 );[127X[104X
+    [4X[28XQuadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28Xz = Z(16)[128X[104X
+    [4X[28X  z^7    1    .    .[128X[104X
+    [4X[28X    .    .    .    .[128X[104X
+    [4X[28X    .    .  z^2    1[128X[104X
+    [4X[28X    .    .    .  z^9[128X[104X
+    [4X[25Xgap>[125X [27Xbiform := AssociatedBilinearForm( qform2 );[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( biform );[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . 1 . [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  end  with  an example of a non-singular quadratic form with a degenerate
+  associated bilinear form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [ [ Z(2^2), Z(2^2), Z(2^2), Z(2^2), Z(2^2) ], [127X[104X
+    [4X[25X>[125X [27X   [ 0*Z(2), Z(2^2), Z(2^2)^2, 0*Z(2), Z(2)^0 ], [127X[104X
+    [4X[25X>[125X [27X   [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ], [127X[104X
+    [4X[25X>[125X [27X   [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [127X[104X
+    [4X[25X>[125X [27X   [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xqform := QuadraticFormByMatrix(mat,GF(4));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27XIsSingularForm(qform);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsDegenerateForm(qform);[127X[104X
+    [4X[28X#I  Testing degeneracy of the *associated bilinear form*[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xbiform := AssociatedBilinearForm(qform);[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(biform);[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28Xz = Z(4)[128X[104X
+    [4X[28X   . z^1 z^1 z^1 z^1[128X[104X
+    [4X[28X z^1   . z^2   .   1[128X[104X
+    [4X[28X z^1 z^2   .   1   1[128X[104X
+    [4X[28X z^1   .   1   .   1[128X[104X
+    [4X[28X z^1   1   1   1   .[128X[104X
+    [4X[25Xgap>[125X [27XIsDegenerateForm(biform);[127X[104X
+    [4X[28Xtrue [128X[104X
+  [4X[32X[104X
+  

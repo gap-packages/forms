@@ -1,101 +1,113 @@
 #############################################################################
 ##  
-##  Demo PackageInfo.g for the GitHubPagesForGAP
+##  PackageInfo.g for the package `Forms'                 
+##                                                              John Bamberg
+##                                                              Jan De Beule
 ##
+##  (created from Frank Luebeck's PackageInfo.g template file)
+##  
 
-SetPackageInfo( rec(
+SetPackageInfo( rec( 
+  PackageName := "Forms", 
+  Subtitle := "Sesquilinear and Quadratic",
+  Version := "1.2.6",
+  Date := "07/07/2021",
+License := "GPL-2.0-or-later",
 
-PackageName := "GitHubPagesForGAP",
-
-Subtitle := "A GitHub Pages generator for GAP packages",
-Version := "0.3",
-Date := "10/11/2019", # dd/mm/yyyy format
-License := "0BSD",
-
+##  URL of the archive(s) of the current package release, but *without*
+##  the format extension(s), like '.zoo', which are given next.
+##  The archive file name *must be changed* with each version of the archive
+##  (and probably somehow contain the package name and version).
+##  The paths of the files in the archive must begin with the name of the
+##  directory containing the package (in our "example" probably:
+##  example/init.g, ...    or  example-1.3/init.g, ...  )
+# 
+ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.6",
+ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
 Persons := [
-  rec(
-    LastName      := "Horn",
-    FirstNames    := "Max",
+  rec( 
+    LastName      := "Bamberg",
+    FirstNames    := "John",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "max.horn@uni-siegen.de",
-    WWWHome       := "https://www.quendi.de/math",
-    PostalAddress := Concatenation(
-                       "Department Mathematik\n",
-                       "Universität Siegen\n",
-                       "Walter-Flex-Straße 3\n",
-                       "57072 Siegen\n",
-                       "Germany" ),
-    Place         := "Siegen",
-    Institution   := "Universität Siegen"
+    Email         := "bamberg@maths.uwa.edu.au",
+    WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
+    PostalAddress := Concatenation( [
+                       "John Bamberg\n",
+                       "School of Mathematics and Statistics\n",
+                       "The University of Western Australia\n",
+                       "35 Stirling Highway\n",
+                       "CrawleyY WA 6009, Perth\n",
+                       "Australia" ] ),
+    Place         := "Perth",
+    Institution   := "The University of Western Australia",
   ),
-
-  rec(
-    LastName      := "Thor",
-    FirstNames    := "A. U.",
-    IsAuthor      := true,
-    IsMaintainer  := false,
-    #Email         := "author@example.com",
-  ),
-
-  rec(
-    LastName      := "Itor",
+  rec( 
+    LastName      := "De Beule",
     FirstNames    := "Jan",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := true,
-    #Email         := "janitor@example.com",
+    Email         := "jan@debeule.eu",
+    WWWHome       := "http://www.debeule.eu",
+    PostalAddress := Concatenation( [
+                       "Jan De Beule\n",
+                       "Department of Mathematics\n",
+                       "Vrije Universiteit Brussel\n",
+                       "Pleinlaan 2\n",
+                       "B-1050 Brussel\n",
+                       "Belgium" ] ),
+    Place         := "Brussels",
+    Institution   := "Vrije Universiteit Brussel",
   ),
 ],
 
-Status := "other",
+Status := "accepted",
+README_URL := "http://cage.ugent.be/geometry/software/forms/README",
+PackageInfoURL := "http://cage.ugent.be/geometry/software/forms/PackageInfo.g",
+AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
 
-# The following are not strictly necessary in your own PackageInfo.g
-# (in the sense that update.g only looks at the usual fields
-# like PackageWWWHome, ArchiveURL etc.). But they are convenient
-# if you use exactly the scheme for your package website that we propose.
-GithubUser := "gap-system",
-GithubRepository := ~.PackageName,
-GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
-
-PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-# The following assumes you are using the Github releases system. If not, adjust
-# it accordingly.
-ArchiveURL     := Concatenation(~.GithubWWW,
-                    "/releases/download/v", ~.Version, "/",
-                    ~.GithubRepository, "-", ~.Version),
-
-ArchiveFormats := ".tar.gz .tar.bz2",
-
-AbstractHTML := 
-  "This is a pseudo package that contains no actual\
-  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
-  GAP packages that allows to quickly setup GitHub Pages.",
-
+PackageWWWHome := "http://cage.ugent.be/geometry/forms.php",
+            
 PackageDoc := rec(
-  BookName  := "GitHubPagesForGAP",
+  # use same as in GAP            
+  BookName  := "Forms",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A GitHub Pages generator for GAP packages",
+  LongTitle := "Forms - Sesquilinear and Quadratic",
 ),
 
-# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.8.1",
-  NeededOtherPackages := [
-    ["GAPDoc", ">= 1.2"],
-    ["IO", ">= 4.1"],
-  ],
-  SuggestedOtherPackages := [["orb", ">= 4.2"]],
-  ExternalConditions := []
-),
+  GAP := ">=4.9",
+  NeededOtherPackages := [],
+  SuggestedOtherPackages := [],
+  ExternalConditions := []),
 
 AvailabilityTest := ReturnTrue,
 
-Keywords := ["GitHub Pages", "GAP"]
+BannerString := Concatenation( 
+  "---------------------------------------------------------------------\n",
+  "Loading 'Forms' ", ~.Version," (", ~.Date,")", "\n",
+  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+        " (", ~.Persons[1].WWWHome, ")\n",
+  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
+        " (", ~.Persons[2].WWWHome, ")\n",
+   "For help, type: ?Forms \n",
+  "---------------------------------------------------------------------\n" ),
+
+TestFile := "tst/testall.g",
+
+IssueTrackerURL := "https://github.com/gap-packages/forms/issues",
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/forms",
+),
+
+Keywords := ["Forms", "Sesquilinear", "Quadratic"],
+
+CommunicatedBy := "Leonard Soicher (London)",
+AcceptDate := "03/2009"
 
 ));
 

@@ -1,0 +1,194 @@
+  
+  [1X2 [33X[0;0YExamples[133X[101X
+  
+  [33X[0;0YHere  we give some simple examples that display some of the functionality of
+  [5XForms[105X.[133X
+  
+  
+  [1X2.1 [33X[0;0YA conic of [22XPG(2,8)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YConsider  the three-dimensional vector space [22XV[122X over the finite field [22XGF(8)[122X ,
+  and consider the following quadratic polynomial in 3 variables:[133X
+  
+  
+  [24X[33X[0;6Yx_1^2+x_2x_3.[133X
+  
+  [124X
+  
+  [33X[0;0YThen  this  polynomial  defines  a  quadratic form on [22XV[122X and the zeros form a
+  [13Xconic[113X  of  the  associated projective plane. So in particular, our quadratic
+  form defines a degenerate parabolic quadric of Witt Index 1. We will see now
+  how we can use [5XForms[105X to view this example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgf := GF(8);[127X[104X
+    [4X[28XGF(2^3)[128X[104X
+    [4X[25Xgap>[125X [27Xvec := gf^3;[127X[104X
+    [4X[28X( GF(2^3)^3 )[128X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialRing( gf, 3);[127X[104X
+    [4X[28XPolynomialRing(..., [ x_1, x_2, x_3 ])[128X[104X
+    [4X[25Xgap>[125X [27Xpoly := r.1^2 + r.2 * r.3;[127X[104X
+    [4X[28Xx_1^2+x_2*x_3[128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByPolynomial( poly, r );[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( form );[127X[104X
+    [4X[28XQuadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . .[128X[104X
+    [4X[28X . . 1[128X[104X
+    [4X[28X . . .[128X[104X
+    [4X[28XPolynomial: x_1^2+x_2*x_3[128X[104X
+    [4X[25Xgap>[125X [27XIsDegenerateForm( form );[127X[104X
+    [4X[28X#I  Testing degeneracy of the *associated bilinear form*[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSingularForm( form );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XWittIndex( form );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XIsParabolicForm( form );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRadicalOfForm( form );[127X[104X
+    [4X[28X<vector space over GF(2^3), with 0 generators>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNow  our conic is stabilised by a group isomorphic to [22XGO(3,8)[122X , but which is
+  not identical to the group returned by the GAP command [10XGO(3,8)[110X. However, our
+  conic is the canonical conic given in [5XForms[105X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xcanonical := IsometricCanonicalForm( form );[127X[104X
+    [4X[28X< parabolic quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xform = canonical;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSo we ``change forms''...[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgo := GO(3,8);[127X[104X
+    [4X[28XGO(0,3,8)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := InvariantQuadraticForm( go )!.matrix;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgapform := QuadraticFormByMatrix( mat, GF(8) );[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xb := BaseChangeToCanonical( gapform );[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xhom := BaseChangeHomomorphism( b, GF(8) );[127X[104X
+    [4X[28X^[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xnewgo := Image(hom, go);[127X[104X
+    [4X[28XGroup([128X[104X
+    [4X[28X[ [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^3), 0*Z(2) ], [ 0*Z(2), 0*Z(2),[128X[104X
+    [4X[28X           Z(2^3)^6 ] ], [128X[104X
+    [4X[28X  [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X      [ 0*Z(2), Z(2)^0, 0*Z(2) ] ] ])[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNow we look at the action of our new [22XGO(3,8)[122X on the conic.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xconic := Filtered(vec, x -> IsZero( x^form ));;[127X[104X
+    [4X[25Xgap>[125X [27XSize(conic);[127X[104X
+    [4X[28X64[128X[104X
+    [4X[25Xgap>[125X [27Xorbs := Orbits(newgo, conic, OnRight);;[127X[104X
+    [4X[25Xgap>[125X [27XList(orbs,Size);[127X[104X
+    [4X[28X[ 1, 63 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSo  we see that there is a fixed point, which is actually the [13Xnucleus[113X of the
+  conic, or in other words, the radical of the form.[133X
+  
+  
+  [1X2.2 [33X[0;0YA form for [22XW(5,3)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  symplectic  polar  space  [22XW(5,q)[122X is defined by an alternating reflexive
+  bilinear  form  on  the  six-dimensional  vector space over the finite field
+  [22XGF(q)[122X.  Any invertible [22X6 × 6[122X matrix [22XA[122X which satisfies [22XA+A^T=0[122X is a candidate
+  for the Gram matrix of a symplectic polarity. The canonical form we adopt in
+  [5XForms[105X for an alternating form is[133X
+  
+  
+  [24X[33X[0;6Yf(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := GF(3);[127X[104X
+    [4X[28XGF(3)[128X[104X
+    [4X[25Xgap>[125X [27Xgram := [[127X[104X
+    [4X[25X>[125X [27X[0,0,0,1,0,0], [127X[104X
+    [4X[25X>[125X [27X[0,0,0,0,1,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,0,0,0,1],[127X[104X
+    [4X[25X>[125X [27X[-1,0,0,0,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,-1,0,0,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,-1,0,0,0]] * One(f);;[127X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix( gram, f );[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XIsSymplecticForm( form );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( form );[127X[104X
+    [4X[28XSymplectic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . . . 1 . .[128X[104X
+    [4X[28X . . . . 1 .[128X[104X
+    [4X[28X . . . . . 1[128X[104X
+    [4X[28X 2 . . . . .[128X[104X
+    [4X[28X . 2 . . . .[128X[104X
+    [4X[28X . . 2 . . .[128X[104X
+    [4X[25Xgap>[125X [27Xb := BaseChangeToCanonical( form );[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( b );[127X[104X
+    [4X[28X 1 . . . . .[128X[104X
+    [4X[28X . . . 1 . .[128X[104X
+    [4X[28X . 1 . . . .[128X[104X
+    [4X[28X . . . . 1 .[128X[104X
+    [4X[28X . . 1 . . .[128X[104X
+    [4X[28X . . . . . 1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( b * gram * TransposedMat(b) );[127X[104X
+    [4X[28X . 1 . . . .[128X[104X
+    [4X[28X 2 . . . . .[128X[104X
+    [4X[28X . . . 1 . .[128X[104X
+    [4X[28X . . 2 . . .[128X[104X
+    [4X[28X . . . . . 1[128X[104X
+    [4X[28X . . . . 2 . [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3 [33X[0;0YWhat is the form preserved by this group?[133X[101X
+  
+  [33X[0;0YHere  we start with a matrix group which is available in GAP, namely [22XGO(5,5)[122X
+  .  We  then conjugate this group by an element of [22XGL(5,5)[122X , and then we find
+  the  forms  left  invariant by this copy of [22XGO(5,5)[122X (which we expect to be a
+  symmetric bilinear form).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgo := GO(5, 5);[127X[104X
+    [4X[28XGO(0,5,5)[128X[104X
+    [4X[25Xgap>[125X [27Xx := [127X[104X
+    [4X[25X>[125X [27X[ [ Z(5)^0, Z(5)^3, 0*Z(5), Z(5)^3, Z(5)^3 ], [127X[104X
+    [4X[25X>[125X [27X  [ Z(5)^2, Z(5)^3, 0*Z(5), Z(5)^2, Z(5) ], [127X[104X
+    [4X[25X>[125X [27X  [ Z(5)^2, Z(5)^2, Z(5)^0, Z(5), Z(5)^3 ],[127X[104X
+    [4X[25X>[125X [27X  [ Z(5)^0, Z(5)^3, Z(5), Z(5)^0, Z(5)^3 ], [127X[104X
+    [4X[25X>[125X [27X  [ Z(5)^3, 0*Z(5), Z(5)^0, 0*Z(5), Z(5) ] [127X[104X
+    [4X[25X>[125X [27X ];;[127X[104X
+    [4X[25Xgap>[125X [27Xgo2 := go^x;[127X[104X
+    [4X[28X<matrix group of size 18720000 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xforms := PreservedSesquilinearForms( go2 );[127X[104X
+    [4X[28X[ < bilinear form > ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( forms[1] );[127X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 4 2 4 3 3[128X[104X
+    [4X[28X 2 2 2 3 3[128X[104X
+    [4X[28X 4 2 3 1 4[128X[104X
+    [4X[28X 3 3 1 2 4[128X[104X
+    [4X[28X 3 3 4 4 3 [128X[104X
+  [4X[32X[104X
+  
