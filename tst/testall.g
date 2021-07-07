@@ -21,8 +21,13 @@ testfiles := [
 "test_forms13.tst",
 "test_forms14.tst",
 "test_forms15.tst",
-"test_forms16.tst"
+"test_forms16.tst",
+"classic_self_contained.tst",
 ];
+
+if CompareVersionNumbers( GAPInfo.Version, "4.12" ) then
+  Add( testfiles, "classic.tst" );
+fi;
 
 testresult:=true;
 for ff in testfiles do
