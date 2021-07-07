@@ -22,8 +22,9 @@ License := "GPL-2.0-or-later",
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.6",
+
 ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
+
 Persons := [
   rec( 
     LastName      := "Bamberg",
@@ -62,11 +63,8 @@ Persons := [
 ],
 
 Status := "accepted",
-README_URL := "http://cage.ugent.be/geometry/software/forms/README",
-PackageInfoURL := "http://cage.ugent.be/geometry/software/forms/PackageInfo.g",
-AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
 
-PackageWWWHome := "http://cage.ugent.be/geometry/forms.php",
+AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
             
 PackageDoc := rec(
   # use same as in GAP            
@@ -98,11 +96,17 @@ BannerString := Concatenation(
 
 TestFile := "tst/testall.g",
 
-IssueTrackerURL := "https://github.com/gap-packages/forms/issues",
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/gap-packages/forms",
+    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
 ),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", ~.PackageName, "-", ~.Version ),
 
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
