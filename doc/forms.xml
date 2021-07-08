@@ -1,53 +1,17 @@
-<!--
+<?xml version="1.0" encoding="UTF-8"?>
 
-  forms.xml          'Forms' package documentation
-                                                                  John Bamberg
-                                                                  Jan De Beule
- 
-  Copyright (C) 2021, The University of Western Australia
-  Copyright (C) 2021, Vrije Universiteit Brussel
-
--->
-
-<?xml version="1.2.3" encoding="UTF-8"?>
-
+<!-- This is an automatically generated file. -->
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
-    [<!ENTITY pg "\mathrm{PG}">
-    <!ENTITY go "\mathrm{GO}">
-    <!ENTITY gf "\mathrm{GF}">
-    <!ENTITY gl "\mathrm{GL}">
-    <!ENTITY rad "\mathrm{Rad}">
-    <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
-    <!ENTITY gldq "<Alt Only=&#34;Text&#34;><M>GL(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(d,q)</Alt>">
-    <!ENTITY radf "<Alt Only=&#34;Text&#34;><M>Rad(f)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&rad;(f)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&rad;(f)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Rad(f)</Alt>">
-    <!ENTITY vmodradf "<Alt Only=&#34;Text&#34;><M>V/Rad(f)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V/&rad;(f)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V/&rad;(f)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V/Rad(f)</Alt>">
-    <!ENTITY vmodradq "<Alt Only=&#34;Text&#34;><M>V/Rad(Q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V/&rad;(Q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V/&rad;(Q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V/Rad(Q)</Alt>">
+[
+<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY Forms '<Package>Forms</Package>'>
 ]
-   >
-
-
-<?LaTeX ExtraPreamble="\usepackage{url}"?>
-
+>
 <Book Name="Forms">
-
 <#Include SYSTEM "title.xml">
-
-<!--  TableOfContents  . . . . . .  generate a table of contents   -->
 <TableOfContents/>
-
-<!--  The only chapter of the book  --> 
 <Body>
-<#Include SYSTEM "intro.xml"> 
-<#Include SYSTEM "examples.xml">
-<#Include SYSTEM "theory.xml">
-<#Include SYSTEM "construct_basic.xml">
-<#Include SYSTEM "morphisms.xml">
 </Body>
-
-<Bibliography Databases="forms"/>
-
-<!--  And finally an index as well   -->
+<Bibliography Databases="forms.bib"/>
 <TheIndex/>
-
 </Book>
-
