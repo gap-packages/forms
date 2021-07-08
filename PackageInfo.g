@@ -52,7 +52,7 @@ Persons := [
     WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
                        "Jan De Beule\n",
-                       "Department of Mathematics\n",
+                       "Department of Mathematics and Data Science\n",
                        "Vrije Universiteit Brussel\n",
                        "Pleinlaan 2\n",
                        "B-1050 Brussel\n",

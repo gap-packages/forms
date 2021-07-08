@@ -17,7 +17,7 @@ This package provides:
 -  An operation which returns the forms left invariant by a matrix group.
 
 For further information see:
-   http://cage.ugent.be/geometry/forms.php
+   https://gap-packages.github.io/forms
 
 INSTALLATION AND DEPENDENCIES
 
