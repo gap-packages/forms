@@ -28,10 +28,10 @@ Gram Matrix:<br>
  1 . .<br>
  . . 1<br>
  . . .<br>
-Polynomial: x_1^2+x_2*x_3<br>
+Polynomial: x_1^2+x_2\*x_3<br>
 <br>
 gap> IsDegenerateForm( form );<br>
-#I  Testing degeneracy of the *associated bilinear form*<br>
+#I  Testing degeneracy of the \*associated bilinear form\*<br>
 true<br>
 gap> IsSingularForm( form );<br>
 false<br>
