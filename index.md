@@ -10,6 +10,38 @@ The current version of this package is version {{site.data.package.version}}, re
 For more information, please refer to [the package manual]({{site.data.package.doc-html}}).
 There is also a [README](README.html) file.
 
+# An example of how it works
+
+gap> LoadPackage("forms");<br>
+true<br>
+gap> gf := GF(8);<br>
+GF(2^3)<br>
+gap> r := PolynomialRing( gf, 3 );<br>
+PolynomialRing(..., [ x_1, x_2, x_3 ])<br>
+gap> poly := r.1^2 + r.2 * r.3;<br>
+x_1^2+x_2\*x_3<br>
+gap> form := QuadraticFormByPolynomial( poly, r );<br>
+&lt; quadratic form ><br>
+gap> Display( form );<br>
+Quadratic form<br>
+Gram Matrix:<br>
+ 1 . .<br>
+ . . 1<br>
+ . . .<br>
+Polynomial: x_1^2+x_2*x_3<br>
+<br>
+gap> IsDegenerateForm( form );<br>
+#I  Testing degeneracy of the *associated bilinear form*<br>
+true<br>
+gap> IsSingularForm( form );<br>
+false<br>
+gap> WittIndex( form );<br>
+1<br>
+gap> IsParabolicForm( form );<br>
+true<br>
+gap> form;<br>
+< non-singular parabolic quadratic form ><br>
+
 ## Dependencies
 
 This package requires GAP version {{site.data.package.GAP}}
