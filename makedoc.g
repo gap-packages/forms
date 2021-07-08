@@ -10,8 +10,5 @@
 if fail = LoadPackage("AutoDoc", ">= 2019.04.10") then
     Error("AutoDoc 2019.04.10 or newer is required");
 fi;
-AutoDoc(rec(
-    scaffold := rec( MainPage := false ),
-));
+AutoDoc("forms");
 QUIT;
-

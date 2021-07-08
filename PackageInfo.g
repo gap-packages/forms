@@ -109,20 +109,6 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
 CommunicatedBy := "Leonard Soicher (London)",
-AcceptDate := "03/2009",
-
-
-AutoDoc := rec(
-    TitlePage := rec(
-        Copyright := Concatenation(
-            "&copyright; 2018 by the authors<P/>\n\n",
-            "This package may be distributed under the terms and conditions ",
-            "of the GNU Public License Version 2 or (at your option) any later version.\n"
-            ),
-    )
-),
-
+AcceptDate := "03/2009"
 
 ));
-
-
