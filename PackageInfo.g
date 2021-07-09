@@ -34,7 +34,6 @@ Persons := [
     Email         := "bamberg@maths.uwa.edu.au",
     WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
     PostalAddress := Concatenation( [
-                       "John Bamberg\n",
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
                        "35 Stirling Highway\n",
@@ -51,7 +50,6 @@ Persons := [
     Email         := "jan@debeule.eu",
     WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
-                       "Jan De Beule\n",
                        "Department of Mathematics and Data Science\n",
                        "Vrije Universiteit Brussel\n",
                        "Pleinlaan 2\n",
