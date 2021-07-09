@@ -23,7 +23,7 @@ License := "GPL-2.0-or-later",
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
 
-ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
+ArchiveFormats := ".tar.gz .zip .tar.bz2",
 
 Persons := [
   rec( 
