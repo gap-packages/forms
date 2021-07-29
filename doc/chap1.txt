@@ -48,7 +48,7 @@
   [30X    [33X[0;6YFind   [5XForms[105X   on   the   Packages   section   of   the   GAP-website:
         [7Xhttp://www.gap-system.org/Packages/forms.html[107X.[133X
   
-  [30X    [33X[0;6YFind [5XForms[105X on its homepage: [7Xhttp://cage.ugent.be/geometry/forms.php[107X.[133X
+  [30X    [33X[0;6YFind [5XForms[105X on its homepage: [7Xhttps://gap-packages.github.io/forms[107X.[133X
   
   [30X    [33X[0;6YReport  bugs,  questions  and  issues  on  the  [5XForms[105X  issue  tracker:
         [7Xhttps://github.com/gap-packages/forms/issues[107X[133X

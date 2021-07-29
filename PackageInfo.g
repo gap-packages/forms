@@ -11,7 +11,7 @@ SetPackageInfo( rec(
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
   Version := "1.2.6",
-  Date := "07/07/2021",
+  Date := "29/07/2021",
 License := "GPL-2.0-or-later",
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -22,8 +22,9 @@ License := "GPL-2.0-or-later",
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.6",
-ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
+
+ArchiveFormats := ".tar.gz .zip .tar.bz2",
+
 Persons := [
   rec( 
     LastName      := "Bamberg",
@@ -33,7 +34,6 @@ Persons := [
     Email         := "bamberg@maths.uwa.edu.au",
     WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
     PostalAddress := Concatenation( [
-                       "John Bamberg\n",
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
                        "35 Stirling Highway\n",
@@ -50,8 +50,7 @@ Persons := [
     Email         := "jan@debeule.eu",
     WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
-                       "Jan De Beule\n",
-                       "Department of Mathematics\n",
+                       "Department of Mathematics and Data Science\n",
                        "Vrije Universiteit Brussel\n",
                        "Pleinlaan 2\n",
                        "B-1050 Brussel\n",
@@ -62,11 +61,8 @@ Persons := [
 ],
 
 Status := "accepted",
-README_URL := "http://cage.ugent.be/geometry/software/forms/README",
-PackageInfoURL := "http://cage.ugent.be/geometry/software/forms/PackageInfo.g",
-AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
 
-PackageWWWHome := "http://cage.ugent.be/geometry/forms.php",
+AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
             
 PackageDoc := rec(
   # use same as in GAP            
@@ -98,11 +94,17 @@ BannerString := Concatenation(
 
 TestFile := "tst/testall.g",
 
-IssueTrackerURL := "https://github.com/gap-packages/forms/issues",
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/gap-packages/forms",
+    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
 ),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", ~.PackageName, "-", ~.Version ),
 
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 

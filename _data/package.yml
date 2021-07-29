@@ -1,7 +1,7 @@
 name: Forms
 version: "1.2.6"
 license: "GPL-2.0-or-later"
-date: 2021-07-07
+date: 2021-07-29
 description: |
     Sesquilinear and Quadratic
 
@@ -19,17 +19,17 @@ maintainers:
 
 GAP: ">=4.9"
 
-www: http://cage.ugent.be/geometry/forms.php
+www: https://gap-packages.github.io/Forms
 readme: README
-packageinfo: http://cage.ugent.be/geometry/software/forms/PackageInfo.g
+packageinfo: https://gap-packages.github.io/Forms/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: http://cage.ugent.be/geometry/software/forms/forms-1.2.6.tar.gz
-    - name: -win.zip
-      url: http://cage.ugent.be/geometry/software/forms/forms-1.2.6-win.zip
+      url: https://github.com/gap-packages/Forms/releases/download/v1.2.6/Forms-1.2.6.tar.gz
+    - name: .zip
+      url: https://github.com/gap-packages/Forms/releases/download/v1.2.6/Forms-1.2.6.zip
     - name: .tar.bz2
-      url: http://cage.ugent.be/geometry/software/forms/forms-1.2.6.tar.bz2
+      url: https://github.com/gap-packages/Forms/releases/download/v1.2.6/Forms-1.2.6.tar.bz2
 
 abstract: |
     This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.
@@ -46,7 +46,7 @@ citeas: |
              Version 1.2.6</i>
      (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
-    <span class='BibHowpublished'><a href="http://cage.ugent.be/geometry/forms.php">http://cage.ugent.be/geometry/forms.php</a></span>.
+    <span class='BibHowpublished'><a href="https://gap-packages.github.io/Forms">https://gap-packages.github.io/Forms</a></span>.
     </p>
     
 
@@ -57,10 +57,8 @@ bibtex: |
       month =            {Jul},
       year =             {2021},
       note =             {Refereed GAP package},
-      howpublished =     {\href        {http://cage.ugent.be/geometry/forms.php}
-                          {\texttt{http://cage.ugent.be/}\discretionary
-                          {}{}{}\texttt{geometry/}\discretionary
-                          {}{}{}\texttt{forms.php}}},
+      howpublished =     {\href                                     {https://gap-packages.github.io/Forms}
+                          {\texttt{https://gap-packages.github.io/}\discretionary {}{}{}\texttt{Forms}}},
       keywords =         {Forms; Sesquilinear; Quadratic},
       printedkey =       {BB21}
     }
