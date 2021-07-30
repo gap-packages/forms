@@ -4,8 +4,8 @@
 ##                                                              John Bamberg
 ##                                                              Jan De Beule
 ##                                                              Frank Celler
-##  Copyright 2017, Vrije Universiteit Brussel
-##  Copyright 2017, The University of Western Austalia
+##  Copyright 2021, Vrije Universiteit Brussel
+##  Copyright 2021, The University of Western Austalia
 ##  Copyright (C) 1996,  Lehrstuhl D fuer Mathematik, RWTH Aachen, Germany
 ##
 ##  This file contains functions to compute sesquilinear forms invariant under
@@ -439,74 +439,98 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm,
 ##
 ClassicalForms_InvariantFormDual := function( module, dmodule )
     local   hom,  scalars,  form,  iform,  identity,  field,  root,
-            q,  i,  m,  a,  quad,  sgn;
+            q,  i,  m,  a, b, x, y, p,  quad,  sgn, n, listforms, test;
 
     # <dmodule> acts absolutely irreducible without scalars
-    hom := MTX.Homomorphisms( dmodule, DualGModule(dmodule) );
+    hom := MTX.BasisModuleHomomorphisms( dmodule, DualGModule(dmodule) );
     if 0 = Length(hom)  then
         return false;
-    elif 1 < Length(hom)  then
-        Error( "module acts absolutely irreducibly but two forms found" );
     fi;
-    Info( InfoForms, 1, "found homomorphism between V and V^*\n" );
+    listforms := [];
+    field :=  MTX.Field(module);
+    root :=  PrimitiveRoot(field);
+    q := Size(field);
 
-    # make sure that the forms commute with the generators of <module>
-    scalars  := [];
-    form     := hom[1];
-    iform    := form^-1;
-    identity := One(form);
-    field   :=  MTX.Field(module);
-    root    :=  PrimitiveRoot(field);
-    q        := Size(field);
-    for i  in MTX.Generators(module)  do
-        m := i * form * TransposedMat(i) * iform;
-        a := m[1,1];
-        if m <> a*identity  then
-            Info(InfoForms, 1,
-                "form is not invariant under all generators\n" );
-            return false;
-        fi;
-        a := NthRoot(field,a,2);
-        Add( scalars, a );
-    od;
+	# make sure that all the forms commute with the generators of <module>
 
-    # check the type of form
-    if TransposedMat(form) = -form  then
-        Info(InfoForms, 1, "form is symplectic\n" );
-        if Characteristic(field) = 2  then
-            quad := ClassicalForms_QuadraticForm2(
-                field, form, MTX.Generators(module), scalars );
-            if quad = false  then
-                return [ "symplectic", form, scalars ];
-            elif MTX.Dimension(module) mod 2 = 1  then
-                Error( "no quadratic form but odd dimension" );
-            elif ClassicalForms_Signum2( field, form, quad ) = -1  then
-                return [ "orthogonalminus", form, scalars, quad ];
-            else
-                return [ "orthogonalplus", form, scalars, quad ];
+    for n in [1 .. Length(hom)] do
+		test := true;
+		scalars := [];
+		form := hom[n];
+        p:=Size(form);
+        for i  in MTX.Generators(module)  do
+            m := i * form * TransposedMat(i) ;
+            a:=0*root;
+            x:=1;
+            y:=1;
+            #This could be done more efficiently
+            while a=0*root and x<=p do
+                while a=0*root and y<=p do
+                    a:= m[x,y];
+                    b:= form[x][y];
+                    y:=y+1;
+                od;
+                x:=x+1;
+                y:=1;
+            od;
+            if b*m <> a*form  then
+                Info(InfoForms,1,"form is not invariant under all generators\n" );
+                test := false;
+  			else
+                a:=a*(b^-1);
+  			    #a := NthRoot(field,a*(b^-1),2);
+  			    Add( scalars, a );
             fi;
-        else
-            return [ "symplectic", form, scalars ];
-        fi;
-    elif TransposedMat(form) = form  then
-        Info(InfoForms, 1, "form is symmetric\n" );
-        quad := ClassicalForms_QuadraticForm( field, form );
-        if MTX.Dimension(module) mod 2 = 1  then
-            return [ "orthogonalcircle", form, scalars, quad ];
-        else
-            sgn := ClassicalForms_Signum( field, form, quad );
-            if sgn[1] = -1  then
-                return [ "orthogonalminus", form, scalars, quad, sgn[2] ];
+        od;
+
+        if test then
+
+        # check the type of form
+
+            if TransposedMat(form) = -form  then
+                Info(InfoForms, 1, "form is symplectic\n" );
+                if Characteristic(field) = 2  then
+                    quad := ClassicalForms_QuadraticForm2(field, form, MTX.Generators(module), scalars );
+                    if quad = false  then
+                        Add( listforms, [ "symplectic", form, scalars ]);
+                    elif MTX.Dimension(module) mod 2 = 1  then
+                        #I have removed the quadorthogonalcircle because of the example with ParabolicQuadric(6,4).I will let orthogonal circle there until I understand the mathematical context.
+                        #I think it's weird that only have maybe.frobenius or maybe.dual because in this particular case, the form can be neither hermitian nor bilinear!
+                        #In this case we should check this possibility directly when we use preservedforms!
+                        Add( listforms, ["orthogonalcircle",form,scalars, quad]);
+                    elif ClassicalForms_Signum2( field, form, quad ) = -1  then
+                        Add (listforms, [ "orthogonalminus", form, scalars, quad ]);
+                    else
+                        Add(listforms, [ "orthogonalplus", form, scalars, quad ]);
+                    fi;
+                else
+                    Add( listforms, [ "symplectic", form, scalars ]);
+                fi;
+            elif TransposedMat(form) = form  then
+                Info(InfoForms, 1, "form is symmetric\n" );
+                quad := ClassicalForms_QuadraticForm( field, form );
+                if MTX.Dimension(module) mod 2 = 1  then
+                    Add (listforms, [ "orthogonalcircle", form, scalars, quad ]);
+                else
+                    sgn := ClassicalForms_Signum( field, form, quad );
+                    if sgn[1] = -1  then
+                        Add (listforms, [ "orthogonalminus", form, scalars, quad, sgn[2] ]);
+                    else
+                        Add(listforms, [ "orthogonalplus", form, scalars, quad, sgn[2] ]);
+                    fi;
+                fi;
             else
-                return [ "orthogonalplus", form, scalars, quad, sgn[2] ];
+                Info( InfoForms, 1,"unknown form\n" );
+                Add(listforms, [ "unknown", "dual", form, scalars ]);
             fi;
         fi;
-    else
-        Info( InfoForms, 1,"unknown form\n" );
-        return [ "unknown", "dual", form, scalars ];
-    fi;
+	od;
+	if Length(listforms)=0 then
+        return false;
+	else
+        return listforms;
+	fi;
 end;
-
 
 #############################################################################
 ##
