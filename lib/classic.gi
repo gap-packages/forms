@@ -7,6 +7,11 @@
 ##
 
 
+# Compatibility with GAP < 4.12
+if not IsBound(IsMatrixOrMatrixObj) then
+    BindGlobal("IsMatrixOrMatrixObj", IsMatrixObj);
+fi;
+
 #############################################################################
 ##
 #O  GeneralOrthogonalGroupCons( <filter>, <form> )
@@ -20,7 +25,7 @@
 ##  and install the corresponding methods.
 ##
 Perform(
-    [ IsMatrixObj, IsQuadraticForm, IsGroup and HasInvariantQuadraticForm ],
+    [ IsMatrixOrMatrixObj, IsQuadraticForm, IsGroup and HasInvariantQuadraticForm ],
     function( obj )
       DeclareConstructor( "GeneralOrthogonalGroupCons",
         [ IsGroup, obj ] );
@@ -37,7 +42,7 @@ Perform(
 ##
 InstallMethod( GeneralOrthogonalGroupCons,
     "matrix group for matrix of form",
-    [ IsMatrixGroup and IsFinite, IsMatrixObj ],
+    [ IsMatrixGroup and IsFinite, IsMatrixOrMatrixObj ],
     { filt, mat } -> GeneralOrthogonalGroupCons( filt,
                        QuadraticFormByMatrix( mat, BaseDomain( mat ) ) ) );
 
@@ -78,7 +83,7 @@ InstallMethod( GeneralOrthogonalGroupCons,
       IsInt,
       IsPosInt,
       IsPosInt,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, e, d, q, mat } -> GeneralOrthogonalGroupCons( filt, e, d, q,
                                 QuadraticFormByMatrix( mat, GF(q) ) ) );
 
@@ -168,7 +173,7 @@ InstallMethod( GeneralOrthogonalGroupCons,
       IsInt,
       IsPosInt,
       IsField and IsFinite,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, e, d, F, form } -> GeneralOrthogonalGroupCons( filt, e, d,
                                  Size( F ),
                                  QuadraticFormByMatrix( form, F ) ) );
@@ -209,7 +214,7 @@ InstallMethod( GeneralOrthogonalGroupCons,
 ##  and install the corresponding methods.
 ##
 Perform(
-    [ IsMatrixObj, IsQuadraticForm, IsGroup and HasInvariantQuadraticForm ],
+    [ IsMatrixOrMatrixObj, IsQuadraticForm, IsGroup and HasInvariantQuadraticForm ],
     function( obj )
       DeclareConstructor( "SpecialOrthogonalGroupCons",
         [ IsGroup, obj ] );
@@ -226,7 +231,7 @@ Perform(
 ##
 InstallMethod( SpecialOrthogonalGroupCons,
     "matrix group for matrix of form",
-    [ IsMatrixGroup and IsFinite, IsMatrixObj ],
+    [ IsMatrixGroup and IsFinite, IsMatrixOrMatrixObj ],
     { filt, mat } -> SpecialOrthogonalGroupCons( filt,
                        QuadraticFormByMatrix( mat, BaseDomain( mat ) ) ) );
 
@@ -267,7 +272,7 @@ InstallMethod( SpecialOrthogonalGroupCons,
       IsInt,
       IsPosInt,
       IsPosInt,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, e, d, q, mat } -> SpecialOrthogonalGroupCons( filt, e, d, q,
                                 QuadraticFormByMatrix( mat, GF(q) ) ) );
 
@@ -352,7 +357,7 @@ InstallMethod( SpecialOrthogonalGroupCons,
       IsInt,
       IsPosInt,
       IsField and IsFinite,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, e, d, F, form } -> SpecialOrthogonalGroupCons( filt, e, d,
                                  Size( F ),
                                  QuadraticFormByMatrix( form, F ) ) );
@@ -396,7 +401,7 @@ InstallMethod( SpecialOrthogonalGroupCons,
 ##  (The other methods have been installed in the GAP library.)
 ##
 Perform(
-    [ IsMatrixObj, IsQuadraticForm, IsGroup and HasInvariantQuadraticForm ],
+    [ IsMatrixOrMatrixObj, IsQuadraticForm, IsGroup and HasInvariantQuadraticForm ],
     function( obj )
       DeclareConstructor( "OmegaCons", [ IsGroup, obj ] );
       DeclareConstructor( "OmegaCons", [ IsGroup, IsInt, IsPosInt, IsPosInt, obj ] );
@@ -447,7 +452,7 @@ Perform(
 ##
 InstallMethod( OmegaCons,
     "matrix group for matrix of form",
-    [ IsMatrixGroup and IsFinite, IsMatrixObj ],
+    [ IsMatrixGroup and IsFinite, IsMatrixOrMatrixObj ],
     { filt, mat } -> OmegaCons( filt,
                        QuadraticFormByMatrix( mat, BaseDomain( mat ) ) ) );
 
@@ -488,7 +493,7 @@ InstallMethod( OmegaCons,
       IsInt,
       IsPosInt,
       IsPosInt,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, e, d, q, mat } -> OmegaCons( filt, e, d, q,
                                 QuadraticFormByMatrix( mat, GF(q) ) ) );
 
@@ -575,7 +580,7 @@ end );
 ##  and install the corresponding methods.
 ##
 Perform(
-    [ IsMatrixObj, IsHermitianForm, IsGroup and HasInvariantSesquilinearForm ],
+    [ IsMatrixOrMatrixObj, IsHermitianForm, IsGroup and HasInvariantSesquilinearForm ],
     function( obj )
       DeclareConstructor( "GeneralUnitaryGroupCons", [ IsGroup, obj ] );
       DeclareConstructor( "GeneralUnitaryGroupCons",
@@ -589,7 +594,7 @@ Perform(
 ##
 InstallMethod( GeneralUnitaryGroupCons,
     "matrix group for matrix of form",
-    [ IsMatrixGroup and IsFinite, IsMatrixObj ],
+    [ IsMatrixGroup and IsFinite, IsMatrixOrMatrixObj ],
     function( filt, mat )
     local q, form;
 
@@ -628,7 +633,7 @@ InstallMethod( GeneralUnitaryGroupCons,
     [ IsMatrixGroup and IsFinite,
       IsPosInt,
       IsPosInt,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, d, q, mat } -> GeneralUnitaryGroupCons( filt, d, q,
                              HermitianFormByMatrix( mat, GF(q^2) ) ) );
 
@@ -706,7 +711,7 @@ end );
 ##  and install the corresponding methods.
 ##
 Perform(
-    [ IsMatrixObj, IsHermitianForm, IsGroup and HasInvariantSesquilinearForm ],
+    [ IsMatrixOrMatrixObj, IsHermitianForm, IsGroup and HasInvariantSesquilinearForm ],
     function( obj )
       DeclareConstructor( "SpecialUnitaryGroupCons", [ IsGroup, obj ] );
       DeclareConstructor( "SpecialUnitaryGroupCons",
@@ -720,7 +725,7 @@ Perform(
 ##
 InstallMethod( SpecialUnitaryGroupCons,
     "matrix group for matrix of form",
-    [ IsMatrixGroup and IsFinite, IsMatrixObj ],
+    [ IsMatrixGroup and IsFinite, IsMatrixOrMatrixObj ],
     function( filt, mat )
     local q, form;
 
@@ -759,7 +764,7 @@ InstallMethod( SpecialUnitaryGroupCons,
     [ IsMatrixGroup and IsFinite,
       IsPosInt,
       IsPosInt,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, d, q, mat } -> SpecialUnitaryGroupCons( filt, d, q,
                              HermitianFormByMatrix( mat, GF(q^2) ) ) );
 
@@ -838,7 +843,7 @@ end );
 ##  and install the corresponding methods.
 ##
 Perform(
-    [ IsMatrixObj, IsBilinearForm, IsGroup and HasInvariantBilinearForm ],
+    [ IsMatrixOrMatrixObj, IsBilinearForm, IsGroup and HasInvariantBilinearForm ],
     function( obj )
       DeclareConstructor( "SymplecticGroupCons", [ IsGroup, obj ] );
       DeclareConstructor( "SymplecticGroupCons",
@@ -854,7 +859,7 @@ Perform(
 ##
 InstallMethod( SymplecticGroupCons,
     "matrix group for matrix of form",
-    [ IsMatrixGroup and IsFinite, IsMatrixObj ],
+    [ IsMatrixGroup and IsFinite, IsMatrixOrMatrixObj ],
     { filt, mat } -> SymplecticGroupCons( filt,
                        BilinearFormByMatrix( mat, BaseDomain( mat ) ) ) );
 
@@ -883,7 +888,7 @@ InstallMethod( SymplecticGroupCons,
     [ IsMatrixGroup and IsFinite,
       IsPosInt,
       IsPosInt,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, d, q, mat } -> SymplecticGroupCons( filt, d, q,
                              BilinearFormByMatrix( mat, GF(q) ) ) );
 
@@ -958,7 +963,7 @@ InstallMethod( SymplecticGroupCons,
     [ IsMatrixGroup and IsFinite,
       IsPosInt,
       IsField and IsFinite,
-      IsMatrixObj ],
+      IsMatrixOrMatrixObj ],
     { filt, d, F, form } -> SymplecticGroupCons( filt, d, Size( F ),
                               BilinearFormByMatrix( form, F ) ) );
 
