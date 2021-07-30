@@ -34,7 +34,7 @@ Then this polynomial defines a quadratic form on <M>V</M> and the zeros
 form a <E>conic</E> of the associated projective plane. So in particular,
 our quadratic form defines a degenerate parabolic quadric of Witt Index 1.
 We will see now how we can use <Package>Forms</Package> to view this example.
-<Example>
+<Example><![CDATA[
 gap> gf := GF(8);
 GF(2^3)
 gap> vec := gf^3;
@@ -44,7 +44,7 @@ PolynomialRing(..., [ x_1, x_2, x_3 ])
 gap> poly := r.1^2 + r.2 * r.3;
 x_1^2+x_2*x_3
 gap> form := QuadraticFormByPolynomial( poly, r );
-&lt; quadratic form >
+< quadratic form >
 gap> Display( form );
 Quadratic form
 Gram Matrix:
@@ -62,28 +62,28 @@ gap> WittIndex( form );
 gap> IsParabolicForm( form );
 true
 gap> RadicalOfForm( form );
-&lt;vector space over GF(2^3), with 0 generators>
-</Example>
+<vector space over GF(2^3), with 0 generators>
+]]></Example>
 Now our conic is stabilised by a group isomorphic to
 <Alt Only="Text"><M>GO(3,8)</M></Alt><Alt Only="LaTeX"><M>&go;(3,8)</M></Alt>
 <Alt Only="HTML MathJax"><M>&go;(3,8)</M></Alt><Alt Only="HTML noMathJax">GO(3,8)</Alt>,
 but which is not identical to the group returned by the GAP command
 <C>GO(3,8)</C>. However, our conic is the canonical conic given in <Package>Forms</Package>.
-<Example>
+<Example><![CDATA[
 gap> canonical := IsometricCanonicalForm( form );
-&lt; parabolic quadratic form >
+< parabolic quadratic form >
 gap> form = canonical;
 true
-</Example>
+]]></Example>
 So we ``change forms''...
-<Example>
+<Example><![CDATA[
 gap> go := GO(3,8);
 GO(0,3,8)
 gap> mat := InvariantQuadraticForm( go )!.matrix;
 [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
   [ 0*Z(2), Z(2)^0, 0*Z(2) ] ]
 gap> gapform := QuadraticFormByMatrix( mat, GF(8) );
-&lt; quadratic form >
+< quadratic form >
 gap> b := BaseChangeToCanonical( gapform );
 [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
   [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]
@@ -96,18 +96,18 @@ Group(
            Z(2^3)^6 ] ], 
   [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
       [ 0*Z(2), Z(2)^0, 0*Z(2) ] ] ])
-</Example>
+]]></Example>
 Now we look at the action of our new
 <Alt Only="Text"><M>GO(3,8)</M></Alt><Alt Only="LaTeX"><M>&go;(3,8)</M></Alt>
 <Alt Only="HTML MathJax"><M>&go;(3,8)</M></Alt><Alt Only="HTML noMathJax">GO(3,8)</Alt> on the conic.
-<Example>
+<Example><![CDATA[
 gap> conic := Filtered(vec, x -> IsZero( x^form ));;
 gap> Size(conic);
 64
 gap> orbs := Orbits(newgo, conic, OnRight);;
 gap> List(orbs,Size);
 [ 1, 63 ]
-</Example> 
+]]></Example> 
 So we see that there is a fixed point, which is actually the
 <E>nucleus</E> of the conic, or in other words, the radical
 of the form.
