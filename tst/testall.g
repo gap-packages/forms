@@ -1,7 +1,8 @@
 LoadPackage("forms");
 
 exclude := [];
-if not CompareVersionNumbers( GAPInfo.Version, "4.12" ) then
+if not IsBound(DescribesInvariantQuadraticForm) then
+  # classic.tst should only run in 4.12
   Add( exclude, "classic.tst" );
 fi;
 
