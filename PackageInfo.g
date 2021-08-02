@@ -10,7 +10,7 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.6",
+  Version := "1.2.7",
   Date := "29/07/2021",
 License := "GPL-2.0-or-later",
 
@@ -100,12 +100,12 @@ SourceRepository := rec(
     
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
 README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/releases/download/v", ~.Version,
-                                 "/", ~.PackageName, "-", ~.Version ),
+                                 "/", LowercaseString(~.PackageName), "-", ~.Version ),
 
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
