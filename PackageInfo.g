@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.7",
-  Date := "2/08/2021",
+  Version := "1.2.7.1m",
+  Date := "06/08/2021",
 License := "GPL-2.0-or-later",
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -75,7 +75,7 @@ Persons := [
 
 Status := "accepted",
 CommunicatedBy := "Leonard Soicher (London)",
-AcceptDate := "03/2009"
+AcceptDate := "03/2009",
 
 AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
             
