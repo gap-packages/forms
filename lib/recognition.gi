@@ -1060,7 +1060,7 @@ InstallMethod( PreservedSesquilinearForms,
     test:= false;
     field := DefaultFieldOfMatrixGroup(grp);
     forms := PreservedFormsOp(grp);
-    for y in forms!.invariantforms do
+    for y in forms!.invariantforms do #work to do
        if y[1] in ["symplectic", "orthogonalplus",
                    "orthogonalminus", "orthogonalcircle"] then
             if y[3]=0*[1 .. Length(y[3])] + One(field) then
