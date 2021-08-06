@@ -5,8 +5,8 @@
 ##                                                              Jan De Beule
 ##                                                              Frank Celler
 ##
-##  Copyright 2017, Vrije Universiteit Brussel
-##  Copyright 2017, The University of Western Austalia
+##  Copyright 2021, Vrije Universiteit Brussel
+##  Copyright 2021, The University of Western Austalia
 ##  Copyright 1996,  Lehrstuhl D fuer Mathematik, RWTH Aachen, Germany
 ##
 ##  This file contains the declarations (functions and operations)
@@ -41,6 +41,10 @@ DeclareOperation( "PreservedFormsOp", [ IsMatrixGroup ] ); #jdb 19/09/2018: was 
 DeclareOperation( "PreservedForms", [ IsMatrixGroup ] );
 DeclareOperation( "PreservedQuadraticForms", [ IsMatrixGroup ] );
 DeclareOperation( "PreservedSesquilinearForms", [ IsMatrixGroup ] );
+
+DeclareOperation( "PreservedFormsUpToScalars", [ IsMatrixGroup ] );
+DeclareOperation( "PreservedQuadraticFormsUpToScalars", [ IsMatrixGroup ] );
+DeclareOperation( "PreservedSesquilinearFormsUpToScalars", [ IsMatrixGroup ] );
 
 InfoForms := NewInfoClass("InfoForms");;
 
