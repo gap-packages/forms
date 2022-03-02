@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.6",
-  Date := "29/07/2021",
+  Version := "1.2.7",
+  Date := "02/03/2022",
 License := "GPL-2.0-or-later",
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -22,6 +22,19 @@ License := "GPL-2.0-or-later",
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
+
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/gap-packages/", LowercaseString(~.PackageName) ),
+    
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", LowercaseString(~.PackageName), "-", ~.Version ),
 
 ArchiveFormats := ".tar.gz .zip .tar.bz2",
 
@@ -61,6 +74,8 @@ Persons := [
 ],
 
 Status := "accepted",
+CommunicatedBy := "Leonard Soicher (London)",
+AcceptDate := "03/2009",
 
 AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
             
@@ -94,23 +109,6 @@ BannerString := Concatenation(
 
 TestFile := "tst/testall.g",
 
-SourceRepository := rec(
-    Type := "git",
-    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
-README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/", ~.PackageName, "-", ~.Version ),
-
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
-CommunicatedBy := "Leonard Soicher (London)",
-AcceptDate := "03/2009"
-
 ));
-
-

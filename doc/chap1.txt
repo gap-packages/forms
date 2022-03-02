@@ -92,3 +92,5 @@
   including  an  extension  of  some GAP library functions to create classical
   matrix groups. These additions are not yet documented.[133X
   
+  [33X[0;0YIn version 1.2.7, only an issue with the automatic release was fixed.[133X
+  
