@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.7.1master",
-  Date := "06/08/2021",
+  Version := "1.2.7",
+  Date := "02/03/2022",
 License := "GPL-2.0-or-later",
 
 ##  URL of the archive(s) of the current package release, but *without*
