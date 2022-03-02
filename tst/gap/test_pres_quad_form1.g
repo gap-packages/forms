@@ -19,3 +19,20 @@ form := pres_forms_ses[1];
 Display(GramMatrix(form));
 inv := InvariantQuadraticForm(group).matrix;
 Display(inv);
+
+e := -1;
+d := 4;
+q := 3;
+
+for e in [-1,1] do
+for d in [2,4,6,8,10] do
+for q in [2,4,8,16,32,64,128,256,512,1024] do
+group := GO(e,d,q);
+invariant_quad_form := QuadraticFormByMatrix(InvariantQuadraticForm(group).matrix);
+pres_forms := PreservedQuadraticForms(group);
+form := pres_forms[1];
+Print("e = ",e,", d = ",d,", q = ",q," equality: ",GramMatrix(form)=GramMatrix(invariant_quad_form),"\n");
+od;
+od;
+od;
+
