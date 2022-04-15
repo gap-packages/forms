@@ -1820,12 +1820,15 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     local row,i,j,k,A,b,c,d,P,D,dummy,r,w,s,v,v1,v2,
           stop,stop2,nplus1,nplus2,q,primroot,one,n;
     A := ShallowCopy(mat);
+    ConvertToMatrixRep(A);
+    Assert(0, A = TransposedMat(A));
     #  n is the projective dimension
-    nplus1 := Size(mat);
+    nplus1 := NrRows(mat);
     n := nplus1 - 1;
     nplus2 := n + 2;
     q := Size(gf);
     D := IdentityMat(nplus1, gf);
+    ConvertToMatrixRepNC(D, gf);
     row := 0;
     stop := false;
     primroot := Z(q);
