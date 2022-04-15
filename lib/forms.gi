@@ -1583,6 +1583,37 @@ InstallGlobalFunction(Forms_SWR,
     return P;
   end );
 
+if IsBound(SwapMatrixColumns) and IsBound(SwapMatrixRows) then
+  # For GAP >= 4.12
+  BindGlobal("Forms_SwapCols", SwapMatrixColumns);
+  BindGlobal("Forms_SwapRows", SwapMatrixRows);
+  BindGlobal("Forms_AddRows", AddMatrixRows);
+  BindGlobal("Forms_AddCols", AddMatrixColumns);
+else
+  # For GAP <= 4.11
+  BindGlobal("Forms_SwapRows", function(mat, i, j)
+    mat{[i,j]} := mat{[j,i]};
+  end);
+
+  BindGlobal("Forms_SwapCols", function(mat, i, j)
+    local row;
+    for row in mat do
+      row{[i,j]} := row{[j,i]};
+    od;
+  end);
+
+  BindGlobal("Forms_AddRows", function(mat, i, j, scalar)
+    mat[i] := mat[i] + mat[j] * scalar;
+  end);
+
+  BindGlobal("Forms_AddCols", function(mat, i, j, scalar)
+    local row;
+    for row in mat do
+      row[i] := row[i] + row[j] * scalar;
+    od;
+  end);
+fi;
+
 InstallGlobalFunction(Forms_SUM_OF_SQUARES,
   function(v,q)
     local stop,dummy,i,v1,v2, primroot;
