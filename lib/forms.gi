@@ -1819,20 +1819,20 @@ InstallMethod( BaseChangeOrthogonalBilinear,
   function(mat, gf)
     local row,i,j,k,A,b,c,d,P,D,dummy,r,w,s,v,v1,v2,
           stop,stop2,nplus1,nplus2,q,primroot,one,n;
-    A := ShallowCopy(mat);
+    A := MutableCopyMat(mat);
     ConvertToMatrixRep(A);
     Assert(0, A = TransposedMat(A));
     #  n is the projective dimension
     nplus1 := NrRows(mat);
     n := nplus1 - 1;
-    nplus2 := n + 2;
     q := Size(gf);
     D := IdentityMat(nplus1, gf);
     ConvertToMatrixRepNC(D, gf);
     row := 0;
-    stop := false;
     primroot := Z(q);
     one := One(GF(q));
+
+    # Diagonalize A
 
     repeat
 
@@ -1840,87 +1840,87 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     # the main diagonal from row + 1 onwards
 
       i := 1 + row;
-      dummy := false;
-      while dummy = false and i <= nplus1 do
-        if IsZero( A[i,i] ) then
+      while i <= nplus1 do
+        if IsZero(A[i,i]) then
            i := i + 1;
         else
-           dummy := true;
+           break;
         fi;
       od;
 
-      # if i is row + 1, then we do nothing since A[i,i] <> 0
-      if 2 + row <= i and i <= nplus1 then
-        P := Forms_SWR(row + 1,i,nplus1);
-        A := P*A*P;
-        D := P*D;
-
-      # If we have not found it on the main diagonal, then we go and do other work.
-      # We search for a nonzero element off the main diagonal.
-
-      elif i = nplus2 then
+      if i = row + 1 then
+        # do nothing since A[row+1,row+1] <> 0
+      elif i <= nplus1 then
+        # swap things around to ensure A[row+1,row+1] <> 0
+        Forms_SwapCols(A, row + 1, i);
+        Forms_SwapRows(A, row + 1, i);
+        Forms_SwapRows(D, row + 1, i);
+      else
+        # All entries on the main diagonal are zero. We now search for a
+        # nonzero element off the main diagonal.
         i := 1 + row;
-        dummy := false;
-        while i <= n and dummy = false do
+        while i <= n do
           k := i + 1;
-          while k <= nplus1 and dummy = false do
+          while k <= nplus1 do
             if IsZero(A[i,k]) then
                k := k + 1;
             else
-               dummy := true;
+               break;
             fi;
           od;
-          if k = nplus2 then
+          if k = n + 2 then
              i := i + 1;
+          else
+             break;
           fi;
         od;
 
         # if i is n+1, then they are all zero and we can stop.
-
         if i = nplus1 then
-          stop := true;
           r := row;
+          break;
+        fi;
 
         # Otherwise: Go and fetch...
         # Put it on A[row+1,row+2]
-
-        elif i = row + 1 then
-          P := Forms_SWR(row+2,k,nplus1);
-          A := P*A*P;
-          D := P*D;
-        else
-          P := Forms_SWR(row+2,k,nplus1) * Forms_SWR(row+1,i,nplus1);
-          A := P*A*TransposedMat(P);
-          D := P*D;
+        if i <> row + 1 then
+          Forms_SwapCols(A, row + 1, i);
+          Forms_SwapRows(A, row + 1, i);
+          Forms_SwapRows(D, row + 1, i);
         fi;
+
+        Forms_SwapCols(A, row + 2, k);
+        Forms_SwapRows(A, row + 2, k);
+        Forms_SwapRows(D, row + 2, k);
 
         #...take care that there is a nonzero on the main diagonal
+        b := A[row+2,row+1]^-1;
+        Forms_AddCols(A,row+1,row+2,b);
+        Forms_AddRows(A,row+1,row+2,b);
+        Forms_AddRows(D,row+1,row+2,b);
 
-        if not stop then
-          b := A[row+2,row+1]^-1;
-          P := IdentityMat(nplus1, gf);
-          P[row+1,row+2] := b;
-          A := P*A*TransposedMat(P);
-          D := P*D;
-        fi;
-      fi;   # end if 2+row <= i and i <= nplus1 ... elif ... fi
+      fi;   # end if i = row + 1 ... elif  i <= nplus1 ... else ... fi
 
       # There is no zero element on the main diagonal, make the rest zero.
+      b := -A[row+1,row+1]^-1;
+      for i in [row+2..nplus1] do
+         c := A[i,row+1];
+         if IsZero(c) then continue; fi;
+         c := b * c;
+         Forms_AddCols(A, i, row+1, c);
+         Forms_AddRows(A, i, row+1, c);
+         Forms_AddRows(D, i, row+1, c);
+      od;
 
-      if not stop then
-        P := IdentityMat(nplus1, gf);
-        for i in [row+2..nplus1] do
-           P[i,row+1] := -A[i,row+1] * A[row+1,row+1]^-1;
-        od;
-        A := P*A*TransposedMat(P);
-        D := P*D;
-        row := row + 1;
-      fi;
-    until row = n or stop;
+      row := row + 1;
+    until row = n;
+
+    Assert(0, IsDiagonalMat(A));
+    Assert(0, D*mat*TransposedMat(D) = A);
 
     # Count how many variables are used.
 
-    if not stop then
+    if row = n then
       if not IsZero( A[nplus1,nplus1] ) then
         r := nplus1;
       else
