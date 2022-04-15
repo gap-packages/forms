@@ -64,7 +64,7 @@ of your browser to UTF-8.
 <Section Label="web">
 <Heading>Web resources</Heading>
 <List>
-<Item>Find <Package>Forms</Package> on the Packages section of the GAP-website: <Homepage>http://www.gap-system.org/Packages/forms.html</Homepage>.</Item>
+<Item>Find <Package>Forms</Package> on the Packages section of the GAP-website: <Homepage>https://www.gap-system.org/Packages/forms.html</Homepage>.</Item>
 <Item>Find <Package>Forms</Package> on its homepage: <Homepage>https://gap-packages.github.io/forms</Homepage>.</Item>
 <Item>Report bugs, questions and issues on the <Package>Forms</Package> issue tracker: <Homepage>https://github.com/gap-packages/forms/issues</Homepage></Item>
 </List>
