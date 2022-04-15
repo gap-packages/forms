@@ -1616,20 +1616,19 @@ fi;
 
 InstallGlobalFunction(Forms_SUM_OF_SQUARES,
   function(v,q)
-    local stop,dummy,i,v1,v2, primroot;
+    local dummy,i,v1,v2, primroot;
     primroot := Z(q);
-    stop := false;
     i := 0;
     repeat
       dummy := LogFFE(v - primroot^(2*i), primroot);
       if dummy mod 2 = 0 then
         v1 := primroot^i;
         v2 := primroot^(dummy/2);
-        stop := true;
+        break;
       else
         i := i + 1;
       fi;
-    until stop;
+    until false;
     return [v1,v2];
   end );
 
