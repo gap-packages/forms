@@ -1942,8 +1942,8 @@ InstallMethod( BaseChangeOrthogonalBilinear,
                dummy := A[j,j];
                A[j,j] := A[i,i];
                A[i,i] := dummy;
-               D := Forms_SWR(i,j,nplus1)*D;
                stop2 := true;
+               Forms_SwapRows(D, i, j);
                i := i + 1;
                s := s + 1;
             else
@@ -2058,16 +2058,14 @@ InstallMethod( BaseChangeOrthogonalBilinear,
       else
         if q mod 4 = 1 then
           if 1 < r then
-            P := Forms_SWR(2,r+1,nplus1);
-            D := P*D;
+            Forms_SwapRows(D,2,r+1);
             P := Forms_REDUCE2(3,r+1,nplus1,q);
             D := P*D;
           fi;
           w := 0;
         else
           if ((r-1)/2) mod 2 <> 0 then
-            P := Forms_SWR(4,r+1,nplus1);
-            D := P*D;
+            Forms_SwapRows(D,4,r+1);
             if 3 < r then
               P := Forms_REDUCE4(5,r+1,nplus1,q);
             else
@@ -2085,8 +2083,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             fi;
             w := 0;
           else
-            P := Forms_SWR(2,r+1,nplus1);
-            D := P*D;
+            Forms_SwapRows(D,2,r+1);
             if 1 < r then
               P := Forms_REDUCE4(3,r+1,nplus1,q);
             else
@@ -2192,9 +2189,9 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         # if there is a zero somewhere, then we go and get it.
 
         if control then
-          P := Forms_SWR(row,i,nplus1);
-          A := P*A*P;
-          D := P*D;
+          Forms_SwapCols(A,row,i);
+          Forms_SwapRows(A,row,i);
+          Forms_SwapRows(D,row,i);
           A := Forms_RESET(A,nplus1,q);
 
         # Otherwise: look in other places.
@@ -2298,9 +2295,9 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         r := r - 1;
       else
         if posk <> row + 1 then
-          P := Forms_SWR(posk,row+1,nplus1);
-          D := P*D;
-          A := P*A*TransposedMat(P);
+          Forms_SwapCols(A,posk,row+1);
+          Forms_SwapRows(A,posk,row+1);
+          Forms_SwapRows(D,posk,row+1);
           A := Forms_RESET(A,nplus1,q);
         fi;
         # Now A[k,k+1] <> 0
