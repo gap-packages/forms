@@ -1703,16 +1703,12 @@ InstallGlobalFunction(Forms_HERM_CONJ,
 
 InstallGlobalFunction(Forms_RESET,
   function(mat,n,q)
-    local i,j,A,B,t;
+    local i,j,A,t;
     t := 0*Z(q);
-    A := List(mat,ShallowCopy);
-    B := List(TransposedMat(A),ShallowCopy);
-    for i in [1..n] do
-      B[i,i] := t;
-    od;
-    A := A + B;
+    A := MutableCopyMat(mat);
     for i in [2..n] do
       for j in [1..i-1] do
+        A[j,i] := A[j,i] + A[i,j];
         A[i,j] := t;
       od;
     od;
