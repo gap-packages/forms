@@ -1814,7 +1814,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
   function(mat, gf)
     local row,i,j,k,A,b,c,d,P,D,dummy,r,w,s,v,v1,v2,
-          stop,stop2,nplus1,nplus2,q,primroot,one,n;
+          nplus1,q,primroot,one,n;
     A := MutableCopyMat(mat);
     ConvertToMatrixRep(A);
     Assert(0, A = TransposedMat(A));
@@ -1831,17 +1831,11 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     # Diagonalize A
 
     repeat
-
-    # We search for an element different from zero on
-    # the main diagonal from row + 1 onwards
-
+      # We look for a nonzero element on the main diagonal, starting
+      # from row + 1
       i := 1 + row;
-      while i <= nplus1 do
-        if IsZero(A[i,i]) then
-           i := i + 1;
-        else
-           break;
-        fi;
+      while i <= nplus1 and IsZero(A[i,i]) do
+        i := i + 1;
       od;
 
       if i = row + 1 then
@@ -1857,12 +1851,8 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         i := 1 + row;
         while i <= n do
           k := i + 1;
-          while k <= nplus1 do
-            if IsZero(A[i,k]) then
-               k := k + 1;
-            else
-               break;
-            fi;
+          while k <= nplus1 and IsZero(A[i,k]) do
+            k := k + 1;
           od;
           if k = n + 2 then
              i := i + 1;
@@ -1928,26 +1918,24 @@ InstallMethod( BaseChangeOrthogonalBilinear,
 
     i := 1;
     s := 0;
-    stop := false;
-    while (not stop) and i < r do
+    while i < r do
       if IsOddInt( LogFFE(A[i,i], primroot) ) then
          j := i + 1;
-         stop2 := false;
          repeat
             if IsEvenInt( LogFFE(A[j,j], primroot) ) then
                dummy := A[j,j];
                A[j,j] := A[i,i];
                A[i,i] := dummy;
-               stop2 := true;
                Forms_SwapRows(D, i, j);
                i := i + 1;
                s := s + 1;
+               break;
             else
                j := j + 1;
             fi;
-         until stop2 or j = r + 1;
+         until j = r + 1;
          if j = r + 1 then
-            stop := true;
+            break;
          fi;
       else
         i := i + 1;
@@ -2197,11 +2185,12 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           i := row;
           while i <= r - 1 and dummy do
             j := i + 1;
-            while j <= r and dummy do
+            while j <= r do
               if not IsZero( A[i,j] ) then
                 posr := i;
                 posk := j;
                 dummy := false;
+                break;
               else
                 j := j + 1;
               fi;
