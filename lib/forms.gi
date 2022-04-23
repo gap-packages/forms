@@ -66,47 +66,47 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
 
     if string = "hermitian" then
       if not IsInt(Sqrt(Size(f))) then
-        Error("No hermitian form exist when the order of <f> is not a square\n" );
+        Error("No hermitian form exist when the order of <f> is not a square" );
       fi;
       if IsHermitianMatrix(m,f) then
         Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
         return el;
       else
-        Error("Given matrix does not define a hermitian form\n" );
+        Error("Given matrix does not define a hermitian form" );
       fi;
     elif string = "symplectic" then
       if IsSymplecticMatrix(m,f) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
         return el;
       else
-        Error("Given matrix does not define a symplectic form\n" );
+        Error("Given matrix does not define a symplectic form" );
       fi;
     elif string = "orthogonal" then
       if IsEvenInt(Size(f)) then
-        Error("No orthogonal forms exist in even characteristic\n" );
+        Error("No orthogonal forms exist in even characteristic" );
       fi;
       if IsOrthogonalMatrix(m) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
         return el;
       else
-        Error("Given matrix does not define an orthogonal form\n" );
+        Error("Given matrix does not define an orthogonal form" );
       fi;
     elif string = "pseudo" then
       if IsOddInt(Size(f)) then
-        Error("No pseudo forms exist in even characteristic\n" );
+        Error("No pseudo forms exist in even characteristic" );
       fi;
       if (IsOrthogonalMatrix(m) and (not IsSymplecticMatrix(m))) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
         return el;
       else
-        Error("Given matrix does not define a pseudo-form\n" );
+        Error("Given matrix does not define a pseudo-form" );
       fi;
     elif string = "quadratic" then
       el.matrix := Forms_RESET(m,NrRows(m),Size(f));
       Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
       return el;
     else
-      Error("Please specify a form properly\n");
+      Error("Please specify a form properly");
     fi;
   end );
 
@@ -140,7 +140,7 @@ InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
        return el;
     else
-       Error("Invalid Gram matrix\n");
+       Error("Invalid Gram matrix");
     fi;
   end );
 
@@ -157,8 +157,8 @@ InstallMethod( BilinearFormByMatrix, "for a ffe matrix and a field",
   [IsMatrix and IsFFECollColl, IsField and IsFinite],
   function( m, f )
     local gf;
-    gf := Field(Union(m));
-    if not Z(Size(gf)) in f then
+    gf := DefaultFieldOfMatrix(m);
+    if not PrimitiveElement(gf) in f then
       Error("<m> is not a matrix over <f>");
     fi;
     return BilinearFormByMatrixOp( MutableCopyMat(m), f);
@@ -172,7 +172,7 @@ InstallMethod( BilinearFormByMatrix, "for a ffe matrix ",
   [IsMatrix and IsFFECollColl ],
   function( m )
   local f;
-  f := Field(Union(m));
+  f := DefaultFieldOfMatrix(m);
   return BilinearFormByMatrixOp( m, f);
 end );
 
@@ -213,8 +213,8 @@ InstallMethod( QuadraticFormByMatrix, "for a ffe matrix and a field",
   [IsMatrix and IsFFECollColl, IsField and IsFinite],
   function( m, f )
     local gf;
-    gf := Field(Union(m));
-    if not Z(Size(gf)) in f then
+    gf := DefaultFieldOfMatrix(m);
+    if not PrimitiveElement(gf) in f then
       Error("<m> is not a matrix over <f>");
     fi;
     return QuadraticFormByMatrixOp( MutableCopyMat(m), f);
@@ -228,7 +228,7 @@ InstallMethod( QuadraticFormByMatrix, "for a ffe matrix ",
   [IsMatrix and IsFFECollColl],
   function( m )
   local f;
-  f := Field(Union(m));
+  f := DefaultFieldOfMatrix(m);
   return QuadraticFormByMatrixOp( m, f);
 end );
 
@@ -245,19 +245,19 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
   function( m, f )
     local el,gf,n;
     n := NrRows(m);
-    gf := Field(Union(m));
-    if not Z(Size(gf)) in f then
+    gf := DefaultFieldOfMatrix(m);
+    if not PrimitiveElement(gf) in f then
       Error("<m> is not a matrix over <f>");
     fi;
     if not IsInt(Sqrt(Size(f))) then
-        Error("No hermitian form exists when the order of <f> is not a square\n" );
+        Error("No hermitian form exists when the order of <f> is not a square" );
     fi;
     if IsHermitianMatrix(m,f) then
        el := rec( matrix := MutableCopyMat(m), basefield := f, type := "hermitian", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
        return el;
     else
-       Error("Given matrix does not define a hermitian form\n" );
+       Error("Given matrix does not define a hermitian form" );
     fi;
   end );
 
@@ -371,7 +371,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
     local mat, form;
     if string = "orthogonal" then
        if IsEvenInt(Size(gf)) then
-          Error("No orthogonal form can be associated with <pol> in even characteristic\n");
+          Error("No orthogonal form can be associated with <pol> in even characteristic");
        else
           mat := UpperTriangleMatrixByPolynomialForForm(pol,gf,n,vars);
           form := FormByMatrix(mat,gf,"orthogonal");
@@ -389,7 +389,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
        SetPolynomialOfForm(form, pol);
        return form;
     else
-       Error("No other forms than quadratic, orthogonal or hermitian can be specified by polynomials\n");
+       Error("No other forms than quadratic, orthogonal or hermitian can be specified by polynomials");
     fi;
   end );
 #
@@ -403,7 +403,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
     vars := IndeterminatesOfPolynomialRing( pring );
     if string = "orthogonal" then
        if IsEvenInt(Size(gf)) then
-          Error("No orthogonal form can be associated with a quadratic polynomial in even characteristic\n");
+          Error("No orthogonal form can be associated with a quadratic polynomial in even characteristic");
        else
           mat := UpperTriangleMatrixByPolynomialForForm(pol,gf,n,vars);
           form := FormByMatrix(mat,gf,"orthogonal");
@@ -421,7 +421,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
        SetPolynomialOfForm(form, pol);
        return form;
     else
-       Error("No forms other than quadratic, orthogonal or hermitian can be specified by polynomials\n");
+       Error("No forms other than quadratic, orthogonal or hermitian can be specified by polynomials");
     fi;
   end );
 #
@@ -449,7 +449,7 @@ InstallMethod( BilinearFormByPolynomial, "for a polynomial over a field, and a d
       return el;
     fi;
     if IsEvenInt(Size(gf)) then
-       Error("No orthogonal form can be associated with a quadratic polynomial in even characteristic\n");
+       Error("No orthogonal form can be associated with a quadratic polynomial in even characteristic");
     else
        mat := UpperTriangleMatrixByPolynomialForForm(pol,gf,n,vars);
        polarity := (mat + TransposedMat(mat))/(One(gf)*2);
@@ -697,7 +697,7 @@ InstallMethod( RadicalOfFormBaseMat, [IsSesquilinearForm],
   function( f )
     local m, gf, d;
     if not IsReflexiveForm( f ) then
-       Error( "Form must be reflexive\n");
+       Error( "Form must be reflexive");
     fi;
     m := f!.matrix;
     gf := f!.basefield;
@@ -725,7 +725,7 @@ InstallMethod( RadicalOfForm, "for a sesquilinear form",
   function( f )
     local m, null, gf, d;
     if not IsReflexiveForm( f ) then
-       Error( "Form must be reflexive\n");
+       Error( "Form must be reflexive");
     fi;
     m := f!.matrix;
     gf := f!.basefield;
@@ -880,7 +880,7 @@ end );
 
 InstallMethod( IsReflexiveForm, [IsQuadraticForm],
   function( f )
-    Error( "<form> must be sesquilinear\n" );
+    Error( "<form> must be sesquilinear" );
 end );
 
 InstallMethod( IsAlternatingForm, [IsBilinearForm],
@@ -900,7 +900,7 @@ end );
 
 InstallMethod( IsAlternatingForm, [IsQuadraticForm],
   function( f )
-    Error( "<form> must be sesquilinear\n" );
+    Error( "<form> must be sesquilinear" );
 end );
 
 InstallMethod( IsSymmetricForm, [IsBilinearForm],
@@ -920,7 +920,7 @@ end );
 
 InstallMethod( IsSymmetricForm, [IsQuadraticForm],
   function( f )
-    Error( "<form> must be sesquilinear\n" );
+    Error( "<form> must be sesquilinear" );
 end );
 
 InstallMethod( IsSymplecticForm, "for sesquilinear forms",
@@ -932,7 +932,7 @@ InstallMethod( IsSymplecticForm, "for sesquilinear forms",
        if IsAlternatingForm( f ) then
           return true;
        else
-          Error( "<form> was incorrectly specified\n" );
+          Error( "<form> was incorrectly specified" );
        fi;
     else
        return false;
@@ -954,7 +954,7 @@ InstallMethod( IsOrthogonalForm, "for sesquilinear forms",
        if IsSymmetricForm( f ) then
           return true;
        else
-          Error( "Form was incorrectly specified\n" );
+          Error( "Form was incorrectly specified" );
        fi;
     else
        return false;
@@ -968,7 +968,7 @@ end );
 
 InstallMethod( IsOrthogonalForm, [IsQuadraticForm],
   function( f )
-    Error( "<form> must be sesquilinear\n" );
+    Error( "<form> must be sesquilinear" );
 end );
 
 InstallMethod( IsPseudoForm, "for sesquilinear forms",
@@ -980,7 +980,7 @@ InstallMethod( IsPseudoForm, "for sesquilinear forms",
        if (IsSymmetricForm( f ) and (not IsAlternatingForm(f))) then
           return true;
        else
-          Error( "Form was incorrectly specified\n" );
+          Error( "Form was incorrectly specified" );
        fi;
     else
        return false;
@@ -994,7 +994,7 @@ end );
 
 InstallMethod( IsPseudoForm, [IsQuadraticForm],
   function( f )
-    Error( "<form> must be sesquilinear\n" );
+    Error( "<form> must be sesquilinear" );
 end );
 
 ##
@@ -1048,7 +1048,7 @@ InstallMethod( BaseChangeToCanonical, "for a sesquilinear form",
       SetWittIndex(f, Int( (b[2]+1)/2 ));
       return b[1];
     elif string = "pseudo" then
-      Error("BaseChangeToCanonical not yet implemented for pseudo forms\n");
+      Error("BaseChangeToCanonical not yet implemented for pseudo forms");
     fi;
 end );
 
@@ -2662,9 +2662,9 @@ InstallMethod( WittIndex, "for a bilinear form",
        SetBaseChangeToCanonical(f,b[1]);
        return (b[2]+b[3]-1)/2;
     elif string = "pseudo" then
-       Error("Witt Index not yet implemented for pseudo forms\n");
+       Error("Witt Index not yet implemented for pseudo forms");
     else
-       Error("Form is incorrectly specified\n");
+       Error("Form is incorrectly specified");
     fi;
   end );
 
@@ -2721,7 +2721,7 @@ InstallMethod( WittIndex, "for a hermitian form",
 InstallMethod( WittIndex, "for a trivial form",
   [IsTrivialForm],
   function(f)
-    Error("<form> is trivial, Witt Index not defined\n");
+    Error("<form> is trivial, Witt Index not defined");
 end );
 
 #############################################################################

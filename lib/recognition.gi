@@ -625,7 +625,7 @@ InstallGlobalFunction(PossibleClassicalForms,
     local  I, d, z, f, t, i0, a, l, g, q, qq, forms, grp,  c, tM, tMi, Minv;
 
     if not Length(arg) in [2,3] then
-        Error("Usage: PossibleClassicalForms( grp, g [,forms] )\n");
+        Error("Usage: PossibleClassicalForms( grp, g [,forms] )");
     fi;
     grp   := arg[1];
     g     := arg[2];
