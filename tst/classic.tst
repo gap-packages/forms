@@ -13,7 +13,7 @@ gap> is_equal:= function( G1, G2 )
 >    end;;
 
 # Test the creation of orthogonal groups.
-gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
+gap> for q in [ 2, 3, 4, 5, 8 ] do
 >      F:= GF(q);
 >      for d in [ 3 .. 5 ] do
 >        if IsEvenInt( d ) then
@@ -120,7 +120,7 @@ gap> for q in [ 2, 3, 4, 5, 7, 8 ] do
 >    od;
 
 # Test the creation of unitary groups.
-gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
+gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25 ] do
 >      F:= GF(q);
 >      F2:= GF(q^2);
 >      for d in [ 2 .. 8 ] do
