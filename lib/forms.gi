@@ -2428,8 +2428,8 @@ end );
 ##
 InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
   function(mat,gf)
-    local row,i,j,k,A,a,b,P,D,t,dummy,dummy2,r,stop,nplus1,q,one,zero,n;
-    A := mat;
+    local row,i,j,k,A,a,b,P,D,t,dummy,r,nplus1,q,one,zero,n,A2,D2;
+    A := MutableCopyMat(mat);
     n := Size(mat) - 1; # projective dimension
     nplus1 := n + 1;
     one := One(gf);
@@ -2437,85 +2437,78 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
     q := Size(gf);
     D := IdentityMat(nplus1, gf);
     row := 0;
-    stop := false;
     t := Sqrt(q);
+
+    # Diagonalize A
+
     repeat
       # We look for a nonzero element on the main diagonal, starting
       # from row + 1
       i := 1 + row;
-      dummy := false;
-      while dummy = false and i <= nplus1 do
-        if IsZero( A[i,i] ) then
-          i := i + 1;
-        else
-           dummy := true;
-        fi;
+      while i <= nplus1 and IsZero(A[i,i]) do
+        i := i + 1;
       od;
-      # if i = row + 1 then we do nothing, since A[i,i] <> 0
-      if 2 + row <= i and i <= nplus1 then
-        P := Forms_SWR(row + 1,i,nplus1);
-        A := P*A*P;  #Forms_HERM_CONJ(P) = P, so Forms_HERM_CONJ is not necessary
-        D := P*D;
 
-      # If we cannot find it, we got elsewhere to get it.
-
-      elif i = n + 2 then
+      if i = row + 1 then
+        # do nothing since A[row+1,row+1] <> 0
+      elif i <= nplus1 then
+        # swap things around to ensure A[row+1,row+1] <> 0
+        Forms_SwapCols(A, row + 1, i);
+        Forms_SwapRows(A, row + 1, i);
+        Forms_SwapRows(D, row + 1, i);
+      else
+        # All entries on the main diagonal are zero. We now search for a
+        # nonzero element off the main diagonal.
         i := 1 + row;
-        dummy := false;
-        while i <= n and dummy = false do
+        while i <= n do
           k := i + 1;
-          while k <= nplus1 and dummy = false do
-            if IsZero( A[i,k] ) then
-               k := k + 1;
-            else
-               dummy := true;
-            fi;
+          while k <= nplus1 and IsZero(A[i,k]) do
+            k := k + 1;
           od;
           if k = n + 2 then
              i := i + 1;
+          else
+             break;
           fi;
         od;
 
-        # Is i = n+1, then it is all zero an we can stop.
-
+        # if i is n+1, then they are all zero and we can stop.
         if i = nplus1 then
-          stop := true;
           r := row;
-          # Otherwise, go and get it
-          # Start from A[row+1,row+2]
-        elif i = row + 1 then
-          P := Forms_SWR(row+2,k,nplus1);
-          A := P*A*P;
-          D := P*D;
-        else
-          P := Forms_SWR(row+2,k,nplus1)*Forms_SWR(row+1,i,nplus1);
-          A := P*A*TransposedMat(P);
-          D := P*D;
+          break;
         fi;
 
-        if not stop then
-          b := Z(q)*(A[row+2,row+1])^-1;
-          P := IdentityMat(nplus1, gf);
-          P[row+1,row+2] := b;
-          A := P*A*Forms_HERM_CONJ(P,nplus1,t);
-          D := P*D;
+        # Otherwise: Go and fetch...
+        # Put it on A[row+1,row+2]
+        if i <> row + 1 then
+          Forms_SwapCols(A, row + 1, i);
+          Forms_SwapRows(A, row + 1, i);
+          Forms_SwapRows(D, row + 1, i);
         fi;
-      fi;
 
-      if not stop then
+        Forms_SwapCols(A, row + 2, k);
+        Forms_SwapRows(A, row + 2, k);
+        Forms_SwapRows(D, row + 2, k);
+
+        b := Z(q)*(A[row+2,row+1])^-1;
         P := IdentityMat(nplus1, gf);
-        for i in [row+2..nplus1] do
-           P[i,row+1] := -A[i,row+1]*(A[row+1,row+1])^-1;
-        od;
+        P[row+1,row+2] := b;
         A := P*A*Forms_HERM_CONJ(P,nplus1,t);
         D := P*D;
-        row := row + 1;
       fi;
-    until row = n or stop;
+
+      P := IdentityMat(nplus1, gf);
+      for i in [row+2..nplus1] do
+         P[i,row+1] := -A[i,row+1]*(A[row+1,row+1])^-1;
+      od;
+      A := P*A*Forms_HERM_CONJ(P,nplus1,t);
+      D := P*D;
+      row := row + 1;
+    until row = n;
 
    # Count how many variables have been used
 
-    if not stop then
+    if row = n then
       if not IsZero(A[nplus1,nplus1]) then
          r := nplus1;
       else
