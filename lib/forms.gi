@@ -1572,17 +1572,6 @@ InstallMethod( Display, [ IsBilinearForm ],
 #############################################################################
 # Functions to support Base Change operations (not for the user):
 ##
-InstallGlobalFunction(Forms_SWR,
-  function(i,j,n)
-    local P;
-    P := IdentityMat(n);
-    P[i,i] := 0;
-    P[i,j] := 1;
-    P[j,j] := 0;
-    P[j,i] := 1;
-    return P;
-  end );
-
 if IsBound(SwapMatrixColumns) and IsBound(SwapMatrixRows) then
   # For GAP >= 4.12
   BindGlobal("Forms_SwapCols", SwapMatrixColumns);
