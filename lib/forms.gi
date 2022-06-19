@@ -2141,7 +2141,7 @@ end);
 InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
     function(mat, gf)
     local A,r,w,row,dummy,i,j,h,D,P,t,a,b,c,d,e,s,
-      zeros,posr,posk,nplus1,control,q,zero,one,n;
+      zeros,posr,posk,nplus1,q,zero,one,n;
     # n is the projective dimension
     nplus1 := Size(mat);
     n := nplus1-1;
@@ -2150,7 +2150,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
     row := 1;
     zero := Zero(gf);
     one := One(gf);
-    A := List(mat, ShallowCopy);
+    A := MutableCopyMat(mat);
     D := IdentityMat(nplus1, gf);
     zeros := [];
     for i in [1..nplus1] do
@@ -2159,20 +2159,15 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
     h := Length(Factors(q));
     while row + 2 <= r do
       if not IsZero( A[row,row] ) then
-        control := false;
         i := row + 1;
         # check on the main diagonal; we look for a zero
-        while i <= r and not control do
-          if IsZero( A[i,i] ) then
-             control := true;
-          else
-             i := i + 1;
-          fi;
+        while i <= r and not IsZero(A[i,i]) do
+          i := i + 1;
         od;
 
         # if there is a zero somewhere, then we go and get it.
 
-        if control then
+        if i <= r then
           Forms_SwapCols(A,row,i);
           Forms_SwapRows(A,row,i);
           Forms_SwapRows(D,row,i);
@@ -2218,16 +2213,26 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           else
             if IsZero( A[row+1,row+2] ) then
                if posr = row + 1 then
-                  P := Forms_SWR(posk,row+2,nplus1);
+                  Forms_SwapCols(A,posk,row+2);
+                  Forms_SwapRows(A,posk,row+2);
+                  Forms_SwapRows(D,posk,row+2);
                elif posk = row + 2 then
-                  P := Forms_SWR(posr,row+1,nplus1);
+                  Forms_SwapCols(A,posr,row+1);
+                  Forms_SwapRows(A,posr,row+1);
+                  Forms_SwapRows(D,posr,row+1);
                elif posr = row + 2 then
                   P := TransposedMat(PermutationMat((posk,posr,row+1),nplus1));
+                  A := P*A*TransposedMat(P);
+                  D := P*D;
                else
-                  P := Forms_SWR(posr,row+1,nplus1)*Forms_SWR(posk,row+2,nplus1);
+                  Forms_SwapCols(A,posk,row+2);
+                  Forms_SwapRows(A,posk,row+2);
+                  Forms_SwapRows(D,posk,row+2);
+
+                  Forms_SwapCols(A,posr,row+1);
+                  Forms_SwapRows(A,posr,row+1);
+                  Forms_SwapRows(D,posr,row+1);
                fi;
-               A := P*A*TransposedMat(P);
-               D := P*D;
                A := Forms_RESET(A,nplus1,q);
             fi;
             #A[row+1,row+2] <> 0
@@ -2397,11 +2402,11 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               P[r,r] := 1/Forms_SQRT2(c,q);
               D := P*D;
               if r > 2 then
-                P := Forms_SWR(2,r-1,nplus1)*Forms_SWR(1,r,nplus1);
+                Forms_SwapRows(D,1,r);
+                Forms_SwapRows(D,2,r-1);
               else
-                P := Forms_SWR(1,2,nplus1);
+                Forms_SwapRows(D,1,2);
               fi;
-              D := P*D;
               e := Forms_C1(q,h);
               if e <> d then
                  a := Forms_QUAD_EQ(d+e,q,h);
