@@ -29,48 +29,7 @@
 <?LaTeX ExtraPreamble="\usepackage{url}"?>
 
 <Book Name="Forms">
-
-<TitlePage>
-<Title>GAP 4 Package <Package>Forms</Package></Title>
-<Subtitle>Sesquilinear and Quadratic</Subtitle>
-<Version>
-<#Include SYSTEM "../VERSION">
-</Version>
-
-<Author>John Bamberg
-<Address>
-School of Mathematics and Statistics,
-The University of Western Australia,
-35 Stirling Highway,
-Crawley WA 6009, Perth,
-Western Australia
-</Address>
-<Email>bamberg@maths.uwa.edu.au</Email>
-<Homepage>http://school.maths.uwa.edu.au/~bamberg</Homepage>
-</Author>
-
-<Author>Jan De Beule
-<Address>
-Department of Mathematics,
-Vrije Universiteit Brussel,
-Pleinlaan 2,
-B--1050 Brussel,
-Belgium
-</Address>
-<Email>jan@debeule.eu</Email>
-<Homepage>http://www.debeule.eu</Homepage>
-</Author>
-  
-<Date>March 2022</Date>
-
-<Copyright>
-  &copyright; 2022 by the authors<P/>
-
-  This package may be distributed under the terms and conditions of the
-  GNU Public License Version 2 or higher.
-</Copyright>
-
-</TitlePage>
+<#Include SYSTEM "title.xml">
 
 <!--  TableOfContents  . . . . . .  generate a table of contents   -->
 <TableOfContents/>

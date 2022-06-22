@@ -127,4 +127,14 @@ TestFile := "tst/testall.g",
 
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+            "&copyright; 2015-2022 by the authors<P/>\n\n",
+            "This package may be distributed under the terms and conditions ",
+            "of the GNU Public License Version 2 or (at your option) any later version.\n"
+            ),
+    )
+),
+
 ));
