@@ -2422,7 +2422,7 @@ end );
 ##
 InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
   function(mat,gf)
-    local row,i,j,k,A,a,b,P,D,t,dummy,r,nplus1,q,one,zero,n,A2,D2;
+    local row,i,j,k,A,a,b,P,D,t,r,nplus1,q,one,zero,n,A2,D2;
     A := MutableCopyMat(mat);
     n := Size(mat) - 1; # projective dimension
     nplus1 := n + 1;
@@ -2512,17 +2512,12 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
     r := r - 1;
     # Take care that the diagonal elements become 1.
 
-    dummy := Difference(gf, GF(t));
     P := IdentityMat(nplus1, gf);
     for i in [1..r+1] do
       a := A[i,i];
       if not IsOne(a) then
-        j := 1;
-        b := dummy[j];
-        while a <> b*b^t do
-          j := j + 1;
-          b := dummy[j];
-        od;
+        # find an b element with norm b*b^t = b^(t+1) equal to a
+        b := RootFFE(gf, a, t+1);
         P[i,i] := 1/b;
       fi;
     od;
