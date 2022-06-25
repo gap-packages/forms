@@ -99,7 +99,7 @@ PackageDoc := rec(
   # use same as in GAP            
   BookName  := "Forms",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Forms - Sesquilinear and Quadratic",
