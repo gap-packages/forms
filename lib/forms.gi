@@ -15,35 +15,18 @@
 # Fundamental methods:
 #############################################################################
 
-InstallMethod( \=, "for two forms",
+InstallMethod( \=, "for two trivial forms",
   [IsTrivialForm and IsFormRep, IsTrivialForm and IsFormRep],
   function( a, b )
-    if a!.basefield <> b!.basefield then
-       return false;
-    fi;
-    return true;
+    return a!.basefield = b!.basefield;
   end );
 
 InstallMethod( \=, "for two forms",
   [IsForm and IsFormRep, IsForm and IsFormRep],
   function( a, b )
-    local aa, bb, i;
-    if a!.basefield <> b!.basefield then
-       return false;
-    fi;
-    if a!.type <> b!.type then
-       return false;
-    fi;
-    aa := a!.matrix;
-    bb := b!.matrix;
-    if Size(aa) <> Size(bb) then
-       return false;
-    fi;
-
-    for i in [1..Length(aa)] do
-        if aa[i] <> bb[i] then return false; fi;
-    od;
-    return true;
+    return (a!.basefield = b!.basefield) and
+           (a!.type = b!.type) and
+           (a!.matrix = b!.matrix);
   end );
 
 #############################################################################
