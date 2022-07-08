@@ -39,8 +39,7 @@ gap> gf := GF(8);
 GF(2^3)
 gap> vec := gf^3;
 ( GF(2^3)^3 )
-gap> r := PolynomialRing( gf, 3);
-PolynomialRing(..., [ x_1, x_2, x_3 ])
+gap> r := PolynomialRing( gf, 3);;
 gap> poly := r.1^2 + r.2 * r.3;
 x_1^2+x_2*x_3
 gap> form := QuadraticFormByPolynomial( poly, r );
@@ -52,6 +51,7 @@ Gram Matrix:
  . . 1
  . . .
 Polynomial: x_1^2+x_2*x_3
+
 gap> IsDegenerateForm( form );
 #I  Testing degeneracy of the *associated bilinear form*
 true
@@ -92,8 +92,9 @@ gap> hom := BaseChangeHomomorphism( b, GF(8) );
   [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]
 gap> newgo := Image(hom, go);
 Group(
-[ [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^3), 0*Z(2) ], [ 0*Z(2), 0*Z(2),
-           Z(2^3)^6 ] ], 
+[ 
+  [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^3), 0*Z(2) ], 
+      [ 0*Z(2), 0*Z(2), Z(2^3)^6 ] ], 
   [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
       [ 0*Z(2), Z(2)^0, 0*Z(2) ] ] ])
 ]]></Example>
@@ -135,9 +136,51 @@ f(x,y)=x&lt;sub>1&lt;/sub>y&lt;sub>2&lt;/sub>&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>y&lt;sub>2n&lt;/sub>&lt;font face="symbol">-&lt;/font
 >x&lt;sub>2n&lt;/sub>y&lt;sub>2n&lt;font face="symbol">-&lt;/font
 >1&lt;/sub>&lt;/center></Alt>
-<Example>
-<#Include SYSTEM "../examples/include/w53.include"> 
-</Example>
+<Example><![CDATA[
+gap> f := GF(3);
+GF(3)
+gap> gram := [
+> [0,0,0,1,0,0], 
+> [0,0,0,0,1,0],
+> [0,0,0,0,0,1],
+> [-1,0,0,0,0,0],
+> [0,-1,0,0,0,0],
+> [0,0,-1,0,0,0]] * One(f);;
+gap> form := BilinearFormByMatrix( gram, f );
+< bilinear form >
+gap> IsSymplecticForm( form );
+true
+gap> Display( form );
+Symplectic form
+Gram Matrix:
+ . . . 1 . .
+ . . . . 1 .
+ . . . . . 1
+ 2 . . . . .
+ . 2 . . . .
+ . . 2 . . .
+gap> b := BaseChangeToCanonical( form );
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap> Display( b );
+ 1 . . . . .
+ . . . 1 . .
+ . 1 . . . .
+ . . . . 1 .
+ . . 1 . . .
+ . . . . . 1
+gap> Display( b * gram * TransposedMat(b) );
+ . 1 . . . .
+ 2 . . . . .
+ . . . 1 . .
+ . . 2 . . .
+ . . . . . 1
+ . . . . 2 .
+]]></Example>
 </Section>
 
 <Section>
@@ -152,8 +195,28 @@ and then we find the forms left invariant by this copy
 of <Alt Only="Text"><M>GO(5,5)</M></Alt><Alt Only="LaTeX"><M>\mathrm{GO}(5,5)</M></Alt>
 <Alt Only="HTML MathJax"><M>\mathrm{GO}(5,5)</M></Alt><Alt Only="HTML noMathJax"><M>GO(5,5)</M></Alt>
 (which we expect to be a symmetric bilinear form).
-<Example>
-<#Include SYSTEM "../examples/include/preservedform.include"> 
-</Example>
+<Example><![CDATA[
+gap> go := GO(5, 5);
+GO(0,5,5)
+gap> x := 
+> [ [ Z(5)^0, Z(5)^3, 0*Z(5), Z(5)^3, Z(5)^3 ], 
+>   [ Z(5)^2, Z(5)^3, 0*Z(5), Z(5)^2, Z(5) ], 
+>   [ Z(5)^2, Z(5)^2, Z(5)^0, Z(5), Z(5)^3 ],
+>   [ Z(5)^0, Z(5)^3, Z(5), Z(5)^0, Z(5)^3 ], 
+>   [ Z(5)^3, 0*Z(5), Z(5)^0, 0*Z(5), Z(5) ] 
+>  ];;
+gap> go2 := go^x;
+<matrix group of size 18720000 with 2 generators>
+gap> forms := PreservedSesquilinearForms( go2 );
+[ < bilinear form > ]
+gap> Display( forms[1] );
+Bilinear form
+Gram Matrix:
+ 4 2 4 3 3
+ 2 2 2 3 3
+ 4 2 3 1 4
+ 3 3 1 2 4
+ 3 3 4 4 3
+]]></Example>
 </Section>
 </Chapter>
