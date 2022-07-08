@@ -11,8 +11,8 @@
   
   [[20XCCN+85[120X]  [16XConway,  J.  H.,  Curtis,  R. T., Norton, S. P., Parker, R. A. and
   Wilson,  R.  A.[116X,  [17XAtlas  of  finite groups[117X, Oxford University Press, Eynsham
-  (1985),  xxxiv+252  pages,  ((Maximal  subgroups and ordinary characters for
-  simple groups, With computational assistance from J. G. Thackray)).
+  (1985),  xxxiv+252  pages,  (Maximal  subgroups  and ordinary characters for
+  simple groups, With computational assistance from J. G. Thackray).
   
   [[20XCLGN+08[120X] [16XCeller, F., Leedham-Green, C. R., Neumann, P. M., Niemeyer, A. C.,
   Pasechnik, D. and Praeger, C. E.[116X, [17XFinding invariant forms[117X, [18Xpreprint[118X (2008).

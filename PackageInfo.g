@@ -10,9 +10,9 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.7",
-  Date := "02/03/2022",
-License := "GPL-2.0-or-later",
+  Version := "1.2.8",
+  Date := "09/07/2022",
+  License := "GPL-2.0-or-later",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -71,6 +71,22 @@ Persons := [
     Place         := "Brussels",
     Institution   := "Vrije Universiteit Brussel",
   ),
+  rec(
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    Email         := "horn@mathematik.uni-kl.de",
+    WWWHome       := "https://www.quendi.de/math",
+    PostalAddress := Concatenation(
+                       "Fachbereich Mathematik\n",
+                       "TU Kaiserslautern\n",
+                       "Gottlieb-Daimler-Straße 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "TU Kaiserslautern",
+  ),
 ],
 
 Status := "accepted",
@@ -83,7 +99,7 @@ PackageDoc := rec(
   # use same as in GAP            
   BookName  := "Forms",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Forms - Sesquilinear and Quadratic",
@@ -110,5 +126,15 @@ BannerString := Concatenation(
 TestFile := "tst/testall.g",
 
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+            "&copyright; 2015-2022 by the authors<P/>\n\n",
+            "This package may be distributed under the terms and conditions ",
+            "of the GNU Public License Version 2 or (at your option) any later version.\n"
+            ),
+    )
+),
 
 ));

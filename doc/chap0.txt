@@ -1,15 +1,15 @@
   
   
-                              [1XGAP 4 Package [5XForms[105X[101X
+                                    [1X Forms [101X
   
   
-                           [1XSesquilinear and Quadratic[101X
+                          [1X Sesquilinear and Quadratic [101X
   
   
-                                     1.2.7
+                                     1.2.8
   
   
-                                   March 2022
+                                  9 July 2022
   
   
                                   John Bamberg
@@ -20,26 +20,31 @@
   
   John Bamberg
       Email:    [7Xmailto:bamberg@maths.uwa.edu.au[107X
-      Homepage: [7Xhttp://school.maths.uwa.edu.au/~bamberg[107X
-      Address:  [33X[0;14YSchool  of  Mathematics  and  Statistics,  The  University  of
-                Western  Australia,  35  Stirling  Highway,  Crawley  WA 6009,
-                Perth, Western Australia[133X
+      Homepage: [7Xhttp://school.maths.uwa.edu.au/~bamberg/[107X
+      Address:  [33X[0;14YSchool of Mathematics and Statistics[133X
+                [33X[0;14YThe University of Western Australia[133X
+                [33X[0;14Y35 Stirling Highway[133X
+                [33X[0;14YCrawleyY WA 6009, Perth[133X
+                [33X[0;14YAustralia[133X
   
   
   Jan De Beule
       Email:    [7Xmailto:jan@debeule.eu[107X
       Homepage: [7Xhttp://www.debeule.eu[107X
-      Address:  [33X[0;14YDepartment   of   Mathematics,   Vrije  Universiteit  Brussel,
-                Pleinlaan 2, B--1050 Brussel, Belgium[133X
+      Address:  [33X[0;14YDepartment of Mathematics and Data Science[133X
+                [33X[0;14YVrije Universiteit Brussel[133X
+                [33X[0;14YPleinlaan 2[133X
+                [33X[0;14YB-1050 Brussel[133X
+                [33X[0;14YBelgium[133X
   
   
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2022 by the authors[133X
+  [33X[0;0Y© 2015-2022 by the authors[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
-  Public License Version 2 or higher.[133X
+  Public License Version 2 or (at your option) any later version.[133X
   
   
   -------------------------------------------------------

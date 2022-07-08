@@ -46,7 +46,7 @@
   [1X1.4 [33X[0;0YWeb resources[133X[101X
   
   [30X    [33X[0;6YFind   [5XForms[105X   on   the   Packages   section   of   the   GAP-website:
-        [7Xhttp://www.gap-system.org/Packages/forms.html[107X.[133X
+        [7Xhttps://www.gap-system.org/Packages/forms.html[107X.[133X
   
   [30X    [33X[0;6YFind [5XForms[105X on its homepage: [7Xhttps://gap-packages.github.io/forms[107X.[133X
   
@@ -93,4 +93,9 @@
   matrix groups. These additions are not yet documented.[133X
   
   [33X[0;0YIn version 1.2.7, only an issue with the automatic release was fixed.[133X
+  
+  [33X[0;0YVersion  1.2.8  optimizes the computation of base change matrices, making it
+  faster  by  several orders of magnitude for large inputs. Moreover, Max Horn
+  was  added  to  the list of maintainers. Finally, various janitorial changes
+  were made.[133X
   
