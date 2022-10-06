@@ -742,7 +742,7 @@ end);
 
     # if all forms are excluded then we are finished
 #    if not forms.maybeDual and not forms.maybeFrobenius  then
-#       i := Size(One(g));
+#       i := NrRows(One(g));
 #        return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
 #    fi;
 
@@ -803,7 +803,7 @@ end);
 #          newform := HermitianFormByMatrix(y[2], field);
 #          Add( newforms, newform );
 #       elif y[1] = "linear" then
-#          i := Size(One(g));
+#          i := NrRows(One(g));
 #          newform := BilinearFormByMatrix( NullMat(i,i,field), field );
 #          Add( newforms, newform );
 #       fi;
@@ -831,7 +831,7 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
 
     ## check that g and form are compatible in dimension and there fields are OK
     gram := GramMatrix( form );
-    if Size(g) <> Size( gram ) then
+    if NrRows(g) <> NrRows( gram ) then
        Error("dimensions are incompatible.");
     fi;
 
@@ -893,7 +893,7 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
 
     # if all forms are excluded then we are finished
     if not forms.maybeDual and not forms.maybeFrobenius  then
-        i := Size(One(g));
+        i := NrRows(One(g));
         return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
     fi;
 
@@ -973,7 +973,7 @@ InstallMethod( PreservedForms,
           newform := HermitianFormByMatrix(y[2], field);
           Add( newforms, newform );
        elif y[1] = "linear" then
-          i := Size(One(grp));
+          i := NrRows(One(grp));
           newform := BilinearFormByMatrix( NullMat(i,i,field), field );
           Add( newforms, newform );
        fi;
@@ -1005,7 +1005,7 @@ InstallMethod( PreservedSesquilinearForms,
           newform := HermitianFormByMatrix(y[2], field);
           Add( newforms, newform );
        elif y[1] = "linear" then
-          i := Size(One(grp));
+          i := NrRows(One(grp));
           newform := BilinearFormByMatrix( NullMat(i,i,field), field );
           Add( newforms, newform );
        fi;

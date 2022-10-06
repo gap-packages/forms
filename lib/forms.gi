@@ -684,7 +684,7 @@ InstallMethod( RadicalOfFormBaseMat, [IsSesquilinearForm],
     fi;
     m := f!.matrix;
     gf := f!.basefield;
-    d := Size(m);
+    d := NrRows(m);
     return NullspaceMat( m );
   end );
 
@@ -694,7 +694,7 @@ InstallMethod( RadicalOfFormBaseMat, [IsQuadraticForm],
     m := f!.matrix;
     m := m + TransposedMat(m);
     gf := f!.basefield;
-    d := Size(m);
+    d := NrRows(m);
     null := NullspaceMat( m );
     if IsEvenInt(Size(gf)) then
       null := Filtered(SubspaceNC(gf^d,null), x -> IsZero(x^f)); #find vectors vanishing under f
@@ -712,7 +712,7 @@ InstallMethod( RadicalOfForm, "for a sesquilinear form",
     fi;
     m := f!.matrix;
     gf := f!.basefield;
-    d := Size(m);
+    d := NrRows(m);
     null := NullspaceMat( m );
     return Subspace( gf^d, null, "basis" );
   end );
@@ -724,7 +724,7 @@ InstallMethod( RadicalOfForm, "for a quadratic form",
     m := f!.matrix;
     m := m + TransposedMat(m);
     gf := f!.basefield;
-    d := Size(m);
+    d := NrRows(m);
     null := NullspaceMat( m );
     if IsEvenInt(Size(gf)) then
       null := Filtered(SubspaceNC(gf^d,null), x -> IsZero(x^f)); #find vectors vanishing under f
@@ -757,9 +757,6 @@ InstallMethod( DiscriminantOfForm, [ IsQuadraticForm ],
    if IsZero( det ) then
       Error( "Form must be nondegenerate" );
    fi;
-   if IsEvenInt(Size(gf)) then
-      return "square";
-   fi;
    if IsOddInt(Size(gf)) then
       primroot := PrimitiveElement( gf );
       squares := AsList( Group( primroot^2 ) );
@@ -785,9 +782,6 @@ InstallMethod( DiscriminantOfForm, [ IsSesquilinearForm ],
    det := Determinant( m );
    if IsZero( det ) then
       Error( "Form must be nondegenerate" );
-   fi;
-   if IsEvenInt(Size(gf)) then
-      return "square";
    fi;
    if IsOddInt(Size(gf)) then
       primroot := PrimitiveElement( gf );
@@ -996,7 +990,7 @@ InstallMethod( BaseChangeToCanonical, "for a trivial form",
   function(f)
     local b,m,n;
     m := f!.matrix;
-    n := Size(m);
+    n := NrRows(m);
     b := IdentityMat(n,m);
     Info(InfoWarning,1,"<form> is trivial, trivial base change is returned");
     return b;
@@ -2115,7 +2109,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
     local A,r,w,row,dummy,i,j,h,D,P,t,a,b,c,d,e,s,
       zeros,posr,posk,nplus1,q,zero,one,n;
     # n is the projective dimension
-    nplus1 := Size(mat);
+    nplus1 := NrRows(mat);
     n := nplus1-1;
     r := nplus1;
     q := Size(gf);
@@ -2124,6 +2118,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
     one := One(gf);
     A := MutableCopyMat(mat);
     D := IdentityMat(nplus1, gf);
+    ConvertToMatrixRep(D, gf);
     zeros := [];
     for i in [1..nplus1] do
       zeros[i] := zero;
@@ -2407,12 +2402,13 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
   function(mat,gf)
     local row,i,j,k,A,a,b,P,D,t,r,nplus1,q,one,zero,n,A2,D2;
     A := MutableCopyMat(mat);
-    n := Size(mat) - 1; # projective dimension
+    n := NrRows(mat) - 1; # projective dimension
     nplus1 := n + 1;
     one := One(gf);
     zero := Zero(gf);
     q := Size(gf);
     D := IdentityMat(nplus1, gf);
+    ConvertToMatrixRep(D, gf);
     row := 0;
     t := Sqrt(q);
 
@@ -2514,7 +2510,7 @@ end );
 InstallGlobalFunction( BaseChangeSymplectic_blockchange,
  function(m, f, i)
    local c1, c2, c, diagpos, pos, bb, d;
-   d := Size(m);
+   d := NrRows(m);
    bb := IdentityMat(d, f);
 
    ## diagpos is the position of the top left corner of the block
@@ -2543,7 +2539,7 @@ end );
 InstallGlobalFunction( BaseChangeSymplectic_cleanup,
   function(m, f, i)
     local e, j, d;
-    d := Size(m);
+    d := NrRows(m);
     e := MutableCopyMat(IdentityMat(d, f));
     for j in [2 * i + 1..d] do;
         e[j,2 * i - 1] := -m[j,2*i];
@@ -2570,7 +2566,7 @@ InstallMethod( BaseChangeSymplectic, [IsMatrix and IsFFECollColl, IsField and Is
 
  function( m, f)
    local d, newm, a, e, basechange, blocknr;
-   d := Size(m);
+   d := NrRows(m);
    basechange := IdentityMat(d, f);
    newm := m;
    for blocknr in [1 .. (Int(d/2))] do
