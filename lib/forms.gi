@@ -1789,7 +1789,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     n := nplus1 - 1;
     q := Size(gf);
     D := IdentityMat(nplus1, gf);
-    ConvertToMatrixRepNC(D, gf);
+    ConvertToMatrixRep(D, gf);
     row := 0;
     primroot := Z(q);
     one := One(GF(q));
