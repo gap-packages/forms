@@ -161,7 +161,7 @@ end );
 
 #############################################################################
 #O QuadraticFormByMatrixOp( <m>, <f> ): constructor not for users.
-#  Analoguous to BilinearFormByMatrixOp
+#  Analogous to BilinearFormByMatrixOp
 # <f> finite field, <m> matrix over <f>.
 # <m> is always "Forms_RESET" to an upper triangle matrix.
 # zero matrix is allowed, then the trivial form is returned.
@@ -3227,13 +3227,13 @@ end );
 #  corresponding rank 1 polar space is q^(1 - sign) + 1, q the order
 #  of the base field of the form.
 #  The above description is valid for sesquilinear and quadratic forms,
-#  of course case (1) can only occcur for bilinear forms, cases (2), (3) and (4)
+#  of course case (1) can only occur for bilinear forms, cases (2), (3) and (4)
 #  for both quadratic and bilinear forms, cases (5) and (6) only for hermitian
 #  forms and case (7) only for bilinear forms.
 #
 #  In principle, for the non-degenerate/non-singular orthogonal forms,
 #  it could be sufficient to investigate whether the determinant is square or not,
-#  however, since degenerate/singular forms are allowed, in thoses cases, we must
+#  however, since degenerate/singular forms are allowed, in those cases, we must
 #  compute the induced form to use the determinant method. Taking into account
 #  that all is already available by simply testing for IsEllipticForm, IsHyperbolicForm
 #  IsParabolicForm (which goes through the base change mechanisms), I opted to use

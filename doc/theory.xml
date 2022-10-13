@@ -92,7 +92,7 @@ Again, it can be easily proved that a sesquilinear
 form <M>f</M> is hermitian if and only if <Alt Only="Text"><M>M_f^T = M_f^{\alpha}</M></Alt>
 <Alt Only="LaTeX"><M>M_f^T = M_f^{\alpha}</M></Alt><Alt Only="HTML MathJax"><M>M_f^T = M_f^{\alpha}</M></Alt>
 <Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub>&lt;sup>&#945;&lt;/sup></Alt>
-(i.e., a hermitian matix). It is proved (see Chapter 7 of <Cite Key="Taylor"/>)
+(i.e., a hermitian matrix). It is proved (see Chapter 7 of <Cite Key="Taylor"/>)
 that hermitian forms are the only reflexive
 sesquilinear forms that are not bilinear. Hence, in general, all reflexive
 sesquilinear forms are known, they are either hermitian or bilinear, and in the
@@ -329,7 +329,7 @@ that <M>f(v,v) = 2Q(v) = 0</M>). Note, however, that different quadratic forms c
 same alternating form. 
 <P/>
 As in the case of sesquilinear forms, we will associate a matrix to a quadratic
-form. Chosing a basis of the vector space <M>V</M>, it is clear that an <M>n
+form. Choosing a basis of the vector space <M>V</M>, it is clear that an <M>n
 \times n</M> matrix determines the quadratic form completely. In
 <Package>Forms</Package>, the <E>Gram matrix</E> of a quadratic form is always an upper
 triangle matrix <M>M</M>, such that
@@ -341,7 +341,7 @@ allowed to use any matrix to define the quadratic form, since any matrix
 <M>M</M> defines a quadratic form <Alt Only="Text"><M>Q(v) := vMv^T</M></Alt>
 <Alt Only="LaTeX"><M>Q(v) := vMv^T</M></Alt><Alt Only="HTML MathJax"><M>Q(v) := vMv^T</M></Alt>
 <Alt Only="HTML noMathJax">Q(v):=vMv&lt;sup>T&lt;/sup></Alt>. During the construction,
-an appopriate upper triangle matrix is computed and stored as the Gram matrix. 
+an appropriate upper triangle matrix is computed and stored as the Gram matrix. 
 So the Gram matrix of the associated bilinear form is <Alt Only="Text"><M>M+M^T</M>.</Alt>
 <Alt Only="LaTeX"><M>M+M^T</M>.</Alt><Alt Only="HTML MathJax"><M>M+M^T</M>.</Alt>
 <Alt Only="HTML noMathJax">M+M&lt;sup>T&lt;/sup>.</Alt>

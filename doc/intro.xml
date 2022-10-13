@@ -94,7 +94,7 @@ into GAPInfo.RootPaths in version 1.2.4. More tests have been added to reach a b
 Due to these tests, a bug in one of the methods for <C>EvaluateForm</C> was discovered and fixed.
 Alexander Konovalov noted that we used the deprecated <F>ReadTest</F> in our test files. This has
 been changed to <F>Test</F>. Finally some LaTeX issues were resolved in the documentation.
-<P/>In verions 1.2.5, some small changes were made to the recognition part.
+<P/>In version 1.2.5, some small changes were made to the recognition part.
 Some new examples in the documentation explain better the functionality.
 <P/>Version 1.2.6 is an intermediate update. It contains a number of corrections/additions suggested/implemented by Thomas Breuer and Max Horn, including an extension of some GAP library functions to create classical matrix groups. These additions are not yet documented. 
 <P/>In version 1.2.7, only an issue with the automatic release was fixed.

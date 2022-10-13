@@ -726,7 +726,7 @@ The argument <A>f</A> is a sesquilinear or quadratic form on the vector space <M
 with radical <M>R</M>, a <M>k</M>-dimensional space.
 Then <A>f</A> induces a non-degenerate/non-singular
 form <M>g</M> on <M>V/R</M>. When <M>R</M> is the trivial vector space,
-the form <M>g</M> is just the given form <A>f</A>. This opertion returns
+the form <M>g</M> is just the given form <A>f</A>. This operation returns
 <List>
 <Item>0 when <M>g</M> is symplecitc or parabolic;</Item>
 <Item>+1 when <M>g</M> is hyperbolic;</Item>
