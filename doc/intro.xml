@@ -101,6 +101,8 @@ Some new examples in the documentation explain better the functionality.
 <P/>Version 1.2.8 optimizes the computation of base change matrices, making it
 faster by several orders of magnitude for large inputs. Moreover, Max Horn was
 added to the list of maintainers. Finally, various janitorial changes were made.
+<P/>Version 1.2.9 fixes an unexpected error in <C>BaseChangeToCanonical</C> if the input
+was over a finite field with more than 256 elements.
 </Section>
 <!-- ############################################################ -->
 
