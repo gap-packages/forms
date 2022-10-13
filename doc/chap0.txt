@@ -6,10 +6,10 @@
                           [1X Sesquilinear and Quadratic [101X
   
   
-                                     1.2.8
+                                     1.2.9
   
   
-                                  9 July 2022
+                                14 October 2022
   
   
                                   John Bamberg

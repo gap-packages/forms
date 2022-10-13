@@ -84,7 +84,7 @@
   has  been  changed  to  [11XTest[111X. Finally some LaTeX issues were resolved in the
   documentation.[133X
   
-  [33X[0;0YIn verions 1.2.5, some small changes were made to the recognition part. Some
+  [33X[0;0YIn version 1.2.5, some small changes were made to the recognition part. Some
   new examples in the documentation explain better the functionality.[133X
   
   [33X[0;0YVersion   1.2.6   is  an  intermediate  update.  It  contains  a  number  of
@@ -98,4 +98,7 @@
   faster  by  several orders of magnitude for large inputs. Moreover, Max Horn
   was  added  to  the list of maintainers. Finally, various janitorial changes
   were made.[133X
+  
+  [33X[0;0YVersion  1.2.9  fixes  an  unexpected  error in [10XBaseChangeToCanonical[110X if the
+  input was over a finite field with more than 256 elements.[133X
   

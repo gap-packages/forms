@@ -603,7 +603,7 @@
   [33X[0;0YThe  argument  [3Xf[103X  is  a sesquilinear or quadratic form on the vector space [22XV[122X
   with    radical    [22XR[122X,    a   [22Xk[122X-dimensional   space.   Then   [3Xf[103X   induces   a
   non-degenerate/non-singular  form  [22Xg[122X  on  [22XV/R[122X.  When [22XR[122X is the trivial vector
-  space, the form [22Xg[122X is just the given form [3Xf[103X. This opertion returns[133X
+  space, the form [22Xg[122X is just the given form [3Xf[103X. This operation returns[133X
   
   [30X    [33X[0;6Y0 when [22Xg[122X is symplecitc or parabolic;[133X
   

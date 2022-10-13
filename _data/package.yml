@@ -1,7 +1,7 @@
 name: Forms
-version: "1.2.8"
+version: "1.2.9"
 license: "GPL-2.0-or-later"
-date: 2022-07-09
+date: 2022-10-14
 description: |
     Sesquilinear and Quadratic
 
@@ -27,11 +27,11 @@ packageinfo: https://gap-packages.github.io/forms/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/forms/releases/download/v1.2.8/forms-1.2.8.tar.gz
+      url: https://github.com/gap-packages/forms/releases/download/v1.2.9/forms-1.2.9.tar.gz
     - name: .zip
-      url: https://github.com/gap-packages/forms/releases/download/v1.2.8/forms-1.2.8.zip
+      url: https://github.com/gap-packages/forms/releases/download/v1.2.9/forms-1.2.9.zip
     - name: .tar.bz2
-      url: https://github.com/gap-packages/forms/releases/download/v1.2.8/forms-1.2.8.tar.bz2
+      url: https://github.com/gap-packages/forms/releases/download/v1.2.9/forms-1.2.9.tar.bz2
 
 abstract: |
     This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.
@@ -45,7 +45,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>BBH22</span>]   <b class='BibAuthor'>Bamberg, J., De Beule, J. and Horn, M.</b>,
      <i class='BibTitle'>Forms, Sesquilinear and Quadratic,
-             Version 1.2.8</i>
+             Version 1.2.9</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/forms">https://gap-packages.github.io/forms</a></span>.
@@ -53,10 +53,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ Forms1.2.8,
+    @misc{ Forms1.2.9,
       author =           {Bamberg, J. and De Beule, J. and Horn, M.},
-      title =            {{Forms}, Sesquilinear and Quadratic, {V}ersion 1.2.8},
-      month =            {Jul},
+      title =            {{Forms}, Sesquilinear and Quadratic, {V}ersion 1.2.9},
+      month =            {Oct},
       year =             {2022},
       note =             {Refereed GAP package},
       howpublished =     {\href           {https://gap-packages.github.io/forms}

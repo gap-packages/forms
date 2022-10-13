@@ -52,7 +52,7 @@
   if  [22Xf(v,w)=f(w,v)^α[122X  holds  for  all vectors [22Xv,w[122X, with [22Xα[122X an involutory field
   automorphism  only  dependent  on  [22Xf[122X.  Again, it can be easily proved that a
   sesquilinear  form  [22Xf[122X  is  hermitian  if  and only if [22XM_f^T = M_f^α[122X (i.e., a
-  hermitian  matix).  It  is  proved (see Chapter 7 of [Tay92]) that hermitian
+  hermitian  matrix).  It  is proved (see Chapter 7 of [Tay92]) that hermitian
   forms  are  the  only  reflexive  sesquilinear  forms that are not bilinear.
   Hence,  in  general,  all  reflexive  sesquilinear forms are known, they are
   either  hermitian  or  bilinear,  and  in  the  latter case, they are either
@@ -371,8 +371,8 @@
   alternating form.[133X
   
   [33X[0;0YAs  in  the  case  of  sesquilinear  forms,  we will associate a matrix to a
-  quadratic form. Chosing a basis of the vector space [22XV[122X, it is clear that an [22Xn
-  ×  n[122X  matrix  determines  the  quadratic form completely. In [5XForms[105X, the [13XGram
+  quadratic  form. Choosing a basis of the vector space [22XV[122X, it is clear that an
+  [22Xn  ×  n[122X  matrix determines the quadratic form completely. In [5XForms[105X, the [13XGram
   matrix[113X of a quadratic form is always an upper triangle matrix [22XM[122X, such that[133X
   
   
@@ -384,7 +384,7 @@
   with  the  quadratic  form  is  always an upper triangle matrix, the user is
   allowed  to  use any matrix to define the quadratic form, since any matrix [22XM[122X
   defines  a  quadratic  form  [22XQ(v)  :=  vMv^T[122X  .  During the construction, an
-  appopriate  upper triangle matrix is computed and stored as the Gram matrix.
+  appropriate upper triangle matrix is computed and stored as the Gram matrix.
   So the Gram matrix of the associated bilinear form is [22XM+M^T[122X.[133X
   
   [33X[0;0YThe   associated   bilinear  form  could  be  used  to  define  the  notions

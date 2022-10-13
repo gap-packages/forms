@@ -35,7 +35,7 @@ examples are included.
 INSTALLATION *outside the GAP main directory*: When you don't have access to
 the directory of your main GAP installation you can also install the package(s)
 by unpacking inside a directory "MYGAPDIR/pkg", where "MYGAPDIR" is any path in
-your home directory that you have acces to. 
+your home directory that you have access to. 
 
 To use packages installed in "MYGAPDIR/pkg", do not forget to start gap with the
 extra option '-l ";MYGAPDIR"'.
