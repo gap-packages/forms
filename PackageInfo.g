@@ -14,15 +14,6 @@ SetPackageInfo( rec(
   Date := "14/10/2022",
   License := "GPL-2.0-or-later",
 
-##  URL of the archive(s) of the current package release, but *without*
-##  the format extension(s), like '.zoo', which are given next.
-##  The archive file name *must be changed* with each version of the archive
-##  (and probably somehow contain the package name and version).
-##  The paths of the files in the archive must begin with the name of the
-##  directory containing the package (in our "example" probably:
-##  example/init.g, ...    or  example-1.3/init.g, ...  )
-# 
-
 SourceRepository := rec(
     Type := "git",
     URL := Concatenation( "https://github.com/gap-packages/", LowercaseString(~.PackageName) ),
