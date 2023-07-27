@@ -32,7 +32,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
 
     I := Filtered( [0 .. d],  x -> not IsZero(c[x+1]) );
     q := Size(F);
-    qq := Characteristic(F)^(LogInt(q,Characteristic(F))/2);
+    qq := Characteristic(F)^(DegreeOverPrimeField(F)/2);
 
     Minv := M^-1;
     tM := Trace(M); tMi := Trace(Minv)^qq; # Frobenius of trace
@@ -530,7 +530,7 @@ local   F,  k,  dim,  mats,  dmats,  qq,  i,  j,  l;
     return GModuleByMats([],module.dimension,SMTX.Field(module));
   else
     F := MTX.Field(module);
-    k := LogInt( Size(F), Characteristic(F) );
+    k := DegreeOverPrimeField(F);
     if k mod 2 = 1  then
         Error( "field <F> is not a square" );
     fi;
@@ -570,7 +570,7 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     field    := MTX.Field(module);
     form := hom[1];
     q  := Size(field);
-    qq := Characteristic(field)^(LogInt(q,Characteristic(field))/2);
+    qq := Characteristic(field)^(DegreeOverPrimeField(field)/2);
     k  := PositionNonZero(form[1]);
     a  := form[1,k] / form[k,1]^qq;
     a := NthRoot(field,a,(1-qq) mod (q-1));

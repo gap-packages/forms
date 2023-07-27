@@ -1185,14 +1185,12 @@ InstallOtherMethod( \^, "for a pair of FFE matrices and a sesquilinear form",
 InstallOtherMethod( \^, "for a pair of FFE vectors and an hermitian form",
   [ IsVectorList and IsFFECollColl, IsHermitianForm ],
   function( pair, f )
-    local frob,hh,bf,p;
+    local frob,hh,bf;
     if Size(pair) <> 2 then
        Error("The first argument must be a pair of vectors");
     fi;
     bf := f!.basefield;
-    p := Characteristic(bf);
-    hh := LogInt(Size(bf),p)/2;
-    #frob := FrobeniusAutomorphism(f!.basefield); #here was a mistake!
+    hh := DegreeOverPrimeField(bf) / 2;
     frob := FrobeniusAutomorphism(bf)^hh;
     return pair[1] * f!.matrix * (pair[2]^frob);
   end );
@@ -1200,14 +1198,12 @@ InstallOtherMethod( \^, "for a pair of FFE vectors and an hermitian form",
 InstallOtherMethod( \^, "for a pair of FFE matrices and an hermitian form",
   [ IsFFECollCollColl, IsHermitianForm ],
   function( pair, f )
-    local frob,hh,bf,p;
+    local frob,hh,bf;
     if Size(pair) <> 2 then
        Error("The first argument must be a pair of vectors");
     fi;
     bf := f!.basefield;
-    p := Characteristic(bf);
-    hh := LogInt(Size(bf),p)/2;
-    #frob := FrobeniusAutomorphism(f!.basefield);  #here was a mistake, noticed by using fining.
+    hh := DegreeOverPrimeField(bf) / 2;
     frob := FrobeniusAutomorphism(bf)^hh;
     return pair[1] * f!.matrix * (TransposedMat(pair[2])^frob);
   end );
@@ -2944,18 +2940,13 @@ InstallMethod( EvaluateForm,  "for a bilinear form and a pair of matrices",
     return v*f!.matrix*TransposedMat(w);
 end );
 
-# jdb 20/01/2016: here was a bug, there is no method for  w^t, w a GF(q) vector
-# t just a natural number! Bugfix: look at the method for \^
 InstallMethod( EvaluateForm, "for an hermitian form and a pair of vectors",
   [IsHermitianForm and IsFormRep,
         IsVector and IsFFECollection, IsVector and IsFFECollection],
   function(f,v,w)
-    local gf,t,p,hh,frob;
-    #t := Sqrt(Size(gf));
-    #return v*f!.matrix*(w^t); # here was the mistake.
+    local gf,t,hh,frob;
     gf := f!.basefield;
-    p := Characteristic(gf);
-    hh := LogInt(Size(gf),p)/2;
+    hh := DegreeOverPrimeField(gf) / 2;
     frob := FrobeniusAutomorphism(gf)^hh;
     return v*f!.matrix*(w^frob);
 end );
@@ -2967,7 +2958,7 @@ InstallMethod( EvaluateForm,  "for an hermitian form and a pair of matrices",
     gf := f!.basefield;
     t := Sqrt(Size(gf));
     wCONJ := MutableTransposedMat(w);
-    m := Size(wCONJ); n := Size(wCONJ[1]);
+    m := NrRows(wCONJ); n := NrCols(wCONJ);
     for i in [1..m] do
       for j in [1..n] do
         wCONJ[i,j] := wCONJ[i,j]^t;
