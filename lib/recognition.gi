@@ -49,7 +49,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
     Add(I,q-1);
     # we need gcd one in order to get alpha exactly (ignoring +-)
     t := GcdRepresentation(I);
-    i0 := I*t;
+    i0 := I*t; #note that this is just Gcd(I)
 
     if not IsZero(tM) and not IsZero(tMi) then
         return [i0, tM/tMi];
@@ -76,7 +76,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
         "characteristic polynomial does not reveal scalar\n" );
       return false;
     fi;
-    return [i0,a];
+    return [i0,a]; #We will compute all solutions in the new version of the code for the next function!
   end );
 
 
@@ -123,6 +123,31 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsFrobenius,
     return new;
  end );
 
+
+ClassicalForms_GeneratorsWithoutScalarsFrobeniusNew := 
+ function( grp )
+    local tries, gens, field, m1, a1, new, i;
+
+    # start with 2 random elements,  at most 10 tries
+    tries := 0;
+    gens  := [];
+    field := FieldOfMatrixGroup(grp);
+    #This function will generate all possible Frobenius dual modules that need to be checked.
+    for m1 in GeneratorsOfGroup(grp) do 
+    #while Length(gens) < 2  do
+        #tries := tries + 1;
+        #if tries = 11  then return false;  fi;
+        #m1 := PseudoRandom(grp);
+        a1 := ClassicalForms_ScalarMultipleFrobenius(field,m1);
+        #compute all solutions of lambda^a1[1] = a1[2] where a1[2] is defined as in the paper. 
+        if IsList(a1) and a1[1]=1 then
+            a1:=a1[2];
+            Add(gens, a1*TransposedMat(m1^-1));
+        fi;
+    od;
+    new := GModuleByMats( gens, field );
+    return new; 
+ end; #);
 
 #############################################################################
 ##
@@ -562,7 +587,7 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     if 0 = Length(hom)  then
         return false;
     elif 1 < Length(hom)  then
-        Error( "module acts absolutely irreducibly but two form found" );
+        Error( "module acts absolutely irreducibly but two forms found" );
     fi;
     Info( InfoForms, 1,"found homomorphism between V and (V^*)^frob\n" );
 
