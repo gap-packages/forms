@@ -122,8 +122,8 @@ InstallMethod( GeneralOrthogonalGroupCons,
     wanted:= QuadraticFormByMatrix( stored, GF(q) );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, q ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, q ) then
+    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
+       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
     mat:= mat2^-1 * mat1;
@@ -311,8 +311,8 @@ InstallMethod( SpecialOrthogonalGroupCons,
     wanted:= QuadraticFormByMatrix( stored, GF(q) );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, q ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, q ) then
+    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
+       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
     mat:= mat2^-1 * mat1;
@@ -532,8 +532,8 @@ InstallMethod( OmegaCons,
     wanted:= QuadraticFormByMatrix( stored, GF(q) );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, q ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, q ) then
+    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
+       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
     mat:= mat2^-1 * mat1;
