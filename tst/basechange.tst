@@ -76,4 +76,28 @@ gap> for dim in [2..10] do
 >    od;
 
 #
+gap> TestBaseChangeSymplectic := function(dim,q)
+>        local F, mat, bc, m;
+>        F := GF(q);
+>        # produce an alternating matrix
+>        mat:=RandomMat(dim,dim,F);
+>        mat:=mat-TransposedMat(mat);
+>        # compute base change
+>        bc:=BaseChangeSymplectic(mat, F);
+>        # verify the base change produces a matrix with the right properties:
+>        m:=bc[1]*mat*TransposedMat(bc[1]);
+>        Assert(0, m = -TransposedMat(m)); # symmetric
+>        # TODO: verify it is canonical
+>    end;;
+
+#
+gap> for dim in [2,10,20,80] do
+>      for q in [2, 3, 4, 5, 7, 8, 9, 25, 27, 17^2] do
+>        for i in [0..3] do
+>          TestBaseChangeSymplectic(dim+i, q);
+>        od;
+>      od;
+>    od;
+
+#
 gap> STOP_TEST("basechange.tst", 0);
