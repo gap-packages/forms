@@ -85,7 +85,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
         Error("Given matrix does not define a pseudo-form" );
       fi;
     elif string = "quadratic" then
-      el.matrix := Forms_RESET(m,NrRows(m),Size(f));
+      el.matrix := Forms_RESET(m,NrRows(m),f);
       Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
       return el;
     else
@@ -177,7 +177,7 @@ InstallMethod( QuadraticFormByMatrixOp, "for a ffe matrix and a field",
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
        return el;
     else
-       el.matrix := Forms_RESET(m,NrRows(m),Size(f));
+       el.matrix := Forms_RESET(m,NrRows(m),f);
        Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
        return el;
     fi;
@@ -1577,9 +1577,9 @@ else
 fi;
 
 InstallGlobalFunction(Forms_SUM_OF_SQUARES,
-  function(v,q)
+  function(v,gf)
     local dummy,i,v1,v2, primroot;
-    primroot := Z(q);
+    primroot := PrimitiveRoot(gf);
     i := 0;
     repeat
       dummy := LogFFE(v - primroot^(2*i), primroot);
@@ -1595,29 +1595,29 @@ InstallGlobalFunction(Forms_SUM_OF_SQUARES,
   end );
 
 InstallGlobalFunction(Forms_REDUCE2,
-  function(start,stop,n,q)
-    local t,i,P,one,primroot;
-    primroot := Z(q);
-    one := primroot^0;
-    t := primroot^(LogFFE(-one,primroot)/2);
-    P := IdentityMat(n,GF(q));
+  function(start,stop,n,gf)
+    local t,i,P,half,primroot;
+    primroot := PrimitiveRoot(gf);
+    half := One(gf) / 2;
+    t := primroot^(LogFFE(-One(gf),primroot)/2) / 2;
+    P := IdentityMat(n,gf);
     i := start;
     while i < stop do
-      P[i,i] := (1/2)*one;
-      P[i,i+1] := (1/2)*t;
-      P[i+1,i] := (1/2)*one;
-      P[i+1,i+1] := (-1/2)*t;
+      P[i,i] := half;
+      P[i,i+1] := t;
+      P[i+1,i] := half;
+      P[i+1,i+1] := -t;
       i := i + 2;
     od;
     return P;
   end );
 
 InstallGlobalFunction(Forms_REDUCE4,
-  function(start,stop,n,q)
+  function(start,stop,n,gf)
     local c,d,i,P,dummy;
-    P := IdentityMat(n,GF(q));
+    P := IdentityMat(n,gf);
     i := start;
-    dummy := Forms_SUM_OF_SQUARES(-One(GF(q)),q);
+    dummy := Forms_SUM_OF_SQUARES(-One(gf),gf);
     c := dummy[1];
     d := dummy[2];
     while i < stop do
@@ -1631,16 +1631,16 @@ InstallGlobalFunction(Forms_REDUCE4,
   end );
 
 InstallGlobalFunction(Forms_DIFF_2_S,
-  function(start,stop,n,q)
-    local i,P,one;
+  function(start,stop,n,gf)
+    local i,P,half;
     i := start;
-    P := IdentityMat(n,GF(q));
-    one := Z(q)^0;
+    P := IdentityMat(n,gf);
+    half := One(gf) / 2;
     while i < stop do
-      P[i,i] := one / 2;
-      P[i,i+1] := one / 2;
-      P[i+1,i] := one / 2;
-      P[i+1,i+1] := -one / 2;
+      P[i,i] := half;
+      P[i,i+1] := half;
+      P[i+1,i] := half;
+      P[i+1,i+1] := -half;
       i := i + 2;
     od;
     return P;
@@ -1664,9 +1664,9 @@ InstallGlobalFunction(Forms_HERM_CONJ,
 #is free to use any matrix to construct the form.
 
 InstallGlobalFunction(Forms_RESET,
-  function(mat,n,q)
+  function(mat,n,gf)
     local i,j,A,t;
-    t := 0*Z(q);
+    t := Zero(gf);
     A := MutableCopyMat(mat);
     for i in [2..n] do
       for j in [1..i-1] do
@@ -1788,7 +1788,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     ConvertToMatrixRep(D, gf);
     row := 0;
     primroot := Z(q);
-    one := One(GF(q));
+    one := One(gf);
 
     # Diagonalize A
 
@@ -1928,7 +1928,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
 
     # We write first v=v1^2 + v2^2
 
-    dummy := Forms_SUM_OF_SQUARES(v,q);
+    dummy := Forms_SUM_OF_SQUARES(v,gf);
     v1 := dummy[1];
     v2 := dummy[2];
 
@@ -1983,20 +1983,20 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     if r mod 2 <> 0 then
       if s = -1 or s = r then
         if q mod 4 = 1 then
-          P := Forms_REDUCE2(1,r+1,nplus1,q);
+          P := Forms_REDUCE2(1,r+1,nplus1,gf);
           D := P*D;
           w := 2;
         else
           if ((r-1)/2) mod 2 <> 0 then
-            P := Forms_REDUCE4(1,r+1,nplus1,q);
+            P := Forms_REDUCE4(1,r+1,nplus1,gf);
             D := P*D;
-            P := Forms_DIFF_2_S(1,r+1,nplus1,q);
+            P := Forms_DIFF_2_S(1,r+1,nplus1,gf);
             D := P*D;
             w := 2;
           else
-            P := Forms_REDUCE4(3,r+1,nplus1,q);
+            P := Forms_REDUCE4(3,r+1,nplus1,gf);
             D := P*D;
-            P := Forms_DIFF_2_S(3,r+1,nplus1,q);
+            P := Forms_DIFF_2_S(3,r+1,nplus1,gf);
             D := P*D;
             w := 0;
           fi;
@@ -2005,7 +2005,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         if q mod 4 = 1 then
           if 1 < r then
             Forms_SwapRows(D,2,r+1);
-            P := Forms_REDUCE2(3,r+1,nplus1,q);
+            P := Forms_REDUCE2(3,r+1,nplus1,gf);
             D := P*D;
           fi;
           w := 0;
@@ -2013,7 +2013,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
           if ((r-1)/2) mod 2 <> 0 then
             Forms_SwapRows(D,4,r+1);
             if 3 < r then
-              P := Forms_REDUCE4(5,r+1,nplus1,q);
+              P := Forms_REDUCE4(5,r+1,nplus1,gf);
             else
               P := IdentityMat(nplus1,gf);
             fi;
@@ -2024,14 +2024,14 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             P[4,4] := 1/(2*b);
             D := P*D;
             if 3 < r then
-              P := Forms_DIFF_2_S(5,r+1,nplus1,q);
+              P := Forms_DIFF_2_S(5,r+1,nplus1,gf);
               D := P*D;
             fi;
             w := 0;
           else
             Forms_SwapRows(D,2,r+1);
             if 1 < r then
-              P := Forms_REDUCE4(3,r+1,nplus1,q);
+              P := Forms_REDUCE4(3,r+1,nplus1,gf);
             else
               P := IdentityMat(nplus1,gf);
             fi;
@@ -2042,7 +2042,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             P[2,2] := 1/(2*b);
             D := P*D;
             if 1 < r then
-              P := Forms_DIFF_2_S(3,r+1,nplus1,q);
+              P := Forms_DIFF_2_S(3,r+1,nplus1,gf);
               D := P*D;
             fi;
             w := 2;
@@ -2052,21 +2052,21 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     elif r <> 0 then
       w := 1;
       if q mod 4 = 1 then
-        P := Forms_REDUCE2(2,r+1,nplus1,q);
+        P := Forms_REDUCE2(2,r+1,nplus1,gf);
         D := P*D;
       else
         if r mod 4 = 0 then
-          P := Forms_REDUCE4(2,r+1,nplus1,q);
+          P := Forms_REDUCE4(2,r+1,nplus1,gf);
           D := P*D;
-          P := Forms_DIFF_2_S(2,r+1,nplus1,q);
+          P := Forms_DIFF_2_S(2,r+1,nplus1,gf);
           D := P*D;
         else
           if 3 < r then
-            P := Forms_REDUCE4(4,r+1,nplus1,q);
+            P := Forms_REDUCE4(4,r+1,nplus1,gf);
           else
             P := IdentityMat(nplus1, gf);
           fi;
-          dummy := Forms_SUM_OF_SQUARES(-1,q);
+          dummy := Forms_SUM_OF_SQUARES(-1,gf);
           c := dummy[1];
           d := dummy[2];
           P[1,1] := c;
@@ -2074,7 +2074,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
           P[3,1] := d;
           P[3,3] := -c;
           D := P*D;
-          P := Forms_DIFF_2_S(2,r+1,nplus1,q);
+          P := Forms_DIFF_2_S(2,r+1,nplus1,gf);
           D := P*D;
           P := IdentityMat(nplus1, gf);
           i := 3;
@@ -2134,7 +2134,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           Forms_SwapCols(A,row,i);
           Forms_SwapRows(A,row,i);
           Forms_SwapRows(D,row,i);
-          A := Forms_RESET(A,nplus1,q);
+          A := Forms_RESET(A,nplus1,gf);
 
         # Otherwise: look in other places.
 
@@ -2196,7 +2196,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
                   Forms_SwapRows(A,posr,row+1);
                   Forms_SwapRows(D,posr,row+1);
                fi;
-               A := Forms_RESET(A,nplus1,q);
+               A := Forms_RESET(A,nplus1,gf);
             fi;
             #A[row+1,row+2] <> 0
             P := IdentityMat(nplus1,gf);
@@ -2209,7 +2209,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               od;
             fi;
             A := P*A*TransposedMat(P);
-            A := Forms_RESET(A,nplus1,q);
+            A := Forms_RESET(A,nplus1,gf);
             D := P*D;
             # A has now that special form a_11*X_1^2+X_1*X_2 + G(X_0,X_2,...,X_n);
             b := A[row,row];
@@ -2217,7 +2217,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             t :=  Forms_SQRT2(b/A[row+1,row+1],q);
             P[row,row+1] := t;
             A := P*A*TransposedMat(P);
-            A := Forms_RESET(A,nplus1,q);
+            A := Forms_RESET(A,nplus1,gf);
             D := P*D;
             #A [row,row] is now 0
           fi;
@@ -2251,7 +2251,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           Forms_SwapCols(A,posk,row+1);
           Forms_SwapRows(A,posk,row+1);
           Forms_SwapRows(D,posk,row+1);
-          A := Forms_RESET(A,nplus1,q);
+          A := Forms_RESET(A,nplus1,gf);
         fi;
         # Now A[k,k+1] <> 0
         P := IdentityMat(nplus1, gf);
@@ -2262,14 +2262,14 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         od;
         D := P*D;
         A := P*A*TransposedMat(P);
-        A := Forms_RESET(A,nplus1,q);
-        P := IdentityMat(nplus1,GF(q));
+        A := Forms_RESET(A,nplus1,gf);
+        P := IdentityMat(nplus1,gf);
         for i in [row+1..nplus1] do
           P[i,row] := A[row+1,i];
         od;
         D := P*D;
         A := P*A*TransposedMat(P);
-        A := Forms_RESET(A,nplus1,q);
+        A := Forms_RESET(A,nplus1,gf);
         row := row + 2;
       fi;
     od;
@@ -2310,11 +2310,11 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           fi;
         else
           if c = t then
-            P := IdentityMat(nplus1,GF(q));
+            P := IdentityMat(nplus1,gf);
             P[r,r] := 1/b;
             D := P*D;
           else
-            P := IdentityMat(nplus1,GF(q));
+            P := IdentityMat(nplus1,gf);
             P[r-1,r-1] := 1/b;
             P[r,r-1] := c/b;
             D := P*D;
@@ -2349,7 +2349,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             w := 2;
           else
             d := (a*c)/(b^2);
-            if Trace(GF(q),d) = t then
+            if Trace(gf,d) = t then
               e := Forms_SQRT2(a,q);
               P := IdentityMat(nplus1, gf);
               s := Forms_QUAD_EQ(d,q,h);
@@ -2902,7 +2902,7 @@ InstallMethod( IsometricCanonicalForm, "for quadratic forms",
     gf := f!.basefield;
     trivial := IdentityMat(NrRows(gram),gf);
     B := BaseChangeToCanonical(f);
-    isom := Forms_RESET(B*gram*TransposedMat(B),NrRows(gram),Size(gf));
+    isom := Forms_RESET(B*gram*TransposedMat(B),NrRows(gram),gf);
     form := FormByMatrix(isom,gf,"quadratic");
     SetBaseChangeToCanonical(form,trivial);
     SetWittIndex(form, WittIndex(f));
