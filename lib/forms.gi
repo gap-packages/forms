@@ -65,7 +65,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
         Error("Given matrix does not define a symplectic form" );
       fi;
     elif string = "orthogonal" then
-      if IsEvenInt(Size(f)) then
+      if Characteristic(f) = 2 then
         Error("No orthogonal forms exist in even characteristic" );
       fi;
       if IsOrthogonalMatrix(m) then
@@ -114,11 +114,11 @@ InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
        el := rec( matrix := m, basefield := f, type := "symplectic", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
        return el;
-    elif (IsOrthogonalMatrix(m) and IsOddInt(Size(f))) then
+    elif IsOrthogonalMatrix(m) and Characteristic(f) <> 2 then
        el := rec( matrix := m, basefield := f, type := "orthogonal", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
        return el;
-    elif (IsOrthogonalMatrix(m) and IsEvenInt(Size(f))) then
+    elif IsOrthogonalMatrix(m) and Characteristic(f) = 2 then
        el := rec( matrix := m, basefield := f, type := "pseudo", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
        return el;
@@ -353,7 +353,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
   function(pol,gf,n,vars,string)
     local mat, form;
     if string = "orthogonal" then
-       if IsEvenInt(Size(gf)) then
+       if Characteristic(gf) = 2 then
           Error("No orthogonal form can be associated with <pol> in even characteristic");
        else
           mat := UpperTriangleMatrixByPolynomialForForm(pol,gf,n,vars);
@@ -385,7 +385,7 @@ InstallMethod( FormByPolynomial, "for a polynomial over a finite field and a str
     gf := CoefficientsRing( pring );
     vars := IndeterminatesOfPolynomialRing( pring );
     if string = "orthogonal" then
-       if IsEvenInt(Size(gf)) then
+       if Characteristic(gf) = 2 then
           Error("No orthogonal form can be associated with a quadratic polynomial in even characteristic");
        else
           mat := UpperTriangleMatrixByPolynomialForForm(pol,gf,n,vars);
@@ -431,7 +431,7 @@ InstallMethod( BilinearFormByPolynomial, "for a polynomial over a field, and a d
       SetPolynomialOfForm(el, pol);
       return el;
     fi;
-    if IsEvenInt(Size(gf)) then
+    if Characteristic(gf) = 2 then
        Error("No orthogonal form can be associated with a quadratic polynomial in even characteristic");
     else
        mat := UpperTriangleMatrixByPolynomialForForm(pol,gf,n,vars);
@@ -548,7 +548,7 @@ InstallMethod( BilinearFormByQuadraticForm, [IsQuadraticForm],
     local m, gf;
     m := f!.matrix;
     gf := f!.basefield;
-    if IsEvenInt( Size(gf) ) then
+    if Characteristic(gf) = 2 then
       Error( "No orthogonal bilinear form can be associated with a quadratic form in even characteristic");
     else
       return BilinearFormByMatrix((m+TransposedMat(m))/(One(gf)*2),gf);
@@ -566,7 +566,7 @@ InstallMethod( QuadraticFormByBilinearForm, [IsBilinearForm],
     local m, gf;
     m := f!.matrix;
     gf := f!.basefield;
-    if IsEvenInt( Size(gf) ) then
+    if Characteristic(gf) = 2 then
        Error( "No quadratic form can be associated to a symmetric form in even characteristic");
     elif IsAlternatingForm(f) then
       Error( "No quadratic form can be associated properly to an alternating form" );
@@ -633,7 +633,7 @@ InstallMethod( PolynomialOfForm, "for a bilinear form",
     m := f!.matrix;
     gf := f!.basefield;
     d := NrRows(m);
-    if IsEvenInt( Size(gf) ) then
+    if Characteristic(gf) = 2 then
        Error( "No polynomial can be (naturally) associated to a bilinear form in even characteristic");
     fi;
     r := PolynomialRing(gf,d);
@@ -696,7 +696,7 @@ InstallMethod( RadicalOfFormBaseMat, [IsQuadraticForm],
     gf := f!.basefield;
     d := NrRows(m);
     null := NullspaceMat( m );
-    if IsEvenInt(Size(gf)) then
+    if Characteristic(gf) = 2 then
       null := Filtered(SubspaceNC(gf^d,null), x -> IsZero(x^f)); #find vectors vanishing under f
     fi;
     null := Filtered(null,x-> not IsZero(x));
@@ -726,7 +726,7 @@ InstallMethod( RadicalOfForm, "for a quadratic form",
     gf := f!.basefield;
     d := NrRows(m);
     null := NullspaceMat( m );
-    if IsEvenInt(Size(gf)) then
+    if Characteristic(gf) = 2 then
       null := Filtered(SubspaceNC(gf^d,null), x -> IsZero(x^f)); #find vectors vanishing under f
     fi;
     null := Filtered(null,x-> not IsZero(x));
@@ -1742,7 +1742,7 @@ InstallMethod( IsSymplecticMatrix, [IsFFECollColl, IsField],
     local n, bool;
     n := NrRows(m);
     bool := true;
-    if IsEvenInt(Size(f)) then
+    if Characteristic(f) = 2 then
        bool := ForAll([1..n], i -> IsZero(m[i,i]) );
     fi;
     return m = -TransposedMat(m) and bool;
