@@ -1940,52 +1940,40 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     s := s - 1;
     r := r - 1;
 
-    # We write first v=v1^2 + v2^2
-
-    dummy := Forms_SUM_OF_SQUARES(v,gf);
-    v1 := dummy[1];
-    v2 := dummy[2];
-
     # Case by case:
 
     P := IdentityMat(nplus1, gf);
     if not (s = -1 or r = s )  then
+      # We write first v=v1^2 + v2^2
+      dummy := Forms_SUM_OF_SQUARES(v,gf);
+      v1 := dummy[1];
+      v2 := dummy[2];
+
       if (r - s) mod 2 = 0 then
-        for i in [s+2..r+1] do
-          P[i,i] := v1/v;
-        od;
+        v1 := v1/v;
+        v2 := v2/v;
         i := s + 2;
         repeat
-          P[i,i+1] := -v2/v;
-          P[i+1,i] := v2/v;
+          D := Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
           i := i + 2;
         until i = r + 2;
-        D := P*D;
         s := r;
       else
         if r mod 2 = 0 then
-          for i in [1..s+1] do
-            P[i,i] := v1;
-          od;
           i := 1;
           repeat
-            P[i,i+1] := v2;
-            P[i+1,i] := -v2;
+            D := Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,v2,-v2,v1);
             i := i + 2;
           until i = s + 2;
-          D := P*D;
           s := -1;
         elif not (s = r - 1) then
-          for i in [s+2..r] do
-            P[i,i] := v1/v;
-          od;
+          v1 := v1/v;
+          v2 := v2/v;
           i := s + 2;
           repeat
-            P[i,i+1] := -v2/v;
-            P[i+1,i] := v2/v;
+            D := Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
             i := i + 2;
           until i = r + 1;
-          D := P*D;
           s := r - 1;
         fi;
       fi;
@@ -2340,6 +2328,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               P[r-1,r] := e/b;
               P[r,r-1] := s/e;
               P[r,r] := e/b;
+              #Forms_TRANSFORM_2_BY_2(D, r-1, r, (s+one)/e, e/b, s/e, e/b);
               D := P*D;
               w := 2;
             else
