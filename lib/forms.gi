@@ -1004,11 +1004,10 @@ end );
 InstallMethod( BaseChangeToCanonical, "for a sesquilinear form",
   [IsSesquilinearForm and IsFormRep],
   function(f)
-    local string,m,q,gf,b;
+    local string,m,gf,b;
     string := f!.type;
     m := f!.matrix;
     gf := f!.basefield;
-    q := Size(gf);
     if IsOrthogonalForm(f) then
       b := BaseChangeOrthogonalBilinear(m, gf);
       SetWittIndex(f, (b[2]+b[3]-1) / 2);
@@ -1700,29 +1699,29 @@ InstallGlobalFunction(Forms_PERM_VAR,
   end );
 
 InstallGlobalFunction(Forms_C1,
-  function(q, h)
+  function(gf, h)
     local i, primroot;
-    primroot := Z(q);
     if h mod 2 = 0 then
+      primroot := PrimitiveRoot(gf);
       i := 1;
       while i <= h - 1 do
-        if not IsZero( Trace(GF(q), primroot^i) ) then
+        if not IsZero( Trace(gf, primroot^i) ) then
           return primroot^i;
         else
           i := i + 1;
         fi;
       od;
     else
-      return primroot^0;
+      return One(gf);
     fi;
   end );
 
 InstallGlobalFunction(Forms_QUAD_EQ,
-  function(delta, q, h)
+  function(delta, gf, h)
     local i,k,dummy,result;
-    k := Forms_C1(q,h);
-    dummy := 0*Z(q);
-    result := 0*Z(q);
+    k := Forms_C1(gf,h);
+    dummy := Zero(gf);
+    result := Zero(gf);
     for i in [1..h-1] do
       dummy := dummy + k^(2^(i-1));
       result := result + dummy*(delta^(2^i));
@@ -1787,7 +1786,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     D := IdentityMat(nplus1, gf);
     ConvertToMatrixRep(D, gf);
     row := 0;
-    primroot := Z(q);
+    primroot := PrimitiveRoot(gf);
     one := One(gf);
 
     # Diagonalize A
@@ -2352,7 +2351,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             if Trace(gf,d) = t then
               e := Forms_SQRT2(a,q);
               P := IdentityMat(nplus1, gf);
-              s := Forms_QUAD_EQ(d,q,h);
+              s := Forms_QUAD_EQ(d,gf,h);
               P[r-1,r-1] := (s+one)/e;
               P[r-1,r] := e/b;
               P[r,r-1] := s/e;
@@ -2370,9 +2369,9 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               else
                 Forms_SwapRows(D,1,2);
               fi;
-              e := Forms_C1(q,h);
+              e := Forms_C1(gf,h);
               if e <> d then
-                 a := Forms_QUAD_EQ(d+e,q,h);
+                 a := Forms_QUAD_EQ(d+e,gf,h);
                  P := IdentityMat(nplus1, gf);
                  P[2,1] := a;
                  D := P*D;
