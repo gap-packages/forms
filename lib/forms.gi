@@ -1550,6 +1550,8 @@ if IsBound(SwapMatrixColumns) and IsBound(SwapMatrixRows) then
   BindGlobal("Forms_SwapRows", SwapMatrixRows);
   BindGlobal("Forms_AddRows", AddMatrixRows);
   BindGlobal("Forms_AddCols", AddMatrixColumns);
+  BindGlobal("Forms_MultRow", MultMatrixRow);
+  BindGlobal("Forms_MultCol", MultMatrixColumn);
 else
   # For GAP <= 4.11
   BindGlobal("Forms_SwapRows", function(mat, i, j)
@@ -1573,6 +1575,18 @@ else
       row[i] := row[i] + row[j] * scalar;
     od;
   end);
+
+  BindGlobal("Forms_MultRow", function(mat, i, scalar)
+    mat[i] := mat[i] * scalar;
+  end);
+
+  BindGlobal("Forms_MultCol", function(mat, i, scalar)
+    local row;
+    for row in mat do
+      row[i] := row[i] * scalar;
+    od;
+  end);
+
 fi;
 
 InstallGlobalFunction(Forms_SUM_OF_SQUARES,
@@ -1909,15 +1923,13 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     # We do the form x_0^2 + ... + x_s^2 + v(x_s+1^2 + ... + x_r^2)
     # with v not quadratic.
 
-    P := IdentityMat(nplus1, gf);
     v := ShallowCopy(primroot);
     for i in [1..s] do
-      P[i,i] := (primroot^(LogFFE(A[i,i], primroot)/2))^-1;
+      Forms_MultRow(D,i,(primroot^(LogFFE(A[i,i], primroot)/2))^-1);
     od;
     for i in [s+1..r] do
-      P[i,i] := (primroot^(LogFFE(A[i,i]/primroot,primroot)/2))^-1;
+      Forms_MultRow(D,i,(primroot^(LogFFE(A[i,i]/primroot,primroot)/2))^-1);
     od;
-    D := P*D;
 
     # We keep as much quadratic part as we can:
 
@@ -2074,13 +2086,11 @@ InstallMethod( BaseChangeOrthogonalBilinear,
           D := P*D;
           P := Forms_DIFF_2_S(2,r+1,nplus1,gf);
           D := P*D;
-          P := IdentityMat(nplus1, gf);
           i := 3;
           while i <= r + 1 do
-            P[i,i] := -one;
+            Forms_MultRow(D,i,-one);
             i := i + 2;
           od;
-          D := P*D;
         fi;
       fi;
     else
@@ -2280,9 +2290,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           w := 2;
        else
           t := Forms_SQRT2(A[r,r],q);
-          P := IdentityMat(nplus1, gf);
-          P[r,r] := 1/t;
-          D := P*D;
+          Forms_MultRow(D,r,1/t);
           P := Forms_PERM_VAR(nplus1,r);
           D := P*D;
           w := 1;
@@ -2298,9 +2306,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
              r := r - 2;
              w := 2;
           else
-             P := IdentityMat(nplus1, gf);
-             P[r,r] := 1/Forms_SQRT2(c,q);
-             D := P*D;
+             Forms_MultRow(D,r,1/Forms_SQRT2(c,q));
              P := Forms_PERM_VAR(nplus1,r);
              D := P*D;
              r := r - 1;
@@ -2308,31 +2314,23 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           fi;
         else
           if c = t then
-            P := IdentityMat(nplus1,gf);
-            P[r,r] := 1/b;
-            D := P*D;
+            Forms_MultRow(D,r,1/b);
           else
-            P := IdentityMat(nplus1,gf);
-            P[r-1,r-1] := 1/b;
-            P[r,r-1] := c/b;
-            D := P*D;
+            Forms_MultRow(D,r-1,1/b);
+            Forms_AddRows(D,r,r-1,c);
           fi;
           w := 2;
         fi;
       else #a <> t
         if b = t then
           if c = t then
-            P := IdentityMat(nplus1, gf);
-            P[r-1,r-1] := 1/Forms_SQRT2(a,q);
-            D := P*D;
+            Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
             P := Forms_PERM_VAR(nplus1,r-1);
             D := P*D;
             r := r - 1;
           else
-            P := IdentityMat(nplus1, gf);
-            P[r-1,r-1] := 1/Forms_SQRT2(a,q);
-            P[r,r-1] := Forms_SQRT2(c,q)/Forms_SQRT2(a,q);
-            D := P*D;
+            Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
+            Forms_AddRows(D,r,r-1,Forms_SQRT2(c,q));
             P := Forms_PERM_VAR(nplus1,r-1);
             D := P*D;
             r := r - 1;
@@ -2340,10 +2338,8 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           w := 1;
         else
           if c = t then
-            P := IdentityMat(nplus1, gf);
-            P[r-1,r] := a/b;
-            P[r,r] := 1/b;
-            D := P*D;
+            Forms_MultRow(D,r,1/b);
+            Forms_AddRows(D,r-1,r,a);
             w := 2;
           else
             d := (a*c)/(b^2);
@@ -2358,10 +2354,9 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               D := P*D;
               w := 2;
             else
-              P := IdentityMat(nplus1, gf);
-              P[r-1,r-1] := Forms_SQRT2(c,q)/b;
-              P[r,r] := 1/Forms_SQRT2(c,q);
-              D := P*D;
+              c := Forms_SQRT2(c,q);
+              Forms_MultRow(D,r-1,c/b);
+              Forms_MultRow(D,r,1/c);
               if r > 2 then
                 Forms_SwapRows(D,1,r);
                 Forms_SwapRows(D,2,r-1);
@@ -2371,9 +2366,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               e := Forms_C1(gf,h);
               if e <> d then
                  a := Forms_QUAD_EQ(d+e,gf,h);
-                 P := IdentityMat(nplus1, gf);
-                 P[2,1] := a;
-                 D := P*D;
+                 Forms_AddRows(D,2,1,a);
               fi;
               w := 0;
             fi;
@@ -2485,16 +2478,14 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
     r := r - 1;
     # Take care that the diagonal elements become 1.
 
-    P := IdentityMat(nplus1, gf);
     for i in [1..r+1] do
       a := A[i,i];
       if not IsOne(a) then
         # find an b element with norm b*b^t = b^(t+1) equal to a
         b := RootFFE(gf, a, t+1);
-        P[i,i] := 1/b;
+        Forms_MultRow(D,i,1/b);
       fi;
     od;
-    D := P*D;
     return [D,r];
 end );
 
