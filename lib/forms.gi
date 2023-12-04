@@ -1613,13 +1613,11 @@ InstallGlobalFunction(Forms_SUM_OF_SQUARES,
 # entries are passed in as arguments 'a11', 'a12', 'a21', 'a22'.
 BindGlobal("Forms_TRANSFORM_2_BY_2",
   function(D,p1,p2,a11,a12,a21,a22)
-    local P;
-    P := OneMutable(D);
-    P[p1,p1] := a11;
-    P[p1,p2] := a12;
-    P[p2,p1] := a21;
-    P[p2,p2] := a22;
-    D := P * D;
+    local r1,r2;
+    r1 := D[p1];
+    r2 := D[p2];
+    D[p1] := a11 * r1 + a12 * r2;
+    D[p2] := a21 * r1 + a22 * r2;
     return D;
   end );
 
