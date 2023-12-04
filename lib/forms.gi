@@ -1942,7 +1942,6 @@ InstallMethod( BaseChangeOrthogonalBilinear,
 
     # Case by case:
 
-    P := IdentityMat(nplus1, gf);
     if not (s = -1 or r = s )  then
       # We write first v=v1^2 + v2^2
       dummy := Forms_SUM_OF_SQUARES(v,gf);
@@ -2011,13 +2010,8 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             if 3 < r then
               D := Forms_REDUCE4(D,5,r+1,nplus1,gf);
             fi;
-            P := IdentityMat(nplus1,gf);
-            b := primroot^(LogFFE(-v, primroot)/2);
-            P[3,3] := (1/2)*one;
-            P[4,3] := (1/2)*one;
-            P[3,4] := -1/(2*b);
-            P[4,4] := 1/(2*b);
-            D := P*D;
+            b := primroot^(LogFFE(-v,primroot)/2);
+            D := Forms_TRANSFORM_2_BY_2(D,3,4,one/2,-b/2,one/2,b/2);
             if 3 < r then
               D := Forms_DIFF_2_S(D,5,r+1,nplus1,gf);
             fi;
@@ -2027,13 +2021,8 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             if 1 < r then
               D := Forms_REDUCE4(D,3,r+1,nplus1,gf);
             fi;
-            P := IdentityMat(nplus1,gf);
             b := primroot^(LogFFE(-v,primroot)/2);
-            P[1,1] := (1/2)*one;
-            P[2,1] := (1/2)*one;
-            P[1,2] := -1/(2*b);
-            P[2,2] := 1/(2*b);
-            D := P*D;
+            D := Forms_TRANSFORM_2_BY_2(D,1,2,one/2,-b/2,one/2,b/2);
             if 1 < r then
               D := Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
             fi;
@@ -2053,15 +2042,10 @@ InstallMethod( BaseChangeOrthogonalBilinear,
           if 3 < r then
             D := Forms_REDUCE4(D,4,r+1,nplus1,gf);
           fi;
-          P := IdentityMat(nplus1, gf);
           dummy := Forms_SUM_OF_SQUARES(-1,gf);
           c := dummy[1];
           d := dummy[2];
-          P[1,1] := c;
-          P[1,3] := d;
-          P[3,1] := d;
-          P[3,3] := -c;
-          D := P*D;
+          D := Forms_TRANSFORM_2_BY_2(D,1,3,c,d,d,-c);
           D := Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
           i := 3;
           while i <= r + 1 do
@@ -2322,14 +2306,8 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             d := (a*c)/(b^2);
             if Trace(gf,d) = t then
               e := Forms_SQRT2(a,q);
-              P := IdentityMat(nplus1, gf);
               s := Forms_QUAD_EQ(d,gf,h);
-              P[r-1,r-1] := (s+one)/e;
-              P[r-1,r] := e/b;
-              P[r,r-1] := s/e;
-              P[r,r] := e/b;
-              #Forms_TRANSFORM_2_BY_2(D, r-1, r, (s+one)/e, e/b, s/e, e/b);
-              D := P*D;
+              D := Forms_TRANSFORM_2_BY_2(D, r-1, r, (s+one)/e, e/b, s/e, e/b);
               w := 2;
             else
               c := Forms_SQRT2(c,q);
