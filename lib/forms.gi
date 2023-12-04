@@ -1698,16 +1698,10 @@ InstallGlobalFunction(Forms_SQRT2,
   end );
 
 InstallGlobalFunction(Forms_PERM_VAR,
-  function(n,r)
-    local i,P;
-    P := IdentityMat(n);
-    for i in [1..r-1] do
-      P[i,i] := 0;
-      P[i+1,i] := 1;
-    od;
-    P[r,r] := 0;
-    P[1,r] := 1;
-    return P;
+  function(D,r)
+    local i;
+    i := Remove(D, r);
+    Add(D, i, 1);
   end );
 
 InstallGlobalFunction(Forms_C1,
@@ -2128,8 +2122,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             od;
             # Permutation of the variables, it is a parabolic
             r := row;
-            P := Forms_PERM_VAR(nplus1,r);
-            D := P*D;
+            Forms_PERM_VAR(D,r);
             w := 1;
             r := r - 1;
             return [D,r,w];
@@ -2187,9 +2180,10 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
       # check for zero row
       dummy := true;
       i := row + 1;
-      while  (dummy and i <= nplus1) do
+      while i <= nplus1 do
         if not IsZero( A[row,i] ) then
            dummy := false;
+           break;
         else
            i := i + 1;
         fi;
@@ -2244,8 +2238,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
        else
           t := Forms_SQRT2(A[r,r],q);
           Forms_MultRow(D,r,1/t);
-          P := Forms_PERM_VAR(nplus1,r);
-          D := P*D;
+          Forms_PERM_VAR(D,r);
           w := 1;
        fi;
     else
@@ -2260,8 +2253,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
              w := 2;
           else
              Forms_MultRow(D,r,1/Forms_SQRT2(c,q));
-             P := Forms_PERM_VAR(nplus1,r);
-             D := P*D;
+             Forms_PERM_VAR(D,r);
              r := r - 1;
              w := 1;
           fi;
@@ -2278,14 +2270,12 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         if b = t then
           if c = t then
             Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
-            P := Forms_PERM_VAR(nplus1,r-1);
-            D := P*D;
+            Forms_PERM_VAR(D,r-1);
             r := r - 1;
           else
             Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
             Forms_AddRows(D,r,r-1,Forms_SQRT2(c,q));
-            P := Forms_PERM_VAR(nplus1,r-1);
-            D := P*D;
+            Forms_PERM_VAR(D,r-1);
             r := r - 1;
           fi;
           w := 1;
