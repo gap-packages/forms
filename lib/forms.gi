@@ -1589,6 +1589,7 @@ else
 
 fi;
 
+# express v as sum of two squares of elements in gf
 InstallGlobalFunction(Forms_SUM_OF_SQUARES,
   function(v,gf)
     local dummy,i,v1,v2, primroot;
@@ -1608,7 +1609,7 @@ InstallGlobalFunction(Forms_SUM_OF_SQUARES,
   end );
 
 InstallGlobalFunction(Forms_REDUCE2,
-  function(start,stop,n,gf)
+  function(D,start,stop,n,gf)
     local t,i,P,half,primroot;
     primroot := PrimitiveRoot(gf);
     half := One(gf) / 2;
@@ -1622,11 +1623,12 @@ InstallGlobalFunction(Forms_REDUCE2,
       P[i+1,i+1] := -t;
       i := i + 2;
     od;
-    return P;
+    D := P * D;
+    return D;
   end );
 
 InstallGlobalFunction(Forms_REDUCE4,
-  function(start,stop,n,gf)
+  function(D,start,stop,n,gf)
     local c,d,i,P,dummy;
     P := IdentityMat(n,gf);
     i := start;
@@ -1640,11 +1642,12 @@ InstallGlobalFunction(Forms_REDUCE4,
       P[i+3,i+3] := -c;
       i := i + 4;
     od;
-    return P;
+    D := P * D;
+    return D;
   end );
 
 InstallGlobalFunction(Forms_DIFF_2_S,
-  function(start,stop,n,gf)
+  function(D,start,stop,n,gf)
     local i,P,half;
     i := start;
     P := IdentityMat(n,gf);
@@ -1656,7 +1659,8 @@ InstallGlobalFunction(Forms_DIFF_2_S,
       P[i+1,i+1] := -half;
       i := i + 2;
     od;
-    return P;
+    D := P * D;
+    return D;
   end );
 
 InstallGlobalFunction(Forms_HERM_CONJ,
@@ -1993,21 +1997,16 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     if r mod 2 <> 0 then
       if s = -1 or s = r then
         if q mod 4 = 1 then
-          P := Forms_REDUCE2(1,r+1,nplus1,gf);
-          D := P*D;
+          D := Forms_REDUCE2(D,1,r+1,nplus1,gf);
           w := 2;
         else
           if ((r-1)/2) mod 2 <> 0 then
-            P := Forms_REDUCE4(1,r+1,nplus1,gf);
-            D := P*D;
-            P := Forms_DIFF_2_S(1,r+1,nplus1,gf);
-            D := P*D;
+            D := Forms_REDUCE4(D,1,r+1,nplus1,gf);
+            D := Forms_DIFF_2_S(D,1,r+1,nplus1,gf);
             w := 2;
           else
-            P := Forms_REDUCE4(3,r+1,nplus1,gf);
-            D := P*D;
-            P := Forms_DIFF_2_S(3,r+1,nplus1,gf);
-            D := P*D;
+            D := Forms_REDUCE4(D,3,r+1,nplus1,gf);
+            D := Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
             w := 0;
           fi;
         fi;
@@ -2015,18 +2014,16 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         if q mod 4 = 1 then
           if 1 < r then
             Forms_SwapRows(D,2,r+1);
-            P := Forms_REDUCE2(3,r+1,nplus1,gf);
-            D := P*D;
+            D := Forms_REDUCE2(D,3,r+1,nplus1,gf);
           fi;
           w := 0;
         else
           if ((r-1)/2) mod 2 <> 0 then
             Forms_SwapRows(D,4,r+1);
             if 3 < r then
-              P := Forms_REDUCE4(5,r+1,nplus1,gf);
-            else
-              P := IdentityMat(nplus1,gf);
+              D := Forms_REDUCE4(D,5,r+1,nplus1,gf);
             fi;
+            P := IdentityMat(nplus1,gf);
             b := primroot^(LogFFE(-v, primroot)/2);
             P[3,3] := (1/2)*one;
             P[4,3] := (1/2)*one;
@@ -2034,17 +2031,15 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             P[4,4] := 1/(2*b);
             D := P*D;
             if 3 < r then
-              P := Forms_DIFF_2_S(5,r+1,nplus1,gf);
-              D := P*D;
+              D := Forms_DIFF_2_S(D,5,r+1,nplus1,gf);
             fi;
             w := 0;
           else
             Forms_SwapRows(D,2,r+1);
             if 1 < r then
-              P := Forms_REDUCE4(3,r+1,nplus1,gf);
-            else
-              P := IdentityMat(nplus1,gf);
+              D := Forms_REDUCE4(D,3,r+1,nplus1,gf);
             fi;
+            P := IdentityMat(nplus1,gf);
             b := primroot^(LogFFE(-v,primroot)/2);
             P[1,1] := (1/2)*one;
             P[2,1] := (1/2)*one;
@@ -2052,8 +2047,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
             P[2,2] := 1/(2*b);
             D := P*D;
             if 1 < r then
-              P := Forms_DIFF_2_S(3,r+1,nplus1,gf);
-              D := P*D;
+              D := Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
             fi;
             w := 2;
           fi;
@@ -2062,20 +2056,16 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     elif r <> 0 then
       w := 1;
       if q mod 4 = 1 then
-        P := Forms_REDUCE2(2,r+1,nplus1,gf);
-        D := P*D;
+        D := Forms_REDUCE2(D,2,r+1,nplus1,gf);
       else
         if r mod 4 = 0 then
-          P := Forms_REDUCE4(2,r+1,nplus1,gf);
-          D := P*D;
-          P := Forms_DIFF_2_S(2,r+1,nplus1,gf);
-          D := P*D;
+          D := Forms_REDUCE4(D,2,r+1,nplus1,gf);
+          D := Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
         else
           if 3 < r then
-            P := Forms_REDUCE4(4,r+1,nplus1,gf);
-          else
-            P := IdentityMat(nplus1, gf);
+            D := Forms_REDUCE4(D,4,r+1,nplus1,gf);
           fi;
+          P := IdentityMat(nplus1, gf);
           dummy := Forms_SUM_OF_SQUARES(-1,gf);
           c := dummy[1];
           d := dummy[2];
@@ -2084,8 +2074,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
           P[3,1] := d;
           P[3,3] := -c;
           D := P*D;
-          P := Forms_DIFF_2_S(2,r+1,nplus1,gf);
-          D := P*D;
+          D := Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
           i := 3;
           while i <= r + 1 do
             Forms_MultRow(D,i,-one);
