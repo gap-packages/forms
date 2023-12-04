@@ -2121,13 +2121,11 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
 
           # If all is zero, STOP
           if dummy then
-            P := IdentityMat(nplus1, gf);
             t := Forms_SQRT2(A[row,row],q);
-            P[row,row] := 1/t;
+            Forms_MultRow(D,row,1/t);
             for i in [row + 1..r] do
-              P[i,row] := Forms_SQRT2(A[i,i],q)/t;
+              Forms_AddRows(D,i,row,Forms_SQRT2(A[i,i],q));
             od;
-            D := P*D;
             # Permutation of the variables, it is a parabolic
             r := row;
             P := Forms_PERM_VAR(nplus1,r);
