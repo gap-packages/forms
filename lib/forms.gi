@@ -1618,7 +1618,6 @@ BindGlobal("Forms_TRANSFORM_2_BY_2",
     r2 := D[p2];
     D[p1] := a11 * r1 + a12 * r2;
     D[p2] := a21 * r1 + a22 * r2;
-    return D;
   end );
 
 InstallGlobalFunction(Forms_REDUCE2,
@@ -1629,10 +1628,9 @@ InstallGlobalFunction(Forms_REDUCE2,
     t := primroot^(LogFFE(-One(gf),primroot)/2) / 2;
     i := start;
     while i < stop do
-      D := Forms_TRANSFORM_2_BY_2(D,i,i+1,half,t,half,-t);
+      Forms_TRANSFORM_2_BY_2(D,i,i+1,half,t,half,-t);
       i := i + 2;
     od;
-    return D;
   end );
 
 InstallGlobalFunction(Forms_REDUCE4,
@@ -1643,10 +1641,9 @@ InstallGlobalFunction(Forms_REDUCE4,
     c := dummy[1];
     d := dummy[2];
     while i < stop do
-      D := Forms_TRANSFORM_2_BY_2(D,i+1,i+3,c,d,d,-c);
+      Forms_TRANSFORM_2_BY_2(D,i+1,i+3,c,d,d,-c);
       i := i + 4;
     od;
-    return D;
   end );
 
 InstallGlobalFunction(Forms_DIFF_2_S,
@@ -1655,10 +1652,9 @@ InstallGlobalFunction(Forms_DIFF_2_S,
     i := start;
     half := One(gf) / 2;
     while i < stop do
-      D := Forms_TRANSFORM_2_BY_2(D,i,i+1,half,half,half,-half);
+      Forms_TRANSFORM_2_BY_2(D,i,i+1,half,half,half,-half);
       i := i + 2;
     od;
-    return D;
   end );
 
 InstallGlobalFunction(Forms_HERM_CONJ,
@@ -1951,7 +1947,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         v2 := v2/v;
         i := s + 2;
         repeat
-          D := Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
+          Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
           i := i + 2;
         until i = r + 2;
         s := r;
@@ -1959,7 +1955,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         if r mod 2 = 0 then
           i := 1;
           repeat
-            D := Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,v2,-v2,v1);
+            Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,v2,-v2,v1);
             i := i + 2;
           until i = s + 2;
           s := -1;
@@ -1968,7 +1964,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
           v2 := v2/v;
           i := s + 2;
           repeat
-            D := Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
+            Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
             i := i + 2;
           until i = r + 1;
           s := r - 1;
@@ -1982,16 +1978,16 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     if r mod 2 <> 0 then
       if s = -1 or s = r then
         if q mod 4 = 1 then
-          D := Forms_REDUCE2(D,1,r+1,nplus1,gf);
+          Forms_REDUCE2(D,1,r+1,nplus1,gf);
           w := 2;
         else
           if ((r-1)/2) mod 2 <> 0 then
-            D := Forms_REDUCE4(D,1,r+1,nplus1,gf);
-            D := Forms_DIFF_2_S(D,1,r+1,nplus1,gf);
+            Forms_REDUCE4(D,1,r+1,nplus1,gf);
+            Forms_DIFF_2_S(D,1,r+1,nplus1,gf);
             w := 2;
           else
-            D := Forms_REDUCE4(D,3,r+1,nplus1,gf);
-            D := Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
+            Forms_REDUCE4(D,3,r+1,nplus1,gf);
+            Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
             w := 0;
           fi;
         fi;
@@ -1999,30 +1995,30 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         if q mod 4 = 1 then
           if 1 < r then
             Forms_SwapRows(D,2,r+1);
-            D := Forms_REDUCE2(D,3,r+1,nplus1,gf);
+            Forms_REDUCE2(D,3,r+1,nplus1,gf);
           fi;
           w := 0;
         else
           if ((r-1)/2) mod 2 <> 0 then
             Forms_SwapRows(D,4,r+1);
             if 3 < r then
-              D := Forms_REDUCE4(D,5,r+1,nplus1,gf);
+              Forms_REDUCE4(D,5,r+1,nplus1,gf);
             fi;
             b := primroot^(LogFFE(-v,primroot)/2);
-            D := Forms_TRANSFORM_2_BY_2(D,3,4,one/2,-b/2,one/2,b/2);
+            Forms_TRANSFORM_2_BY_2(D,3,4,one/2,-b/2,one/2,b/2);
             if 3 < r then
-              D := Forms_DIFF_2_S(D,5,r+1,nplus1,gf);
+              Forms_DIFF_2_S(D,5,r+1,nplus1,gf);
             fi;
             w := 0;
           else
             Forms_SwapRows(D,2,r+1);
             if 1 < r then
-              D := Forms_REDUCE4(D,3,r+1,nplus1,gf);
+              Forms_REDUCE4(D,3,r+1,nplus1,gf);
             fi;
             b := primroot^(LogFFE(-v,primroot)/2);
-            D := Forms_TRANSFORM_2_BY_2(D,1,2,one/2,-b/2,one/2,b/2);
+            Forms_TRANSFORM_2_BY_2(D,1,2,one/2,-b/2,one/2,b/2);
             if 1 < r then
-              D := Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
+              Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
             fi;
             w := 2;
           fi;
@@ -2031,20 +2027,20 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     elif r <> 0 then
       w := 1;
       if q mod 4 = 1 then
-        D := Forms_REDUCE2(D,2,r+1,nplus1,gf);
+        Forms_REDUCE2(D,2,r+1,nplus1,gf);
       else
         if r mod 4 = 0 then
-          D := Forms_REDUCE4(D,2,r+1,nplus1,gf);
-          D := Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
+          Forms_REDUCE4(D,2,r+1,nplus1,gf);
+          Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
         else
           if 3 < r then
-            D := Forms_REDUCE4(D,4,r+1,nplus1,gf);
+            Forms_REDUCE4(D,4,r+1,nplus1,gf);
           fi;
           dummy := Forms_SUM_OF_SQUARES(-1,gf);
           c := dummy[1];
           d := dummy[2];
-          D := Forms_TRANSFORM_2_BY_2(D,1,3,c,d,d,-c);
-          D := Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
+          Forms_TRANSFORM_2_BY_2(D,1,3,c,d,d,-c);
+          Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
           i := 3;
           while i <= r + 1 do
             Forms_MultRow(D,i,-one);
@@ -2305,7 +2301,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             if Trace(gf,d) = t then
               e := Forms_SQRT2(a,q);
               s := Forms_QUAD_EQ(d,gf,h);
-              D := Forms_TRANSFORM_2_BY_2(D, r-1, r, (s+one)/e, e/b, s/e, e/b);
+              Forms_TRANSFORM_2_BY_2(D, r-1, r, (s+one)/e, e/b, s/e, e/b);
               w := 2;
             else
               c := Forms_SQRT2(c,q);
