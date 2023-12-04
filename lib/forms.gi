@@ -1608,58 +1608,58 @@ InstallGlobalFunction(Forms_SUM_OF_SQUARES,
     return [v1,v2];
   end );
 
+# Apply a 2x2 transformation matrix to rows 'p1' and 'p2' of the matrix 'D'.
+# The matrix 'D' may be changed in-place by this. For efficiency the matrix
+# entries are passed in as arguments 'a11', 'a12', 'a21', 'a22'.
+BindGlobal("Forms_TRANSFORM_2_BY_2",
+  function(D,p1,p2,a11,a12,a21,a22)
+    local P;
+    P := OneMutable(D);
+    P[p1,p1] := a11;
+    P[p1,p2] := a12;
+    P[p2,p1] := a21;
+    P[p2,p2] := a22;
+    D := P * D;
+    return D;
+  end );
+
 InstallGlobalFunction(Forms_REDUCE2,
   function(D,start,stop,n,gf)
-    local t,i,P,half,primroot;
+    local t,i,half,primroot;
     primroot := PrimitiveRoot(gf);
     half := One(gf) / 2;
     t := primroot^(LogFFE(-One(gf),primroot)/2) / 2;
-    P := IdentityMat(n,gf);
     i := start;
     while i < stop do
-      P[i,i] := half;
-      P[i,i+1] := t;
-      P[i+1,i] := half;
-      P[i+1,i+1] := -t;
+      D := Forms_TRANSFORM_2_BY_2(D,i,i+1,half,t,half,-t);
       i := i + 2;
     od;
-    D := P * D;
     return D;
   end );
 
 InstallGlobalFunction(Forms_REDUCE4,
   function(D,start,stop,n,gf)
-    local c,d,i,P,dummy;
-    P := IdentityMat(n,gf);
+    local c,d,i,dummy;
     i := start;
     dummy := Forms_SUM_OF_SQUARES(-One(gf),gf);
     c := dummy[1];
     d := dummy[2];
     while i < stop do
-      P[i+1,i+1] := c;
-      P[i+1,i+3] := d;
-      P[i+3,i+1] := d;
-      P[i+3,i+3] := -c;
+      D := Forms_TRANSFORM_2_BY_2(D,i+1,i+3,c,d,d,-c);
       i := i + 4;
     od;
-    D := P * D;
     return D;
   end );
 
 InstallGlobalFunction(Forms_DIFF_2_S,
   function(D,start,stop,n,gf)
-    local i,P,half;
+    local i,half;
     i := start;
-    P := IdentityMat(n,gf);
     half := One(gf) / 2;
     while i < stop do
-      P[i,i] := half;
-      P[i,i+1] := half;
-      P[i+1,i] := half;
-      P[i+1,i+1] := -half;
+      D := Forms_TRANSFORM_2_BY_2(D,i,i+1,half,half,half,-half);
       i := i + 2;
     od;
-    D := P * D;
     return D;
   end );
 
