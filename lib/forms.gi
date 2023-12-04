@@ -1738,13 +1738,12 @@ InstallGlobalFunction(Forms_QUAD_EQ,
 
 InstallMethod( IsSymplecticMatrix, [IsFFECollColl, IsField],
   function(m,f)
-    local n, bool;
-    n := NrRows(m);
-    bool := true;
     if Characteristic(f) = 2 then
-       bool := ForAll([1..n], i -> IsZero(m[i,i]) );
+       if not ForAll([1..NrRows(m)], i -> IsZero(m[i,i]) ) then
+           return false;
+       fi;
     fi;
-    return m = -TransposedMat(m) and bool;
+    return m = -TransposedMat(m);
   end );
 
 InstallMethod( IsOrthogonalMatrix, [IsFFECollColl],
