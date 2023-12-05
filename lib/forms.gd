@@ -84,13 +84,7 @@ DeclareOperation( "HermitianFormByMatrix", [IsMatrix and IsFFECollColl, IsField]
 DeclareOperation( "QuadraticFormByMatrix", [IsMatrix and IsFFECollColl, IsField] );
 DeclareOperation( "QuadraticFormByMatrix", [IsMatrix and IsFFECollColl] );
 
-## the user probably won't use this one. it will not be documented.
-DeclareOperation( "FormByPolynomial",
-                      [IsPolynomial, IsField, IsInt, IsList, IsString] );
 ## For the users...
-DeclareOperation( "FormByPolynomial",
-                      [IsPolynomial, IsFiniteFieldPolynomialRing, IsInt, IsString] );
-
 DeclareOperation( "BilinearFormByPolynomial",
                       [ IsPolynomial, IsFiniteFieldPolynomialRing, IsInt ] );
 DeclareOperation( "QuadraticFormByPolynomial",
