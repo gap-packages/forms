@@ -31,8 +31,8 @@ BindGlobal("Forms_OrthogonalGroup",
     wanted:= QuadraticFormByMatrix( stored, gf );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, gf ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, gf ) then
+    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ) ) <>
+       Forms_RESET( mat2 * stored * TransposedMat( mat2 ) ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
     mat:= mat2^-1 * mat1;
