@@ -562,7 +562,7 @@ ClassicalForms_InvariantFormDual := function( gens_scalars )
         for i in [1..Length(gens)] do
             m := gens[i] * form * TransposedMat(gens[i]) * iform;
             a := m[1,1]; 
-            Print(a=scalars[i],"\n");
+#            Print(a=scalars[i],"\n");
             if m <> a*identity  then
                 Info(InfoForms, 1,
                     "form is not invariant under all generators\n" );
@@ -590,7 +590,7 @@ ClassicalForms_InvariantFormDual := function( gens_scalars )
                 Add(output, [ "orthogonalplus", form, scalars, quad ]);
             fi;
         else
-            return Add(output,[ "symplectic", form, scalars ]);
+            Add(output,[ "symplectic", form, scalars ]);
         fi;
     elif TransposedMat(form) = form  then
         Info(InfoForms, 1, "form is symmetric\n" );
