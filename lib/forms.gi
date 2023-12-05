@@ -2428,52 +2428,6 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
 end );
 
 #############################################################################
-#helper operations for BaseChangeSymplectic
-#
-InstallGlobalFunction( BaseChangeSymplectic_blockchange,
- function(m, f, i)
-   local c1, c2, c, diagpos, pos, bb, d;
-   d := NrRows(m);
-   bb := IdentityMat(d, f);
-
-   ## diagpos is the position of the top left corner of the block
-   ## on the diagonal of m
-   diagpos := 2 * i - 1;
-   c1 := bb[diagpos];
-
-   ## c2 is basis element which corresponds to first nonzero
-   ## entry of the third row of m (this will automatically be l.i. to x1)
-   pos := First([1..d], j -> not IsZero( m[diagpos,j] ) );
-
-   if pos=fail then
-     return pos;
-   else
-     c2 := bb[pos];
-     c2 := c2/(c1*m*c2);
-
-   ## [c1,c2] is extended to a basis
-     c := BaseSteinitzVectors(IdentityMat(d,f), [c1,c2]).factorspace;
-     Add( c, c1, diagpos);
-     Add( c, c2, diagpos+1);
-     return c;
-   fi;
-end );
-
-InstallGlobalFunction( BaseChangeSymplectic_cleanup,
-  function(m, f, i)
-    local e, j, d;
-    d := NrRows(m);
-    e := MutableCopyMat(IdentityMat(d, f));
-    for j in [2 * i + 1..d] do;
-        e[j,2 * i - 1] := -m[j,2*i];
-        e[j,2 * i] := m[j,2*i-1];
-    od;
-    return e;
-  end );
-#
-#############################################################################
-
-#############################################################################
 ##
 #O  BaseChangeSymplectic( <mat>, <field> )
 # input: Gram matrix of a symplectic form, field
@@ -2487,27 +2441,53 @@ InstallMethod( BaseChangeSymplectic, [IsMatrix and IsFFECollColl, IsField and Is
 ## the alternating form arising from the block diagonal matrix
 ## with each block equal to J=[[0,1],[-1,0]].
 
- function( m, f)
-   local d, newm, a, e, basechange, blocknr;
+ function(m, f)
+   local d, basechange, blocknr, diagpos, pos, j, a, b;
    d := NrRows(m);
    basechange := IdentityMat(d, f);
-   newm := m;
+   ConvertToMatrixRep(basechange, f);
+   m := MutableCopyMat(m);
    for blocknr in [1 .. (Int(d/2))] do
-      a := BaseChangeSymplectic_blockchange(newm, f, blocknr);
+      ## diagpos is the position of the top left corner of the block
+      ## on the diagonal of m
+      diagpos := 2 * blocknr - 1;
 
-  # when a=fail, then only degeneracy is left and the base transition is complete
+      ## find first nonzero entry in column diagpos below the diagonal
+      pos := First([diagpos+1..d], j -> not IsZero( m[diagpos,j] ) );
 
-      if a=fail then
-        return [basechange,2*(blocknr-1)];
+      # when pos=fail, then only degeneracy is left and the base transition is complete
+      if pos=fail then
+         return [basechange, 2*(blocknr-1)];
                 #the second entry is the number of non-zero rows after basechange
       fi;
-      newm := a * newm * TransposedMat(a);
-      basechange :=  a * basechange;
-      if blocknr < d/2 then
-         e := BaseChangeSymplectic_cleanup(newm, f, blocknr);
-         newm := e * newm * TransposedMat(e);
-         basechange := e * basechange;
+
+      # normalize the non-zero entry we just located to be 1
+      a := 1/m[diagpos,pos];
+      Forms_MultRow(basechange, pos, a);
+      Forms_MultRow(m, pos, a);
+      Forms_MultCol(m, pos, a);
+
+      #
+      if pos <> diagpos+1 then
+         Forms_SwapRows(basechange, diagpos+1, pos);
+         Forms_SwapRows(m, diagpos+1, pos);
+         Forms_SwapCols(m, diagpos+1, pos);
       fi;
+
+      # clean up to the right and below the current block
+      for j in [2 * blocknr + 1..d] do
+         a := -m[j,diagpos+1];
+         b := m[j,diagpos];
+
+         Forms_AddRows(basechange, j, diagpos, a);
+         Forms_AddRows(basechange, j, diagpos+1, b);
+
+         Forms_AddRows(m, j, diagpos, a);
+         Forms_AddRows(m, j, diagpos+1, b);
+
+         Forms_AddCols(m, j, diagpos, a);
+         Forms_AddCols(m, j, diagpos+1, b);
+      od;
    od;
    return [basechange,2*blocknr];
           #the second entry is the number of non-zero rows after basechange
