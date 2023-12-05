@@ -138,9 +138,7 @@ InstallMethod( GeneralOrthogonalGroupCons,
     gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    UseIsomorphismRelation( g, gg );
 
     if HasName( g ) then
       SetName( gg, Name( g ) );
@@ -322,9 +320,7 @@ InstallMethod( SpecialOrthogonalGroupCons,
     gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    UseIsomorphismRelation( g, gg );
 
     if HasName( g ) then
       SetName( gg, Name( g ) );
@@ -543,9 +539,7 @@ InstallMethod( OmegaCons,
     gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    UseIsomorphismRelation( g, gg );
 
     if HasName( g ) then
       SetName( gg, Name( g ) );
@@ -681,9 +675,7 @@ InstallMethod( GeneralUnitaryGroupCons,
     gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    UseIsomorphismRelation( g, gg );
 
     if HasName( g ) then
       SetName( gg, Name( g ) );
@@ -812,9 +804,7 @@ InstallMethod( SpecialUnitaryGroupCons,
     gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    UseIsomorphismRelation( g, gg );
 
     if HasName( g ) then
       SetName( gg, Name( g ) );
@@ -936,9 +926,7 @@ InstallMethod( SymplecticGroupCons,
     gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    UseIsomorphismRelation( g, gg );
 
     if HasName( g ) then
       SetName( gg, Name( g ) );
