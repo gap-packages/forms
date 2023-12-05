@@ -133,7 +133,7 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25 ] do
 >        gg:= GeneralUnitaryGroup( d, q, permmat );
 >        if not ( is_equal( g, GeneralUnitaryGroup( g ) ) and
 >                 ( is_equal( g, GeneralUnitaryGroup( stored ) ) or
->                   BaseDomain( stored ) <> F ) and
+>                   BaseDomain( stored ) <> F or IsSquareInt(q) ) and
 >                 is_equal( g, GeneralUnitaryGroup( form ) ) and
 >                 is_equal( g, GeneralUnitaryGroup( d, q, g ) ) and
 >                 is_equal( g, GeneralUnitaryGroup( d, q, stored ) ) and
@@ -151,7 +151,7 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25 ] do
 >        gg:= SpecialUnitaryGroup( d, q, permmat );
 >        if not ( is_equal( g, SpecialUnitaryGroup( g ) ) and
 >                 ( is_equal( g, SpecialUnitaryGroup( stored ) ) or
->                   BaseDomain( stored ) <> F ) and
+>                   BaseDomain( stored ) <> F or IsSquareInt(q) ) and
 >                 is_equal( g, SpecialUnitaryGroup( form ) ) and
 >                 is_equal( g, SpecialUnitaryGroup( d, q, g ) ) and
 >                 is_equal( g, SpecialUnitaryGroup( d, q, stored ) ) and

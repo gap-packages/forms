@@ -41,6 +41,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
   [IsMatrix and IsFFECollColl, IsField and IsFinite, IsString],
   function( m, f, string )
     local el;
+    m := ImmutableMatrix(f, m);
     el := rec( matrix := m, basefield := f, type := string );
 
    ## We follow a certain convention, which is outlined in the manual,
@@ -85,7 +86,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
         Error("Given matrix does not define a pseudo-form" );
       fi;
     elif string = "quadratic" then
-      el.matrix := Forms_RESET(m);
+      el.matrix := ImmutableMatrix(f, Forms_RESET(m));
       Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
       return el;
     else
@@ -106,6 +107,7 @@ InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
   function( m, f )
     local el, n;
     n := NrRows(m);
+    m := ImmutableMatrix(f, m);
     if IsZero(m) then
        el := rec( matrix := m, basefield := f, type := "trivial", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
@@ -144,7 +146,7 @@ InstallMethod( BilinearFormByMatrix, "for a ffe matrix and a field",
     if not PrimitiveElement(gf) in f then
       Error("<m> is not a matrix over <f>");
     fi;
-    return BilinearFormByMatrixOp( MutableCopyMat(m), f);
+    return BilinearFormByMatrixOp( m, f);
 end );
 
 #############################################################################
@@ -171,13 +173,14 @@ InstallMethod( QuadraticFormByMatrixOp, "for a ffe matrix and a field",
   function( m, f )
     local el, n;
     n := NrRows(m);
+    m := ImmutableMatrix(f, m);
     el := rec( matrix := m, basefield := f, type := "quadratic", vectorspace := FullRowSpace(f,n) );
     if IsZero(m) then
        el.type := "trivial";
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
        return el;
     else
-       el.matrix := Forms_RESET(m);
+       el.matrix := ImmutableMatrix(f, Forms_RESET(m));
        Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
        return el;
     fi;
@@ -200,7 +203,7 @@ InstallMethod( QuadraticFormByMatrix, "for a ffe matrix and a field",
     if not PrimitiveElement(gf) in f then
       Error("<m> is not a matrix over <f>");
     fi;
-    return QuadraticFormByMatrixOp( MutableCopyMat(m), f);
+    return QuadraticFormByMatrixOp( m, f);
 end );
 
 #############################################################################
@@ -236,7 +239,8 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
         Error("No hermitian form exists when the order of <f> is not a square" );
     fi;
     if IsHermitianMatrix(m,f) then
-       el := rec( matrix := MutableCopyMat(m), basefield := f, type := "hermitian", vectorspace := FullRowSpace(f,n) );
+       m := ImmutableMatrix(f, m);
+       el := rec( matrix := m, basefield := f, type := "hermitian", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
        return el;
     else
@@ -426,6 +430,7 @@ InstallMethod( BilinearFormByPolynomial, "for a polynomial over a field, and a d
     vars := IndeterminatesOfPolynomialRing( pring );
     if IsZero(pol) then
       mat := NullMat(n, n, gf);
+      mat := ImmutableMatrix(gf, mat);
       el := rec( matrix := mat, basefield := gf, type := "trivial" );
       Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
       SetPolynomialOfForm(el, pol);
@@ -473,6 +478,7 @@ InstallMethod( HermitianFormByPolynomial, "for a polynomial over a field, and a 
     fi;
     if IsZero(pol) then
       mat := NullMat(n, n, gf);
+      mat := ImmutableMatrix(gf, mat);
       el := rec( matrix := mat, basefield := gf, type := "trivial" );
       Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
       SetPolynomialOfForm(el, pol);
