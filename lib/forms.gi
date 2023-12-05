@@ -1589,6 +1589,7 @@ else
 
 fi;
 
+# express v as sum of two squares of elements in gf
 InstallGlobalFunction(Forms_SUM_OF_SQUARES,
   function(v,gf)
     local dummy,i,v1,v2, primroot;
@@ -1607,56 +1608,53 @@ InstallGlobalFunction(Forms_SUM_OF_SQUARES,
     return [v1,v2];
   end );
 
+# Apply a 2x2 transformation matrix to rows 'p1' and 'p2' of the matrix 'D'.
+# The matrix 'D' may be changed in-place by this. For efficiency the matrix
+# entries are passed in as arguments 'a11', 'a12', 'a21', 'a22'.
+BindGlobal("Forms_TRANSFORM_2_BY_2",
+  function(D,p1,p2,a11,a12,a21,a22)
+    local r1,r2;
+    r1 := D[p1];
+    r2 := D[p2];
+    D[p1] := a11 * r1 + a12 * r2;
+    D[p2] := a21 * r1 + a22 * r2;
+  end );
+
 InstallGlobalFunction(Forms_REDUCE2,
-  function(start,stop,n,gf)
-    local t,i,P,half,primroot;
+  function(D,start,stop,n,gf)
+    local t,i,half,primroot;
     primroot := PrimitiveRoot(gf);
     half := One(gf) / 2;
     t := primroot^(LogFFE(-One(gf),primroot)/2) / 2;
-    P := IdentityMat(n,gf);
     i := start;
     while i < stop do
-      P[i,i] := half;
-      P[i,i+1] := t;
-      P[i+1,i] := half;
-      P[i+1,i+1] := -t;
+      Forms_TRANSFORM_2_BY_2(D,i,i+1,half,t,half,-t);
       i := i + 2;
     od;
-    return P;
   end );
 
 InstallGlobalFunction(Forms_REDUCE4,
-  function(start,stop,n,gf)
-    local c,d,i,P,dummy;
-    P := IdentityMat(n,gf);
+  function(D,start,stop,n,gf)
+    local c,d,i,dummy;
     i := start;
     dummy := Forms_SUM_OF_SQUARES(-One(gf),gf);
     c := dummy[1];
     d := dummy[2];
     while i < stop do
-      P[i+1,i+1] := c;
-      P[i+1,i+3] := d;
-      P[i+3,i+1] := d;
-      P[i+3,i+3] := -c;
+      Forms_TRANSFORM_2_BY_2(D,i+1,i+3,c,d,d,-c);
       i := i + 4;
     od;
-    return P;
   end );
 
 InstallGlobalFunction(Forms_DIFF_2_S,
-  function(start,stop,n,gf)
-    local i,P,half;
+  function(D,start,stop,n,gf)
+    local i,half;
     i := start;
-    P := IdentityMat(n,gf);
     half := One(gf) / 2;
     while i < stop do
-      P[i,i] := half;
-      P[i,i+1] := half;
-      P[i+1,i] := half;
-      P[i+1,i+1] := -half;
+      Forms_TRANSFORM_2_BY_2(D,i,i+1,half,half,half,-half);
       i := i + 2;
     od;
-    return P;
   end );
 
 InstallGlobalFunction(Forms_HERM_CONJ,
@@ -1700,16 +1698,10 @@ InstallGlobalFunction(Forms_SQRT2,
   end );
 
 InstallGlobalFunction(Forms_PERM_VAR,
-  function(n,r)
-    local i,P;
-    P := IdentityMat(n);
-    for i in [1..r-1] do
-      P[i,i] := 0;
-      P[i+1,i] := 1;
-    od;
-    P[r,r] := 0;
-    P[1,r] := 1;
-    return P;
+  function(D,r)
+    local i;
+    i := Remove(D, r);
+    Add(D, i, 1);
   end );
 
 InstallGlobalFunction(Forms_C1,
@@ -1936,52 +1928,39 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     s := s - 1;
     r := r - 1;
 
-    # We write first v=v1^2 + v2^2
-
-    dummy := Forms_SUM_OF_SQUARES(v,gf);
-    v1 := dummy[1];
-    v2 := dummy[2];
-
     # Case by case:
 
-    P := IdentityMat(nplus1, gf);
     if not (s = -1 or r = s )  then
+      # We write first v=v1^2 + v2^2
+      dummy := Forms_SUM_OF_SQUARES(v,gf);
+      v1 := dummy[1];
+      v2 := dummy[2];
+
       if (r - s) mod 2 = 0 then
-        for i in [s+2..r+1] do
-          P[i,i] := v1/v;
-        od;
+        v1 := v1/v;
+        v2 := v2/v;
         i := s + 2;
         repeat
-          P[i,i+1] := -v2/v;
-          P[i+1,i] := v2/v;
+          Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
           i := i + 2;
         until i = r + 2;
-        D := P*D;
         s := r;
       else
         if r mod 2 = 0 then
-          for i in [1..s+1] do
-            P[i,i] := v1;
-          od;
           i := 1;
           repeat
-            P[i,i+1] := v2;
-            P[i+1,i] := -v2;
+            Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,v2,-v2,v1);
             i := i + 2;
           until i = s + 2;
-          D := P*D;
           s := -1;
         elif not (s = r - 1) then
-          for i in [s+2..r] do
-            P[i,i] := v1/v;
-          od;
+          v1 := v1/v;
+          v2 := v2/v;
           i := s + 2;
           repeat
-            P[i,i+1] := -v2/v;
-            P[i+1,i] := v2/v;
+            Forms_TRANSFORM_2_BY_2(D,i,i+1,v1,-v2,v2,v1);
             i := i + 2;
           until i = r + 1;
-          D := P*D;
           s := r - 1;
         fi;
       fi;
@@ -1993,21 +1972,16 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     if r mod 2 <> 0 then
       if s = -1 or s = r then
         if q mod 4 = 1 then
-          P := Forms_REDUCE2(1,r+1,nplus1,gf);
-          D := P*D;
+          Forms_REDUCE2(D,1,r+1,nplus1,gf);
           w := 2;
         else
           if ((r-1)/2) mod 2 <> 0 then
-            P := Forms_REDUCE4(1,r+1,nplus1,gf);
-            D := P*D;
-            P := Forms_DIFF_2_S(1,r+1,nplus1,gf);
-            D := P*D;
+            Forms_REDUCE4(D,1,r+1,nplus1,gf);
+            Forms_DIFF_2_S(D,1,r+1,nplus1,gf);
             w := 2;
           else
-            P := Forms_REDUCE4(3,r+1,nplus1,gf);
-            D := P*D;
-            P := Forms_DIFF_2_S(3,r+1,nplus1,gf);
-            D := P*D;
+            Forms_REDUCE4(D,3,r+1,nplus1,gf);
+            Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
             w := 0;
           fi;
         fi;
@@ -2015,45 +1989,30 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         if q mod 4 = 1 then
           if 1 < r then
             Forms_SwapRows(D,2,r+1);
-            P := Forms_REDUCE2(3,r+1,nplus1,gf);
-            D := P*D;
+            Forms_REDUCE2(D,3,r+1,nplus1,gf);
           fi;
           w := 0;
         else
           if ((r-1)/2) mod 2 <> 0 then
             Forms_SwapRows(D,4,r+1);
             if 3 < r then
-              P := Forms_REDUCE4(5,r+1,nplus1,gf);
-            else
-              P := IdentityMat(nplus1,gf);
+              Forms_REDUCE4(D,5,r+1,nplus1,gf);
             fi;
-            b := primroot^(LogFFE(-v, primroot)/2);
-            P[3,3] := (1/2)*one;
-            P[4,3] := (1/2)*one;
-            P[3,4] := -1/(2*b);
-            P[4,4] := 1/(2*b);
-            D := P*D;
+            b := primroot^(LogFFE(-v,primroot)/2);
+            Forms_TRANSFORM_2_BY_2(D,3,4,one/2,-b/2,one/2,b/2);
             if 3 < r then
-              P := Forms_DIFF_2_S(5,r+1,nplus1,gf);
-              D := P*D;
+              Forms_DIFF_2_S(D,5,r+1,nplus1,gf);
             fi;
             w := 0;
           else
             Forms_SwapRows(D,2,r+1);
             if 1 < r then
-              P := Forms_REDUCE4(3,r+1,nplus1,gf);
-            else
-              P := IdentityMat(nplus1,gf);
+              Forms_REDUCE4(D,3,r+1,nplus1,gf);
             fi;
             b := primroot^(LogFFE(-v,primroot)/2);
-            P[1,1] := (1/2)*one;
-            P[2,1] := (1/2)*one;
-            P[1,2] := -1/(2*b);
-            P[2,2] := 1/(2*b);
-            D := P*D;
+            Forms_TRANSFORM_2_BY_2(D,1,2,one/2,-b/2,one/2,b/2);
             if 1 < r then
-              P := Forms_DIFF_2_S(3,r+1,nplus1,gf);
-              D := P*D;
+              Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
             fi;
             w := 2;
           fi;
@@ -2062,30 +2021,20 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     elif r <> 0 then
       w := 1;
       if q mod 4 = 1 then
-        P := Forms_REDUCE2(2,r+1,nplus1,gf);
-        D := P*D;
+        Forms_REDUCE2(D,2,r+1,nplus1,gf);
       else
         if r mod 4 = 0 then
-          P := Forms_REDUCE4(2,r+1,nplus1,gf);
-          D := P*D;
-          P := Forms_DIFF_2_S(2,r+1,nplus1,gf);
-          D := P*D;
+          Forms_REDUCE4(D,2,r+1,nplus1,gf);
+          Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
         else
           if 3 < r then
-            P := Forms_REDUCE4(4,r+1,nplus1,gf);
-          else
-            P := IdentityMat(nplus1, gf);
+            Forms_REDUCE4(D,4,r+1,nplus1,gf);
           fi;
           dummy := Forms_SUM_OF_SQUARES(-1,gf);
           c := dummy[1];
           d := dummy[2];
-          P[1,1] := c;
-          P[1,3] := d;
-          P[3,1] := d;
-          P[3,3] := -c;
-          D := P*D;
-          P := Forms_DIFF_2_S(2,r+1,nplus1,gf);
-          D := P*D;
+          Forms_TRANSFORM_2_BY_2(D,1,3,c,d,d,-c);
+          Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
           i := 3;
           while i <= r + 1 do
             Forms_MultRow(D,i,-one);
@@ -2166,17 +2115,14 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
 
           # If all is zero, STOP
           if dummy then
-            P := IdentityMat(nplus1, gf);
             t := Forms_SQRT2(A[row,row],q);
-            P[row,row] := 1/t;
+            Forms_MultRow(D,row,1/t);
             for i in [row + 1..r] do
-              P[i,row] := Forms_SQRT2(A[i,i],q)/t;
+              Forms_AddRows(D,i,row,Forms_SQRT2(A[i,i],q));
             od;
-            D := P*D;
             # Permutation of the variables, it is a parabolic
             r := row;
-            P := Forms_PERM_VAR(nplus1,r);
-            D := P*D;
+            Forms_PERM_VAR(D,r);
             w := 1;
             r := r - 1;
             return [D,r,w];
@@ -2234,9 +2180,10 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
       # check for zero row
       dummy := true;
       i := row + 1;
-      while  (dummy and i <= nplus1) do
+      while i <= nplus1 do
         if not IsZero( A[row,i] ) then
            dummy := false;
+           break;
         else
            i := i + 1;
         fi;
@@ -2291,8 +2238,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
        else
           t := Forms_SQRT2(A[r,r],q);
           Forms_MultRow(D,r,1/t);
-          P := Forms_PERM_VAR(nplus1,r);
-          D := P*D;
+          Forms_PERM_VAR(D,r);
           w := 1;
        fi;
     else
@@ -2307,8 +2253,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
              w := 2;
           else
              Forms_MultRow(D,r,1/Forms_SQRT2(c,q));
-             P := Forms_PERM_VAR(nplus1,r);
-             D := P*D;
+             Forms_PERM_VAR(D,r);
              r := r - 1;
              w := 1;
           fi;
@@ -2325,14 +2270,12 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         if b = t then
           if c = t then
             Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
-            P := Forms_PERM_VAR(nplus1,r-1);
-            D := P*D;
+            Forms_PERM_VAR(D,r-1);
             r := r - 1;
           else
             Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
             Forms_AddRows(D,r,r-1,Forms_SQRT2(c,q));
-            P := Forms_PERM_VAR(nplus1,r-1);
-            D := P*D;
+            Forms_PERM_VAR(D,r-1);
             r := r - 1;
           fi;
           w := 1;
@@ -2345,13 +2288,8 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             d := (a*c)/(b^2);
             if Trace(gf,d) = t then
               e := Forms_SQRT2(a,q);
-              P := IdentityMat(nplus1, gf);
               s := Forms_QUAD_EQ(d,gf,h);
-              P[r-1,r-1] := (s+one)/e;
-              P[r-1,r] := e/b;
-              P[r,r-1] := s/e;
-              P[r,r] := e/b;
-              D := P*D;
+              Forms_TRANSFORM_2_BY_2(D, r-1, r, (s+one)/e, e/b, s/e, e/b);
               w := 2;
             else
               c := Forms_SQRT2(c,q);
