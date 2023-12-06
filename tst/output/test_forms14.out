@@ -37,9 +37,9 @@ true
 gap> results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
 gap> [[[Zero(f)]],(q^dim-1)/(q-1)] in results;
 true
-gap> Length(Filtered(vectors,x->IsIsotropicVector(form,x)))=(q^dim-1)/(q-1);
+gap> Number(vectors,x->IsIsotropicVector(form,x))=(q^dim-1)/(q-1);
 true
-gap> Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^dim-1)/(q-1);
+gap> Number(matrices,x->IsTotallyIsotropicSubspace(form,x))=(q^dim-1)/(q-1);
 true
 gap> planes := Subspaces(v,2);
 Subspaces( ( GF(5)^6 ), 2 )
@@ -49,7 +49,7 @@ gap> z := Zero(f);
 0*Z(5)
 gap> [[[z,z],[z,z]],(q^2+1)*(q^6-1)/(q-1)] in results;
 true
-gap> Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^2+1)*(q^6-1)/(q-1);
+gap> Number(matrices,x->IsTotallyIsotropicSubspace(form,x))=(q^2+1)*(q^6-1)/(q-1);
 true
 gap> threespaces := Subspaces(v,3);
 Subspaces( ( GF(5)^6 ), 3 )
@@ -59,6 +59,6 @@ gap> z := Zero(f);
 0*Z(5)
 gap> [[[Zero(f)]],(q^3+1)*(q^2+q+1)] in results;
 true
-gap> Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=(q^3+1)*(q^2+q+1);
+gap> Number(matrices,x->IsTotallyIsotropicSubspace(form,x))=(q^3+1)*(q^2+q+1);
 true
 gap> quit;

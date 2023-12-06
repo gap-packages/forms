@@ -14,6 +14,6 @@ results := Collected(List(vectors,x->EvaluateForm(form,x,x)));;
 [Zero(f),q^6+1] in results;
 results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
 [[[Zero(f)]],q^6+1] in results;
-Length(Filtered(vectors,x->IsIsotropicVector(form,x)))=q^6+1;
-Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=q^6+1;
+Number(vectors,x->IsIsotropicVector(form,x))=q^6+1;
+Number(matrices,x->IsTotallyIsotropicSubspace(form,x))=q^6+1;
 quit;
