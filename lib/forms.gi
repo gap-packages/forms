@@ -41,6 +41,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
   [IsMatrix and IsFFECollColl, IsField and IsFinite, IsString],
   function( m, f, string )
     local el;
+    m := ImmutableMatrix(f, m);
     el := rec( matrix := m, basefield := f, type := string );
 
    ## We follow a certain convention, which is outlined in the manual,
@@ -85,7 +86,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
         Error("Given matrix does not define a pseudo-form" );
       fi;
     elif string = "quadratic" then
-      el.matrix := Forms_RESET(m,NrRows(m),f);
+      el.matrix := ImmutableMatrix(f, Forms_RESET(m));
       Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
       return el;
     else
@@ -106,6 +107,7 @@ InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
   function( m, f )
     local el, n;
     n := NrRows(m);
+    m := ImmutableMatrix(f, m);
     if IsZero(m) then
        el := rec( matrix := m, basefield := f, type := "trivial", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
@@ -144,7 +146,7 @@ InstallMethod( BilinearFormByMatrix, "for a ffe matrix and a field",
     if not PrimitiveElement(gf) in f then
       Error("<m> is not a matrix over <f>");
     fi;
-    return BilinearFormByMatrixOp( MutableCopyMat(m), f);
+    return BilinearFormByMatrixOp( m, f);
 end );
 
 #############################################################################
@@ -171,13 +173,14 @@ InstallMethod( QuadraticFormByMatrixOp, "for a ffe matrix and a field",
   function( m, f )
     local el, n;
     n := NrRows(m);
+    m := ImmutableMatrix(f, m);
     el := rec( matrix := m, basefield := f, type := "quadratic", vectorspace := FullRowSpace(f,n) );
     if IsZero(m) then
        el.type := "trivial";
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
        return el;
     else
-       el.matrix := Forms_RESET(m,NrRows(m),f);
+       el.matrix := ImmutableMatrix(f, Forms_RESET(m));
        Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
        return el;
     fi;
@@ -200,7 +203,7 @@ InstallMethod( QuadraticFormByMatrix, "for a ffe matrix and a field",
     if not PrimitiveElement(gf) in f then
       Error("<m> is not a matrix over <f>");
     fi;
-    return QuadraticFormByMatrixOp( MutableCopyMat(m), f);
+    return QuadraticFormByMatrixOp( m, f);
 end );
 
 #############################################################################
@@ -236,7 +239,8 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
         Error("No hermitian form exists when the order of <f> is not a square" );
     fi;
     if IsHermitianMatrix(m,f) then
-       el := rec( matrix := MutableCopyMat(m), basefield := f, type := "hermitian", vectorspace := FullRowSpace(f,n) );
+       m := ImmutableMatrix(f, m);
+       el := rec( matrix := m, basefield := f, type := "hermitian", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
        return el;
     else
@@ -426,6 +430,7 @@ InstallMethod( BilinearFormByPolynomial, "for a polynomial over a field, and a d
     vars := IndeterminatesOfPolynomialRing( pring );
     if IsZero(pol) then
       mat := NullMat(n, n, gf);
+      mat := ImmutableMatrix(gf, mat);
       el := rec( matrix := mat, basefield := gf, type := "trivial" );
       Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
       SetPolynomialOfForm(el, pol);
@@ -473,6 +478,7 @@ InstallMethod( HermitianFormByPolynomial, "for a polynomial over a field, and a 
     fi;
     if IsZero(pol) then
       mat := NullMat(n, n, gf);
+      mat := ImmutableMatrix(gf, mat);
       el := rec( matrix := mat, basefield := gf, type := "trivial" );
       Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
       SetPolynomialOfForm(el, pol);
@@ -1621,8 +1627,9 @@ BindGlobal("Forms_TRANSFORM_2_BY_2",
   end );
 
 InstallGlobalFunction(Forms_REDUCE2,
-  function(D,start,stop,n,gf)
-    local t,i,half,primroot;
+  function(D,start,stop,gf)
+    local n,t,i,half,primroot;
+    n := NrRows(D);
     primroot := PrimitiveRoot(gf);
     half := One(gf) / 2;
     t := primroot^(LogFFE(-One(gf),primroot)/2) / 2;
@@ -1634,8 +1641,9 @@ InstallGlobalFunction(Forms_REDUCE2,
   end );
 
 InstallGlobalFunction(Forms_REDUCE4,
-  function(D,start,stop,n,gf)
-    local c,d,i,dummy;
+  function(D,start,stop,gf)
+    local n,c,d,i,dummy;
+    n := NrRows(D);
     i := start;
     dummy := Forms_SUM_OF_SQUARES(-One(gf),gf);
     c := dummy[1];
@@ -1647,10 +1655,11 @@ InstallGlobalFunction(Forms_REDUCE4,
   end );
 
 InstallGlobalFunction(Forms_DIFF_2_S,
-  function(D,start,stop,n,gf)
-    local i,half;
+  function(D,start,stop)
+    local n,i,half;
+    n := NrRows(D);
     i := start;
-    half := One(gf) / 2;
+    half := One(D[1,1]) / 2;
     while i < stop do
       Forms_TRANSFORM_2_BY_2(D,i,i+1,half,half,half,-half);
       i := i + 2;
@@ -1658,8 +1667,9 @@ InstallGlobalFunction(Forms_DIFF_2_S,
   end );
 
 InstallGlobalFunction(Forms_HERM_CONJ,
-  function(mat,n,t)
-    local i,j,dummy;
+  function(mat,t)
+    local n,i,j,dummy;
+    n := NrRows(mat);
     dummy := MutableTransposedMat(mat);
     for i in  [1..n] do
       for j in [1..n] do
@@ -1675,9 +1685,10 @@ InstallGlobalFunction(Forms_HERM_CONJ,
 #is free to use any matrix to construct the form.
 
 InstallGlobalFunction(Forms_RESET,
-  function(mat,n,gf)
-    local i,j,A,t;
-    t := Zero(gf);
+  function(mat)
+    local n,i,j,A,t;
+    n := NrRows(mat);
+    t := Zero(mat[1,1]);
     A := MutableCopyMat(mat);
     for i in [2..n] do
       for j in [1..i-1] do
@@ -1762,7 +1773,7 @@ InstallMethod( IsHermitianMatrix, [IsFFECollColl, IsField],
     local t,n;
     t := Sqrt(Size(f));
     n := NrRows(m);
-    return m=Forms_HERM_CONJ(m,n,t);
+    return m=Forms_HERM_CONJ(m,t);
   end );
 
 #############################################################################
@@ -1972,16 +1983,16 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     if r mod 2 <> 0 then
       if s = -1 or s = r then
         if q mod 4 = 1 then
-          Forms_REDUCE2(D,1,r+1,nplus1,gf);
+          Forms_REDUCE2(D,1,r+1,gf);
           w := 2;
         else
           if ((r-1)/2) mod 2 <> 0 then
-            Forms_REDUCE4(D,1,r+1,nplus1,gf);
-            Forms_DIFF_2_S(D,1,r+1,nplus1,gf);
+            Forms_REDUCE4(D,1,r+1,gf);
+            Forms_DIFF_2_S(D,1,r+1);
             w := 2;
           else
-            Forms_REDUCE4(D,3,r+1,nplus1,gf);
-            Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
+            Forms_REDUCE4(D,3,r+1,gf);
+            Forms_DIFF_2_S(D,3,r+1);
             w := 0;
           fi;
         fi;
@@ -1989,30 +2000,30 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         if q mod 4 = 1 then
           if 1 < r then
             Forms_SwapRows(D,2,r+1);
-            Forms_REDUCE2(D,3,r+1,nplus1,gf);
+            Forms_REDUCE2(D,3,r+1,gf);
           fi;
           w := 0;
         else
           if ((r-1)/2) mod 2 <> 0 then
             Forms_SwapRows(D,4,r+1);
             if 3 < r then
-              Forms_REDUCE4(D,5,r+1,nplus1,gf);
+              Forms_REDUCE4(D,5,r+1,gf);
             fi;
             b := primroot^(LogFFE(-v,primroot)/2);
             Forms_TRANSFORM_2_BY_2(D,3,4,one/2,-b/2,one/2,b/2);
             if 3 < r then
-              Forms_DIFF_2_S(D,5,r+1,nplus1,gf);
+              Forms_DIFF_2_S(D,5,r+1);
             fi;
             w := 0;
           else
             Forms_SwapRows(D,2,r+1);
             if 1 < r then
-              Forms_REDUCE4(D,3,r+1,nplus1,gf);
+              Forms_REDUCE4(D,3,r+1,gf);
             fi;
             b := primroot^(LogFFE(-v,primroot)/2);
             Forms_TRANSFORM_2_BY_2(D,1,2,one/2,-b/2,one/2,b/2);
             if 1 < r then
-              Forms_DIFF_2_S(D,3,r+1,nplus1,gf);
+              Forms_DIFF_2_S(D,3,r+1);
             fi;
             w := 2;
           fi;
@@ -2021,20 +2032,20 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     elif r <> 0 then
       w := 1;
       if q mod 4 = 1 then
-        Forms_REDUCE2(D,2,r+1,nplus1,gf);
+        Forms_REDUCE2(D,2,r+1,gf);
       else
         if r mod 4 = 0 then
-          Forms_REDUCE4(D,2,r+1,nplus1,gf);
-          Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
+          Forms_REDUCE4(D,2,r+1,gf);
+          Forms_DIFF_2_S(D,2,r+1);
         else
           if 3 < r then
-            Forms_REDUCE4(D,4,r+1,nplus1,gf);
+            Forms_REDUCE4(D,4,r+1,gf);
           fi;
           dummy := Forms_SUM_OF_SQUARES(-1,gf);
           c := dummy[1];
           d := dummy[2];
           Forms_TRANSFORM_2_BY_2(D,1,3,c,d,d,-c);
-          Forms_DIFF_2_S(D,2,r+1,nplus1,gf);
+          Forms_DIFF_2_S(D,2,r+1);
           i := 3;
           while i <= r + 1 do
             Forms_MultRow(D,i,-one);
@@ -2091,7 +2102,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           Forms_SwapCols(A,row,i);
           Forms_SwapRows(A,row,i);
           Forms_SwapRows(D,row,i);
-          A := Forms_RESET(A,nplus1,gf);
+          A := Forms_RESET(A);
 
         # Otherwise: look in other places.
 
@@ -2150,7 +2161,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
                   Forms_SwapRows(A,posr,row+1);
                   Forms_SwapRows(D,posr,row+1);
                fi;
-               A := Forms_RESET(A,nplus1,gf);
+               A := Forms_RESET(A);
             fi;
             #A[row+1,row+2] <> 0
             P := IdentityMat(nplus1,gf);
@@ -2163,7 +2174,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
               od;
             fi;
             A := P*A*TransposedMat(P);
-            A := Forms_RESET(A,nplus1,gf);
+            A := Forms_RESET(A);
             D := P*D;
             # A has now that special form a_11*X_1^2+X_1*X_2 + G(X_0,X_2,...,X_n);
             b := A[row,row];
@@ -2171,7 +2182,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             t :=  Forms_SQRT2(b/A[row+1,row+1],q);
             P[row,row+1] := t;
             A := P*A*TransposedMat(P);
-            A := Forms_RESET(A,nplus1,gf);
+            A := Forms_RESET(A);
             D := P*D;
             #A [row,row] is now 0
           fi;
@@ -2206,7 +2217,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           Forms_SwapCols(A,posk,row+1);
           Forms_SwapRows(A,posk,row+1);
           Forms_SwapRows(D,posk,row+1);
-          A := Forms_RESET(A,nplus1,gf);
+          A := Forms_RESET(A);
         fi;
         # Now A[k,k+1] <> 0
         P := IdentityMat(nplus1, gf);
@@ -2217,14 +2228,14 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         od;
         D := P*D;
         A := P*A*TransposedMat(P);
-        A := Forms_RESET(A,nplus1,gf);
+        A := Forms_RESET(A);
         P := IdentityMat(nplus1,gf);
         for i in [row+1..nplus1] do
           P[i,row] := A[row+1,i];
         od;
         D := P*D;
         A := P*A*TransposedMat(P);
-        A := Forms_RESET(A,nplus1,gf);
+        A := Forms_RESET(A);
         row := row + 2;
       fi;
     od;
@@ -2391,7 +2402,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
         b := Z(q)*(A[row+2,row+1])^-1;
         P := IdentityMat(nplus1, gf);
         P[row+1,row+2] := b;
-        A := P*A*Forms_HERM_CONJ(P,nplus1,t);
+        A := P*A*Forms_HERM_CONJ(P,t);
         D := P*D;
       fi;
 
@@ -2399,7 +2410,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
       for i in [row+2..nplus1] do
          P[i,row+1] := -A[i,row+1]*(A[row+1,row+1])^-1;
       od;
-      A := P*A*Forms_HERM_CONJ(P,nplus1,t);
+      A := P*A*Forms_HERM_CONJ(P,t);
       D := P*D;
       row := row + 1;
     until row = n;
@@ -2789,7 +2800,7 @@ InstallMethod( IsometricCanonicalForm, "for hermitian forms",
     gf := f!.basefield;
     trivial := IdentityMat(NrRows(gram),gf);
     B := BaseChangeToCanonical(f);
-    isom := B*gram*Forms_HERM_CONJ(B,NrRows(B),Sqrt(Size(gf)));
+    isom := B*gram*Forms_HERM_CONJ(B,Sqrt(Size(gf)));
     form := FormByMatrix(isom,gf,"hermitian");
     SetBaseChangeToCanonical(form,trivial);
     SetWittIndex(form, WittIndex(f));
@@ -2809,7 +2820,7 @@ InstallMethod( IsometricCanonicalForm, "for quadratic forms",
     gf := f!.basefield;
     trivial := IdentityMat(NrRows(gram),gf);
     B := BaseChangeToCanonical(f);
-    isom := Forms_RESET(B*gram*TransposedMat(B),NrRows(gram),gf);
+    isom := Forms_RESET(B*gram*TransposedMat(B));
     form := FormByMatrix(isom,gf,"quadratic");
     SetBaseChangeToCanonical(form,trivial);
     SetWittIndex(form, WittIndex(f));

@@ -57,12 +57,12 @@ gap> TestBaseChangeHermitian := function(dim,q)
 >        F := GF(q^2);
 >        # produce a symmetric matrix
 >        mat:=RandomInvertibleMat(dim,F);
->        mat:=mat+Forms_HERM_CONJ(mat, dim, q);
+>        mat:=mat+Forms_HERM_CONJ(mat, q);
 >        # compute base change
 >        bc:=BaseChangeHermitian(mat, F);
 >        # verify the base change produces a matrix with the right properties:
->        m:=bc[1]*mat*Forms_HERM_CONJ(bc[1], dim, q);
->        Assert(0, m = Forms_HERM_CONJ(m, dim, q));
+>        m:=bc[1]*mat*Forms_HERM_CONJ(bc[1], q);
+>        Assert(0, m = Forms_HERM_CONJ(m, q));
 >        # TODO: verify it is canonical
 >    end;;
 
