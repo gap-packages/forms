@@ -26,8 +26,8 @@ true
 gap> results := Collected(List(matrices,x->EvaluateForm(form,x,x)));;
 gap> [[[Zero(f)]],q^6+1] in results;
 true
-gap> Length(Filtered(vectors,x->IsIsotropicVector(form,x)))=q^6+1;
+gap> Number(vectors,x->IsIsotropicVector(form,x))=q^6+1;
 true
-gap> Length(Filtered(matrices,x->IsTotallyIsotropicSubspace(form,x)))=q^6+1;
+gap> Number(matrices,x->IsTotallyIsotropicSubspace(form,x))=q^6+1;
 true
 gap> STOP_TEST("test_forms16.tst", 10000 );

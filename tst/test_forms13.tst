@@ -22,8 +22,8 @@ true
 gap> results := Collected(List(matrices,x->x^form));;
 gap> [[[Zero(f)]],(q^(dim-1)-1)/(q-1)] in results;
 true
-gap> Length(Filtered(vectors,x->IsSingularVector(form,x)))=(q^(dim-1)-1)/(q-1);
+gap> Number(vectors,x->IsSingularVector(form,x))=(q^(dim-1)-1)/(q-1);
 true
-gap> Length(Filtered(matrices,x->IsTotallySingularSubspace(form,x)))=(q^(dim-1)-1)/(q-1);
+gap> Number(matrices,x->IsTotallySingularSubspace(form,x))=(q^(dim-1)-1)/(q-1);
 true
 gap> STOP_TEST("test_forms13.tst", 10000 );
