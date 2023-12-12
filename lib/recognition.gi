@@ -607,7 +607,7 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
     fi;
     # if all forms are excluded then we are finished
     if not forms.maybeDual and not forms.maybeFrobenius  then
-            Add( forms.invariantforms, [ "linear" ] );
+            Append( forms.invariantforms, [ "linear" ] );
     fi;
 
     return forms;
