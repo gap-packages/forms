@@ -21,15 +21,20 @@
 # Functions (not to be used by the user):
 #############################################################################
 
-DeclareGlobalFunction( "ClassicalForms_ScalarMultipleFrobenius" );
-DeclareGlobalFunction( "ClassicalForms_GeneratorsWithoutScalarsFrobenius" );
-DeclareGlobalFunction( "ClassicalForms_PossibleScalarsBilinear" );
-DeclareGlobalFunction( "ClassicalForms_GeneratorsWithoutScalarsDual" );
+DeclareGlobalFunction( "DualFrobeniusGModule" );
+
+DeclareGlobalFunction( "ClassicalForms_PossibleScalarsSesquilinear" );
+DeclareGlobalFunction( "ClassicalForms_GeneratorsWithBetterScalarsSesquilinear" );
+DeclareGlobalFunction( "ClassicalForms_InvariantForms" );
+
 DeclareGlobalFunction( "ClassicalForms_Signum2" );
 DeclareGlobalFunction( "ClassicalForms_Signum" );
 DeclareGlobalFunction( "ClassicalForms_QuadraticForm2" );
 DeclareGlobalFunction( "ClassicalForms_QuadraticForm" );
 DeclareGlobalFunction( "PossibleClassicalForms" );
+
+DeclareGlobalFunction( "ScalarsOfPreservedForm" );
+
 
 #############################################################################
 # Methods (to be used by the user):

@@ -6,6 +6,20 @@
 ##  involve a prescribed invariant form.
 ##
 
+#############################################################################
+##
+#F  ClassicalForms_InvariantFormFrobenius( <module>, <fmodule> )
+##
+TransposedFrobeniusMat := function( mat, qq )
+    local   i,  j;
+    mat:=MutableTransposedMat(mat);
+    for i  in [ 1 .. NrRows(mat) ]  do
+        for j  in [ 1 .. NrCols(mat) ]  do
+            mat[i,j] := mat[i,j]^qq;
+        od;
+    od;
+    return mat;
+end;
 
 # Compatibility with GAP < 4.12
 if not IsBound(IsMatrixOrMatrixObj) then
