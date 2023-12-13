@@ -23,7 +23,7 @@
 
 DeclareGlobalFunction( "ClassicalForms_ScalarMultipleFrobenius" );
 DeclareGlobalFunction( "ClassicalForms_GeneratorsWithoutScalarsFrobenius" );
-DeclareGlobalFunction( "ClassicalForms_ScalarMultipleDual" );
+DeclareGlobalFunction( "ClassicalForms_PossibleScalarsBilinear" );
 DeclareGlobalFunction( "ClassicalForms_GeneratorsWithoutScalarsDual" );
 DeclareGlobalFunction( "ClassicalForms_Signum2" );
 DeclareGlobalFunction( "ClassicalForms_Signum" );
