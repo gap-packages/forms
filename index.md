@@ -10,8 +10,12 @@ The current version of this package is version {{site.data.package.version}}, re
 For more information, please refer to [the package manual]({{site.data.package.doc-html}}).
 There is also a [README](README.html) file.
 
-# An example of how it works
+{% if site.data.package.license %}
+  License: [{{ site.data.package.license }}](https://spdx.org/licenses/{{ site.data.package.license }})
+{% endif %}
 
+## An example of how it works
+```
 gap> LoadPackage("forms");<br>
 true<br>
 gap> gf := GF(8);<br>
@@ -41,6 +45,7 @@ gap> IsParabolicForm( form );<br>
 true<br>
 gap> form;<br>
 < non-singular parabolic quadratic form ><br>
+```
 
 ## Dependencies
 
