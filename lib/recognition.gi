@@ -83,7 +83,7 @@ InstallGlobalFunction( ClassicalForms_PossibleScalarsSesquilinear,
 #F  ClassicalForms_GeneratorsWithBetterScalarsSesquilinear( grp, frob )
 # Note that the user determines whether looking for a preserved bilinear, respectively
 # hermitian form, by choosing frob to be the identiy, respectively the involutory 
-# field automorhipsm.
+# field automorhipsm. This is actually just a massage of the generating set of the group.
 #
 ##
 InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
@@ -109,6 +109,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
     fi;
 
     # the next function returns a matrix with a list of possible scalars for this matrix.
+    # if it is possible to change the matrix to multiple that preserves up to scalar one, this is achieved.
 
     improvegenerator := function(m1,i,count,len)
         local a1, s, j, k, scalars;
@@ -122,8 +123,12 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
         if IsList(a1) then 
             root := NthRoot(field,a1[2],a1[1]);
             if a1[1] = 1 then # the matrix m1 has scalar a1[2]
-                return [m1,[a1[2]]];               
-            elif LogFFE(root,PrimitiveElement(field)) mod (q+1) = 0 then 
+                #if a1[2] has a square root, we can replace m1 with m1*sqrt{a1[2]};
+                if LogFFE(a1[2],PrimitiveElement(field)) mod 2 = 0 then
+                    return [m1/NthRoot(field,a1[2],2),[One(field)]];
+                fi;
+                return [m1,[a1[2]]]; #originally, the three lines above this return were not there. Those three lines make sure scalar becomes 1 if possible (basicaly if there is a sqrt).
+            elif LogFFE(root,PrimitiveElement(field)) mod (q+1) = 0 then
                 return [m1/NthRoot(field,root,q+1),[One(field)]]; #either frob = id, then q+1 = 2, or frob is not trivial, then we take q+1-st root. In both cases, modify m1 to a matrix that has scalar one. 
             else
                 scalars := AsList(Group(NthRoot(field,a1[2],a1[1]))); # add all possible scalars for m1 
@@ -172,12 +177,15 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
 #############################################################################
 ##
 #F  ClassicalForms_Signum2( <field>, <form>, <quad> )
+# This function computes a base change, seemingly sufficient to see from the
+# changed form what its type is, all for characteristic 2.
 ##
 InstallGlobalFunction( ClassicalForms_Signum2,
   function( field, form, quad )
     local dim, base, avoid, i, d, j, c, k, x, sgn, pol;
 
     # compute a new basis,  such that the symmetric form is standard
+    #Error("here in ClassicalForms_Signum2");
     base :=OneOp(form);
     form:=MutableCopyMat(form);
     avoid := [];
@@ -251,7 +259,9 @@ InstallGlobalFunction( ClassicalForms_Signum2,
 ##
 InstallGlobalFunction( ClassicalForms_Signum,
   ##
-  ## This could be replaced by operations in "Forms"
+  ## This could be replaced by operations in "Forms".
+  ## We are, however, not convinced any more, as Determinant might be faster
+  ## than computing the base changes.
   ##
   function( field, form, quad )
     local sgn, det, sqr;
@@ -289,6 +299,16 @@ end );
 #############################################################################
 ##
 #F  ClassicalForms_QuadraticForm2( <field>, <form>, <gens>, <scalars> )
+##  <form> is a given bilinear form, preserved by <gens> modulo <scalars>.
+##  This function computes a quadratic form which has <form> as polar form,
+##  and the quadratic form is preserved by gens (if that is all possible).
+##  Characteristic is two. Note that since the polar form <form> is given,
+##  the quadratic form is already determined above the diagonal. So only
+##  the elements on the diagonal have to be computed.
+##
+##  Because of the optimizations in improvegenerators, we may assume that generators
+##  indeed preserve the sesquilinear form up to scalar one, since in characteristic
+##  2 we can always achieve this.
 ##
 InstallGlobalFunction( ClassicalForms_QuadraticForm2,
  function( field, form, gens, scalars )
@@ -299,7 +319,7 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
         Error( "characteristic must be two" );
     fi;
 
-    # construct the upper half of the form
+    # construct the upper half of the quadratic form
     H := ZeroOp(form);
     dim := NrRows(form);
     for i  in [ 1 .. dim ]  do
@@ -322,9 +342,17 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
         r := x*H*TransposedMat(x)+H;
 
         # check <r>
+        # here we use that all scalars are one
+        # observe that x*H*TransposedMat(x)+H will be symmetric now
+        # because H is the upper triangle part of form, hence whatever
+        # change is made to H by x*H*TransposedMat(x), if you add H, the
+        # result must be symmetric.
+        # In fact, we now know mathematically, that scalars should always be one
+        # if the given form indeed comes from a quadratic form.
         for i  in [ 1 .. dim ]  do
             for j  in [ i+1 .. dim ]  do
                 if not IsZero(r[i,j]+r[j,i]) then
+                    Print("returning false at symmetry check\n");
                     return false;
                 fi;
             od;
@@ -351,6 +379,7 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
         od;
         return ImmutableMatrix(field,H);
     else
+        Print("returning false at no solution found\n");
         return false;
     fi;
   end );
@@ -470,7 +499,7 @@ InstallGlobalFunction( ClassicalForms_InvariantForms,
                 #Error("here is now a mistake");
                 Add(output, [ "unitary", mu*form, scalars ]);
             else
-                Error("make sure we see what happens");
+                #Error("make sure we see what happens");
                 Add(output, [ "unknown", "hermitian", form, scalars ]);
             fi;
         else    
