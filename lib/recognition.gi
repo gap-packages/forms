@@ -99,7 +99,8 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
     # are possible, we try to replace m1 by a matrix that has fewer 
     # solutions to the scalar equation. 
 
-    field := FieldOfMatrixGroup(grp);
+    #field := FieldOfMatrixGroup(grp); #this causes a problem if one has a maximal subgroup of e.g. SU(3,7^2). There are examples of which de FieldOf is GF(7), while DefaultFieldOF is GF(7^2). Then this causes problems.
+    field := DefaultFieldOfMatrixGroup(grp);
     qq := Size(field);
     if not IsOne(frob) then
         q := Sqrt(qq);
@@ -107,10 +108,12 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
         q := 1;
     fi;
 
+    # the next function returns a matrix with a list of possible scalars for this matrix.
+
     improvegenerator := function(m1,i,count,len)
         local a1, s, j, k, scalars;
         
-        a1 := ClassicalForms_PossibleScalarsSesquilinear(field,m1,frob); # frob is trivial here
+        a1 := ClassicalForms_PossibleScalarsSesquilinear(field,m1,frob); 
         #Recall that the scalars satisfy the equation lambda^a[1] = a[2]
         if a1 = false then
             return false; #The group does not preserve a form modulo scalars
@@ -130,7 +133,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
                     champion := [m1,scalars];
                     len := Length(scalars);
                 fi;
-                k := Random(Difference([1..Length(gens)],[i]));
+                k := Random(Difference([1..Length(gens)],[i])); #m1 could not be improved, so try to change m1 by multiplying with another generator.
                 m1 := m1*gens[k];
                 return improvegenerator(m1,i,count-1,len);
             fi;
@@ -340,6 +343,7 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
     od;
 
     # and return a solution
+    Print("Rank of e:",RankMat(e),"\n");
     e := SolutionMat( TransposedMat(e), b );
     if e <> fail  then
         for i  in [ 1 .. dim ]  do
@@ -390,8 +394,6 @@ InstallGlobalFunction( DualFrobeniusGModule,
     fi;
 end );
 
-
-
 #############################################################################
 ##
 #F  ClassicalForms_InvariantForms( <gens_scalars> )
@@ -404,7 +406,8 @@ InstallGlobalFunction( ClassicalForms_InvariantForms,
     function( gens_scalars, frob )
     local   hom,  scalars,  form,  iform,  identity,  field,  root,
             q,  i,  m,  a,  quad,  sgn, gmodule, forms, biglist, x,
-            dmodule, gens, scale_gens, module, output, isform, pair;
+            dmodule, gens, scale_gens, module, output, isform, pair, transposedform,
+            check_scalar_matrix, lambda;
 
     # <dmodule> acts absolutely irreducible without scalars
     gens := gens_scalars[1];
@@ -431,24 +434,49 @@ InstallGlobalFunction( ClassicalForms_InvariantForms,
     
     output := [];
 
+    check_scalar_matrix := function(T,F)
+        local i,lambda;
+        i := PositionNonZero(T[1]);
+        if i <> PositionNonZero(F[1]) then
+            return false;
+        fi;
+        lambda := T[1][i] / F[1][i];
+        if T <> lambda*F then
+            return false;
+        else
+            return lambda;
+        fi;
+    end;
+
     for pair in forms do
         form := pair[1];
         scalars  := pair[2];
+        transposedform := TransposedMat(form);
 
         # check the type of form, replace this afterwards with default forms constructors. Then also join the two for loops.
             
         if not IsOne(frob) then
-        #check if the form is hermitian
-            if TransposedMat(form) <> form^frob then 
-                Info( InfoForms, 1,"unknown form\n" );
-                Add(output, [ "unknown", "hermitian", form, scalars ]);
+        q := Sqrt(Size(field));
+        #check if the form is hermitian. Note that the condition should be TransposedMat(form) = lambda form^frob
+        # for some scalar lambda. If so, then mu^(q-1) = \lambda^q. Then mu = RootFFE(GF(q^2),lambda^q,q-1);
+            #if TransposedMat(form) <> form^frob then
+            lambda := check_scalar_matrix(transposedform,form^frob);
+            if lambda <> false then # the form is actually hermitian, we need to change its gram matrix.
+                if lambda <> One(field) then
+                    mu := RootFFE(field,lambda,q-1);
+                    Info( InfoForms, 1,"unknown form made into hermitian\n" );
+                else mu := lambda;
+                fi;
+                #Error("here is now a mistake");
+                Add(output, [ "unitary", mu*form, scalars ]);
             else
-                Add(output, [ "unitary", form, scalars ]);
+                Error("make sure we see what happens");
+                Add(output, [ "unknown", "hermitian", form, scalars ]);
             fi;
         else    
         #now we know the form is not hermitian.
-        
-            if TransposedMat(form) = -form  then
+ 
+             if TransposedMat(form) = -form  then
                 Info(InfoForms, 1, "form is symplectic\n" );
                 if Characteristic(field) = 2  then
                     quad := ClassicalForms_QuadraticForm2(field, form, gens, scalars );
@@ -564,11 +592,19 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
         frob := frob^(DegreeOverPrimeField(field)/2);
     fi;
 
+    # <grp> must act irreducibly
+    #Is this really necessary? Can we not simply delete it?
+    if not MTX.IsIrreducible(module)  then
+        #Error("Currently the use of MeatAxe requires the module to be absolutely irreducible");
+        Info( InfoForms, 1,  "group is not irreducible and therefore it does not preserve non-degenerate forms\n" );
+        return [];
+    fi;
+
     # <grp> must act absolutely irreducibly
-    #Is this really necessary? Can we not simply delete it? 
+    #Is this really necessary? Can we not simply delete it?
     if not MTX.IsAbsolutelyIrreducible(module)  then
-        Error("Currently the use of MeatAxe requires the module to be absolutely irreducible");
-        #Info( InfoForms, 1,  "grp not absolutely irreducible\n" );
+        #Error("Currently the use of MeatAxe requires the module to be absolutely irreducible");
+        Info( InfoForms, 1,  "grp not absolutely irreducible\n" );
         #return [];
     fi;
 
@@ -629,6 +665,9 @@ InstallMethod( PreservedForms,
     newforms := [];
     field := DefaultFieldOfMatrixGroup(grp);
     forms := PreservedFormsOp(grp);
+    if IsList(forms) and IsEmpty(forms) then
+        return forms;
+    fi;
     for y in forms!.invariantforms do
        if y[1] in ["orthogonalplus", "orthogonalminus", "orthogonalcircle"] then
           newform := QuadraticFormByMatrix(y[4], field);
@@ -666,6 +705,9 @@ InstallMethod( PreservedSesquilinearForms,
     newforms := [];
     field := DefaultFieldOfMatrixGroup(grp);
     forms := PreservedFormsOp(grp);
+    if IsList(forms) and IsEmpty(forms) then
+        return forms;
+    fi;
     for y in forms!.invariantforms do
        if y[1] in ["symplectic", "orthogonalplus",
                    "orthogonalminus", "orthogonalcircle"] then
