@@ -7,8 +7,8 @@ gap> forms := PreservedSesquilinearForms(g);
 gap> Display( forms[1] );
 Hermitian form
 Gram Matrix:
- . . . 2
- . . 2 .
- . 2 . .
- 2 . . .
+ . . . 1
+ . . 1 .
+ . 1 . .
+ 1 . . .
 gap> STOP_TEST("pres_sesforms1.tst", 10000 );

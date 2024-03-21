@@ -13,12 +13,12 @@ gap> forms := PreservedSesquilinearForms( g );
 gap> Display( forms[1] );
 Bilinear form
 Gram Matrix:
- . 1 . . . .
- 1 . . . . .
- . . . 1 . .
- . . 1 . . .
- . . . . . 1
- . . . . 1 .
+ . 2 . . . .
+ 2 . . . . .
+ . . . 2 . .
+ . . 2 . . .
+ . . . . . 2
+ . . . . 2 .
 gap> m := GModuleByMats( [a,b], GF(3) );;
 gap> usemeataxe := MTX.InvariantBilinearForm(m);
 fail
