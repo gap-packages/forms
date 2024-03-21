@@ -969,7 +969,7 @@
   [12Xscalars[112X.  Eventually,  the procedure used for finding preserved sesquilinear
   forms  does  use the [5XMeatAxe[105X but in some cases it can rule out the existence
   of  preserved forms without calling the [5XMeatAxe[105X. For more information on the
-  algorithm, please see [CLGN+08].[133X
+  algorithm, please see [CLN+08].[133X
   
   [1X4.8-1 PreservedForms[101X
   

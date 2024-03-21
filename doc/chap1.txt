@@ -102,3 +102,6 @@
   [33X[0;0YVersion  1.2.9  fixes  an  unexpected  error in [10XBaseChangeToCanonical[110X if the
   input was over a finite field with more than 256 elements.[133X
   
+  [33X[0;0YVersion  1.2.10  optimizes  compute  base change matrices for symplectic and
+  quadratic forms.[133X
+  

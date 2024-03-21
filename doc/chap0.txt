@@ -6,10 +6,10 @@
                           [1X Sesquilinear and Quadratic [101X
   
   
-                                     1.2.9
+                                     1.2.10
   
   
-                                14 October 2022
+                                 21 March 2024
   
   
                                   John Bamberg
@@ -41,7 +41,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2015-2022 by the authors[133X
+  [33X[0;0Y© 2015-2024 by the authors[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2 or (at your option) any later version.[133X

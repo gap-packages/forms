@@ -10,18 +10,9 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.9",
-  Date := "14/10/2022",
+  Version := "1.2.10",
+  Date := "21/03/2024",
   License := "GPL-2.0-or-later",
-
-##  URL of the archive(s) of the current package release, but *without*
-##  the format extension(s), like '.zoo', which are given next.
-##  The archive file name *must be changed* with each version of the archive
-##  (and probably somehow contain the package name and version).
-##  The paths of the files in the archive must begin with the name of the
-##  directory containing the package (in our "example" probably:
-##  example/init.g, ...    or  example-1.3/init.g, ...  )
-# 
 
 SourceRepository := rec(
     Type := "git",
@@ -76,16 +67,16 @@ Persons := [
     FirstNames    := "Max",
     IsAuthor      := false,
     IsMaintainer  := true,
-    Email         := "horn@mathematik.uni-kl.de",
+    Email         := "mhorn@rptu.de",
     WWWHome       := "https://www.quendi.de/math",
     PostalAddress := Concatenation(
                        "Fachbereich Mathematik\n",
-                       "TU Kaiserslautern\n",
+                       "RPTU Kaiserslautern-Landau\n",
                        "Gottlieb-Daimler-Straße 48\n",
                        "67663 Kaiserslautern\n",
                        "Germany" ),
     Place         := "Kaiserslautern, Germany",
-    Institution   := "TU Kaiserslautern",
+    Institution   := "RPTU Kaiserslautern-Landau",
   ),
 ],
 
@@ -130,7 +121,7 @@ Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2015-2022 by the authors<P/>\n\n",
+            "&copyright; 2015-2024 by the authors<P/>\n\n",
             "This package may be distributed under the terms and conditions ",
             "of the GNU Public License Version 2 or (at your option) any later version.\n"
             ),
