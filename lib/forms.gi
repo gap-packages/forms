@@ -1552,8 +1552,8 @@ InstallMethod( Display, [ IsBilinearForm ],
 ##
 if IsBound(SwapMatrixColumns) and IsBound(SwapMatrixRows) then
   # For GAP >= 4.12
-  BindGlobal("Forms_SwapCols", SwapMatrixColumns);
   BindGlobal("Forms_SwapRows", SwapMatrixRows);
+  BindGlobal("Forms_SwapCols", SwapMatrixColumns);
   BindGlobal("Forms_AddRows", AddMatrixRows);
   BindGlobal("Forms_AddCols", AddMatrixColumns);
   BindGlobal("Forms_MultRow", MultMatrixRow);
