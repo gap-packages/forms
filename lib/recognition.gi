@@ -49,7 +49,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
     Add(I,q-1);
     # we need gcd one in order to get alpha exactly (ignoring +-)
     t := GcdRepresentation(I);
-    i0 := I*t;
+    i0 := I*t; #note that this is just Gcd(I)
 
     if not IsZero(tM) and not IsZero(tMi) then
         return [i0, tM/tMi];
@@ -76,7 +76,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
         "characteristic polynomial does not reveal scalar\n" );
       return false;
     fi;
-    return [i0,a];
+    return [i0,a]; #We will compute all solutions in the new version of the code for the next function!
   end );
 
 
@@ -124,30 +124,64 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsFrobenius,
  end );
 
 
+ClassicalForms_GeneratorsWithoutScalarsFrobeniusNew := 
+ function( grp )
+    local tries, gens, field, m1, a1, new, i;
+
+    # start with 2 random elements,  at most 10 tries
+    tries := 0;
+    gens  := [];
+    field := FieldOfMatrixGroup(grp);
+    #This function will generate all possible Frobenius dual modules that need to be checked.
+    for m1 in GeneratorsOfGroup(grp) do 
+    #while Length(gens) < 2  do
+        #tries := tries + 1;
+        #if tries = 11  then return false;  fi;
+        #m1 := PseudoRandom(grp);
+        a1 := ClassicalForms_ScalarMultipleFrobenius(field,m1);
+        #compute all solutions of lambda^a1[1] = a1[2] where a1[2] is defined as in the paper. 
+        if IsList(a1) and a1[1]=1 then
+            a1:=a1[2];
+            Add(gens, a1*TransposedMat(m1^-1));
+        fi;
+    od;
+    new := GModuleByMats( gens, field );
+    return new; 
+ end; #);
+
 #############################################################################
 ##
-#F  ClassicalForms_ScalarMultipleDual( <field>, <mat> )
+#F  ClassicalForms_PossibleScalarsBilinear( <field>, <mat> )
+# Very important: this function is meant to be called *only* for
+# bilinear forms, that means, the "bar map" is the identity.
+# This function returns [i0,a] such that if <mat> preserves a bilinear form B 
+# modulo scalars then the scalar lambda for which mat*B*mat^T = lambda*B 
+# satisfies lambda^i0 = a
 ##
-InstallGlobalFunction( ClassicalForms_ScalarMultipleDual,
+InstallGlobalFunction( ClassicalForms_PossibleScalarsBilinear,
  function( F, M )
-    local mpol, d, c, z, I, t, a, l, q, i0, Minv;
+    local cpol, d, c, z, I, t, a, l, q, i0, Minv;
 
     # compute the characteristic polynomial of <M>
-    mpol := CharacteristicPolynomial(M);
+    cpol := CharacteristicPolynomial(M);
 
     # get the position of the non-zero coefficients
-    d := Degree(mpol);
-    c := CoefficientsOfUnivariatePolynomial(mpol);
+    d := Degree(cpol);
+    c := CoefficientsOfUnivariatePolynomial(cpol);
     z := Zero(F);
     q := Size(F);
     I := Filtered( [ 0 .. d ],  x -> c[x+1] <> z );
+
+    #Lemma: Trace(M) <> z implies that Trace(M^*) <> z.
 
     Minv := M^-1;
     if Trace(M) = z and Trace(Minv) <> z or
        Trace(M) <> z and Trace(Minv) = z then
         return false;
     fi;
-    # make sure that <d> and <d>-i both occur
+    
+    # make sure that <d> and <d>-i both occur, i.e. check that the support of cpol is symmetric
+    
     if ForAny( I, x -> not (d-x) in I )  then
         return false;
     fi;
@@ -157,25 +191,29 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleDual,
     t := GcdRepresentation(I);
     i0 := I*t;
 
-    a:=c[1];
-    l:=List([1..Length(I)-1], x ->(a*c[d-I[x]+1]/c[I[x]+1]));
+    #a:=c[1]; #this caused a mess ;-)
+
+    #Lemma 1: if g preserves a form modulo lambda then c[d-I]\bar(c_0) = \bar(c_i) lambda^i.
+    #cpol = c_0 +c_1 X + \ldots + c_d X^d
+    #l will be the list of the lambda^i's. 
+    l:=List([1..Length(I)-1], x ->(c[1]*c[d-I[x]+1]/c[I[x]+1])); #here is the line with identity field automorphism!
 
     a:=Product([1..Length(I)-1], x->l[x]^t[x]);
     # Now the scalar $\lambda$ satisfies $\lambda^{i_0}=a$
 
     # check: $\forall_i: c_{d-i}c_0=c_i\lambda^i
+    # if any of the conditions from Lemma 1 fail, g does not preserve the form modulo this lambda. 
     if ForAny([1..Length(I)-1],x->(l[x]<>a^QuoInt(I[x],i0))) then
-        Info( InfoForms, 1,
-          "characteristic polynomial does not reveal scalar\n" );
+        Info( InfoForms, 1, "Characteristic polynomial proves that there is no scalar\n" );
       return false;
     fi;
 
     # compute a square root of <alpha>
-    a:=NthRoot(F,a,2*i0);
-    if a=fail then
-        Info( InfoForms, 1,"characteristic polynomial does not reveal scalar\n" );
-      return false;
-    fi;
+    #a:=NthRoot(F,a,2*i0);
+    #if a=fail then
+    #    Info( InfoForms, 1,"characteristic polynomial does not reveal scalar\n" );
+    #  return fail; #was false
+    #fi;
     return [i0,a];
   end );
 
@@ -183,42 +221,81 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleDual,
 #############################################################################
 ##
 #F  ClassicalForms_GeneratorsWithoutScalarsDual( grp )
+#F  ClassicalForms_GeneratorsWithBetterScalarsBilinear( grp ) #this is the objective!
+#
 ##
 InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsDual,
   function( grp )
-    local tries, gens, field, m1, a1, new, i;
+    local tries, gens, field, m1, a1, new, i, scalars, root, improvegenerator, res, newgens, champion, len;
+
+    # the aim of this function is to replace the matrix m1 by a 
+    # matrix that has as few solutions to the scalar equation 
+    # lambda^a1[1] = a1[2] as possible. It checks first if a1[1] = 1, 
+    # since then lambda is determined. Next we check if a1[2] is a 
+    # square. And then we replace m1 by a matrix that leaves the 
+    # bilinear form invariant modula the scalar 1. If none of these 
+    # are possible, we try to replace m1 by a matrix that has fewer 
+    # solutions to the scalar equation. 
+
+    improvegenerator := function(m1,i,count,len)
+        local a1, s, j, k, scalars;
+        
+        a1 := ClassicalForms_PossibleScalarsBilinear(field,m1);
+        if a1 = false then
+            return false; #The group does not preserve a form modulo scalars
+        fi;
+        
+        #scalars := AsList(Group(NthRoot(field,a1[2],a1[1]))); # add all possible scalars for m1 
+        
+        if IsList(a1) then 
+            root := NthRoot(field,a1[2],a1[1]);
+            if a1[1] = 1 then # the matrix m1 has scalar a1[2]
+                return [m1,[a1[2]]];
+            elif IsEvenInt(LogFFE(root,PrimitiveElement(field))) then #IsEvenInt(a1[1]) then # modify m1 to a matrix that has scalar one.
+                return [m1/NthRoot(field,root,2),[One(field)]];
+            else
+                scalars := AsList(Group(NthRoot(field,a1[2],a1[1]))); # add all possible scalars for m1 
+                if count = 0 then 
+                    return champion; # add all possible scalars for m1 
+                elif Length(scalars) < len then
+                    champion := [m1,scalars];
+                    len := Length(scalars);
+                fi;
+                k := Random(Difference([1..Length(gens)],[i]));
+                m1 := m1*gens[k];
+                return improvegenerator(m1,i,count-1,len);
+            fi;
+        fi;
+    end;
+
 
     # start with 2 random elements,  at most 10 tries
     tries := 0;
-    gens  := [];
+    gens  := ShallowCopy(GeneratorsOfGroup(grp));
+    if Length(gens) = 1 then
+        Add(gens,PseudoRandom(grp));
+    fi;
+    #We will randomize the generating set in the hope that we obtain generators preserving fewer
+    #scalars.
+     
+    scalars := [];
     field := FieldOfMatrixGroup(grp);
-    while Length(gens) < 2  do
-        tries := tries + 1;
-        if tries > 10  then return false;  fi;
-        m1 := PseudoRandom(grp);
-        a1 := ClassicalForms_ScalarMultipleDual(field,m1);
-        if IsList(a1) and a1[1]=1 then
-            a1:=a1[2];
-            Add(gens, m1*a1^-1);
+ 
+    newgens := ShallowCopy(gens);
+        
+    for i in [1..Length(gens)] do 
+        champion := [gens[i],AsList(Group(PrimitiveElement(field)))];
+        len := Length(champion[2]);
+        res := improvegenerator(gens[i],i,10,len);
+        if res = false then
+            return false; #The group does not preserve a bilinear form modulo scalars
         fi;
+        newgens[i] := res[1];
+        scalars[i] := res[2];
     od;
-    new := GModuleByMats( gens, field );
 
-    # the module must act absolutely irreducible
-    while not MTX.IsAbsolutelyIrreducible(new)  do
-        for i  in [ 1 .. 2 ]  do
-            repeat
-                tries := tries + 1;
-                if tries > 10  then return false;  fi;
-                m1 := PseudoRandom(grp);
-                a1 := ClassicalForms_ScalarMultipleDual(field,m1);
-            until IsList(a1) and a1[1]=1;
-            a1:=a1[2];
-            Add(gens, m1*a1^-1);
-        od;
-        new := GModuleByMats( gens, field );
-    od;
-    return new;
+    return [newgens,scalars];
+
   end );
 
 
@@ -435,76 +512,105 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm,
 
 #############################################################################
 ##
-#F  ClassicalForms_InvariantFormDual( <module>, <dmodule> )
+#F  ClassicalForms_InvariantFormDual( <gens_scalars> )
+#   We generate the module by generators stored in gens_scalars and we know
+#   that this module is the module of the original group. Then we construct
+#   all possible dual modules according to the list stored in gens_scalars. 
+#   Then we check which ones yield bilinear forms.
 ##
-ClassicalForms_InvariantFormDual := function( module, dmodule )
+ClassicalForms_InvariantFormDual := function( gens_scalars )
     local   hom,  scalars,  form,  iform,  identity,  field,  root,
-            q,  i,  m,  a,  quad,  sgn;
+            q,  i,  m,  a,  quad,  sgn, gmodule, forms, biglist, x,
+            dmodule, gens, scale_gens, module, output, isform, pair;
 
     # <dmodule> acts absolutely irreducible without scalars
-    hom := MTX.Homomorphisms( dmodule, DualGModule(dmodule) );
-    if 0 = Length(hom)  then
-        return false;
-    elif 1 < Length(hom)  then
-        Error( "module acts absolutely irreducibly but two forms found" );
-    fi;
-    Info( InfoForms, 1, "found homomorphism between V and V^*\n" );
-
+    field := FieldOfMatrixGroup(Group(gens_scalars[1]));
+    gmodule := GModuleByMats(gens_scalars[1],field);
+    forms := [];
+    biglist := Cartesian(gens_scalars[2]);
+    gens := gens_scalars[1];
+    for x in biglist do 
+        scale_gens := List([1..Length(gens)],i->gens[i] / x[i]);
+        dmodule := DualGModule(GModuleByMats(scale_gens,field)); 
+        hom := MTX.Homomorphisms( gmodule, dmodule);
+        #if 0 = Length(hom)  then
+        #    return false;
+        #elif 1 < Length(hom)  then
+        #    Error( "module acts absolutely irreducibly but two forms found" );
+        #fi;
+        Info( InfoForms, 1, "found homomorphism between V and V^*\n" );
+        Append(forms,List(hom,i->[i,x]));
+    od;
+    #TO DO: get rid of these checks in the final version.
     # make sure that the forms commute with the generators of <module>
-    scalars  := [];
-    form     := hom[1];
-    iform    := form^-1;
-    identity := One(form);
-    field   :=  MTX.Field(module);
+    # forms is a list now. We should run the following checks for each of the elements in forms.
+    
+    output := [];
     root    :=  PrimitiveRoot(field);
     q        := Size(field);
-    for i  in MTX.Generators(module)  do
-        m := i * form * TransposedMat(i) * iform;
-        a := m[1,1];
-        if m <> a*identity  then
-            Info(InfoForms, 1,
-                "form is not invariant under all generators\n" );
-            return false;
-        fi;
-        a := NthRoot(field,a,2);
-        Add( scalars, a );
-    od;
 
-    # check the type of form
-    if TransposedMat(form) = -form  then
-        Info(InfoForms, 1, "form is symplectic\n" );
-        if Characteristic(field) = 2  then
-            quad := ClassicalForms_QuadraticForm2(
-                field, form, MTX.Generators(module), scalars );
+    scalars  := gens_scalars[2];
+
+    #
+
+    for pair in forms do
+        form := pair[1];
+        scalars  := pair[2];
+        iform    := form^-1;
+        identity := One(form);
+        isform := true;
+        for i in [1..Length(gens)] do
+            m := gens[i] * form * TransposedMat(gens[i]) * iform;
+            a := m[1,1]; 
+#            Print(a=scalars[i],"\n");
+            if m <> a*identity  then
+                Info(InfoForms, 1,
+                    "form is not invariant under all generators\n" );
+                isform := false;
+                continue;
+            fi;
+         od;
+
+        # check the type of form, replace this afterwards with default forms constructors. Then also join the two for loops.
+        
+        if isform = false then
+            continue;
+        elif TransposedMat(form) = -form  then
+            Info(InfoForms, 1, "form is symplectic\n" );
+            if Characteristic(field) = 2  then
+                quad := ClassicalForms_QuadraticForm2(
+                field, form, gens, scalars );
             if quad = false  then
-                return [ "symplectic", form, scalars ];
-            elif MTX.Dimension(module) mod 2 = 1  then
+                Add(output, [ "symplectic", form, scalars ]);
+            elif MTX.Dimension(gmodule) mod 2 = 1  then
                 Error( "no quadratic form but odd dimension" );
             elif ClassicalForms_Signum2( field, form, quad ) = -1  then
-                return [ "orthogonalminus", form, scalars, quad ];
+                Add(output, [ "orthogonalminus", form, scalars, quad ]);
             else
-                return [ "orthogonalplus", form, scalars, quad ];
+                Add(output, [ "orthogonalplus", form, scalars, quad ]);
             fi;
         else
-            return [ "symplectic", form, scalars ];
+            Add(output,[ "symplectic", form, scalars ]);
         fi;
     elif TransposedMat(form) = form  then
         Info(InfoForms, 1, "form is symmetric\n" );
         quad := ClassicalForms_QuadraticForm( field, form );
-        if MTX.Dimension(module) mod 2 = 1  then
-            return [ "orthogonalcircle", form, scalars, quad ];
+        if MTX.Dimension(gmodule) mod 2 = 1  then
+            Add(output, [ "orthogonalcircle", form, scalars, quad ]);
         else
             sgn := ClassicalForms_Signum( field, form, quad );
             if sgn[1] = -1  then
-                return [ "orthogonalminus", form, scalars, quad, sgn[2] ];
+                Add(output, [ "orthogonalminus", form, scalars, quad, sgn[2] ]);
             else
-                return [ "orthogonalplus", form, scalars, quad, sgn[2] ];
+                Add(output, [ "orthogonalplus", form, scalars, quad, sgn[2] ]);
             fi;
         fi;
     else
         Info( InfoForms, 1,"unknown form\n" );
-        return [ "unknown", "dual", form, scalars ];
+        Add(output, [ "unknown", "dual", form, scalars ]);
     fi;
+    od;
+    return output;
 end;
 
 
@@ -562,7 +668,7 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     if 0 = Length(hom)  then
         return false;
     elif 1 < Length(hom)  then
-        Error( "module acts absolutely irreducibly but two form found" );
+        Error( "module acts absolutely irreducibly but two forms found" );
     fi;
     Info( InfoForms, 1,"found homomorphism between V and (V^*)^frob\n" );
 
@@ -863,8 +969,11 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
 InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
   function( grp )
     local   forms, field, i, g, qq, c, module,  invariantforms,
-            dmodule, fmodule, form, y, newform, newforms;
+            gens_scalars, fmodule, form, y, newform, newforms, bilinearforms;
+    
     field := DefaultFieldOfMatrixGroup(grp);
+
+    # remember to rename Dual to Bilinaer and Frobenius to Hermitian.
 
     forms := rec();
     forms.field := field;
@@ -877,25 +986,25 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
 
     # set the possibilities
     forms.maybeDual      := true;
-    forms.maybeFrobenius := DegreeOverPrimeField(field) mod 2 = 0;
+    forms.maybeFrobenius := IsEvenInt(DegreeOverPrimeField(field));
 
     if forms.maybeFrobenius  then
         qq := Characteristic(field)^(DegreeOverPrimeField(field)/2);
     fi;
 
     # We first perform some inexpensive tests with a few random elements
-    for i in [1 .. 8]  do
-        g := PseudoRandom(grp);
-        if forms.maybeDual or forms.maybeFrobenius  then
-           PossibleClassicalForms( grp, g, forms );
-        fi;
-    od;
+    #for i in [1 .. 8]  do
+    #    g := PseudoRandom(grp);
+    #    if forms.maybeDual or forms.maybeFrobenius  then
+    #       PossibleClassicalForms( grp, g, forms );
+    #    fi;
+    #od;
 
     # if all forms are excluded then we are finished
-    if not forms.maybeDual and not forms.maybeFrobenius  then
-        i := NrRows(One(g));
-        return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
-    fi;
+    #if not forms.maybeDual and not forms.maybeFrobenius  then
+    #    i := NrRows(One(g));
+    #    return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
+    #fi;
 
     # <grp> must act absolutely irreducibly
     if not MTX.IsAbsolutelyIrreducible(module)  then
@@ -905,9 +1014,9 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
     fi;
 
     # try to find generators without scalars
-    if forms.maybeDual  then
-        dmodule := ClassicalForms_GeneratorsWithoutScalarsDual(grp);
-        if dmodule = false  then
+    if forms.maybeDual then
+        gens_scalars := ClassicalForms_GeneratorsWithoutScalarsDual(grp);
+        if gens_scalars = false then #happens if the group does not preserve a bilinear form modulo scalars
             forms.maybeDual := false;
         fi;
     fi;
@@ -920,9 +1029,9 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
 
     # now try to find an invariant form
     if forms.maybeDual  then
-        form := ClassicalForms_InvariantFormDual(module,dmodule);
-        if form <> false  then
-            Add( forms.invariantforms, form );
+        bilinearforms := ClassicalForms_InvariantFormDual(gens_scalars);
+        if bilinearforms <> false  then
+            Append( forms.invariantforms, bilinearforms );
         else
             forms.maybeDual := false;
         fi;
