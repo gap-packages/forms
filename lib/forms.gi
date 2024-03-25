@@ -1770,10 +1770,7 @@ InstallMethod( IsOrthogonalMatrix, [IsFFECollColl],
 
 InstallMethod( IsHermitianMatrix, [IsFFECollColl, IsField],
   function(m,f)
-    local t,n;
-    t := Sqrt(Size(f));
-    n := NrRows(m);
-    return m=Forms_HERM_CONJ(m,t);
+    return m=Forms_HERM_CONJ(m,Sqrt(Size(f)));
   end );
 
 #############################################################################
@@ -2400,18 +2397,18 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
         Forms_SwapRows(D, row + 2, k);
 
         b := Z(q)*(A[row+2,row+1])^-1;
-        P := IdentityMat(nplus1, gf);
-        P[row+1,row+2] := b;
-        A := P*A*Forms_HERM_CONJ(P,t);
-        D := P*D;
+        Forms_AddCols(A, row+1, row+2, b^t);
+        Forms_AddRows(A, row+1, row+2, b);
+        Forms_AddRows(D, row+1, row+2, b);
       fi;
 
-      P := IdentityMat(nplus1, gf);
+      a := A[row+1,row+1];
       for i in [row+2..nplus1] do
-         P[i,row+1] := -A[i,row+1]*(A[row+1,row+1])^-1;
+        b := -A[i,row+1]/a;
+        Forms_AddCols(A, i, row+1, b^t);
+        Forms_AddRows(A, i, row+1, b);
+        Forms_AddRows(D, i, row+1, b);
       od;
-      A := P*A*Forms_HERM_CONJ(P,t);
-      D := P*D;
       row := row + 1;
     until row = n;
 
