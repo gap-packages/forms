@@ -1684,18 +1684,22 @@ InstallGlobalFunction(Forms_HERM_CONJ,
 #is that their Gram matrix is always an upper triangular matrix, although the user
 #is free to use any matrix to construct the form.
 
-InstallGlobalFunction(Forms_RESET,
-  function(mat)
-    local n,i,j,A,t;
-    n := NrRows(mat);
-    t := Zero(mat[1,1]);
-    A := MutableCopyMat(mat);
-    for i in [2..n] do
+BindGlobal("Forms_RESET_inplace",
+  function(A)
+    local i,j,t;
+    t := Zero(A[1,1]);
+    for i in [2..NrRows(A)] do
       for j in [1..i-1] do
         A[j,i] := A[j,i] + A[i,j];
         A[i,j] := t;
       od;
     od;
+  end );
+
+InstallGlobalFunction(Forms_RESET,
+  function(A)
+    A := MutableCopyMat(A);
+    Forms_RESET_inplace(A);
     return A;
   end );
 
@@ -2099,7 +2103,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           Forms_SwapCols(A,row,i);
           Forms_SwapRows(A,row,i);
           Forms_SwapRows(D,row,i);
-          A := Forms_RESET(A);
+          Forms_RESET_inplace(A);
 
         # Otherwise: look in other places.
 
@@ -2146,6 +2150,8 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
                   Forms_SwapRows(A,posr,row+1);
                   Forms_SwapRows(D,posr,row+1);
                elif posr = row + 2 then
+                  # TODO: Does this case ever occur? I failed to find examples
+                  # that trigger it
                   P := TransposedMat(PermutationMat((posk,posr,row+1),nplus1));
                   A := P*A*TransposedMat(P);
                   D := P*D;
@@ -2158,30 +2164,39 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
                   Forms_SwapRows(A,posr,row+1);
                   Forms_SwapRows(D,posr,row+1);
                fi;
-               A := Forms_RESET(A);
+               Forms_RESET_inplace(A);
             fi;
             #A[row+1,row+2] <> 0
-            P := IdentityMat(nplus1,gf);
             t := A[row+1,row+2];
-            P[row,row+2] := A[row,row+1]/t;
-            P[row+2,row+2] := 1/t;
-            if row + 3 <= nplus1 then
-              for i in [row+3..nplus1] do
-                P[i,row+2] := A[row+1,i]/t;
-              od;
-            fi;
-            A := P*A*TransposedMat(P);
-            A := Forms_RESET(A);
-            D := P*D;
+
+            b := 1/t;
+            Forms_MultCol(A,row+2,b);
+            Forms_MultRow(A,row+2,b);
+            Forms_MultRow(D,row+2,b);
+
+            b := A[row,row+1];
+            Forms_AddCols(A,row,row+2,b);
+            Forms_AddRows(A,row,row+2,b);
+            Forms_AddRows(D,row,row+2,b);
+
+            for i in [row+3..nplus1] do
+              b := A[row+1,i];
+              Forms_AddCols(A,i,row+2,b);
+              Forms_AddRows(A,i,row+2,b);
+              Forms_AddRows(D,i,row+2,b);
+            od;
+
+            Forms_RESET_inplace(A);
+
             # A has now that special form a_11*X_1^2+X_1*X_2 + G(X_0,X_2,...,X_n);
             b := A[row,row];
-            P :=  IdentityMat(nplus1, gf);
             t :=  Forms_SQRT2(b/A[row+1,row+1],q);
-            P[row,row+1] := t;
-            A := P*A*TransposedMat(P);
-            A := Forms_RESET(A);
-            D := P*D;
+            Forms_AddCols(A,row,row+1,t);
+            Forms_AddRows(A,row,row+1,t);
+            Forms_AddRows(D,row,row+1,t);
+
             #A [row,row] is now 0
+            Forms_RESET_inplace(A);
           fi;
         fi;
       fi;
@@ -2199,40 +2214,41 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
       posk := i;
       # A is a zero row then...
       if dummy then
-        P := IdentityMat(nplus1);
-        P[row,row] := 0;
-        P[r,row] := 1;
         for i in [row+1..r] do
-          P[i,i] := 0;
-          P[i-1,i] := 1;
+          Forms_SwapCols(A,i,i-1);
+          Forms_SwapRows(A,i,i-1);
+          Forms_SwapRows(D,i,i-1);
         od;
-        A := P*A*TransposedMat(P);
-        D := P*D;
         r := r - 1;
       else
         if posk <> row + 1 then
           Forms_SwapCols(A,posk,row+1);
           Forms_SwapRows(A,posk,row+1);
           Forms_SwapRows(D,posk,row+1);
-          A := Forms_RESET(A);
+          Forms_RESET_inplace(A);
         fi;
+
         # Now A[k,k+1] <> 0
-        P := IdentityMat(nplus1, gf);
         t := A[row,row+1];
-        P[row+1,row+1] := P[row+1,row+1]/t;
+        b := 1/t;
+        Forms_MultCol(A,row+1,b);
+        Forms_MultRow(A,row+1,b);
+        Forms_MultRow(D,row+1,b);
         for i in [row+2..nplus1] do
-            P[i,row+1] := A[row,i]/t;
+          b := A[row,i];
+          Forms_AddCols(A,i,row+1,b);
+          Forms_AddRows(A,i,row+1,b);
+          Forms_AddRows(D,i,row+1,b);
         od;
-        D := P*D;
-        A := P*A*TransposedMat(P);
-        A := Forms_RESET(A);
-        P := IdentityMat(nplus1,gf);
+        Forms_RESET_inplace(A);
+
         for i in [row+1..nplus1] do
-          P[i,row] := A[row+1,i];
+          b := A[row+1,i];
+          Forms_AddCols(A,i,row,b);
+          Forms_AddRows(A,i,row,b);
+          Forms_AddRows(D,i,row,b);
         od;
-        D := P*D;
-        A := P*A*TransposedMat(P);
-        A := Forms_RESET(A);
+        Forms_RESET_inplace(A);
         row := row + 2;
       fi;
     od;

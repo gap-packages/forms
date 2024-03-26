@@ -8,12 +8,7 @@ x_1*x_6+x_2*x_5+x_3*x_4
 gap> form := QuadraticFormByPolynomial(pol,r,6);
 < quadratic form >
 gap> B := BaseChangeToCanonical(form);
-[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
-  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], 
-  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+< immutable compressed matrix 6x6 over GF(8) >
 gap> mat := form!.matrix;;
 gap> Display(mat);
  . . . . . 1
