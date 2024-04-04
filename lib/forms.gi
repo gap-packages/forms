@@ -2086,7 +2086,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
     for i in [1..n] do
       zeros[i] := zero;
     od;
-    h := Length(Factors(q));
+    h := DegreeOverPrimeField(gf);
     while row + 2 <= r do
       if not IsZero( A[row,row] ) then
         i := row + 1;
