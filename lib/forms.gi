@@ -2468,7 +2468,7 @@ InstallMethod( BaseChangeSymplectic, [IsMatrix and IsFFECollColl, IsField and Is
 ## with each block equal to J=[[0,1],[-1,0]].
 
  function(m, f)
-   local d, basechange, blocknr, diagpos, pos, j, a, b;
+   local d, basechange, blocknr, diagpos, pos, j, a, b, offset;
    d := NrRows(m);
    basechange := IdentityMat(d, f);
    ConvertToMatrixRep(basechange, f);
@@ -2478,8 +2478,20 @@ InstallMethod( BaseChangeSymplectic, [IsMatrix and IsFFECollColl, IsField and Is
       ## on the diagonal of m
       diagpos := 2 * blocknr - 1;
 
-      ## find first nonzero entry in column diagpos below the diagonal
-      pos := First([diagpos+1..d], j -> not IsZero( m[diagpos,j] ) );
+      for offset in [0..d-diagpos] do
+         ## find first nonzero entry in column diagpos below the diagonal
+         pos := First([diagpos+1..d], j -> not IsZero( m[diagpos+offset,j] ) );
+         if pos <> fail then
+            if offset <> 0 then
+               Forms_SwapRows(basechange, diagpos, diagpos+offset);
+               Forms_SwapRows(m, diagpos, diagpos+offset);
+               Forms_SwapCols(m, diagpos, diagpos+offset);
+               pos := First([diagpos+1..d], j -> not IsZero( m[diagpos,j] ) );
+               Assert(0, pos <> fail);
+            fi;
+            break;
+         fi;
+      od;
 
       # when pos=fail, then only degeneracy is left and the base transition is complete
       if pos=fail then
