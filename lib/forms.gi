@@ -1696,8 +1696,12 @@ BindGlobal("Forms_RESET_inplace",
     od;
   end );
 
+# HACK: ignore extra arguments to Forms_RESET, which used to
+# take three arguments; the other two were redundant, so we dropped them.
+# But the FinInG function also calls Forms_RESET, so for its sake, we
+# ignore the other arguments
 InstallGlobalFunction(Forms_RESET,
-  function(A)
+  function(A,extra...)
     A := MutableCopyMat(A);
     Forms_RESET_inplace(A);
     return A;
