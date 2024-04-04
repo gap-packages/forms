@@ -2015,7 +2015,8 @@ InstallMethod( BaseChangeOrthogonalBilinear,
               Forms_REDUCE4(D,5,r+1,gf);
             fi;
             b := primroot^(LogFFE(-v,primroot)/2);
-            Forms_TRANSFORM_2_BY_2(D,3,4,one/2,-b/2,one/2,b/2);
+            b := 1/(2*b);
+            Forms_TRANSFORM_2_BY_2(D,3,4,one/2,-b,one/2,b);
             if 3 < r then
               Forms_DIFF_2_S(D,5,r+1);
             fi;
@@ -2026,7 +2027,8 @@ InstallMethod( BaseChangeOrthogonalBilinear,
               Forms_REDUCE4(D,3,r+1,gf);
             fi;
             b := primroot^(LogFFE(-v,primroot)/2);
-            Forms_TRANSFORM_2_BY_2(D,1,2,one/2,-b/2,one/2,b/2);
+            b := 1/(2*b);
+            Forms_TRANSFORM_2_BY_2(D,1,2,one/2,-b,one/2,b);
             if 1 < r then
               Forms_DIFF_2_S(D,3,r+1);
             fi;
