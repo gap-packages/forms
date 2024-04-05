@@ -1796,103 +1796,96 @@ InstallMethod( BaseChangeOrthogonalBilinear,
     [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
   function(mat, gf)
     local row,i,j,k,A,b,c,d,P,D,dummy,r,w,s,v,v1,v2,
-          nplus1,q,primroot,one,n;
-    A := MutableCopyMat(mat);
-    ConvertToMatrixRep(A);
-    Assert(0, A = TransposedMat(A));
-    #  n is the projective dimension
-    nplus1 := NrRows(mat);
-    n := nplus1 - 1;
+          n,q,primroot,one;
+    Assert(1, mat = TransposedMat(mat));
+    n := NrRows(mat);
     q := Size(gf);
-    D := IdentityMat(nplus1, gf);
+    one := One(gf);
+
+    A := MutableCopyMat(mat);
+    ConvertToMatrixRep(A, gf);
+    D := IdentityMat(n, gf);
     ConvertToMatrixRep(D, gf);
     row := 0;
-    primroot := PrimitiveRoot(gf);
-    one := One(gf);
 
     # Diagonalize A
 
     repeat
+      row := row + 1;
+
       # We look for a nonzero element on the main diagonal, starting
-      # from row + 1
-      i := 1 + row;
-      while i <= nplus1 and IsZero(A[i,i]) do
+      # from row
+      i := row;
+      while i <= n and IsZero(A[i,i]) do
         i := i + 1;
       od;
 
-      if i = row + 1 then
-        # do nothing since A[row+1,row+1] <> 0
-      elif i <= nplus1 then
-        # swap things around to ensure A[row+1,row+1] <> 0
-        Forms_SwapCols(A, row + 1, i);
-        Forms_SwapRows(A, row + 1, i);
-        Forms_SwapRows(D, row + 1, i);
+      if i = row then
+        # do nothing since A[row,row] <> 0
+      elif i <= n then
+        # swap things around to ensure A[row,row] <> 0
+        Forms_SwapCols(A, row, i);
+        Forms_SwapRows(A, row, i);
+        Forms_SwapRows(D, row, i);
       else
         # All entries on the main diagonal are zero. We now search for a
         # nonzero element off the main diagonal.
-        i := 1 + row;
-        while i <= n do
+        i := row;
+        while i < n do
           k := i + 1;
-          while k <= nplus1 and IsZero(A[i,k]) do
+          while k <= n and IsZero(A[i,k]) do
             k := k + 1;
           od;
-          if k = n + 2 then
+          if k = n + 1 then
              i := i + 1;
           else
              break;
           fi;
         od;
 
-        # if i is n+1, then they are all zero and we can stop.
-        if i = nplus1 then
+        # if i is n, then they are all zero and we can stop.
+        if i = n then
+          row := row - 1;
           r := row;
           break;
         fi;
 
         # Otherwise: Go and fetch...
-        # Put it on A[row+1,row+2]
-        if i <> row + 1 then
-          Forms_SwapCols(A, row + 1, i);
-          Forms_SwapRows(A, row + 1, i);
-          Forms_SwapRows(D, row + 1, i);
+        # Put it on A[row,row+1]
+        if i <> row then
+          Forms_SwapCols(A, row, i);
+          Forms_SwapRows(A, row, i);
+          Forms_SwapRows(D, row, i);
         fi;
 
-        Forms_SwapCols(A, row + 2, k);
-        Forms_SwapRows(A, row + 2, k);
-        Forms_SwapRows(D, row + 2, k);
+        Forms_SwapCols(A, row + 1, k);
+        Forms_SwapRows(A, row + 1, k);
+        Forms_SwapRows(D, row + 1, k);
 
-        #...take care that there is a nonzero on the main diagonal
-        b := A[row+2,row+1]^-1;
-        Forms_AddCols(A,row+1,row+2,b);
-        Forms_AddRows(A,row+1,row+2,b);
-        Forms_AddRows(D,row+1,row+2,b);
-
-      fi;   # end if i = row + 1 ... elif  i <= nplus1 ... else ... fi
+        b := 1/A[row+1,row];
+        Forms_AddCols(A, row, row+1, b);
+        Forms_AddRows(A, row, row+1, b);
+        Forms_AddRows(D, row, row+1, b);
+      fi;   # end if i = row ... elif  i <= n ... else ... fi
 
       # There is no zero element on the main diagonal, make the rest zero.
-      b := -A[row+1,row+1]^-1;
-      for i in [row+2..nplus1] do
-         c := A[i,row+1];
-         if IsZero(c) then continue; fi;
-         c := b * c;
-         Forms_AddCols(A, i, row+1, c);
-         Forms_AddRows(A, i, row+1, c);
-         Forms_AddRows(D, i, row+1, c);
+      c := -A[row,row]^-1;
+      for i in [row+1..n] do
+        b := A[i,row] * c;
+        if IsZero(b) then continue; fi;
+        Forms_AddCols(A, i, row, b);
+        Forms_AddRows(A, i, row, b);
+        Forms_AddRows(D, i, row, b);
       od;
-
-      row := row + 1;
-    until row = n;
-
-    Assert(0, IsDiagonalMat(A));
-    Assert(0, D*mat*TransposedMat(D) = A);
+    until row = n - 1;
 
     # Count how many variables are used.
 
-    if row = n then
-      if not IsZero( A[nplus1,nplus1] ) then
-        r := nplus1;
-      else
+    if row = n - 1 then
+      if not IsZero(A[n,n]) then
         r := n;
+      else
+        r := n - 1;
       fi;
     fi;
 
@@ -1900,6 +1893,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
 
     i := 1;
     s := 0;
+    primroot := PrimitiveRoot(gf);
     while i < r do
       if IsOddInt( LogFFE(A[i,i], primroot) ) then
          j := i + 1;
@@ -2078,20 +2072,18 @@ end);
 InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
     function(mat, gf)
     local A,r,w,row,dummy,i,j,h,D,P,t,a,b,c,d,e,s,
-      zeros,posr,posk,nplus1,q,zero,one,n;
-    # n is the projective dimension
-    nplus1 := NrRows(mat);
-    n := nplus1-1;
-    r := nplus1;
+      zeros,posr,posk,n,q,zero,one;
+    n := NrRows(mat);
+    r := n;
     q := Size(gf);
     row := 1;
     zero := Zero(gf);
     one := One(gf);
     A := MutableCopyMat(mat);
-    D := IdentityMat(nplus1, gf);
+    D := IdentityMat(n, gf);
     ConvertToMatrixRep(D, gf);
     zeros := [];
-    for i in [1..nplus1] do
+    for i in [1..n] do
       zeros[i] := zero;
     od;
     h := Length(Factors(q));
@@ -2158,7 +2150,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
                elif posr = row + 2 then
                   # TODO: Does this case ever occur? I failed to find examples
                   # that trigger it
-                  P := TransposedMat(PermutationMat((posk,posr,row+1),nplus1));
+                  P := TransposedMat(PermutationMat((posk,posr,row+1),n));
                   A := P*A*TransposedMat(P);
                   D := P*D;
                else
@@ -2185,7 +2177,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
             Forms_AddRows(A,row,row+2,b);
             Forms_AddRows(D,row,row+2,b);
 
-            for i in [row+3..nplus1] do
+            for i in [row+3..n] do
               b := A[row+1,i];
               Forms_AddCols(A,i,row+2,b);
               Forms_AddRows(A,i,row+2,b);
@@ -2209,7 +2201,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
       # check for zero row
       dummy := true;
       i := row + 1;
-      while i <= nplus1 do
+      while i <= n do
         if not IsZero( A[row,i] ) then
            dummy := false;
            break;
@@ -2240,7 +2232,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         Forms_MultCol(A,row+1,b);
         Forms_MultRow(A,row+1,b);
         Forms_MultRow(D,row+1,b);
-        for i in [row+2..nplus1] do
+        for i in [row+2..n] do
           b := A[row,i];
           Forms_AddCols(A,i,row+1,b);
           Forms_AddRows(A,i,row+1,b);
@@ -2248,7 +2240,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
         od;
         Forms_RESET_inplace(A);
 
-        for i in [row+1..nplus1] do
+        for i in [row+1..n] do
           b := A[row+1,i];
           Forms_AddCols(A,i,row,b);
           Forms_AddRows(A,i,row,b);
@@ -2355,98 +2347,102 @@ end );
 ##
 InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
   function(mat,gf)
-    local row,i,j,k,A,a,b,P,D,t,r,nplus1,q,one,zero,n,A2,D2;
-    A := MutableCopyMat(mat);
-    n := NrRows(mat) - 1; # projective dimension
-    nplus1 := n + 1;
-    one := One(gf);
-    zero := Zero(gf);
+    local row,i,j,k,A,a,b,P,D,t,r,n,q,one,A2,D2;
+    n := NrRows(mat);
     q := Size(gf);
-    D := IdentityMat(nplus1, gf);
+    one := One(gf);
+    t := Sqrt(q);
+
+    A := MutableCopyMat(mat);
+    ConvertToMatrixRep(A, gf);
+    D := IdentityMat(n, gf);
     ConvertToMatrixRep(D, gf);
     row := 0;
-    t := Sqrt(q);
 
     # Diagonalize A
 
     repeat
+      row := row + 1;
+
       # We look for a nonzero element on the main diagonal, starting
-      # from row + 1
-      i := 1 + row;
-      while i <= nplus1 and IsZero(A[i,i]) do
+      # from row
+      i := row;
+      while i <= n and IsZero(A[i,i]) do
         i := i + 1;
       od;
 
-      if i = row + 1 then
-        # do nothing since A[row+1,row+1] <> 0
-      elif i <= nplus1 then
-        # swap things around to ensure A[row+1,row+1] <> 0
-        Forms_SwapCols(A, row + 1, i);
-        Forms_SwapRows(A, row + 1, i);
-        Forms_SwapRows(D, row + 1, i);
+      if i = row then
+        # do nothing since A[row,row] <> 0
+      elif i <= n then
+        # swap things around to ensure A[row,row] <> 0
+        Forms_SwapCols(A, row, i);
+        Forms_SwapRows(A, row, i);
+        Forms_SwapRows(D, row, i);
       else
         # All entries on the main diagonal are zero. We now search for a
         # nonzero element off the main diagonal.
-        i := 1 + row;
-        while i <= n do
+        i := row;
+        while i < n do
           k := i + 1;
-          while k <= nplus1 and IsZero(A[i,k]) do
+          while k <= n and IsZero(A[i,k]) do
             k := k + 1;
           od;
-          if k = n + 2 then
+          if k = n + 1 then
              i := i + 1;
           else
              break;
           fi;
         od;
 
-        # if i is n+1, then they are all zero and we can stop.
-        if i = nplus1 then
+        # if i is n, then they are all zero and we can stop.
+        if i = n then
+          row := row - 1;
           r := row;
           break;
         fi;
 
         # Otherwise: Go and fetch...
-        # Put it on A[row+1,row+2]
-        if i <> row + 1 then
-          Forms_SwapCols(A, row + 1, i);
-          Forms_SwapRows(A, row + 1, i);
-          Forms_SwapRows(D, row + 1, i);
+        # Put it on A[row,row+1]
+        if i <> row then
+          Forms_SwapCols(A, row, i);
+          Forms_SwapRows(A, row, i);
+          Forms_SwapRows(D, row, i);
         fi;
 
-        Forms_SwapCols(A, row + 2, k);
-        Forms_SwapRows(A, row + 2, k);
-        Forms_SwapRows(D, row + 2, k);
+        Forms_SwapCols(A, row + 1, k);
+        Forms_SwapRows(A, row + 1, k);
+        Forms_SwapRows(D, row + 1, k);
 
-        b := Z(q)*(A[row+2,row+1])^-1;
-        Forms_AddCols(A, row+1, row+2, b^t);
-        Forms_AddRows(A, row+1, row+2, b);
-        Forms_AddRows(D, row+1, row+2, b);
+        b := Z(q)/A[row+1,row];
+        Forms_AddCols(A, row, row+1, b^t);
+        Forms_AddRows(A, row, row+1, b);
+        Forms_AddRows(D, row, row+1, b);
       fi;
 
-      a := A[row+1,row+1];
-      for i in [row+2..nplus1] do
-        b := -A[i,row+1]/a;
-        Forms_AddCols(A, i, row+1, b^t);
-        Forms_AddRows(A, i, row+1, b);
-        Forms_AddRows(D, i, row+1, b);
+      # There is no zero element on the main diagonal, make the rest zero.
+      a := -A[row,row]^-1;
+      for i in [row+1..n] do
+        b := A[i,row] * a;
+        if IsZero(b) then continue; fi;
+        Forms_AddCols(A, i, row, b^t);
+        Forms_AddRows(A, i, row, b);
+        Forms_AddRows(D, i, row, b);
       od;
-      row := row + 1;
-    until row = n;
+    until row = n - 1;
 
-   # Count how many variables have been used
+    # Count how many variables have been used
 
-    if row = n then
-      if not IsZero(A[nplus1,nplus1]) then
-         r := nplus1;
+    if row = n - 1 then
+      if not IsZero(A[n,n]) then
+        r := n;
       else
-         r := n;
+        r := n - 1;
       fi;
     fi;
-    r := r - 1;
+
     # Take care that the diagonal elements become 1.
 
-    for i in [1..r+1] do
+    for i in [1..r] do
       a := A[i,i];
       if not IsOne(a) then
         # find an b element with norm b*b^t = b^(t+1) equal to a
@@ -2454,7 +2450,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
         Forms_MultRow(D,i,1/b);
       fi;
     od;
-    return [D,r];
+    return [D,r-1];
 end );
 
 #############################################################################
@@ -2895,7 +2891,8 @@ InstallMethod( EvaluateForm,  "for an hermitian form and a pair of matrices",
     gf := f!.basefield;
     t := Sqrt(Size(gf));
     wCONJ := MutableTransposedMat(w);
-    m := NrRows(wCONJ); n := NrCols(wCONJ);
+    m := NrRows(wCONJ);
+    n := NrCols(wCONJ);
     for i in [1..m] do
       for j in [1..n] do
         wCONJ[i,j] := wCONJ[i,j]^t;
