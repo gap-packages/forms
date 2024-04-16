@@ -196,6 +196,23 @@ gap> mat:= IdentityMat( 3, GF(7) );;
 gap> g:= GO( 3, 7, mat );;
 gap> InvariantQuadraticForm( g ).matrix = mat;
 true
+gap> mat:= IdentityMat( 3, GF(257) );;
+gap> g:= GO( 3, 257, mat );;
+gap> InvariantQuadraticForm( g ).matrix = mat;
+true
+
+# Increase the code coverage.
+gap> mat:= IdentityMat( 3, GF(5) );;
+gap> _IsEqualModScalars( mat, Z(5) * mat );
+true
+gap> _IsEqualModScalars( mat, Zero( mat ) );
+false
+gap> _IsEqualModScalars( Zero( mat ), Zero( mat ) );
+true
+gap> _IsEqualModScalars( mat, IdentityMat( 2, GF(5) ) );
+false
+gap> _IsEqualModScalars( mat, NullMat( 3, 2, GF(5) ) );
+false
 
 ##
 gap> STOP_TEST( "classic.tst" );
