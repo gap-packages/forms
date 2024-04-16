@@ -1,4 +1,4 @@
-#@local is_equal, q, F, d, es, e, g, stored, pi, permmat, form, gg, F2
+#@local is_equal, q, F, d, es, e, g, stored, pi, permmat, form, gg, F2, mat
 
 gap> START_TEST( "Forms: classic.tst" );
 
@@ -189,6 +189,30 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >        fi;
 >      od;
 >    od;
+
+# Test a form given by a matrix that cannot be transformed to the
+# default matrix with a base change.
+gap> mat:= IdentityMat( 3, GF(7) );;
+gap> g:= GO( 3, 7, mat );;
+gap> InvariantQuadraticForm( g ).matrix = mat;
+true
+gap> mat:= IdentityMat( 3, GF(257) );;
+gap> g:= GO( 3, 257, mat );;
+gap> InvariantQuadraticForm( g ).matrix = mat;
+true
+
+# Increase the code coverage.
+gap> mat:= IdentityMat( 3, GF(5) );;
+gap> _IsEqualModScalars( mat, Z(5) * mat );
+true
+gap> _IsEqualModScalars( mat, Zero( mat ) );
+false
+gap> _IsEqualModScalars( Zero( mat ), Zero( mat ) );
+true
+gap> _IsEqualModScalars( mat, IdentityMat( 2, GF(5) ) );
+false
+gap> _IsEqualModScalars( mat, NullMat( 3, 2, GF(5) ) );
+false
 
 ##
 gap> STOP_TEST( "classic.tst" );
