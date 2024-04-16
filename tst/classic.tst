@@ -1,4 +1,4 @@
-#@local is_equal, q, F, d, es, e, g, stored, pi, permmat, form, gg, F2
+#@local is_equal, q, F, d, es, e, g, stored, pi, permmat, form, gg, F2, mat
 
 gap> START_TEST( "Forms: classic.tst" );
 
