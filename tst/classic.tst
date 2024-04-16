@@ -190,5 +190,12 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >      od;
 >    od;
 
+# Test a form given by a matrix that cannot be transformed to the
+# default matrix with a base change.
+gap> mat:= IdentityMat( 3, GF(7) );;
+gap> g:= GO( 3, 7, mat );;
+gap> InvariantQuadraticForm( g ).matrix = mat;
+true
+
 ##
 gap> STOP_TEST( "classic.tst" );
