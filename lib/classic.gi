@@ -12,6 +12,37 @@ if not IsBound(IsMatrixOrMatrixObj) then
     BindGlobal("IsMatrixOrMatrixObj", IsMatrixObj);
 fi;
 
+# We cannot use the function 'IsEqualProjective' from the recog package
+# because the matrices that describe forms can have zero rows.
+BindGlobal( "_IsEqualModScalars",
+    function( mat1, mat2 )
+    local m, n, i, j, s;
+
+    m:= NrRows( mat1 );
+    if m <> NrRows( mat2 ) then
+      return false;
+    fi;
+    n:= NrCols( mat1 );
+    if n <> NrCols( mat2 ) then
+      return false;
+    fi;
+    for i in [ 1 .. m ] do
+      for j in [ 1 .. n ] do
+        if not IsZero( mat1[ i, j ] ) then
+          s:= mat2[ i, j ] / mat1[ i, j ];
+          if IsZero( s ) then
+            return false;
+          elif IsRowListMatrix( mat1 ) and IsRowListMatrix( mat2 ) then
+            # separate case for performance reasons
+            return ForAll( [ 1 .. m ], i -> s * mat1[i] = mat2[i] );
+          fi;
+          return s * mat1 = mat2;
+        fi;
+      od;
+    od;
+    return IsZero( mat2 );
+end );
+
 BindGlobal("Forms_OrthogonalGroup",
     function( g, form )
     local stored, gf, d, wanted, mat1, mat2, mat, matinv, gens, gg;
@@ -31,8 +62,9 @@ BindGlobal("Forms_OrthogonalGroup",
     wanted:= QuadraticFormByMatrix( stored, gf );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ) ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ) ) then
+    if not _IsEqualModScalars(
+               Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ) ),
+               Forms_RESET( mat2 * stored * TransposedMat( mat2 ) ) ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
     mat:= mat2^-1 * mat1;
@@ -75,7 +107,7 @@ end );
 ##  'GeneralOrthogonalGroup' is a plain function that is defined in the GAP
 ##  library.
 ##  It calls 'GeneralOrthogonalGroupCons',
-##  thus we have to declare the variants involving a quadratic form,
+##  thus we have to declare the variants involving a form,
 ##  and install the corresponding methods.
 ##
 Perform(
@@ -215,7 +247,7 @@ InstallMethod( GeneralOrthogonalGroupCons,
 ##  'SpecialOrthogonalGroup' is a plain function that is defined in the GAP
 ##  library.
 ##  It calls 'SpecialOrthogonalGroupCons',
-##  thus we have to declare the variants involving a quadratic form,
+##  thus we have to declare the variants involving a form,
 ##  and install the corresponding methods.
 ##
 Perform(
@@ -354,7 +386,7 @@ InstallMethod( SpecialOrthogonalGroupCons,
 #O  Omega( [<filt>, ][<e>, ]<d>, <R>, <form> )
 ##
 ##  'Omega' is an operation hat is defined in the GAP library.
-##  Thus we have to declare the variants involving a quadratic form,
+##  Thus we have to declare the variants involving a form,
 ##  and install the corresponding 'Omega' methods that call 'OmegaCons'.
 ##
 ##  Install the methods involving <form>, which may be either a matrix or
@@ -493,7 +525,7 @@ end );
 ##  'GeneralUnitaryGroup' is a plain function that is defined in the GAP
 ##  library.
 ##  It calls 'GeneralUnitaryGroupCons',
-##  thus we have to declare the variants involving a quadratic form,
+##  thus we have to declare the variants involving a form,
 ##  and install the corresponding methods.
 ##
 Perform(
@@ -622,7 +654,7 @@ end );
 ##  'SpecialUnitaryGroup' is a plain function that is defined in the GAP
 ##  library.
 ##  It calls 'SpecialUnitaryGroupCons',
-##  thus we have to declare the variants involving a quadratic form,
+##  thus we have to declare the variants involving a form,
 ##  and install the corresponding methods.
 ##
 Perform(
@@ -752,7 +784,7 @@ end );
 ##  'SymplecticGroup' is a plain function that is defined in the GAP
 ##  library.
 ##  It calls 'SymplecticGroupCons',
-##  thus we have to declare the variants involving a quadratic form,
+##  thus we have to declare the variants involving a form,
 ##  and install the corresponding methods.
 ##
 Perform(
