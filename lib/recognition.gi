@@ -82,6 +82,71 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
 
 #############################################################################
 ##
+#F  ClassicalForms_PossibleScalarsSesquilinear( <field>, <mat>, <frob> )
+# Very important: this function is meant to be called *only* for
+# sesquilinear forms, that means, the "bar map" is the argument <frob>,
+# which is the identity if we are looking for a bilinear form, and
+# the involutory field automorphism in case of a hermitian form.
+# This function returns [i0,a] such that if <mat> preserves a sesquilinear form B
+# modulo scalars then the scalar lambda for which mat*B*(mat^T)^frob = lambda*B
+# satisfies lambda^i0 = a
+##
+InstallGlobalFunction( ClassicalForms_PossibleScalarsSesquilinear,
+ function( F, M, frob )
+    local cpol, d, c, z, I, t, a, l, q, i0, Minv;
+
+    # compute the characteristic polynomial of <M>
+    cpol := CharacteristicPolynomial(M);
+
+    # get the position of the non-zero coefficients
+    d := Degree(cpol);
+    c := CoefficientsOfUnivariatePolynomial(cpol);
+    z := Zero(F);
+    q := Size(F);
+    I := Filtered( [ 0 .. d ],  x -> c[x+1] <> z );
+
+    #Lemma: Trace(M) <> z implies that Trace(M^*) <> z.
+
+    Minv := M^-1;
+    if Trace(M) = z and Trace(Minv) <> z or
+       Trace(M) <> z and Trace(Minv) = z then
+        return false;
+    fi;
+    
+    # make sure that <d> and <d>-i both occur, i.e. check that the support of cpol is symmetric
+    
+    if ForAny( I, x -> not (d-x) in I )  then
+        return false;
+    fi;
+
+    # we need gcd one in order to get alpha exactly (ignoring +-)
+    Add(I,q-1);
+    t := GcdRepresentation(I);
+    i0 := I*t;
+
+    #Lemma 1: if g preserves a form modulo lambda then c[d-I](c_0^frob) = (c_i^frob) lambda^i.
+    #cpol = c_0 +c_1 X + \ldots + c_d X^d
+    #l will be the list of the lambda^i's.
+    l:=List([1..Length(I)-1], x ->((c[1]^frob)*c[d-I[x]+1]/(c[I[x]+1]^frob))); #here is the line with identity field automorphism!
+
+    a:=Product([1..Length(I)-1], x->l[x]^t[x]);
+    # Now the scalar $\lambda$ satisfies $\lambda^{i_0}=a$
+
+    # check: $\forall_i: c_{d-i}c_0^frob=c_i^frob\lambda^i
+    # if any of the conditions from Lemma 1 fail, g does not preserve the form modulo this lambda.
+    if ForAny([1..Length(I)-1],x->(l[x]<>a^QuoInt(I[x],i0))) then
+        Info( InfoForms, 1, "Characteristic polynomial proves that there is no scalar\n" );
+      return false;
+    fi;
+
+    return [i0,a];
+  end );
+
+
+
+
+#############################################################################
+##
 #F  ClassicalForms_GeneratorsWithoutScalarsFrobenius( grp )
 ##
 InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsFrobenius,
@@ -523,33 +588,48 @@ TransposedFrobeniusMat := function( mat, qq )
     return mat;
 end;
 
-DualFrobeniusGModule := function(module)
-local   F,  k,  dim,  mats,  dmats,  qq,  i,  j,  l;
 
-  if SMTX.IsZeroGens(module) then
-    return GModuleByMats([],module.dimension,SMTX.Field(module));
-  else
-    F := MTX.Field(module);
-    k := DegreeOverPrimeField(F);
-    if k mod 2 = 1  then
-        Error( "field <F> is not a square" );
+InstallGlobalFunction( DualFrobeniusGModule,
+    function(module,frob)
+    #make sure frob is involution.
+    local   mats,  dmats;
+
+    if SMTX.IsZeroGens(module) then
+        return GModuleByMats([],module.dimension,SMTX.Field(module));
+    else
+        mats  := MTX.Generators(module);
+        dmats := List(mats,i->TransposedMat(i^frob)^-1);
+        return GModuleByMats(dmats,MTX.Field(module));
     fi;
-    dim   := MTX.Dimension(module);
-    mats  := MTX.Generators(module);
-    dmats := List(mats,i->List(i,ShallowCopy));
-    qq    := Characteristic(F) ^ ( k / 2 );
-    for i  in [ 1 .. Length(mats) ]  do
-      for j  in [ 1 .. dim ]  do
-        for l  in [ 1 .. dim ]  do
-          dmats[i][j,l] := mats[i][l,j]^qq;
-        od;
-      od;
-      dmats[i]:=ImmutableMatrix(F,dmats[i]);
-    od;
+end );
 
-    return GModuleByMats(List(dmats,i->i^-1),F);
-  fi;
-end;
+#DualFrobeniusGModule := function(module)
+#local   F,  k,  dim,  mats,  dmats,  qq,  i,  j,  l;
+#
+#  if SMTX.IsZeroGens(module) then
+#    return GModuleByMats([],module.dimension,SMTX.Field(module));
+#  else
+#    F := MTX.Field(module);
+#    k := DegreeOverPrimeField(F);
+#    if k mod 2 = 1  then
+#        Error( "field <F> is not a square" );
+#    fi;
+#    dim   := MTX.Dimension(module);
+#    mats  := MTX.Generators(module);
+#    dmats := List(mats,i->List(i,ShallowCopy));
+#    qq    := Characteristic(F) ^ ( k / 2 );
+#    for i  in [ 1 .. Length(mats) ]  do
+#      for j  in [ 1 .. dim ]  do
+#        for l  in [ 1 .. dim ]  do
+#          dmats[i][j,l] := mats[i][l,j]^qq;
+#        od;
+#      od;
+#      dmats[i]:=ImmutableMatrix(F,dmats[i]);
+#    od;
+#
+#    return GModuleByMats(List(dmats,i->i^-1),F);
+#  fi;
+#end;
 
 
 ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
