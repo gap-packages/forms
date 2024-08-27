@@ -371,7 +371,7 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
     od;
 
     # and return a solution
-    Print("Rank of e:",RankMat(e),"\n");
+    #Print("Rank of e:",RankMat(e),"\n");
     e := SolutionMat( TransposedMat(e), b );
     if e <> fail  then
         for i  in [ 1 .. dim ]  do
