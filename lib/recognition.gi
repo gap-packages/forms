@@ -896,3 +896,47 @@ ClassicalForms_InvariantFormDual := function( module, dmodule )
         return [ "unknown", "dual", form, scalars ];
     fi;
 end;
+
+#For compatibility reasons with recog
+#############################################################################
+##
+#F  ClassicalForms_InvariantFormFrobenius( <module>, <fmodule> )
+##
+TransposedFrobeniusMat := function( mat, qq )
+    local   i,  j;
+    mat:=MutableTransposedMat(mat);
+    for i  in [ 1 .. NrRows(mat) ]  do
+        for j  in [ 1 .. NrCols(mat) ]  do
+            mat[i,j] := mat[i,j]^qq;
+        od;
+    od;
+    return mat;
+end;
+
+DualFrobeniusGModule := function(module)
+local   F,  k,  dim,  mats,  dmats,  qq,  i,  j,  l;
+
+  if SMTX.IsZeroGens(module) then
+    return GModuleByMats([],module.dimension,SMTX.Field(module));
+  else
+    F := MTX.Field(module);
+    k := DegreeOverPrimeField(F);
+    if k mod 2 = 1  then
+        Error( "field <F> is not a square" );
+    fi;
+    dim   := MTX.Dimension(module);
+    mats  := MTX.Generators(module);
+    dmats := List(mats,i->List(i,ShallowCopy));
+    qq    := Characteristic(F) ^ ( k / 2 );
+    for i  in [ 1 .. Length(mats) ]  do
+      for j  in [ 1 .. dim ]  do
+        for l  in [ 1 .. dim ]  do
+          dmats[i][j,l] := mats[i][l,j]^qq;
+        od;
+      od;
+      dmats[i]:=ImmutableMatrix(F,dmats[i]);
+    od;
+
+    return GModuleByMats(List(dmats,i->i^-1),F);
+  fi;
+end;
