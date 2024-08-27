@@ -913,6 +913,11 @@ TransposedFrobeniusMat := function( mat, qq )
     return mat;
 end;
 
+#For compatibility reasons with recog
+#############################################################################
+##
+#F ClassicalForms_InvariantFormFrobenius( module, fmodule )
+##
 ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     local   fro,  hom,  form,  q,  qq,  k,  a,  scalars,  iform,
             identity,  field,  root,  i,  m,  j;
