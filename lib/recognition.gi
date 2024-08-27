@@ -913,3 +913,60 @@ TransposedFrobeniusMat := function( mat, qq )
     return mat;
 end;
 
+ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
+    local   fro,  hom,  form,  q,  qq,  k,  a,  scalars,  iform,
+            identity,  field,  root,  i,  m,  j;
+
+    # <fmodule> acts absolutely irreducible without scalars
+    fro := DualFrobeniusGModule(fmodule);
+    hom := MTX.Homomorphisms(fmodule, fro);
+    if 0 = Length(hom)  then
+        return false;
+    elif 1 < Length(hom)  then
+        Error( "module acts absolutely irreducibly but two form found" );
+    fi;
+    Info( InfoForms, 1,"found homomorphism between V and (V^*)^frob\n" );
+
+    # invariant form might return a scalar multiple of our form
+    field    := MTX.Field(module);
+    form := hom[1];
+    q  := Size(field);
+    qq := Characteristic(field)^(DegreeOverPrimeField(field)/2);
+    k  := PositionNonZero(form[1]);
+    a  := form[1,k] / form[k,1]^qq;
+    a := NthRoot(field,a,(1-qq) mod (q-1));
+    if a = fail then
+      return false;
+    fi;
+    form := form * a^-1;
+
+
+    # make sure that the forms commute with the generators of <module>
+    scalars  := [];
+    iform    := form^-1;
+    identity := One(form);
+    root     := PrimitiveRoot(field);
+    for i  in MTX.Generators(module)  do
+        m := i * form * TransposedFrobeniusMat(i,qq) * iform;
+        a := m[1,1];
+        if m <> a*identity  then
+            Info(InfoForms, 1,
+                 "form is not invariant under all generators\n" );
+            return false;
+        fi;
+        a:=NthRoot(field,a,qq+1);
+        Add( scalars, a );
+    od;
+
+    # check the type of form
+    for i  in [ 1 .. NrRows(form) ]  do
+        for j  in [ 1 .. NrRows(form) ]  do
+            if form[i,j]^qq <> form[j,i]  then
+                Info(InfoForms, 1, "unknown form\n" );
+                return [ "unknown", "frobenius", form, scalars ];
+            fi;
+        od;
+    od;
+    return [ "unitary", form, scalars ];
+
+end;
