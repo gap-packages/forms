@@ -29,65 +29,34 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
             "trivialform_prop", "wittindex", "typeofform", "orthogonaltovector"];
 
-files := ["preservedforms2"];
-
-files := ["conic"];
-
-#initialize directorynames
-#exampledir = dir where .g files are located : ".../pkg/forms/examples/gap"
-#preambledir = directory where 'preamble_sws.g is found' :  ".../pkg/forms/examples"
-#outputdir = directory to write '.out' files: ".../pkg/forms/examples/output"
-#name of script to start gap version. The user has to fill this in!
+#files := ["preservedforms2"];
 
 homedir := DirectoryCurrent();
-exampledir := DirectoriesPackageLibrary("forms","examples/gap")[1];
-preambledir := DirectoriesPackageLibrary("forms","examples/")[1];
-outputdir := DirectoriesPackageLibrary("forms","examples/output")[1];
+scriptfile := Filename(homedir,"generate_output_forms.sh");
+PrintTo("");
 
-#paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
-paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
-args := JoinStringsWithSeparator(["-l",paths," -L forms.ws"," -o 4G"]," ");
-args := ["-l",paths,"-L","forms.ws","-o","4G"];
-extension := ".out\";";
-cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"examples\/output\"\)\[1\]\;";
-
-#create .out files using the saved workspace
-#IMPORTANT: here we suppose that the script to start up our favorite version of
-#GAP is called 'gap4r4', and is located in '/usr/bin'. Change the code if this is not true!
-#you certainly now the name of the script, since you started gap. To find the
-#dir, just issue in the gap session that is running:
-
-#Exec("which gap4r4"); #for UNIX only
-
-Exec("which gap4r13.1");
 gapstart := "gap4r13.1"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
+pathsstr := Concatenation("\"",paths,"\"");
+exampledir := DirectoriesPackageLibrary("forms","examples/gap")[1];
+outputdir := DirectoriesPackageLibrary("forms","examples/output")[1];
+
+filename := "conic";
+#cmd := ["gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g]
+#gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g
+
 
 for filename in files do
-  Print("Now converting file: ", filename, "\n");
-  stream := InputOutputLocalProcess( homedir, gap, args);
-  #cmd := Concatenation("file := \"",filename,".out\";");
-  cmd := Concatenation("file := \"",filename,extension);
-  WriteLine(stream,cmd);
-  #cmd := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"examples\/output\"\)\[1\]\;";
-  WriteLine(stream,cmddir);
-  preamble := Filename(preambledir,"preamble_sws.g");
-  preamble_stream := InputTextFile(preamble);
-  cmds := ReadAll(preamble_stream);
-  WriteLine(stream,cmds);
-  repeat
-    str := ReadLine(stream);
-  until str = "true\n";
-  inputfile := Filename(exampledir,Concatenation(filename,".g"));
-  input_stream := InputTextFile(inputfile);
-  cmd := ReadLine(input_stream);
-  while cmd <> fail do
-    WriteAll(stream,cmd);
-    cmd := ReadLine(input_stream);
-    ReadAll(stream);
-  od;
-  repeat until ReadAll(stream)=fail; #new since oct 2015.
+inputfile := Filename(exampledir,Concatenation(filename,".g"));
+outputfile := Filename(outputdir,Concatenation(filename,".out"));
+outputfilestr := Concatenation("\"LogTo(","\\\"",outputfile,"\\\"",");\"");
+cmdlist := [gapstart,"-l",pathsstr,"-L","forms.ws","-o","4G","-c",outputfilestr,"<",inputfile,"\n"];
+cmd := JoinStringsWithSeparator(cmdlist," ");
+AppendTo(scriptfile,cmd);
 od;
+
+filename := "conic";
 
 #create .include files
 #for the include files, some characters will be translated to suitable xml

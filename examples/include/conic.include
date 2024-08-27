@@ -25,7 +25,7 @@ gap> WittIndex( form );
 gap> IsParabolicForm( form );
 true
 gap> RadicalOfForm( form );
-&lt;vector space over GF(2^3), with 0 generators>
+&lt;vector space of dimension 0 over GF(2^3)>
 gap> canonical := IsometricCanonicalForm( form );
 &lt; parabolic quadratic form >
 gap> form = canonical;
