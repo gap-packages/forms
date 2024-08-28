@@ -22,11 +22,27 @@ quit;
 
 #initialisations to create .tst files from .g files in tst directory. Output will be in outputdir.
 
+Make your choice:
+
+#examples files
+files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3","bg_th_ex4",
+            "bg_th_ex5", "bg_th_ex6", "bg_th_ex7", "bg_th_ex8", "bg_th_ex9", "bilformbymatrix",
+            "quadformbymatrix", "hermitianformbymatrix", "bilformbypoly", "quadformbypoly",
+            "hermitianformbypoly", "quadformbybilform", "bilformbyquadform", "assocbilform",
+            "evalform", "radicalofform", "polyofform", "discofform", "pres_sesforms1",
+            "pres_sesforms2", "pres_quadform", "preservedforms2", "basechangehom", "basechangetocanonical",
+            "isometriccanonicalform", "quadformfields", "orthogonaltovector",
+            "istotallysingular", "istotallyisotropic", "isisotropicvector",
+            "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
+            "trivialform_prop", "wittindex", "typeofform", "orthogonaltovector"];
+
+#easy test files
 files := ["test_forms1", "test_forms2", "test_forms3", "test_forms4", "test_forms5",
             "test_forms6","test_forms7", "test_forms8", "test_forms9", "test_forms10",
             "test_forms11", "test_recog", "test_forms12", "test_forms13", "test_forms14",
             "test_forms15", "test_forms16" ];
-            
+           
+#recognition tests
 files := ["test_recog", "test_preservedform"];
 
 homedir := DirectoryCurrent();
@@ -37,12 +53,15 @@ gapstart := "gap4r13.1"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
 paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 pathsstr := Concatenation("\"",paths,"\"");
-sourcedir := DirectoriesPackageLibrary("forms","tst/gap")[1];
-outputdir := DirectoriesPackageLibrary("forms","tst/output")[1];
 
-filename := "conic";
-#cmd := ["gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g]
-#gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g
+#make your choice: for "easy" and "recognition":
+sourcedir := DirectoriesPackageLibrary("forms","tst/gap")[1];
+
+#for examples:
+sourcedir := DirectoriesPackageLibrary("forms","examples/gap")[1];
+
+#continue now
+outputdir := DirectoriesPackageLibrary("forms","tst/output")[1];
 
 for filename in files do
 inputfile := Filename(sourcedir,Concatenation(filename,".g"));
@@ -57,7 +76,15 @@ preambledir := DirectoriesPackageLibrary("forms","examples/")[1];
 outputdir := DirectoriesPackageLibrary("forms","tst/output")[1];
 cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"tst\/output\"\)\[1\]\;";
 
-#subfolder. in this case "easy", "recog", "examples".
+#subfolder. Make your choice:
+
+#for easy "tst/easy"
+sub := "tst/easy";
+
+#for examples
+sub := "tst/examples";
+
+#for recognition:
 sub := "tst/recog";
 
 #create .tst files
@@ -88,6 +115,8 @@ for filename in files do
   AppendTo(o,Concatenation("gap> STOP_TEST(\"",filename,".tst\", 10000 );\n"));
 od;
 
+
+#The following is actually obsolete now. 
 #now write testall.g file.
 
 o := Filename(includedir,"testall.g");
