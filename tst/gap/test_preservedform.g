@@ -8,9 +8,6 @@ x :=
   [ Z(5)^3, 0*Z(5), Z(5)^0, 0*Z(5), Z(5) ] 
  ];;
 grp := go^x;
-forms := PreservedSesquilinearForms( grp );
-form := forms[1];
-mat := GramMatrix(form);
-gens := GeneratorsOfGroup(grp);
-List(gens,x->_IsEqualModScalars(x*mat*TransposedMat(x),mat));
+forms := PreservedSesquilinearForms( grp );;
+TestPreservedSesquilinearForms(grp,forms);
 quit;
