@@ -900,22 +900,6 @@ end;
 #For compatibility reasons with recog
 #############################################################################
 ##
-#F  ClassicalForms_InvariantFormFrobenius( <module>, <fmodule> )
-##
-TransposedFrobeniusMat := function( mat, qq )
-    local   i,  j;
-    mat:=MutableTransposedMat(mat);
-    for i  in [ 1 .. NrRows(mat) ]  do
-        for j  in [ 1 .. NrCols(mat) ]  do
-            mat[i,j] := mat[i,j]^qq;
-        od;
-    od;
-    return mat;
-end;
-
-#For compatibility reasons with recog
-#############################################################################
-##
 #F ClassicalForms_InvariantFormFrobenius( module, fmodule )
 ##
 ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
@@ -975,3 +959,31 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     return [ "unitary", form, scalars ];
 
 end;
+
+#############################################################################
+##
+#O  ScalarsOfPreservedForm( <grp>, <form> )
+##  given <grp> and a list of forms, check whether <grp> preserves <forms> modulo scalars.
+##  This function is meant to return true or the position in the list for which the
+##  test fails.
+##
+InstallGlobalFunction(TestPreservedSesquilinearForms,
+    function(grp,list)
+
+    local form, mat, result, i, fails, gens;
+    gens := GeneratorsOfGroup(grp);
+    fails := [];
+    for i in [1..Length(list)] do
+        form := list[i];
+        mat := GramMatrix(form);
+        result := List(gens,x->_IsEqualModScalars(x*mat*TransposedMat(x),mat));
+        if false in result then
+            Add(fails,i);
+        fi;
+    od;
+    if fails = [] then
+        return true;
+    else
+        return fails;
+    fi;
+end );

@@ -39,6 +39,9 @@ DeclareGlobalFunction( "PossibleClassicalForms" );
 
 DeclareGlobalFunction( "ScalarsOfPreservedForm" );
 
+DeclareGlobalFunction( "TestPreservedSesquilinearForms" );
+
+
 
 #############################################################################
 # Methods (to be used by the user):

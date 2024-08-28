@@ -12,6 +12,22 @@ if not IsBound(IsMatrixOrMatrixObj) then
     BindGlobal("IsMatrixOrMatrixObj", IsMatrixObj);
 fi;
 
+#For compatibility reasons with recog
+#############################################################################
+##
+#F  ClassicalForms_InvariantFormFrobenius( <module>, <fmodule> )
+##
+TransposedFrobeniusMat := function( mat, qq )
+    local   i,  j;
+    mat:=MutableTransposedMat(mat);
+    for i  in [ 1 .. NrRows(mat) ]  do
+        for j  in [ 1 .. NrCols(mat) ]  do
+            mat[i,j] := mat[i,j]^qq;
+        od;
+    od;
+    return mat;
+end;
+
 # We cannot use the function 'IsEqualProjective' from the recog package
 # because the matrices that describe forms can have zero rows.
 BindGlobal( "_IsEqualModScalars",
