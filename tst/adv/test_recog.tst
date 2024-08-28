@@ -10,7 +10,7 @@ SU(4,3)
 gap> forms := PreservedSesquilinearForms(g);
 [ < hermitian form > ]
 gap> TestPreservedSesquilinearForms(g,forms);
-[ 1 ]
+true
 gap> g := SO(1,4,3);
 SO(+1,4,3)
 gap> forms := PreservedSesquilinearForms(g);

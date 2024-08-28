@@ -29,8 +29,7 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
             "bg_th_ex5", "bg_th_ex6", "bg_th_ex7", "bg_th_ex8", "bg_th_ex9", "bilformbymatrix",
             "quadformbymatrix", "hermitianformbymatrix", "bilformbypoly", "quadformbypoly",
             "hermitianformbypoly", "quadformbybilform", "bilformbyquadform", "assocbilform",
-            "evalform", "radicalofform", "polyofform", "discofform", "pres_sesforms1",
-            "pres_sesforms2", "pres_quadform", "preservedforms2", "basechangehom", "basechangetocanonical",
+            "evalform", "radicalofform", "polyofform", "discofform", "pres_quadform", "preservedforms2", "basechangehom", "basechangetocanonical",
             "isometriccanonicalform", "quadformfields", "orthogonaltovector",
             "istotallysingular", "istotallyisotropic", "isisotropicvector",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
@@ -42,8 +41,8 @@ files := ["test_forms1", "test_forms2", "test_forms3", "test_forms4", "test_form
             "test_forms11", "test_recog", "test_forms12", "test_forms13", "test_forms14",
             "test_forms15", "test_forms16" ];
            
-#recognition tests
-files := ["test_recog", "test_preservedform"];
+#advanced tests   #"basechange", "classic",
+files := ["test_recog", "test_preservedform", "test_pres_sesforms1", "test_pres_sesforms2"];
 
 homedir := DirectoryCurrent();
 scriptfile := Filename(homedir,"generate_output_forms_testfiles.sh");
@@ -54,7 +53,7 @@ gap := Filename(Directory("/usr/local/bin/"),gapstart);
 paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 pathsstr := Concatenation("\"",paths,"\"");
 
-#make your choice: for "easy" and "recognition":
+#make your choice: for "easy" and "advanced":
 sourcedir := DirectoriesPackageLibrary("forms","tst/gap")[1];
 
 #for examples:
@@ -84,8 +83,8 @@ sub := "tst/easy";
 #for examples
 sub := "tst/examples";
 
-#for recognition:
-sub := "tst/recog";
+#for advanced:
+sub := "tst/adv";
 
 #create .tst files
 #the nested ifs together with the SizeScreen make sure that input lines (plural),
@@ -116,7 +115,7 @@ for filename in files do
 od;
 
 
-#The following is actually obsolete now. 
+#The following is actually obsolete now.
 #now write testall.g file.
 
 o := Filename(includedir,"testall.g");

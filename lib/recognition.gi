@@ -970,13 +970,14 @@ end;
 InstallGlobalFunction(TestPreservedSesquilinearForms,
     function(grp,list)
 
-    local form, mat, result, i, fails, gens;
+    local form, mat, result, i, fails, gens, aut;
     gens := GeneratorsOfGroup(grp);
     fails := [];
     for i in [1..Length(list)] do
         form := list[i];
         mat := GramMatrix(form);
-        result := List(gens,x->_IsEqualModScalars(x*mat*TransposedMat(x),mat));
+        aut := CompanionAutomorphism(form);
+        result := List(gens,x->_IsEqualModScalars(x*mat*(TransposedMat(x)^aut),mat));
         if false in result then
             Add(fails,i);
         fi;
