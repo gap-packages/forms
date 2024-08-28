@@ -196,56 +196,57 @@ InstallMethod( GeneralOrthogonalGroupCons,
 
     # Create the default generators and form.
     g:= GeneralOrthogonalGroupCons( filt, e, d, q );
-    stored:= InvariantQuadraticForm( g ).matrix;
+    return Forms_OrthogonalGroup( g, form );
+    #stored:= InvariantQuadraticForm( g ).matrix;
 
     # If the prescribed form fits then just return.
-    if stored = form!.matrix then
-      return g;
-    fi;
+    #if stored = form!.matrix then
+    #  return g;
+    #fi;
 
     # Compute a base change matrix.
     # (Check that the canonical forms are equal.)
-    wanted:= QuadraticFormByMatrix( stored, GF(q) );
-    mat1:= BaseChangeToCanonical( form );
-    mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
-      Error( "canonical forms of <form> and <wanted> differ" );
-    fi;
-    mat:= mat2^-1 * mat1;
-    matinv:= mat^-1;
+    #wanted:= QuadraticFormByMatrix( stored, GF(q) );
+    #mat1:= BaseChangeToCanonical( form );
+    #mat2:= BaseChangeToCanonical( wanted );
+    #if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
+    #   Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
+    #  Error( "canonical forms of <form> and <wanted> differ" );
+    #fi;
+    #mat:= mat2^-1 * mat1;
+    #matinv:= mat^-1;
 
-    mat1:= BaseChangeToCanonical( form );
-    mat2:= BaseChangeToCanonical( QuadraticFormByMatrix( stored, GF(q) ) );
-    mat:= mat2^-1 * mat1;
-    matinv:= mat^-1;
+    #mat1:= BaseChangeToCanonical( form );
+    #mat2:= BaseChangeToCanonical( QuadraticFormByMatrix( stored, GF(q) ) );
+    #mat:= mat2^-1 * mat1;
+    #matinv:= mat^-1;
 
     # Create the group w.r.t. the prescribed form.
-    gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
-    gg:= GroupWithGenerators( gens );
+    #gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
+    #gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    #if HasSize( g ) then
+    #  SetSize( gg, Size( g ) );
+    #fi;
 
-    if HasName( g ) then
-      SetName( gg, Name( g ) );
-    fi;
+    #if HasName( g ) then
+    #  SetName( gg, Name( g ) );
+    #fi;
 
-    SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix ) );
-    if HasIsFullSubgroupGLorSLRespectingQuadraticForm( g ) then
-      SetIsFullSubgroupGLorSLRespectingQuadraticForm( gg,
-          IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
-    fi;
+    #SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix ) );
+    #if HasIsFullSubgroupGLorSLRespectingQuadraticForm( g ) then
+    #  SetIsFullSubgroupGLorSLRespectingQuadraticForm( gg,
+    #      IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
+    #fi;
 
-    SetInvariantBilinearForm( gg, rec( matrix:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv ) ) );
-    if q mod 2 = 1 and
-       HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
-      SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
-          IsFullSubgroupGLorSLRespectingBilinearForm( g ) );
-    fi;
+    #SetInvariantBilinearForm( gg, rec( matrix:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv ) ) );
+    #if q mod 2 = 1 and
+    #   HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
+    #  SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
+    #      IsFullSubgroupGLorSLRespectingBilinearForm( g ) );
+    #fi;
 
-    return gg;
+    #return gg;
 end );
 
 
@@ -385,51 +386,53 @@ InstallMethod( SpecialOrthogonalGroupCons,
 
     # Create the default generators and form.
     g:= SpecialOrthogonalGroupCons( filt, e, d, q );
-    stored:= InvariantQuadraticForm( g ).matrix;
+    return Forms_OrthogonalGroup( g, form );
+
+    #stored:= InvariantQuadraticForm( g ).matrix;
 
     # If the prescribed form fits then just return.
-    if stored = form!.matrix then
-      return g;
-    fi;
+    #if stored = form!.matrix then
+    #  return g;
+    #fi;
 
     # Compute a base change matrix.
     # (Check that the canonical forms are equal.)
-    wanted:= QuadraticFormByMatrix( stored, GF(q) );
-    mat1:= BaseChangeToCanonical( form );
-    mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
-      Error( "canonical forms of <form> and <wanted> differ" );
-    fi;
-    mat:= mat2^-1 * mat1;
-    matinv:= mat^-1;
+    #wanted:= QuadraticFormByMatrix( stored, GF(q) );
+    #mat1:= BaseChangeToCanonical( form );
+    #mat2:= BaseChangeToCanonical( wanted );
+    #if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
+    #   Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
+    #  Error( "canonical forms of <form> and <wanted> differ" );
+    #fi;
+    #mat:= mat2^-1 * mat1;
+    #matinv:= mat^-1;
 
     # Create the group w.r.t. the prescribed form.
-    gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
-    gg:= GroupWithGenerators( gens );
+    #gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
+    #gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    #if HasSize( g ) then
+    #  SetSize( gg, Size( g ) );
+    #fi;
 
-    if HasName( g ) then
-      SetName( gg, Name( g ) );
-    fi;
+    #if HasName( g ) then
+    #  SetName( gg, Name( g ) );
+    #fi;
 
-    SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix ) );
-    if HasIsFullSubgroupGLorSLRespectingQuadraticForm( g ) then
-      SetIsFullSubgroupGLorSLRespectingQuadraticForm( gg,
-          IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
-    fi;
+    #SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix ) );
+    #if HasIsFullSubgroupGLorSLRespectingQuadraticForm( g ) then
+    #  SetIsFullSubgroupGLorSLRespectingQuadraticForm( gg,
+    #      IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
+    #fi;
 
-    SetInvariantBilinearForm( gg, rec( matrix:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv ) ) );
-    if q mod 2 = 1 and
-       HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
-      SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
-          IsFullSubgroupGLorSLRespectingBilinearForm( g ) );
-    fi;
+    #SetInvariantBilinearForm( gg, rec( matrix:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv ) ) );
+    #if q mod 2 = 1 and
+    #   HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
+    #  SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
+    #      IsFullSubgroupGLorSLRespectingBilinearForm( g ) );
+    #fi;
 
-    return gg;
+    #return gg;
 end );
 
 
@@ -606,51 +609,53 @@ InstallMethod( OmegaCons,
 
     # Create the default generators and form.
     g:= OmegaCons( filt, e, d, q );
-    stored:= InvariantQuadraticForm( g ).matrix;
+    return Forms_OrthogonalGroup( g, form );
+
+    #stored:= InvariantQuadraticForm( g ).matrix;
 
     # If the prescribed form fits then just return.
-    if stored = form!.matrix then
-      return g;
-    fi;
+    #if stored = form!.matrix then
+    #  return g;
+    #fi;
 
     # Compute a base change matrix.
     # (Check that the canonical forms are equal.)
-    wanted:= QuadraticFormByMatrix( stored, GF(q) );
-    mat1:= BaseChangeToCanonical( form );
-    mat2:= BaseChangeToCanonical( wanted );
-    if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
-       Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
-      Error( "canonical forms of <form> and <wanted> differ" );
-    fi;
-    mat:= mat2^-1 * mat1;
-    matinv:= mat^-1;
+    #wanted:= QuadraticFormByMatrix( stored, GF(q) );
+    #mat1:= BaseChangeToCanonical( form );
+    #mat2:= BaseChangeToCanonical( wanted );
+    #if Forms_RESET( mat1 * form!.matrix * TransposedMat( mat1 ), d, GF(q) ) <>
+    #   Forms_RESET( mat2 * stored * TransposedMat( mat2 ), d, GF(q) ) then
+    #  Error( "canonical forms of <form> and <wanted> differ" );
+    #fi;
+    #mat:= mat2^-1 * mat1;
+    #matinv:= mat^-1;
 
     # Create the group w.r.t. the prescribed form.
-    gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
-    gg:= GroupWithGenerators( gens );
+    #gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
+    #gg:= GroupWithGenerators( gens );
 
-    if HasSize( g ) then
-      SetSize( gg, Size( g ) );
-    fi;
+    #if HasSize( g ) then
+    #  SetSize( gg, Size( g ) );
+    #fi;
 
-    if HasName( g ) then
-      SetName( gg, Name( g ) );
-    fi;
+    #if HasName( g ) then
+    #  SetName( gg, Name( g ) );
+    #fi;
 
-    SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix ) );
-    if HasIsFullSubgroupGLorSLRespectingQuadraticForm( g ) then
-      SetIsFullSubgroupGLorSLRespectingQuadraticForm( gg,
-          IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
-    fi;
+    #SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix ) );
+    #if HasIsFullSubgroupGLorSLRespectingQuadraticForm( g ) then
+    #  SetIsFullSubgroupGLorSLRespectingQuadraticForm( gg,
+    #      IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
+    #fi;
 
-    SetInvariantBilinearForm( gg, rec( matrix:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv ) ) );
-    if q mod 2 = 1 and
-       HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
-      SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
-          IsFullSubgroupGLorSLRespectingBilinearForm( g ) );
-    fi;
+    #SetInvariantBilinearForm( gg, rec( matrix:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv ) ) );
+    #if q mod 2 = 1 and
+    #   HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
+    #  SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
+    #      IsFullSubgroupGLorSLRespectingBilinearForm( g ) );
+    #fi;
 
-    return gg;
+    #return gg;
 end );
 
 
