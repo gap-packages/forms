@@ -27,7 +27,7 @@ files := ["test_forms1", "test_forms2", "test_forms3", "test_forms4", "test_form
             "test_forms11", "test_recog", "test_forms12", "test_forms13", "test_forms14",
             "test_forms15", "test_forms16" ];
             
-files := ["test_preservedform"];
+files := ["test_recog", "test_preservedform"];
 
 homedir := DirectoryCurrent();
 scriptfile := Filename(homedir,"generate_output_forms_testfiles.sh");
@@ -57,10 +57,13 @@ preambledir := DirectoriesPackageLibrary("forms","examples/")[1];
 outputdir := DirectoriesPackageLibrary("forms","tst/output")[1];
 cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"tst\/output\"\)\[1\]\;";
 
+#subfolder. in this case "easy", "recog", "examples".
+sub := "tst/recog";
+
 #create .tst files
 #the nested ifs together with the SizeScreen make sure that input lines (plural),
 #are written back in the tst file as one (long) input line.
-includedir := DirectoriesPackageLibrary("forms","tst")[1];
+includedir := DirectoriesPackageLibrary("forms",sub)[1];
 for filename in files do
   i := Filename(outputdir,Concatenation(filename,".out"));
   o := Filename(includedir,Concatenation(filename,".tst"));
