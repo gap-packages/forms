@@ -41,6 +41,8 @@ DeclareGlobalFunction( "ScalarsOfPreservedForm" );
 
 DeclareGlobalFunction( "TestPreservedSesquilinearForms" );
 
+#helper function for classic.gi
+DeclareGlobalFunction( "TransposedFrobeniusMat" );
 
 
 #############################################################################
