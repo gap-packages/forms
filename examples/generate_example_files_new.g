@@ -33,7 +33,7 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
 
 homedir := DirectoryCurrent();
 scriptfile := Filename(homedir,"generate_output_forms.sh");
-PrintTo("");
+PrintTo(scriptfile,"");
 
 gapstart := "gap4r13.1"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
