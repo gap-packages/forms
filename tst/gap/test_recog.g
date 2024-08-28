@@ -1,4 +1,4 @@
-# test code for recognition
+# test code for recognition, only testing whether no errors are thrown.
 g := Sp(6,3);
 forms := PreservedSesquilinearForms(g);
 g := SU(4,3);
