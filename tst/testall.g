@@ -3,7 +3,7 @@ LoadPackage("forms");
 exclude := [];
 if not IsBound(DescribesInvariantQuadraticForm) then
   # classic.tst should only run in 4.12
-  Add( exclude, "classic.tst" );
+  Add( exclude, "adv/classic.tst" );
 fi;
 
 TestDirectory(DirectoriesPackageLibrary("forms", "tst"),
