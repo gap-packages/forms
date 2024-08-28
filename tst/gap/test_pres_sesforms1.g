@@ -2,5 +2,4 @@
 g := SU(4,3);
 forms := PreservedSesquilinearForms(g);;
 TestPreservedSesquilinearForms(g,forms);
-Display( forms[1] );
 quit;
