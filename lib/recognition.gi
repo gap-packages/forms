@@ -18,13 +18,13 @@
 #############################################################################
 ##
 #F  ClassicalForms_PossibleScalarsSesquilinear( <field>, <mat>, <frob> )
+# This function returns [i0,a] such that if <mat> preserves a sesquilinear form B
+# modulo scalars then the scalar lambda for which mat*B*(mat^T)^frob = lambda*B
+# satisfies lambda^i0 = a.
 # Very important: this function is meant to be called *only* for
 # sesquilinear forms, that means, the "bar map" is the argument <frob>,
 # which is the identity if we are looking for a bilinear form, and
 # the involutory field automorphism in case of a hermitian form.
-# This function returns [i0,a] such that if <mat> preserves a sesquilinear form B
-# modulo scalars then the scalar lambda for which mat*B*(mat^T)^frob = lambda*B
-# satisfies lambda^i0 = a
 ##
 InstallGlobalFunction( ClassicalForms_PossibleScalarsSesquilinear,
  function( F, M, frob )
@@ -81,10 +81,11 @@ InstallGlobalFunction( ClassicalForms_PossibleScalarsSesquilinear,
 #############################################################################
 ##
 #F  ClassicalForms_GeneratorsWithBetterScalarsSesquilinear( grp, frob )
+# Given a group <grp>, this function tries to compute a list of generators
+# for <grp> that preserve a form modulo the returned scalars.
 # Note that the user determines whether looking for a preserved bilinear, respectively
 # hermitian form, by choosing frob to be the identiy, respectively the involutory
 # field automorhipsm. This is actually just a massage of the generating set of the group.
-#
 ##
 InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
   function( grp, frob )
@@ -172,7 +173,6 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
     return [newgens,scalars];
 
   end );
-
 
 #############################################################################
 ##
@@ -295,14 +295,13 @@ InstallGlobalFunction( ClassicalForms_Signum,
     return [ sgn, sqr ];
 end );
 
-
 #############################################################################
 ##
 #F  ClassicalForms_QuadraticForm2( <field>, <form>, <gens>, <scalars> )
-##  <form> is a given bilinear form, preserved by <gens> modulo <scalars>.
-##  This function computes a quadratic form which has <form> as polar form,
-##  and the quadratic form is preserved by gens (if that is all possible).
-##  Characteristic is two. Note that since the polar form <form> is given,
+##  <form> is a given bilinear form in characteristic 2, preserved by <gens>
+##  modulo <scalars>, this function computes a quadratic form (with <form>
+##  as polar form) and preserved by gens (if that is all possible).
+##  Note that since the polar form <form> is given, the Gram matrix of
 ##  the quadratic form is already determined above the diagonal. So only
 ##  the elements on the diagonal have to be computed.
 ##
@@ -388,6 +387,8 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
 #############################################################################
 ##
 #F  ClassicalForms_QuadraticForm( <field>, <form> )
+##  This function should become obsolete, since forms has built in constructors
+##  for this.
 ##
 InstallGlobalFunction( ClassicalForms_QuadraticForm,
   function( field, form )
@@ -409,6 +410,12 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm,
     return H;
   end );
 
+#############################################################################
+##
+#F  DualFrobeniusGModule( <module>, <frob>)
+##  Helper function for ClassicalForms_InvariantForms and
+##  ClassicalForms_InvariantFormFrobenius
+##
 InstallGlobalFunction( DualFrobeniusGModule,
     function(module,frob)
     #make sure frob is involution.
