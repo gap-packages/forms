@@ -39,7 +39,7 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
 files := ["test_forms1", "test_forms2", "test_forms3", "test_forms4", "test_forms5",
             "test_forms6","test_forms7", "test_forms8", "test_forms9", "test_forms10",
             "test_forms11", "test_recog", "test_forms12", "test_forms13", "test_forms14",
-            "test_forms15", "test_forms16" ];
+            "test_forms15", "test_forms16", "test_tech1" ];
            
 #advanced tests   #"basechange", "classic",
 files := ["test_recog", "test_preservedform", "test_pres_sesforms1", "test_pres_sesforms2"];
