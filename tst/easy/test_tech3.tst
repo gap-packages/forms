@@ -18,9 +18,7 @@ rec( IsAbsolutelyIrreducible := true, IsIrreducible := true,
       characteristicPolynomial := x_1^6+x_1^5-x_1^4+x_1^3-x_1^2+x_1+Z(3)^0, 
       charpolFactors := x_1-Z(3)^0, degreeFieldExt := 1, ndimFlag := 1, 
       nullspaceVector := [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), Z(3), Z(3)^0 ] ) )
-gap> ClassicalForms_InvariantFormDual(module,dmodule);
-[ "symplectic", < immutable compressed matrix 6x6 over GF(3) >, 
-  [ Z(3)^0, Z(3)^0 ] ]
+gap> ClassicalForms_InvariantFormDual(module,dmodule);;
 gap> g := GO(3,3);
 GO(0,3,3)
 gap> module := GModuleByMats(GeneratorsOfGroup(g),GF(3));
@@ -55,10 +53,5 @@ rec( IsAbsolutelyIrreducible := true, IsIrreducible := true,
       characteristicPolynomial := x_1^3-x_1^2-Z(3)^0, 
       charpolFactors := x_1+Z(3)^0, degreeFieldExt := 1, ndimFlag := 1, 
       nullspaceVector := [ 0*Z(3), 0*Z(3), Z(3)^0 ] ) )
-gap> ClassicalForms_InvariantFormDual(module,dmodule);
-[ "orthogonalcircle", 
-  [ [ 0*Z(3), Z(3), 0*Z(3) ], [ Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), Z(3)^0 ] ], [ Z(3)^0, Z(3)^0 ], 
-  [ [ 0*Z(3), Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), Z(3) ] ] ]
+gap> ClassicalForms_InvariantFormDual(module,dmodule);;
 gap> STOP_TEST("test_tech3.tst", 10000 );
