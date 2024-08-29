@@ -962,7 +962,7 @@ end;
 
 #############################################################################
 ##
-#O  ScalarsOfPreservedForm( <grp>, <form> )
+#O  TestPreservedSesquilinearForms( <grp>, <form> )
 ##  given <grp> and a list of forms, check whether <grp> preserves <forms> modulo scalars.
 ##  This function is meant to return true or the position in the list for which the
 ##  test fails.
