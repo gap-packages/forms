@@ -822,6 +822,133 @@ InstallGlobalFunction(ScalarsOfPreservedForm,
     return scalars;
 end );
 
+#############################################################################
+##
+#O  TestPreservedSesquilinearForms( <grp>, <form> )
+##  given <grp> and a list of forms, check whether <grp> preserves <forms> modulo scalars.
+##  This function is meant to return true or the position in the list for which the
+##  test fails.
+##
+InstallGlobalFunction(TestPreservedSesquilinearForms,
+    function(grp,list)
+
+    local form, mat, result, i, fails, gens, aut;
+    gens := GeneratorsOfGroup(grp);
+    fails := [];
+    for i in [1..Length(list)] do
+        form := list[i];
+        mat := GramMatrix(form);
+        aut := CompanionAutomorphism(form);
+        result := List(gens,x->_IsEqualModScalars(x*mat*(TransposedMat(x)^aut),mat));
+        if false in result then
+            Add(fails,i);
+        fi;
+    od;
+    if fails = [] then
+        return true;
+    else
+        return fails;
+    fi;
+end );
+
+#For compatibility reasons with recog. Roughly speaking, we have to keep the old
+#machinery alive until recog uses our new machineary.
+#############################################################################
+##
+#F  ClassicalForms_ScalarMultipleDual( <field>, <mat> )
+##
+InstallGlobalFunction( ClassicalForms_ScalarMultipleDual,
+ function( F, M )
+    local mpol, d, c, z, I, t, a, l, q, i0, Minv;
+
+    # compute the characteristic polynomial of <M>
+    mpol := CharacteristicPolynomial(M);
+
+    # get the position of the non-zero coefficients
+    d := Degree(mpol);
+    c := CoefficientsOfUnivariatePolynomial(mpol);
+    z := Zero(F);
+    q := Size(F);
+    I := Filtered( [ 0 .. d ],  x -> c[x+1] <> z );
+
+    Minv := M^-1;
+    if Trace(M) = z and Trace(Minv) <> z or
+       Trace(M) <> z and Trace(Minv) = z then
+        return false;
+    fi;
+    # make sure that <d> and <d>-i both occur
+    if ForAny( I, x -> not (d-x) in I )  then
+        return false;
+    fi;
+
+    # we need gcd one in order to get alpha exactly (ignoring +-)
+    Add(I,q-1);
+    t := GcdRepresentation(I);
+    i0 := I*t;
+
+    a:=c[1];
+    l:=List([1..Length(I)-1], x ->(a*c[d-I[x]+1]/c[I[x]+1]));
+
+    a:=Product([1..Length(I)-1], x->l[x]^t[x]);
+    # Now the scalar $\lambda$ satisfies $\lambda^{i_0}=a$
+
+    # check: $\forall_i: c_{d-i}c_0=c_i\lambda^i
+    if ForAny([1..Length(I)-1],x->(l[x]<>a^QuoInt(I[x],i0))) then
+        Info( InfoForms, 1,
+          "characteristic polynomial does not reveal scalar\n" );
+      return false;
+    fi;
+
+    # compute a square root of <alpha>
+    a:=NthRoot(F,a,2*i0);
+    if a=fail then
+        Info( InfoForms, 1,"characteristic polynomial does not reveal scalar\n" );
+      return false;
+    fi;
+    return [i0,a];
+  end );
+
+#############################################################################
+##
+#F  ClassicalForms_GeneratorsWithoutScalarsDual( grp )
+##
+InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsDual,
+  function( grp )
+    local tries, gens, field, m1, a1, new, i;
+
+    # start with 2 random elements,  at most 10 tries
+    tries := 0;
+    gens  := [];
+    field := FieldOfMatrixGroup(grp);
+    while Length(gens) < 2  do
+        tries := tries + 1;
+        if tries > 10  then return false;  fi;
+        m1 := PseudoRandom(grp);
+        a1 := ClassicalForms_ScalarMultipleDual(field,m1);
+        if IsList(a1) and a1[1]=1 then
+            a1:=a1[2];
+            Add(gens, m1*a1^-1);
+        fi;
+    od;
+    new := GModuleByMats( gens, field );
+
+    # the module must act absolutely irreducible
+    while not MTX.IsAbsolutelyIrreducible(new)  do
+        for i  in [ 1 .. 2 ]  do
+            repeat
+                tries := tries + 1;
+                if tries > 10  then return false;  fi;
+                m1 := PseudoRandom(grp);
+                a1 := ClassicalForms_ScalarMultipleDual(field,m1);
+            until IsList(a1) and a1[1]=1;
+            a1:=a1[2];
+            Add(gens, m1*a1^-1);
+        od;
+        new := GModuleByMats( gens, field );
+    od;
+    return new;
+  end );
+
 #For compatibility reasons with recog
 #############################################################################
 ##
@@ -959,32 +1086,3 @@ ClassicalForms_InvariantFormFrobenius := function( module, fmodule )
     return [ "unitary", form, scalars ];
 
 end;
-
-#############################################################################
-##
-#O  TestPreservedSesquilinearForms( <grp>, <form> )
-##  given <grp> and a list of forms, check whether <grp> preserves <forms> modulo scalars.
-##  This function is meant to return true or the position in the list for which the
-##  test fails.
-##
-InstallGlobalFunction(TestPreservedSesquilinearForms,
-    function(grp,list)
-
-    local form, mat, result, i, fails, gens, aut;
-    gens := GeneratorsOfGroup(grp);
-    fails := [];
-    for i in [1..Length(list)] do
-        form := list[i];
-        mat := GramMatrix(form);
-        aut := CompanionAutomorphism(form);
-        result := List(gens,x->_IsEqualModScalars(x*mat*(TransposedMat(x)^aut),mat));
-        if false in result then
-            Add(fails,i);
-        fi;
-    od;
-    if fails = [] then
-        return true;
-    else
-        return fails;
-    fi;
-end );
