@@ -16,7 +16,7 @@
 ##  generously providing the bulk of this code.  ***
 ##
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_ScalarMultipleFrobenius( <field>, <mat> )
 ##
@@ -82,7 +82,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleFrobenius,
   end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_GeneratorsWithoutScalarsFrobenius( grp )
 ##
@@ -126,7 +126,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsFrobenius,
  end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_ScalarMultipleDual( <field>, <mat> )
 ##
@@ -182,7 +182,7 @@ InstallGlobalFunction( ClassicalForms_ScalarMultipleDual,
   end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_GeneratorsWithoutScalarsDual( grp )
 ##
@@ -224,7 +224,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithoutScalarsDual,
   end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_Signum2( <field>, <form>, <quad> )
 #   This function computes a base change, seemingly sufficient to see from the
@@ -302,7 +302,7 @@ InstallGlobalFunction( ClassicalForms_Signum2,
   end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_Signum( <field>, <form>, <quad> )
 ##
@@ -345,7 +345,7 @@ InstallGlobalFunction( ClassicalForms_Signum,
 end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_QuadraticForm2( <field>, <form>, <gens>, <scalars> )
 ##  <form> is a given bilinear form in characteristic 2, preserved by <gens>
@@ -434,7 +434,7 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
   end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F  ClassicalForms_QuadraticForm( <field>, <form> )
 ##  This function should become obsolete, since forms has built in constructors
@@ -461,7 +461,7 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm,
   end );
 
 
-############################################################################# checked
+############################################################################# 
 ##
 #F  ClassicalForms_InvariantFormDual( <module>, <dmodule> )
 ##
@@ -536,7 +536,7 @@ InstallGlobalFunction( ClassicalForms_InvariantFormDual,
     fi;
 end );
 
-############################################################################# checked
+#############################################################################
 ##
 #F  TransposedFrobeniusMat( <module>, <fmodule> )
 ##
@@ -552,7 +552,7 @@ end );
 #    return mat;
 #end;
 
-############################################################################# checked, not used anymore in recognition.gi
+#############################################################################
 ##
 #F  DualFrobeniusGModule( <module> )
 ##
@@ -586,7 +586,7 @@ local   F,  k,  dim,  mats,  dmats,  qq,  i,  j,  l;
 end );
 
 
-############################################################################# checked
+#############################################################################
 ##
 #F ClassicalForms_InvariantFormFrobenius( module, fmodule )
 ##
@@ -851,7 +851,7 @@ end);
 #    return newforms;
 #end );
 
-############################################################################# checked
+#############################################################################
 ##
 #O  ScalarOfSimilarity( <grp> )
 ##
@@ -893,12 +893,12 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
     return scalar;
   end );
 
-############################################################################# checked, we have a new version of this.
+#############################################################################
 ##
 #O  PreservedFormsOp( <grp> )
 ##  return a record containing information on preserved forms. This operation
 ##  is not intended for the user. Its output will be processed in different
-##  operations.
+##  operations. New version in recognition_new
 ##
 #InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
 #  function( grp )

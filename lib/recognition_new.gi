@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  recognition.gi              'Forms' package
+##  recognition_new.gi              'Forms' package
 ##                                                              John Bamberg
 ##                                                              Jan De Beule
 ##                                                              Frank Celler
@@ -9,7 +9,8 @@
 ##  Copyright (C) 2024,  Lehrstuhl D fuer Mathematik, RWTH Aachen, Germany
 ##
 ##  This file contains functions to compute sesquilinear forms invariant under
-##  matrix groups.
+##  matrix groups. It is work in progress. This file contains the additions
+##  and corrected version of some functions in recognition.gi
 ##
 ##  *** Bamberg and De Beule are very grateful to Frank Celler for
 ##  generously providing the bulk of this code.  ***
