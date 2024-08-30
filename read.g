@@ -13,6 +13,6 @@
 #############################################################################
 
 ReadPackage("forms", "lib/forms.gi");
-ReadPackage("forms", "lib/for_recg.gi");
-ReadPackage("forms", "lib/classic.gi");
 ReadPackage("forms", "lib/recognition.gi");
+ReadPackage("forms", "lib/classic.gi");
+ReadPackage("forms", "lib/recognition_new.gi");
