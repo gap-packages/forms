@@ -110,3 +110,7 @@
   computation for bilinear forms introduced in 1.2.10; and a long-standing bug
   in the base change computation for degenerate alternating forms.[133X
   
+  [33X[0;0YVersion  1.2.12  is to be considered as an intermediate release. Part of the
+  recognition  functionality  has  been  updated  and  corrected. This work in
+  progress will be continued.[133X
+  
