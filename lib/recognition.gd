@@ -22,6 +22,10 @@
 #############################################################################
 
 DeclareGlobalFunction( "DualFrobeniusGModule" );
+DeclareGlobalFunction( "DualFrobeniusGModuleNew" );
+
+DeclareGlobalFunction( "ClassicalForms_InvariantFormDual" );
+DeclareGlobalFunction( "ClassicalForms_InvariantFormFrobenius" );
 
 DeclareGlobalFunction( "ClassicalForms_PossibleScalarsSesquilinear" );
 DeclareGlobalFunction( "ClassicalForms_GeneratorsWithBetterScalarsSesquilinear" );
