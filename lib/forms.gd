@@ -146,12 +146,12 @@ DeclareGlobalFunction( "BaseChangeSymplectic_blockchange" ); #a name clash is in
 DeclareGlobalFunction( "BaseChangeSymplectic_cleanup" );
 
 #############################################################################
-# Operations to check input (most likely not for the user):
+# Operations to check input (not for the user):
 #############################################################################
 
-DeclareOperation( "IsSymplecticMatrix",[IsFFECollColl, IsField] );
-DeclareOperation( "IsOrthogonalMatrix", [IsFFECollColl] );
-DeclareOperation( "IsHermitianMatrix", [IsFFECollColl, IsField] );
+DeclareOperation( "FORMS_IsSymplecticMatrix",[IsFFECollColl, IsField] );
+DeclareOperation( "FORMS_IsSymmetricMatrix", [IsFFECollColl] );
+DeclareOperation( "FORMS_IsHermitianMatrix", [IsFFECollColl, IsField] );
 
 #############################################################################
 # User operations:

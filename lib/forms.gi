@@ -52,14 +52,14 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
       if not IsInt(Sqrt(Size(f))) then
         Error("No hermitian form exist when the order of <f> is not a square" );
       fi;
-      if IsHermitianMatrix(m,f) then
+      if FORMS_IsHermitianMatrix(m,f) then
         Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
         return el;
       else
         Error("Given matrix does not define a hermitian form" );
       fi;
     elif string = "symplectic" then
-      if IsSymplecticMatrix(m,f) then
+      if FORMS_IsSymplecticMatrix(m,f) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
         return el;
       else
@@ -69,7 +69,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
       if Characteristic(f) = 2 then
         Error("No orthogonal forms exist in even characteristic" );
       fi;
-      if IsOrthogonalMatrix(m) then
+      if FORMS_IsSymmetricMatrix(m) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
         return el;
       else
@@ -79,7 +79,7 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
       if IsOddInt(Size(f)) then
         Error("No pseudo forms exist in even characteristic" );
       fi;
-      if (IsOrthogonalMatrix(m) and (not IsSymplecticMatrix(m))) then
+      if (FORMS_IsSymmetricMatrix(m) and (not FORMS_IsSymplecticMatrix(m))) then
         Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
         return el;
       else
@@ -112,15 +112,15 @@ InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
        el := rec( matrix := m, basefield := f, type := "trivial", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
        return el;
-    elif IsSymplecticMatrix(m,f) then
+    elif FORMS_IsSymplecticMatrix(m,f) then
        el := rec( matrix := m, basefield := f, type := "symplectic", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
        return el;
-    elif IsOrthogonalMatrix(m) and Characteristic(f) <> 2 then
+    elif FORMS_IsSymmetricMatrix(m) and Characteristic(f) <> 2 then
        el := rec( matrix := m, basefield := f, type := "orthogonal", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
        return el;
-    elif IsOrthogonalMatrix(m) and Characteristic(f) = 2 then
+    elif FORMS_IsSymmetricMatrix(m) and Characteristic(f) = 2 then
        el := rec( matrix := m, basefield := f, type := "pseudo", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
        return el;
@@ -238,7 +238,7 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
     if not IsInt(Sqrt(Size(f))) then
         Error("No hermitian form exists when the order of <f> is not a square" );
     fi;
-    if IsHermitianMatrix(m,f) then
+    if FORMS_IsHermitianMatrix(m,f) then
        m := ImmutableMatrix(f, m);
        el := rec( matrix := m, basefield := f, type := "hermitian", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
@@ -784,7 +784,7 @@ InstallMethod( IsReflexiveForm, [IsBilinearForm],
 
 InstallMethod( IsReflexiveForm, [IsHermitianForm],
   function( f )
-    return IsHermitianMatrix( f!.matrix, f!.basefield);
+    return FORMS_IsHermitianMatrix( f!.matrix, f!.basefield);
   end );
 
 InstallMethod( IsReflexiveForm, [IsTrivialForm], #new in 1.2.1
@@ -799,7 +799,7 @@ end );
 
 InstallMethod( IsAlternatingForm, [IsBilinearForm],
   function( f )
-    return IsSymplecticMatrix( f!.matrix, f!.basefield );
+    return FORMS_IsSymplecticMatrix( f!.matrix, f!.basefield );
  end );
 
 InstallMethod( IsAlternatingForm, [IsHermitianForm],
@@ -819,7 +819,7 @@ end );
 
 InstallMethod( IsSymmetricForm, [IsBilinearForm],
   function( f )
-    return IsOrthogonalMatrix( f!.matrix );
+    return FORMS_IsSymmetricMatrix( f!.matrix );
  end );
 
 InstallMethod( IsSymmetricForm, [IsHermitianForm],
@@ -1692,7 +1692,7 @@ InstallGlobalFunction(Forms_QUAD_EQ,
 # Operations to check input (most likely not for the user):
 #############################################################################
 
-InstallMethod( IsSymplecticMatrix, [IsFFECollColl, IsField],
+InstallMethod( FORMS_IsSymplecticMatrix, [IsFFECollColl, IsField],
   function(m,f)
     if Characteristic(f) = 2 then
        if not ForAll([1..NrRows(m)], i -> IsZero(m[i,i]) ) then
@@ -1702,12 +1702,12 @@ InstallMethod( IsSymplecticMatrix, [IsFFECollColl, IsField],
     return m = -TransposedMat(m);
   end );
 
-InstallMethod( IsOrthogonalMatrix, [IsFFECollColl],
+InstallMethod( FORMS_IsSymmetricMatrix, [IsFFECollColl],
   function(m)
     return m=TransposedMat(m);
   end );
 
-InstallMethod( IsHermitianMatrix, [IsFFECollColl, IsField],
+InstallMethod( FORMS_IsHermitianMatrix, [IsFFECollColl, IsField],
   function(m,f)
     return m=Forms_HERM_CONJ(m,Sqrt(Size(f)));
   end );
