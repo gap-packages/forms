@@ -86,6 +86,8 @@ od;
 SizeScreen([80,24]);
 
 
+
+#This is probably an old version. 
 SizeScreen([85,24]);
 includedir := DirectoriesPackageLibrary("forms","examples/include")[1];
 for filename in files do
