@@ -16,7 +16,7 @@ quit;
 
 #restart gap now.
 
-#initialize filenames
+#initialize filenames. for each filename, there exists a .g file in ./pkg/forms/examples/gap/
 
 files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3","bg_th_ex4",
             "bg_th_ex5", "bg_th_ex6", "bg_th_ex7", "bg_th_ex8", "bg_th_ex9", "bilformbymatrix",
@@ -42,7 +42,7 @@ pathsstr := Concatenation("\"",paths,"\"");
 exampledir := DirectoriesPackageLibrary("forms","examples/gap")[1];
 outputdir := DirectoriesPackageLibrary("forms","examples/output")[1];
 
-filename := "conic";
+#filename := "conic";
 #cmd := ["gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g]
 #gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g
 
@@ -56,12 +56,15 @@ cmd := JoinStringsWithSeparator(cmdlist," ");
 AppendTo(scriptfile,cmd);
 od;
 
-filename := "conic";
+#Now there is a .sh file ready called generate_output_forms.sh. Make it executable and execute it, then for each filename
+#in files an .out file will be generated in ./pkg/forms/examples/gap/output. Each of these .out files contains output almost suitable
+#to include in the documentation, or to include in the test directory.
 
 #create .include files
 #for the include files, some characters will be translated to suitable xml
 #codes, taking more then one character. Therefore we widen the screen a little bit.
 #includir: directory containing the include files: ".../pkg/forms/examples/include"
+
 SizeScreen([85,24]);
 includedir := DirectoriesPackageLibrary("forms","examples/include")[1];
 for filename in files do

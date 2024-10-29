@@ -23,10 +23,10 @@ gap> gens := [ [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ],
 gap> group := Group(gens);
 &lt;matrix group with 3 generators>
 gap> PreservedForms(group);
-[ &lt; quadratic form > ]
+[ &lt; quadratic form >, &lt; hermitian form > ]
 gap> PreservedForms(group);
-[ &lt; quadratic form > ]
+[ &lt; quadratic form >, &lt; hermitian form > ]
 gap> PreservedForms(group);
-[ &lt; quadratic form > ]
+[ &lt; quadratic form >, &lt; hermitian form > ]
 gap> PreservedForms(group);
 [ &lt; quadratic form >, &lt; hermitian form > ]
