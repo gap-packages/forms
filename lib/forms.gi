@@ -1741,7 +1741,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
 
     # Diagonalize A
 
-    repeat
+    while row < n - 1 do
       row := row + 1;
 
       # We look for a nonzero element on the main diagonal, starting
@@ -1808,7 +1808,7 @@ InstallMethod( BaseChangeOrthogonalBilinear,
         Forms_AddRows(A, i, row, b);
         Forms_AddRows(D, i, row, b);
       od;
-    until row = n - 1;
+    od;
 
     # Count how many variables are used.
 
@@ -2292,7 +2292,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
 
     # Diagonalize A
 
-    repeat
+    while row < n - 1 do
       row := row + 1;
 
       # We look for a nonzero element on the main diagonal, starting
@@ -2359,7 +2359,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
         Forms_AddRows(A, i, row, b);
         Forms_AddRows(D, i, row, b);
       od;
-    until row = n - 1;
+    od;
 
     # Count how many variables have been used
 

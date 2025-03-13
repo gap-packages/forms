@@ -45,7 +45,7 @@ gap> TestBaseChangeOrthogonalBilinear := function(dim,q)
 >    end;;
 
 #
-gap> for dim in [2,10,20] do
+gap> for dim in [1,2,10,20] do
 >      for q in [3, 5, 7, 9, 25, 27, 17^2] do
 >        for i in [0..4] do
 >          TestBaseChangeOrthogonalBilinear(dim+i, q);
@@ -95,7 +95,7 @@ gap> TestBaseChangeOrthogonalQuadratic := function(dim,q)
 >    end;;
 
 #
-gap> for dim in [2,10,20] do
+gap> for dim in [1,2,10,20] do
 >      for q in [2, 4, 8, 16, 2^9] do
 >        for i in [0..4] do
 >          TestBaseChangeOrthogonalQuadratic(dim+1, q);
@@ -130,7 +130,7 @@ gap> TestBaseChangeHermitian := function(dim,q)
 >    end;;
 
 #
-gap> for dim in [2,10,20] do
+gap> for dim in [1,2,10,20] do
 >      for q in [2, 3, 4, 5, 7, 9, 16, 25, 27, 17^2] do
 >        for i in [0..4] do
 >          TestBaseChangeHermitian(dim+i, q);
