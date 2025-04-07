@@ -695,7 +695,7 @@ InstallMethod( DiscriminantOfForm, [ IsQuadraticForm ],
       Error( "Form must be nondegenerate" );
    fi;
    if IsOddInt(Size(gf)) then
-      primroot := PrimitiveElement( gf );
+      primroot := PrimitiveRoot( gf );
       squares := AsList( Group( primroot^2 ) );
       if det in squares then
          return "square";
@@ -721,7 +721,7 @@ InstallMethod( DiscriminantOfForm, [ IsSesquilinearForm ],
       Error( "Form must be nondegenerate" );
    fi;
    if IsOddInt(Size(gf)) then
-      primroot := PrimitiveElement( gf );
+      primroot := PrimitiveRoot( gf );
       squares := AsList( Group( primroot^2 ) );
       if det in squares then
          return "square";
