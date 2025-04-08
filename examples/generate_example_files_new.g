@@ -35,9 +35,10 @@ homedir := DirectoryCurrent();
 scriptfile := Filename(homedir,"generate_output_forms.sh");
 PrintTo(scriptfile,"");
 
-gapstart := "gap4r13.1"; #might be different on your computer
+#gapstart := "gap4r13.1"; #might be different on your computer
+gapstart := "gap4r14"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
-paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";"); #note: this is typical for the installation on jdb's computer, gap is started using gap... - "./;/opt/..."
 pathsstr := Concatenation("\"",paths,"\"");
 exampledir := DirectoriesPackageLibrary("forms","examples/gap")[1];
 outputdir := DirectoriesPackageLibrary("forms","examples/output")[1];
@@ -84,35 +85,3 @@ for filename in files do
   od;
 od;
 SizeScreen([80,24]);
-
-
-
-#This is probably an old version. 
-SizeScreen([85,24]);
-includedir := DirectoriesPackageLibrary("forms","examples/include")[1];
-for filename in files do
-  i := Filename(outputdir,Concatenation(filename,".out"));
-  o := Filename(includedir,Concatenation(filename,".include"));
-  PrintTo(o,"");
-  input_stream := InputTextFile(i);
-  ReadLine(input_stream);
-  list := [];
-  line := ReadLine(input_stream);
-  while line <> "gap> quit;\n" do
-    if line <> "\n" then
-      line := ReplacedString(line,"\\\n","\n");
-      #AppendTo(o,ReplacedString(line,"<","&lt;"));
-      Add(list,ReplacedString(line,"<","&lt;"));
-    fi;
-    line := ReadLine(input_stream);
-  od;
-  l := Length(list);
-  new := ReplacedString(list[l],"\n","");
-  list[l] := new;
-  for line in list do
-    AppendTo(o,line);
-  od;
-od;
-SizeScreen([80,24]);
-
-
