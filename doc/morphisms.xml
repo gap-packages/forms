@@ -295,12 +295,6 @@ the Gram matrix.
 sum of hyperbolic lines, and hence <M>(V,f)</M> is isometric to the formed
 space <M>(V,f')</M>, where the Gram matrix of <M>f'</M> consists of blocks as
 described above. The chosen canonical form has polynomial
-<Alt Only="Text"><Display>
-x_1 x_2 + \ldots + x_{n-1}x_n
-</Display></Alt>
-<Alt Only="LaTeX"><Display>
-x_1 x_2 + \ldots + x_{n-1}x_n
-</Display></Alt>
 <Alt Only="Text"><Display>x_1 x_2 + \ldots + x_{n-1}x_n</Display></Alt>
 <Alt Only="LaTeX"><Display>x_1 x_2 + \ldots + x_{n-1}x_n</Display></Alt>
 <Alt Only="HTML MathJax"><Display>x_1 x_2 + \ldots + x_{n-1}x_n</Display></Alt>
