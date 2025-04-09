@@ -48,7 +48,8 @@ homedir := DirectoryCurrent();
 scriptfile := Filename(homedir,"generate_output_forms_testfiles.sh");
 PrintTo(scriptfile,"");
 
-gapstart := "gap4r13.1"; #might be different on your computer
+#gapstart := "gap4r13.1"; #might be different on your computer
+gapstart := "gap4r14"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
 paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 pathsstr := Concatenation("\"",paths,"\"");
