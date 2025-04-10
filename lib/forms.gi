@@ -1639,12 +1639,17 @@ InstallGlobalFunction(Forms_RESET,
   end );
 
 InstallGlobalFunction(Forms_SQRT2,
-  function(a, q)
+  function(a, gf)
+    local z, q;
     if IsZero( a ) then
       return a;
-    else
-      return Z(q)^((q*LogFFE(a,Z(q)))/2);
     fi;
+    q:=Size(gf);
+    if q mod 2 = 0 then
+      return a^(q/2);
+    fi;
+    z:=PrimitiveRoot(gf);
+    return z^(LogFFE(a,z)/2);
   end );
 
 InstallGlobalFunction(Forms_PERM_VAR,
@@ -2003,10 +2008,9 @@ end);
 InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
     function(mat, gf)
     local A,r,w,row,dummy,i,j,h,D,P,t,a,b,c,d,e,s,
-      zeros,posr,posk,n,q,zero,one;
+      zeros,posr,posk,n,zero,one;
     n := NrRows(mat);
     r := n;
-    q := Size(gf);
     row := 1;
     zero := Zero(gf);
     one := One(gf);
@@ -2056,10 +2060,10 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
 
           # If all is zero, STOP
           if dummy then
-            t := Forms_SQRT2(A[row,row],q);
+            t := Forms_SQRT2(A[row,row],gf);
             Forms_MultRow(D,row,1/t);
             for i in [row + 1..r] do
-              Forms_AddRows(D,i,row,Forms_SQRT2(A[i,i],q));
+              Forms_AddRows(D,i,row,Forms_SQRT2(A[i,i],gf));
             od;
             # Permutation of the variables, it is a parabolic
             r := row;
@@ -2119,7 +2123,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
 
             # A has now that special form a_11*X_1^2+X_1*X_2 + G(X_0,X_2,...,X_n);
             b := A[row,row];
-            t :=  Forms_SQRT2(b/A[row+1,row+1],q);
+            t :=  Forms_SQRT2(b/A[row+1,row+1],gf);
             Forms_AddCols(A,row,row+1,t);
             Forms_AddRows(A,row,row+1,t);
             Forms_AddRows(D,row,row+1,t);
@@ -2189,7 +2193,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           r := r - 1;
           w := 2;
        else
-          t := Forms_SQRT2(A[r,r],q);
+          t := Forms_SQRT2(A[r,r],gf);
           Forms_MultRow(D,r,1/t);
           Forms_PERM_VAR(D,r);
           w := 1;
@@ -2205,7 +2209,7 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
              r := r - 2;
              w := 2;
           else
-             Forms_MultRow(D,r,1/Forms_SQRT2(c,q));
+             Forms_MultRow(D,r,1/Forms_SQRT2(c,gf));
              Forms_PERM_VAR(D,r);
              r := r - 1;
              w := 1;
@@ -2222,12 +2226,12 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
       else #a <> t
         if b = t then
           if c = t then
-            Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
+            Forms_MultRow(D,r-1,1/Forms_SQRT2(a,gf));
             Forms_PERM_VAR(D,r-1);
             r := r - 1;
           else
-            Forms_MultRow(D,r-1,1/Forms_SQRT2(a,q));
-            Forms_AddRows(D,r,r-1,Forms_SQRT2(c,q));
+            Forms_MultRow(D,r-1,1/Forms_SQRT2(a,gf));
+            Forms_AddRows(D,r,r-1,Forms_SQRT2(c,gf));
             Forms_PERM_VAR(D,r-1);
             r := r - 1;
           fi;
@@ -2240,12 +2244,12 @@ InstallMethod(BaseChangeOrthogonalQuadratic, [ IsMatrix and IsFFECollColl, IsFie
           else
             d := (a*c)/(b^2);
             if Trace(gf,d) = t then
-              e := Forms_SQRT2(a,q);
+              e := Forms_SQRT2(a,gf);
               s := Forms_QUAD_EQ(d,gf,h);
               Forms_TRANSFORM_2_BY_2(D, r-1, r, (s+one)/e, e/b, s/e, e/b);
               w := 2;
             else
-              c := Forms_SQRT2(c,q);
+              c := Forms_SQRT2(c,gf);
               Forms_MultRow(D,r-1,c/b);
               Forms_MultRow(D,r,1/c);
               if r > 2 then
@@ -2278,11 +2282,10 @@ end );
 ##
 InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsFinite ],
   function(mat,gf)
-    local row,i,j,k,A,a,b,P,D,t,r,n,q,one,A2,D2;
+    local row,i,j,k,A,a,b,P,D,t,r,n,one,A2,D2;
     n := NrRows(mat);
-    q := Size(gf);
     one := One(gf);
-    t := Sqrt(q);
+    t := Sqrt(Size(gf));
 
     A := MutableCopyMat(mat);
     ConvertToMatrixRep(A, gf);
@@ -2344,7 +2347,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
         Forms_SwapRows(A, row + 1, k);
         Forms_SwapRows(D, row + 1, k);
 
-        b := Z(q)/A[row+1,row];
+        b := PrimitiveRoot(gf)/A[row+1,row];
         Forms_AddCols(A, row, row+1, b^t);
         Forms_AddRows(A, row, row+1, b);
         Forms_AddRows(D, row, row+1, b);
@@ -2376,7 +2379,7 @@ InstallMethod(BaseChangeHermitian, [ IsMatrix and IsFFECollColl, IsField and IsF
     for i in [1..r] do
       a := A[i,i];
       if not IsOne(a) then
-        # find an b element with norm b*b^t = b^(t+1) equal to a
+        # find an element b with norm b*b^t = b^(t+1) equal to a
         b := RootFFE(gf, a, t+1);
         Forms_MultRow(D,i,1/b);
       fi;
