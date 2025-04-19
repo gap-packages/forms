@@ -1,4 +1,4 @@
-gap> START_TEST("Forms: bg_th_ex2.tst");
+gap> START_TEST("Forms: test_bg_th_ex2.tst");
 gap> mat := [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,-1]]*Z(9)^0;
 [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3) ] ]
@@ -17,8 +17,7 @@ gap> IsSymmetricForm(form);
 true
 gap> IsAlternatingForm(form);
 false
-gap> r := RadicalOfForm(form);
-<vector space of dimension 0 over GF(3^2)>
+gap> r := RadicalOfForm(form);;
 gap> Dimension(r);
 0
-gap> STOP_TEST("bg_th_ex2.tst", 10000 );
+gap> STOP_TEST("test_bg_th_ex2.tst", 10000 );

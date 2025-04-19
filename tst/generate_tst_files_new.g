@@ -59,11 +59,11 @@ end;
 subs := ["examples", "easy", "adv" ];
 
 #examples files
-filesexamples := ["conic", "w53", "bg_th_ex2","bg_th_ex3","bg_th_ex4",
-            "bg_th_ex5", "bg_th_ex6", "bg_th_ex7", "bg_th_ex8", "bg_th_ex9", "bilformbymatrix",
+filesexamples := ["w53", "bg_th_ex3", "bg_th_ex4",
+            "bg_th_ex5", "bg_th_ex6", "bg_th_ex8", "bg_th_ex9", "bilformbymatrix",
             "quadformbymatrix", "hermitianformbymatrix", "quadformbypoly",
             "hermitianformbypoly", "quadformbybilform", "bilformbyquadform", "assocbilform",
-            "evalform", "radicalofform", "polyofform", "discofform", "pres_quadform", "preservedforms2", "basechangehom", "basechangetocanonical",
+            "evalform", "polyofform", "discofform", "pres_quadform", "preservedforms2", "basechangehom", "basechangetocanonical",
             "isometriccanonicalform", "quadformfields", "orthogonaltovector",
             "istotallysingular", "istotallyisotropic", "isisotropicvector",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
@@ -73,7 +73,8 @@ filesexamples := ["conic", "w53", "bg_th_ex2","bg_th_ex3","bg_th_ex4",
 fileseasy := ["test_forms1", "test_forms2", "test_forms3", "test_forms4", "test_forms5",
             "test_forms6","test_forms7", "test_forms8", "test_forms9", "test_forms10",
             "test_forms11", "test_recog", "test_forms12", "test_forms13", "test_forms14",
-            "test_forms15", "test_forms16", "test_tech1", "test_tech2", "test_tech3" ];
+            "test_forms15", "test_forms16", "test_tech1", "test_tech2", "test_tech3", "test_radicalofform",
+            "test_bg_th_ex7", "test_bg_th_ex2", "test_conic" ];
            
 #advanced tests   #"basechange", "classic",
 filesadv := ["test_recog", "test_preservedform", "test_pres_sesforms1", "test_pres_sesforms2"];

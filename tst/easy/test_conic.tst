@@ -1,4 +1,4 @@
-gap> START_TEST("Forms: conic.tst");
+gap> START_TEST("Forms: test_conic.tst");
 gap> gf := GF(8);
 GF(2^3)
 gap> vec := gf^3;
@@ -26,8 +26,9 @@ gap> WittIndex( form );
 1
 gap> IsParabolicForm( form );
 true
-gap> RadicalOfForm( form );
-<vector space of dimension 0 over GF(2^3)>
+gap> r := RadicalOfForm( form );;
+gap> Dimension(r);
+0
 gap> canonical := IsometricCanonicalForm( form );
 < parabolic quadratic form >
 gap> form = canonical;
@@ -58,4 +59,4 @@ gap> Size(conic);
 gap> orbs := Orbits(newgo, conic, OnRight);;
 gap> List(orbs,Size);
 [ 1, 63 ]
-gap> STOP_TEST("conic.tst", 10000 );
+gap> STOP_TEST("test_conic.tst", 10000 );
