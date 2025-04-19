@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: quadformfields.tst");
-gap> #constructing the same form over different fields
 gap> mat := 
 > [[Z(2)^0,Z(2)^0,0*Z(2),0*Z(2)],[0*Z(2),Z(2)^0,0*Z(2),0*Z(2)], 
 >  [0*Z(2),0*Z(2),0*Z(2),Z(2)^0],[0*Z(2),0*Z(2),0*Z(2),0*Z(2)]];

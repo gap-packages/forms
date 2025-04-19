@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: isisotropicvector.tst");
-gap> #testing isotropy for vectors.
 gap> mat := [[1,0,0,0],[0,-1,0,0],[0,0,0,1],[0,0,1,0]]*Z(41)^0;
 [ [ Z(41)^0, 0*Z(41), 0*Z(41), 0*Z(41) ], 
   [ 0*Z(41), Z(41)^20, 0*Z(41), 0*Z(41) ], 

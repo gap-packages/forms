@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: trivialform.tst");
-gap> #Constructing a trivial form
 gap> mat := [[0,0,0],[0,0,0],[0,0,0]]*Z(7)^0;
 [ [ 0*Z(7), 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), 0*Z(7) ], 
   [ 0*Z(7), 0*Z(7), 0*Z(7) ] ]

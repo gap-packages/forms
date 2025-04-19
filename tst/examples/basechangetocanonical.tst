@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: basechangetocanonical.tst");
-gap> #morphisms: BaseChangeToCanonical
 gap> gf := GF(3);
 GF(3)
 gap> gram := [

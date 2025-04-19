@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: basechangehom.tst");
-gap> #morphisms: BaseChangeHomomorphism
 gap> gl:=GL(3,3);
 GL(3,3)
 gap> go:=GO(3,3);

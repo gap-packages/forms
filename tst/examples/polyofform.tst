@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: polyofform.tst");
-gap> #Polynomial of form: PolynomialOfForm
 gap> mat := [ [ Z(8) , 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
 >  [ 0*Z(2), Z(2)^0, Z(2^3)^5, 0*Z(2), 0*Z(2) ], 
 >  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 

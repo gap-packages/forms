@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: bilformbymatrix.tst");
-gap> #Constructing form: BilinearFormByMatrix
 gap> mat := IdentityMat(4, GF(9));
 [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]

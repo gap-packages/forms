@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: conic.tst");
-gap> #A conic of PG(2,8)
 gap> gf := GF(8);
 GF(2^3)
 gap> vec := gf^3;
@@ -27,8 +26,8 @@ gap> WittIndex( form );
 1
 gap> IsParabolicForm( form );
 true
-gap> Dimension( RadicalOfForm( form ) );
-0
+gap> RadicalOfForm( form );
+<vector space of dimension 0 over GF(2^3)>
 gap> canonical := IsometricCanonicalForm( form );
 < parabolic quadratic form >
 gap> form = canonical;

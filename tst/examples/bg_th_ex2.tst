@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: bg_th_ex2.tst");
-gap> #Background theory: example 2
 gap> mat := [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,-1]]*Z(9)^0;
 [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3) ] ]
@@ -18,6 +17,8 @@ gap> IsSymmetricForm(form);
 true
 gap> IsAlternatingForm(form);
 false
-gap> Dimension(RadicalOfForm(form));
+gap> r := RadicalOfForm(form);
+<vector space of dimension 0 over GF(3^2)>
+gap> Dimension(r);
 0
 gap> STOP_TEST("bg_th_ex2.tst", 10000 );

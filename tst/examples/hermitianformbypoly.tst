@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: hermitianformbypoly.tst");
-gap> #Constructing form: HermitianFormByPolynomial
 gap> r := PolynomialRing( GF(9), 4);
 GF(3^2)[x_1,x_2,x_3,x_4]
 gap> vars := IndeterminatesOfPolynomialRing( r );

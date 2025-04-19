@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: bilformbyquadform.tst");
-gap> #Constructing form: BilinearFormByQuadraticForm
 gap> r := PolynomialRing(GF(9),4);
 GF(3^2)[x_1,x_2,x_3,x_4]
 gap> poly := -r.1*r.2+Z(3^2)*r.3^2+r.4^2;

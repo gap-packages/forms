@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: quadformbypoly.tst");
-gap> #Constructing form: QuadraticFormByPolynomial
 gap> r := PolynomialRing( GF(8), 3);
 GF(2^3)[x_1,x_2,x_3]
 gap> poly := r.1^2 + r.2^2 + r.3^2;

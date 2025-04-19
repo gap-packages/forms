@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: w53.tst");
-gap> #A form for W(5,3)
 gap> f := GF(3);
 GF(3)
 gap> gram := [

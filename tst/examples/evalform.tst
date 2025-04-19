@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: evalform.tst");
-gap> #computing subspace orthogonal to given vector
 gap> mat := [[Z(8),0,0,0],[0,0,Z(8)^4,0],[0,0,0,1],[0,0,0,0]]*Z(8)^0;;
 gap> form := QuadraticFormByMatrix(mat,GF(8));
 < quadratic form >

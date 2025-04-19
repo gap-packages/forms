@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: bg_th_ex6.tst");
-gap> #Background theory: example 6
 gap> V := GF(4)^3;                           
 ( GF(2^2)^3 )
 gap> mat := [[Z(2^2)^2,Z(2^2),Z(2^2)^2],[Z(2^2)^2,Z(2)^0,Z(2)^0],

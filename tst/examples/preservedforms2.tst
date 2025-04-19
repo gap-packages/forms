@@ -1,0 +1,34 @@
+gap> START_TEST("Forms: preservedforms2.tst");
+gap> gens := [ [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+> 	[ 0*Z(5), 0*Z(5), Z(5)^3, Z(5^2)^21 ],
+> 	[ 0*Z(5), Z(5), Z(5), Z(5^2)^3 ], 
+>      	[ 0*Z(5), Z(5^2)^21, Z(5^2)^15, Z(5)^2 ] ], 
+>   [ [ Z(5)^3, Z(5^2)^7, Z(5^2)^16, Z(5^2)^15 ], 
+>       	[ 0*Z(5), Z(5)^0, Z(5^2)^4, Z(5)^3 ], 
+>       	[ Z(5^2)^22, Z(5^2)^10, Z(5^2)^21, Z(5)^2 ], 
+>       	[ Z(5^2)^7, Z(5^2)^23, Z(5^2)^9, Z(5^2)^11 ] ], 
+>   [ [ 0*Z(5), Z(5^2), 0*Z(5), 0*Z(5) ], 
+> 	[ Z(5^2)^5, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+>       	[ 0*Z(5), 0*Z(5), Z(5)^0, Z(5^2)^4 ], 
+>       	[ 0*Z(5), 0*Z(5), Z(5^2)^20, Z(5)^2 ] ] ];
+[ [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), Z(5)^3, Z(5^2)^21 ],
+      [ 0*Z(5), Z(5), Z(5), Z(5^2)^3 ], 
+      [ 0*Z(5), Z(5^2)^21, Z(5^2)^15, Z(5)^2 ] ], 
+  [ [ Z(5)^3, Z(5^2)^7, Z(5^2)^16, Z(5^2)^15 ], 
+      [ 0*Z(5), Z(5)^0, Z(5^2)^4, Z(5)^3 ], 
+      [ Z(5^2)^22, Z(5^2)^10, Z(5^2)^21, Z(5)^2 ], 
+      [ Z(5^2)^7, Z(5^2)^23, Z(5^2)^9, Z(5^2)^11 ] ], 
+  [ [ 0*Z(5), Z(5^2), 0*Z(5), 0*Z(5) ], [ Z(5^2)^5, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+      [ 0*Z(5), 0*Z(5), Z(5)^0, Z(5^2)^4 ], 
+      [ 0*Z(5), 0*Z(5), Z(5^2)^20, Z(5)^2 ] ] ]
+gap> group := Group(gens);
+<matrix group with 3 generators>
+gap> PreservedForms(group);
+[ < quadratic form >, < hermitian form > ]
+gap> PreservedForms(group);
+[ < quadratic form >, < hermitian form > ]
+gap> PreservedForms(group);
+[ < quadratic form >, < hermitian form > ]
+gap> PreservedForms(group);
+[ < quadratic form >, < hermitian form > ]
+gap> STOP_TEST("preservedforms2.tst", 10000 );

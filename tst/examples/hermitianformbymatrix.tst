@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: hermitianformbymatrix.tst");
-gap> #Constructing form: HermitianFormByMatrix
 gap> gf := GF(3^2);
 GF(3^2)
 gap> mat := IdentityMat(4, gf);

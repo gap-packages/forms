@@ -12,6 +12,6 @@ results := Collected(List(vectors,x->EvaluateForm(form,x)));;
 [Zero(f),(q^(dim-1)-1)/(q-1)] in results;
 results := Collected(List(matrices,x->x^form));;
 [[[Zero(f)]],(q^(dim-1)-1)/(q-1)] in results;
-Number(vectors,x->IsSingularVector(form,x)))=(q^(dim-1)-1)/(q-1);
-Number(matrices,x->IsTotallySingularSubspace(form,x)))=(q^(dim-1)-1)/(q-1);
+Number(vectors,x->IsSingularVector(form,x))=(q^(dim-1)-1)/(q-1);
+Number(matrices,x->IsTotallySingularSubspace(form,x))=(q^(dim-1)-1)/(q-1);
 quit;

@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: bg_th_ex9.tst");
-gap> #Background theory: example 9
 gap> mat := [ [ Z(2^2), Z(2^2), Z(2^2), Z(2^2), Z(2^2) ], 
 >    [ 0*Z(2), Z(2^2), Z(2^2)^2, 0*Z(2), Z(2)^0 ], 
 >    [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ], 

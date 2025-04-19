@@ -1,5 +1,4 @@
 gap> START_TEST("Forms: quadformbybilform.tst");
-gap> #Constructing form: QuadraticFormByBilinearForm
 gap> mat := [ [ Z(3^2)^7, Z(3)^0, Z(3^2)^2, 0*Z(3), Z(3^2)^5 ], 
 >    [ Z(3)^0, Z(3^2)^7, Z(3^2)^6, Z(3^2)^5, Z(3^2)^2 ], 
 >    [ Z(3^2)^2, Z(3^2)^6, Z(3^2)^7, Z(3^2)^2, Z(3^2)^2 ], 
