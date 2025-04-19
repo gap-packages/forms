@@ -25,4 +25,4 @@ gap> GramMatrix(form);
 [ [ 0*Z(11), 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), 0*Z(11) ], 
   [ 0*Z(11), 0*Z(11), 0*Z(11) ] ]
 gap> RadicalOfForm(form);
-&lt;vector space over GF(11^2), with 3 generators>
+&lt;vector space of dimension 3 over GF(11^2)>

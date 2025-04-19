@@ -51,9 +51,10 @@ gap> form := BilinearFormByMatrix(mat,GF(8));
 gap> IsDegenerateForm(form);
 false
 gap> TypeOfForm(form);
-Error, &lt;f> is a pseudo form and has no defined type called from
-&lt;function "unknown">( &lt;arguments> )
- called from read-eval loop at line 30 of *stdin*
+Error, &lt;f> is a pseudo form and has no defined type at ./pkg/forms/lib/forms.gi:\
+3129 called from
+&lt;function "TypeOfForm for a bilinear form">( &lt;arguments> )
+ called from read-eval loop at *stdin*:25
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk> quit;

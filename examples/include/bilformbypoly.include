@@ -21,12 +21,11 @@ x_1*x_2
 gap> form := BilinearFormByPolynomial(pol,r);
 Error, No orthogonal form can be associated with a quadratic polynomial in even cha\
 ra
-cteristic
- called from
-BilinearFormByPolynomial( pol, pring, n 
- ) at ./pkg/forms/lib/forms.gi:470 called from
-&lt;function "unknown">( &lt;arguments> )
- called from read-eval loop at line 14 of *stdin*
+cteristic at ./pkg/forms/lib/forms.gi:371 called from
+BilinearFormByPolynomial( pol, pring, n ) at ./pkg/forms/lib/forms.gi:391 called fr\
+om
+&lt;function "BilinearFormByPolynomial no dimension">( &lt;arguments> )
+ called from read-eval loop at *stdin*:9
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk> quit;

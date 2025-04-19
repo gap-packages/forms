@@ -13,4 +13,4 @@ Gram Matrix:
  . . . .
 Polynomial: x_1*x_2+x_3*x_4
 gap> RadicalOfForm(qform);
-&lt;vector space over GF(2^3), with 0 generators>
+&lt;vector space of dimension 0 over GF(2^3)>

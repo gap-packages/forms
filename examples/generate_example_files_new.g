@@ -8,6 +8,8 @@
 #package "forms".
 #
 #Messy things happen when you do it, so don't try this at home kids!
+#This is the example generating file!
+
 
 #create workspace with packages
 LoadPackage("forms");
@@ -15,6 +17,38 @@ SaveWorkspace("forms.ws");
 quit;
 
 #restart gap now.
+
+homedir := DirectoryCurrent();
+
+#gapstart := "gap4r13.1"; #might be different on your computer
+gapstart := "gap4r14"; #might be different on your computer
+gap := Filename(Directory("/usr/local/bin/"),gapstart);
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
+pathsstr := Concatenation("\"",paths,"\"");
+
+#note that for the forms package, we use some of the examples as gap source. Therefore we adapted the generate_script:
+#when sub = "examples", we point outside the ./tst/gap, instead we point to ./examples/gap
+#We make sure that output is always in ./tst/output/sub directory.
+
+generate_script := function(files)
+local homedir,scriptfile,sourcedir,str,filename,inputfile,outputfile,outputfilestr,outputdir,cmdlist,cmd;
+homedir := DirectoryCurrent();
+str := Concatenation("generate_output_forms_examples",".sh");
+scriptfile := Filename(homedir,str);
+PrintTo(scriptfile,"");
+str := "examples/gap/";
+sourcedir := DirectoriesPackageLibrary("forms",str)[1];
+str := "examples/output/";
+outputdir := DirectoriesPackageLibrary("forms",str)[1];
+for filename in files do
+inputfile := Filename(sourcedir,Concatenation(filename,".g"));
+outputfile := Filename(outputdir,Concatenation(filename,".out"));
+outputfilestr := Concatenation("\"LogTo(","\\\"",outputfile,"\\\"",");\"");
+cmdlist := [gapstart,"-l",pathsstr,"-L","forms.ws","-o","4G","-c",outputfilestr,"<",inputfile,"\n"];
+cmd := JoinStringsWithSeparator(cmdlist," ");
+AppendTo(scriptfile,cmd);
+od;
+end;
 
 #initialize filenames. for each filename, there exists a .g file in ./pkg/forms/examples/gap/
 
@@ -29,33 +63,9 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
             "trivialform_prop", "wittindex", "typeofform", "orthogonaltovector"];
 
-#files := ["preservedforms2"];
+generate_script(files);
 
-homedir := DirectoryCurrent();
-scriptfile := Filename(homedir,"generate_output_forms.sh");
-PrintTo(scriptfile,"");
-
-#gapstart := "gap4r13.1"; #might be different on your computer
-gapstart := "gap4r14"; #might be different on your computer
-gap := Filename(Directory("/usr/local/bin/"),gapstart);
-paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";"); #note: this is typical for the installation on jdb's computer, gap is started using gap... - "./;/opt/..."
-pathsstr := Concatenation("\"",paths,"\"");
-exampledir := DirectoriesPackageLibrary("forms","examples/gap")[1];
 outputdir := DirectoriesPackageLibrary("forms","examples/output")[1];
-
-#filename := "conic";
-#cmd := ["gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g]
-#gap4r13.1 -l "./;/opt/gap-4.13.1/" -L forms.ws -c "LogTo(\"test.out\");" < conic.g
-
-
-for filename in files do
-inputfile := Filename(exampledir,Concatenation(filename,".g"));
-outputfile := Filename(outputdir,Concatenation(filename,".out"));
-outputfilestr := Concatenation("\"LogTo(","\\\"",outputfile,"\\\"",");\"");
-cmdlist := [gapstart,"-l",pathsstr,"-L","forms.ws","-o","4G","-c",outputfilestr,"<",inputfile,"\n"];
-cmd := JoinStringsWithSeparator(cmdlist," ");
-AppendTo(scriptfile,cmd);
-od;
 
 #Now there is a .sh file ready called generate_output_forms.sh. Make it executable and execute it, then for each filename
 #in files an .out file will be generated in ./pkg/forms/examples/gap/output. Each of these .out files contains output almost suitable

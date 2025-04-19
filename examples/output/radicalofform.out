@@ -6,7 +6,7 @@ x_1^2+x_2*x_3
 gap> form := QuadraticFormByPolynomial( poly, r );
 < quadratic form >
 gap> r := RadicalOfForm( form );
-<vector space over GF(2^3), with 0 generators>
+<vector space of dimension 0 over GF(2^3)>
 gap> Dimension(r);
 0
 gap> quit;

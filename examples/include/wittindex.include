@@ -9,7 +9,7 @@ gap> form := BilinearFormByMatrix(mat,GF(7));
 gap> WittIndex(form);
 1
 gap> RadicalOfForm(form);
-&lt;vector space over GF(7), with 3 generators>
+&lt;vector space of dimension 3 over GF(7)>
 gap> Dimension(last);
 3
 gap> mat := IdentityMat(6,GF(5));

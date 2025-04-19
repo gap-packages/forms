@@ -15,7 +15,7 @@ false
 gap> IsAlternatingForm(form);
 true
 gap> r := RadicalOfForm(form);
-<vector space over GF(7), with 1 generators>
+<vector space of dimension 1 over GF(7)>
 gap> Dimension(r);
 1
 gap> quit;
