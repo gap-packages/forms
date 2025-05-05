@@ -109,6 +109,10 @@ It also fixes a regression in the base change computation for bilinear forms int
 and a long-standing bug in the base change computation for degenerate alternating forms.
 <P/>Version 1.2.12 is to be considered as an intermediate release. Part of the recognition functionality has been
 updated and corrected. This work in progress will be continued.
+<P/>Version 1.2.13 fixes a bug <C>BaseChangeToCanonical</C> in dimension 1 where an error could be thrown.
+This now works. Moreover the undocumented internal functions <C>IsSymplecticMatrix</C>, <C>IsOrthogonalMatrix</C>
+and <C>IsHermitianMatrix</C> were renamed to prevent anyone from accidentally using them.
+Various other internal changes were made that should not affect users.
 </Section>
 <!-- ############################################################ -->
 
