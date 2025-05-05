@@ -310,7 +310,8 @@ GF(3)
  . . . 1 . .
  . . 2 . . .
  . . . . . 1
- . . . . 2 . 
+ . . . . 2 .
+ 
 </pre></div>
 
 <p><a id="X87A6F5C979551677" name="X87A6F5C979551677"></a></p>
@@ -331,25 +332,25 @@ GO(0,3,3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := PreservedSesquilinearForms(go)[1]; </span>
 &lt; bilinear form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gram := GramMatrix( form );  </span>
-[ [ 0*Z(3), Z(3), 0*Z(3) ], [ Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+[ [ 0*Z(3), Z(3)^0, 0*Z(3) ], [ Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := BaseChangeToCanonical(form);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := BaseChangeHomomorphism(b, GF(3));</span>
-^[ [ 0*Z(3), Z(3)^0, 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], 
-  [ Z(3)^0, Z(3), 0*Z(3) ] ]
+^[ [ 0*Z(3), 0*Z(3), Z(3) ], [ Z(3), Z(3), Z(3)^0 ], [ Z(3), 0*Z(3), Z(3) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">newgo := Image(hom, go); </span>
 Group(
 [ 
-  [ [ Z(3)^0, Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], 
-      [ Z(3), Z(3)^0, Z(3) ] ], 
-  [ [ Z(3)^0, Z(3), 0*Z(3) ], [ Z(3), Z(3), Z(3)^0 ], 
-      [ 0*Z(3), Z(3)^0, 0*Z(3) ] ] ])
+  [ [ Z(3)^0, 0*Z(3), Z(3) ], [ Z(3)^0, Z(3), Z(3)^0 ], 
+      [ 0*Z(3), 0*Z(3), Z(3) ] ], 
+  [ [ Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3) ], 
+      [ Z(3)^0, Z(3)^0, Z(3) ] ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := GeneratorsOfGroup(newgo);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">canonical := b * gram * TransposedMat(b);</span>
-[ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3) ], 
-  [ 0*Z(3), Z(3), 0*Z(3) ] ]
+[ [ Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3)^0 ], 
+  [ 0*Z(3), Z(3)^0, 0*Z(3) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(gens, y -&gt; y * canonical * TransposedMat(y) = canonical);</span>
-true 
+true
+ 
 </pre></div>
 
 <p><a id="X7DFEFA2C7945A5AD" name="X7DFEFA2C7945A5AD"></a></p>
@@ -390,7 +391,8 @@ Gram Matrix:
  . . . . .
  . . . . 1
  . . . . .
-Witt Index: 2 
+Witt Index: 2
+ 
 </pre></div>
 
 <p><a id="X7C7D92267EFE71DB" name="X7C7D92267EFE71DB"></a></p>
@@ -449,7 +451,7 @@ Z(3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WittIndex(form);</span>
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RadicalOfForm(form);</span>
-&lt;vector space over GF(7), with 3 generators&gt;
+&lt;vector space of dimension 3 over GF(7)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension(last);</span>
 3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := IdentityMat(6,GF(5));</span>
@@ -591,9 +593,10 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDegenerateForm(form);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TypeOfForm(form);</span>
-Error, &lt;f&gt; is a pseudo form and has no defined type called from
-&lt;function "unknown"&gt;( &lt;arguments&gt; )
- called from read-eval loop at line 30 of *stdin*
+Error, &lt;f&gt; is a pseudo form and has no defined type at ./pkg/forms/lib/forms.gi:\
+3129 called from
+&lt;function "TypeOfForm for a bilinear form"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at *stdin*:25
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 <span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit;</span>

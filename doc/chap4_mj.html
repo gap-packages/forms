@@ -186,7 +186,8 @@ z = Z(16)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := BilinearFormByMatrix(mat,GF(49));</span>
 &lt; bilinear form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WittIndex(form);</span>
-2 
+2
+ 
 </pre></div>
 
 <p><a id="X86B8694F782A4EE7" name="X86B8694F782A4EE7"></a></p>
@@ -226,7 +227,8 @@ z = Z(4)
    .   1   .   .
    .   .   .   .
    .   . z^2   1
-   .   .   . z^2 
+   .   .   . z^2
+ 
 </pre></div>
 
 <p>The following example shows how using the argument <var class="Arg">field</var> has influence on the properties of the constructed form.</p>
@@ -245,7 +247,8 @@ z = Z(4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := QuadraticFormByMatrix(mat,GF(4));</span>
 &lt; quadratic form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WittIndex(form);</span>
-2 
+2
+ 
 </pre></div>
 
 <p><a id="X7C027FF77AFED321" name="X7C027FF77AFED321"></a></p>
@@ -284,7 +287,8 @@ Hermitian form
 Gram Matrix:
   1  .  .
   .  .  2
-  .  2  . 
+  .  2  .
+ 
 </pre></div>
 
 <p><a id="X78476EDF7B9498D7" name="X78476EDF7B9498D7"></a></p>
@@ -331,15 +335,15 @@ x_1*x_2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := BilinearFormByPolynomial(pol,r);</span>
 Error, No orthogonal form can be associated with a quadratic polynomial in even cha\
 ra
-cteristic
- called from
-BilinearFormByPolynomial( pol, pring, n 
- ) at ./pkg/forms/lib/forms.gi:470 called from
-&lt;function "unknown"&gt;( &lt;arguments&gt; )
- called from read-eval loop at line 14 of *stdin*
+cteristic at ./pkg/forms/lib/forms.gi:371 called from
+BilinearFormByPolynomial( pol, pring, n ) at ./pkg/forms/lib/forms.gi:391 called fr\
+om
+&lt;function "BilinearFormByPolynomial no dimension"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at *stdin*:9
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
-<span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit; </span>
+<span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit;</span>
+ 
 </pre></div>
 
 <p><a id="X86ADE1D986CC90CB" name="X86ADE1D986CC90CB"></a></p>
@@ -374,7 +378,8 @@ Gram Matrix:
  . 1 . .
  . . . 1
  . . . .
-Polynomial: x_1^2+x_2^2+x_3*x_4 
+Polynomial: x_1^2+x_2^2+x_3*x_4
+ 
 </pre></div>
 
 <p><a id="X7E21CFFA84180D0D" name="X7E21CFFA84180D0D"></a></p>
@@ -404,7 +409,8 @@ Gram Matrix:
  1 . . .
  . . . 1
  . . 1 .
-Polynomial: x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3 
+Polynomial: x_1^3*x_2+x_1*x_2^3+x_3^3*x_4+x_3*x_4^3
+ 
 </pre></div>
 
 <p><a id="X843B68558283CE5F" name="X843B68558283CE5F"></a></p>
@@ -465,7 +471,8 @@ Z(3^2)^7*x_1^2-x_1*x_2+Z(3^2)^6*x_1*x_3+Z(3^2)*x_1*x_5+Z(3^2)^7*x_2^2+Z(3^2)^2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PolynomialOfForm(Q);</span>
 Z(3^2)^7*x_1^2-x_1*x_2+Z(3^2)^6*x_1*x_3+Z(3^2)*x_1*x_5+Z(3^2)^7*x_2^2+Z(3^2)^2
 *x_2*x_3+Z(3^2)*x_2*x_4+Z(3^2)^6*x_2*x_5+Z(3^2)^7*x_3^2+Z(3^2)^6*x_3*x_4+Z(3^2
-)^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2 
+)^6*x_3*x_5+Z(3^2)^6*x_4^2+Z(3^2)^3*x_4*x_5-x_5^2
+ 
 </pre></div>
 
 <p>Note that the given bilinear form <var class="Arg">form</var> is <strong class="button">not</strong> the associated bilinear form of the constructed quadratic form <span class="SimpleMath">\(Q\)</span>, according to the definition in Section <a href="chap3_mj.html#X864CAF8881067D8A"><span class="RefLink">3.2</span></a>. We can construct the associated bilinear forms by using <code class="func">AssociatedBilinearForm</code> (<a href="chap4_mj.html#X7BF7FBCA7FF91052"><span class="RefLink">4.4-3</span></a>). (See <a href="chap3_mj.html#X864CAF8881067D8A"><span class="RefLink">3.2</span></a> for more on quadratic forms).</p>
@@ -507,7 +514,8 @@ z = Z(9)
    .   . z^1   .
    .   .   .   1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(GF(9)^4, x -&gt; [x,x]^form = x^qform);</span>
-[ true ] 
+[ true ]
+ 
 </pre></div>
 
 <p>Note that the constructed bilinear form <span class="SimpleMath">\(f\)</span> is <strong class="button">not</strong> the associated bilinear form of the given quadratic form <span class="SimpleMath">\(Q\)</span>, according to the definition in Section <a href="chap3_mj.html#X864CAF8881067D8A"><span class="RefLink">3.2</span></a>. We can construct the associated bilinear forms by using <code class="func">AssociatedBilinearForm</code> (<a href="chap4_mj.html#X7BF7FBCA7FF91052"><span class="RefLink">4.4-3</span></a>). (See <a href="chap3_mj.html#X864CAF8881067D8A"><span class="RefLink">3.2</span></a> for more on quadratic forms).</p>
@@ -539,7 +547,8 @@ Gram Matrix:
   .  .  .  1  .  .
   .  .  1  .  .  .
   1  .  .  .  .  .
-  . 10  .  .  .  . 
+  . 10  .  .  .  .
+ 
 </pre></div>
 
 <p><a id="X8110213A7B303D1C" name="X8110213A7B303D1C"></a></p>
@@ -577,7 +586,8 @@ Z(2^3)^6
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EvaluateForm( form, u, v);</span>
 [ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[u,v]^form;</span>
-[ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ] 
+[ [ Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ]
+ 
 </pre></div>
 
 <p><a id="X7A0825A987C88978" name="X7A0825A987C88978"></a></p>
@@ -896,9 +906,10 @@ x_1^2+x_2*x_3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := QuadraticFormByPolynomial( poly, r );</span>
 &lt; quadratic form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := RadicalOfForm( form );</span>
-&lt;vector space over GF(2^3), with 0 generators&gt;
+&lt;vector space of dimension 0 over GF(2^3)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension(r);</span>
-0 
+0
+ 
 </pre></div>
 
 <p><a id="X82E7367F817C6BD0" name="X82E7367F817C6BD0"></a></p>
@@ -920,7 +931,8 @@ x_1^2+x_2*x_3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := QuadraticFormByMatrix(mat,GF(8));</span>
 &lt; quadratic form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PolynomialOfForm(form);</span>
-Z(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5 
+Z(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5
+ 
 </pre></div>
 
 <p><a id="X87B652A28534E0D2" name="X87B652A28534E0D2"></a></p>
@@ -938,7 +950,8 @@ Z(2^3)*x_1^2+x_2^2+Z(2^3)^5*x_2*x_3+x_4*x_5
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">qform := QuadraticFormByMatrix(gram, GF(5));</span>
 &lt; quadratic form &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DiscriminantOfForm( qform );</span>
-"nonsquare" 
+"nonsquare"
+ 
 </pre></div>
 
 <p><a id="X8400E22D7D51FCCE" name="X8400E22D7D51FCCE"></a></p>
@@ -1002,11 +1015,11 @@ SU(4,16)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">group := Group(gens);</span>
 &lt;matrix group with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreservedForms(group);</span>
-[ &lt; quadratic form &gt; ]
+[ &lt; quadratic form &gt;, &lt; hermitian form &gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreservedForms(group);</span>
-[ &lt; quadratic form &gt; ]
+[ &lt; quadratic form &gt;, &lt; hermitian form &gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreservedForms(group);</span>
-[ &lt; quadratic form &gt; ]
+[ &lt; quadratic form &gt;, &lt; hermitian form &gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreservedForms(group);</span>
 [ &lt; quadratic form &gt;, &lt; hermitian form &gt; ]
 
@@ -1030,10 +1043,11 @@ SU(4,3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( forms[1] );</span>
 Hermitian form
 Gram Matrix:
- . . . 2
- . . 2 .
- . 2 . .
- 2 . . . 
+ . . . 1
+ . . 1 .
+ . 1 . .
+ 1 . . .
+ 
 </pre></div>
 
 <p>Here is another example which shows that this procedure is suitable in some cases where using the <strong class="pkg">MeatAxe</strong> is not applicable. Here, our matrix group is the group of similarities preserving a (hyperbolic) bilinear form on a 6-dimensional vector space over <span class="SimpleMath">\(\mathrm{GF}(3)\)</span> .</p>
@@ -1061,7 +1075,8 @@ Gram Matrix:
  . . . . 1 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := GModuleByMats( [a,b], GF(3) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">usemeataxe := MTX.InvariantBilinearForm(m);</span>
-fail 
+fail
+ 
 </pre></div>
 
 <p><a id="X7D6F72B682E405E1" name="X7D6F72B682E405E1"></a></p>
@@ -1165,7 +1180,7 @@ GF(11^2)
 [ [ 0*Z(11), 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), 0*Z(11) ], 
   [ 0*Z(11), 0*Z(11), 0*Z(11) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RadicalOfForm(form);</span>
-&lt;vector space over GF(11^2), with 3 generators&gt;
+&lt;vector space of dimension 3 over GF(11^2)&gt;
  
 </pre></div>
 

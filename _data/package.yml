@@ -1,7 +1,7 @@
 name: Forms
-version: "1.2.12"
+version: "1.2.13"
 license: "GPL-2.0-or-later"
-date: 2024-08-30
+date: 2025-05-05
 description: |
     Sesquilinear and Quadratic
 
@@ -27,11 +27,11 @@ packageinfo: https://gap-packages.github.io/forms/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/forms/releases/download/v1.2.12/forms-1.2.12.tar.gz
+      url: https://github.com/gap-packages/forms/releases/download/v1.2.13/forms-1.2.13.tar.gz
     - name: .zip
-      url: https://github.com/gap-packages/forms/releases/download/v1.2.12/forms-1.2.12.zip
+      url: https://github.com/gap-packages/forms/releases/download/v1.2.13/forms-1.2.13.zip
     - name: .tar.bz2
-      url: https://github.com/gap-packages/forms/releases/download/v1.2.12/forms-1.2.12.tar.bz2
+      url: https://github.com/gap-packages/forms/releases/download/v1.2.13/forms-1.2.13.tar.bz2
 
 abstract: |
     This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.
@@ -43,10 +43,10 @@ keywords: |
     Forms, Sesquilinear, Quadratic.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>BBH24</span>]   <b class='BibAuthor'>Bamberg, J., De Beule, J. and Horn, M.</b>,
+    [<span class='BibKey'>BBH25</span>]   <b class='BibAuthor'>Bamberg, J., De Beule, J. and Horn, M.</b>,
      <i class='BibTitle'>Forms, Sesquilinear and Quadratic,
-             Version 1.2.12</i>
-     (<span class='BibYear'>2024</span>)<br />
+             Version 1.2.13</i>
+     (<span class='BibYear'>2025</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/forms">https://gap-packages.github.io/forms</a></span>.
     </p>
@@ -55,14 +55,15 @@ citeas: |
 bibtex: |
     @misc{ Forms,
       author =           {Bamberg, J. and De Beule, J. and Horn, M.},
-      title =            {{Forms}, Sesquilinear and Quadratic, {V}ersion 1.2.12},
-      month =            {Aug},
-      year =             {2024},
+      title =            {{Forms},   {Sesquilinear   and  Quadratic},  {V}ersion
+                          1.2.13},
+      month =            {May},
+      year =             {2025},
       note =             {GAP package},
       howpublished =     {\href           {https://gap-packages.github.io/forms}
                           {\texttt{https://gap\texttt{\symbol{45}}packages.github.io/}\discretionary
                           {}{}{}\texttt{forms}}},
       keywords =         {Forms; Sesquilinear; Quadratic},
-      printedkey =       {BBH24}
+      printedkey =       {BBH25}
     }
 

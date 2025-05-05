@@ -6,10 +6,10 @@
                           [1X Sesquilinear and Quadratic [101X
   
   
-                                     1.2.12
+                                     1.2.13
   
   
-                                 30 August 2024
+                                   5 May 2025
   
   
                                   John Bamberg
@@ -24,7 +24,7 @@
       Address:  [33X[0;14YSchool of Mathematics and Statistics[133X
                 [33X[0;14YThe University of Western Australia[133X
                 [33X[0;14Y35 Stirling Highway[133X
-                [33X[0;14YCrawleyY WA 6009, Perth[133X
+                [33X[0;14YCrawley WA 6009, Perth[133X
                 [33X[0;14YAustralia[133X
   
   

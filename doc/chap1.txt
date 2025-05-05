@@ -114,3 +114,9 @@
   recognition  functionality  has  been  updated  and  corrected. This work in
   progress will be continued.[133X
   
+  [33X[0;0YVersion  1.2.13  fixes  a  bug [10XBaseChangeToCanonical[110X in dimension 1 where an
+  error  could  be  thrown. This now works. Moreover the undocumented internal
+  functions  [10XIsSymplecticMatrix[110X, [10XIsOrthogonalMatrix[110X and [10XIsHermitianMatrix[110X were
+  renamed  to  prevent  anyone  from  accidentally  using  them. Various other
+  internal changes were made that should not affect users.[133X
+  

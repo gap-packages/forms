@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.12",
-  Date := "30/08/2024",
+  Version := "1.2.13",
+  Date := "05/05/2025",
   License := "GPL-2.0-or-later",
 
 SourceRepository := rec(
@@ -41,7 +41,7 @@ Persons := [
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
                        "35 Stirling Highway\n",
-                       "CrawleyY WA 6009, Perth\n",
+                       "Crawley WA 6009, Perth\n",
                        "Australia" ] ),
     Place         := "Perth",
     Institution   := "The University of Western Australia",
