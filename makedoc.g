@@ -14,6 +14,7 @@ fi;
 AutoDoc(rec(
     scaffold := rec( MainPage := false ),
     gapdoc := rec( main := "forms.xml" ),
+    autodoc := true,
 ));
 QUIT;
 
