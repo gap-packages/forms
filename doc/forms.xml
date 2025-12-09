@@ -41,7 +41,7 @@
 <#Include SYSTEM "theory.xml">
 <#Include SYSTEM "construct_basic.xml">
 <#Include SYSTEM "morphisms.xml">
-<#Include SYSTEM "_Chapter_TODO.xml">
+<#Include SYSTEM "_Chapter_Formspace.xml">
 
 </Body>
 
