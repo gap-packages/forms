@@ -30,9 +30,9 @@ WriteTestFilePreservedFormspaceTest := function(path, name, G, n, F,f_space_expe
     WriteAll(stream, "gap> L:=PreservedFormspace(G);;\n");
     WriteAll(stream, "gap> TestMatricesAreForms2(G, L); # found in custom_test_functions.g, Tests whether the matrices returned are forms preserved by G or not\n");
     WriteAll(stream, "[ \"Ok\", \"Ok\" ]\n");
-    WriteAll(stream, "gap> Dimension(DefualtFieldOfMatrixGroup(G), Vectorspace(L[1]))=f_space_expected_normal_d;\n");
+    WriteAll(stream, "gap> Dimension(DefaultFieldOfMatrixGroup(G), Vectorspace(L[1]))=f_space_expected_normal_d;\n");
     WriteAll(stream, "true\n");
-    WriteAll(stream, "gap> Dimension(DefualtFieldOfMatrixGroup(G), Vectorspace(L[2]))=f_space_expected_unitary_d;\n");
+    WriteAll(stream, "gap> Dimension(DefaultFieldOfMatrixGroup(G), Vectorspace(L[2]))=f_space_expected_unitary_d;\n");
     WriteAll(stream, "true\n");
     WriteAll(stream, end_test);
     CloseStream(stream);
