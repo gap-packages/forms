@@ -293,7 +293,7 @@ __FORMSPACE__INTERNAL__FilterUnitaryForms := function(Forms, F, n, hom)
 end;
 
 # Compute the formspace for cyclic matrix group. TODO!!
-__FORMSPACE__INTERNAL__CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, Lambda, unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, F, n)
+__FORMSPACE__INTERNAL__CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, Lambda, unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, frob_inv_base_change, F, n)
     # maybe recoginize the trivial group here as a special case
     local p, mat, outspace, i, j, w, OutForms;
 
@@ -307,7 +307,7 @@ __FORMSPACE__INTERNAL__CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, 
     
     for i in [1..Size(outspace)] do
         for w in outspace[i] do
-            Add(OutForms, frob_inv_star_base_change * __FORMSPACE__INTERNAL__FrobSpinAtBlock(w, Gen_adjoint_inv_scaled, frob[3], i, n, F));
+            Add(OutForms, frob_inv_base_change * __FORMSPACE__INTERNAL__FrobSpinAtBlock(w, Gen_adjoint_inv_scaled, frob[3], i, n, F));
         od;
     od;
     return OutForms;
@@ -436,7 +436,7 @@ InstallMethod(PreservedFormspace,
             frob_inv_star_scaled := FrobeniusNormalForm(Gen_adjoint_inv_scaled);
             frob_inv_star_base_change := Inverse(frob_inv_star_scaled[2]);
 
-            return __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, Lambda[1], unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, F, n);
+            return __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, Lambda[1], unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, Inverse(frob[2]), F, n);
         fi;
         #contains  group element, scalar, (factors of minopol), Basis change to Frobenius (v, vg, vg^2, ...), Frobenius block lengths, number of iterations to compute
         g_res := __FORMSPACE__INTERNAL__FindCyclicGroupElementAndScalars(Gens, Lambdas);
@@ -483,8 +483,9 @@ InstallMethod(PreservedFormspace,
             frob := FrobeniusNormalForm(Gen);
             frob_inv_star_scaled := FrobeniusNormalForm(Gen_adjoint_inv_scaled);
             frob_inv_star_base_change := Inverse(frob_inv_star_scaled[2]);
+            g_inv_frob := Inverse(frob[2]);
 
-            Add(Out, __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), false, fail, frob, frob_inv_star_scaled, frob_inv_star_base_change, F, n));
+            Add(Out, __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), false, fail, frob, frob_inv_star_scaled, frob_inv_star_base_change, g_inv_frob, F, n));
 
             if p_exponent mod 2 = 0 then
                 hom := FrobeniusAutomorphism(F)^(p_exponent/2);
@@ -492,7 +493,7 @@ InstallMethod(PreservedFormspace,
                 frob_inv_star_base_change := frob_inv_star_base_change^hom;
                 frob_inv_star_scaled[2] := frob_inv_star_scaled[2]^hom;
 
-                Add(Out, __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), true, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, F, n));
+                Add(Out, __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), true, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, g_inv_frob, F, n));
             else 
                 Add(Out, []);
             fi;
