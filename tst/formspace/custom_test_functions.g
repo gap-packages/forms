@@ -89,7 +89,7 @@ TestMatricesAreForms2 := function(G, forms)
     Gens := GeneratorsOfGroup(G);
     n := DimensionsMat(Gens[1])[1];
     lambdas := [];
-    for i in [1..n] do
+    for i in [1..Size(Gens)] do
         Add(lambdas, One(F));
     od;
     return [TestMatricesAreForms(G, lambdas, false, forms[1]), TestMatricesAreForms(G, lambdas, true, forms[2])];
