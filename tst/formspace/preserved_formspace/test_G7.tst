@@ -7,8 +7,8 @@ gap> f_space_expected_unitary_d := 2;;
 gap> L:=PreservedFormspace(G);;
 gap> TestMatricesAreForms2(G, L); # found in custom_test_functions.g, Tests whether the matrices returned are forms preserved by G or not
 [ "Ok", "Ok" ]
-gap> Dimension(DefaultFieldOfMatrixGroup(G), Vectorspace(L[1]))=f_space_expected_normal_d;
+gap> Size(L[1])=f_space_expected_normal_d;
 true
-gap> Dimension(DefaultFieldOfMatrixGroup(G), Vectorspace(L[2]))=f_space_expected_unitary_d;
+gap> Size(L[2])=f_space_expected_unitary_d;
 true
 gap> STOP_TEST("Formspace: Preserved Formspace G7");
