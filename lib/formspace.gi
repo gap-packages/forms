@@ -405,7 +405,7 @@ end;
 #!  <A>G</A> is a finitely generated matrix group over a finite field $K$. 
 #!  L is a list of scalars corresponding to the group generators. I.e. $\Lambda(G_i)$ = <A>L[i]</A> for $i = 1, \dots, $<A>Size(GeneratorsOfGroup(G))</A>. 
 #!  If unitary is true, the function uses $h(x) = x$ for all $x \in K$. 
-#!  If unitary is false, the function tries to use a field automorphism of order two for $h$ or will report failure if no such field automorphism exists.
+#!  If unitary is false, the function tries to use a field automorphism of order two for $h$. If no such field automorphism exists, it will return [].
 InstallMethod(PreservedFormspace,
     "for matrix group over finite field, with given scalars, and search for unitary forms", [IsMatrixGroup, IsVector and IsFFECollection, IsBool],
     function(G, Lambdas, unitary) 
@@ -413,8 +413,8 @@ InstallMethod(PreservedFormspace,
         F := DefaultFieldOfMatrixGroup(G);
         p_exponent := DegreeOverPrimeField(F);
         if unitary and (p_exponent mod 2 <> 0) then
-            Print("Field does not admit field automorphism of order two!");
-            return;
+            # Print("Field does not admit field automorphism of order two!");
+            return [];
         fi;
         # Prüfen ob es sich um einen endlichen körper handelt??
         Gens := GeneratorsOfGroup(G);

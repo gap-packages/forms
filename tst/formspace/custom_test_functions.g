@@ -52,3 +52,121 @@ TestPolyEval := function(benchmark)
     fi;
     return "Ok";
 end;
+
+TestMatricesAreForms := function(G, Lambdas, unitary, forms)
+    local p_exponent, hom, F, f, g, i, Gens, n, j;
+    F := DefaultFieldOfMatrixGroup(G);
+    Gens := GeneratorsOfGroup(G);
+    n := DimensionsMat(Gens[1])[1];
+    p_exponent := DegreeOverPrimeField(F);
+    hom := fail;
+    if unitary then
+        if p_exponent mod 2 <> 0 then
+            if Size(forms) = 0 then
+                return "Ok";
+            else 
+                Error("Claims to have found unitary form although the field does not admit a field automorphism of order two!");
+            fi;
+        fi;
+        hom := FrobeniusAutomorphism(F)^(p_exponent/2);
+    fi;
+
+    for i in [1..Size(forms)] do
+        f := forms[i];
+        for j in [1..Size(Gens)] do
+            g := Gens[j];
+            if g * f * __FORMSPACE__INTERNAL__CalculateAdjoint(g, unitary, hom, n, F) <> Lambdas[j] * f then
+                Error("Computed non formspace element ", f, "group " , G, " unitary ", unitary, " Lambdas ", Lambdas);
+            fi;
+        od;
+    od;
+    return "Ok";
+end;
+
+TestMatricesAreForms2 := function(G, forms)
+    local F, n, lambdas, Gens, i;
+    F := DefaultFieldOfMatrixGroup(G);
+    Gens := GeneratorsOfGroup(G);
+    n := DimensionsMat(Gens[1])[1];
+    lambdas := [];
+    for i in [1..n] do
+        Add(lambdas, One(F));
+    od;
+    return [TestMatricesAreForms(G, lambdas, false, forms[1]), TestMatricesAreForms(G, lambdas, true, forms[2])];
+end;
+
+# computes F by solving big system of linear equations.
+# this is a good idea for testing to see that the presered formspace function actually computes the entire formspace not just a subspace. (this is the function that provides the formsace solutions used in other tests)
+# however maybe we should test the test? this seems a little stupid
+TestComputeFormspaceBruteForce := function(G, Lambdas, unitary)
+    local Gens, i, j, F, n, base, b, g, eqs, p_exponent, ComputeMatrixVectorSpaceBasis, VectorToMatrix, MatrixToVector, sol, out, s, hom, v;
+    Gens := GeneratorsOfGroup(G);
+    n := DimensionsMat(Gens[1])[1];
+    F := DefaultFieldOfMatrixGroup(G);
+
+    ComputeMatrixVectorSpaceBasis := function(F, n)
+        local O, i, j, m;
+        O := [];
+        for i in [1..n] do
+            for j in [1..n] do
+                m := NullMat(n, n, F);
+                m[i][j] := One(F);
+                Add(O, m);
+            od;
+        od;
+        return O;
+    end;
+
+    VectorToMatrix := function(vec, F, n)
+        local i, j, m;
+        m := NullMat(n, n, F);
+        for i in [1..n] do
+            for j in [1..n] do
+                m[i][j] := vec[(i-1)*n + j];
+            od;
+        od;
+        return m;
+    end;
+
+    MatrixToVector := function(mat, F, n)
+        local vec, i, j;
+        vec := ZeroVector(F, n^2);
+        for i in [1..n] do
+            for j in [1..n] do
+                vec[(i-1)*n + j] := mat[i][j];
+            od;
+        od;
+        return vec;
+    end;
+
+    p_exponent := DegreeOverPrimeField(F);
+    hom := fail;
+    if unitary then
+        if p_exponent mod 2 <> 0 then
+            return [];
+        fi;
+        hom := FrobeniusAutomorphism(F)^(p_exponent/2);
+    fi;
+    base := ComputeMatrixVectorSpaceBasis(F, n);
+    eqs := [];
+   
+    for j in [1..Size(base)] do  
+        for i in [1..Size(Gens)] do
+            b := base[j];  
+            v :=  MatrixToVector(Gens[i] * b * __FORMSPACE__INTERNAL__CalculateAdjoint(Gens[i], unitary, hom, n, F) - Lambdas[i] * b, F, n);
+            if i = 1 then
+                Add(eqs, v);
+            else
+                eqs[j] := Concatenation(List(eqs[j]), List(v));
+            fi;
+        od;
+    od;
+    # Print(aaa);
+    sol := NullspaceMat(eqs);
+    out := [];
+    for s in sol do
+        Add(out, VectorToMatrix(s, F, n));
+    od;
+    # Print(aaa);
+    return out;
+end;

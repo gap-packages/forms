@@ -10,7 +10,7 @@
 # end;
 
 #         gap --packagedirs $PWD
-#         Read("tst/formspace/poly_eval_test.g");
+#         Read("tst/formspace/custom_test_functions.g");
 
 ## various micselaneous functions..
 
@@ -41,7 +41,7 @@ end;
 
 ## groups
 
-# trivial group
+# trivial group over GF(5)
 Gtriv := Group([[ Z(5^4), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ],
   [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ],
   [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ],
@@ -126,7 +126,7 @@ G3 := Group([ [ Z(5^2)^5, Z(5^2)^9, 0*Z(5), 0*Z(5), 0*Z(5), Z(5^2)^21, Z(5^2)^13
   );
 
 ## Subgroup of O+(14, 7) which is irreducible, but not absolutely irreducible 
-## Intersting is that the foms package seems to reliably find a hermitian and quadratic form, my function sometimes (there must be a bug!!!) finds a 10d form space, It seems that it is hard to find a cyclic group element in this particular group! Needs Fix !!!!
+## Intersting is that the foms package seems to reliably find a hermitian and quadratic form, It seems that it is hard to find a cyclic group element in this particular group! 
 G4 := Group([ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ],
   [ 0*Z(7), Z(7)^4, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^3, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ],
   [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ],
@@ -173,7 +173,7 @@ G4 := Group([ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 
 
 
 
-# Subgroup of O-(14, 11^2) another group which is irreducible but not absolutely irreducible. it is intersting that once again my program fails to find a cyclic element. It also does not find a presrved formspace. There seems to be some error in the implementation
+# Subgroup of O-(14, 11^2) another group which is irreducible but not absolutely irreducible. it is intersting that once again my program fails to find a cyclic element. 
 G5 := Group([ [ 0*Z(11), 0*Z(11), Z(11)^0, 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11),
        0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), 0*Z(11), Z(11)^0, 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11),
        0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11), 0*Z(11) ],

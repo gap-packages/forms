@@ -6,7 +6,7 @@ if not IsBound(DescribesInvariantQuadraticForm) then
   Add( exclude, "adv/classic.tst" );
 fi;
 
-ReadPackage("forms", "tst/formspace/custom_test_functions.g.g");
+ReadPackage("forms", "tst/formspace/custom_test_functions.g");
 
 TestDirectory(DirectoriesPackageLibrary("forms", "tst"),
     rec(
