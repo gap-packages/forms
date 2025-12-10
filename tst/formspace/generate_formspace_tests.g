@@ -8,8 +8,6 @@ ReadPackage("forms", "tst/interesting_groups.g");
 WriteTestFilePreservedFormspaceTest := function(path, name, G, n, F,f_space_expected_normal_d, f_space_expected_unitary_d)
     local full_name, start_test, end_test, stream, file_name, dir, full_path;
     full_name := StringFormatted("test_{}.tst", name);
-    full_name := ReplacedString(full_name, "(", "__");
-    full_name := ReplacedString(full_name, ")", "__");
     full_name := ReplacedString(full_name, ",", "_");
     full_path := StringFormatted("{}/{}", path, full_name);
 
@@ -43,7 +41,7 @@ end;
 GenerateTestsForPreservedFormspace := function()
     local Groups, R, G, GG, n, F, Gens, path, lambdas, i, conjugated, f_space_expected_normal_d, f_space_expected_unitary_d;
     path := "tst/formspace/preserved_formspace";
-    Groups := [["GO(5,3)", GO(5, 3)], ["SU(4,5)", SU(4, 5)], ["Sp(4,5)", Sp(4, 5)], ["Gtriv", Gtriv], ["G1", G1], ["G2", G2], ["G3", G3], ["G4", G4], ["G5", G5], ["G6", G6], ["G7", G7], ["G8", G8], ["GP22", GP22]];
+    Groups := [["GO(5,3)", GO(5, 3)], ["SU(4,5)", SU(4, 5)], ["Sp(4,5)", Sp(4, 5)], ["Gtriv", Gtriv], ["G1", G1], ["G2", G2], ["G3", G3], ["G4", G4], ["G5", G5], ["G6", G6], ["G7", G7], ["G8", G8], ["GP22", GP22], ["Group(SP(4,5).1)", Group(SP(4,5).1)]];
     for GG in Groups do
         G := GG[2];
         Gens := GeneratorsOfGroup(G);
