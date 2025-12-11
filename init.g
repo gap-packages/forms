@@ -12,5 +12,8 @@
 ##
 #############################################################################
 
+
 ReadPackage("forms","lib/forms.gd");
 ReadPackage("forms","lib/recognition.gd");
+LoadPackage("nofoma");
+ReadPackage("forms","lib/formspace.gd");
