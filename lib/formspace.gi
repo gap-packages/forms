@@ -108,6 +108,16 @@ __FORMSPACE__INTERNAL__VectorReorganize := function(vec, j, F, n)
     return A;
 end;
 
+# turns the F^{j times n} matrix into F^{jn} vector
+__FORMSPACE__INTERNAL__MatrixReorganize := function(mat, j, F, n)
+    local vec, i;
+    vec := ZeroVector(F, j*n);
+    for i in [1..j] do
+        vec{[((i - 1) * n + 1)..(i*n)]} := mat[i];
+    od;
+    return vec;
+end;
+
 # Evaluates the univariate polynomial p (given as coefficients) in the matrix g \in F^{n\times n}. frob_base = FrobeniusNormalForm(g) must be satisfied and frob_base_inv = Inverse(FrobeniusNormalForm(g)[2]). The reason these two parameters are given, and not computed in the function itself is to not compute FrobeniusNormalForm(g) multiple times when evaluating multiple polynomials in g.
 __FORMSPACE__INTERNAL__EvaluatePolynomialWithFrobenius := function(p, g, frob_base, frob_base_inv, F, n) # frob_base_inv useless, right now this is not actually evaluating the polynomial frob_base_inv missing
     local ws, C, i, end_pos, j, k;
@@ -219,7 +229,7 @@ __FORMSPACE__INTERNAL__ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q
         for j in [1..n] do
             if Form[i][j] <> Zero(F) then 
                 if Form[j][i] = Zero(F) then
-                    return [];
+                    return fail;
                 fi;
                 if lambda <> fail and Form[i][j] * lambda <> hom(Form[j][i]) then
                     return fail;
@@ -234,14 +244,105 @@ __FORMSPACE__INTERNAL__ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q
 end;
 
 # find symplectic and symmetric matrices in Forms
+# returns bases [[symmetric forms], [symplectic forms]]
 __FORMSPACE__INTERNAL__FilterBilinearForms := function(Forms, F, n)
-    # TODO
+    local transposed_equal_result, form, symmetric_base, symplectic_base, transposed_form, TransposedEqual, symmetric_base_vecs, symplectic_base_vecs, char_2_eqs, sol, out;
+
+    # computes if f = f^T or f = -f^T or none
+    # return 0 if f = -f^T
+    # return 1 if f = f^T
+    # return 2 if f <> f^T and f <> -f^T
+    TransposedEqual := function(f, F, n) 
+        local i, j, symmetric_possible, symplectic_possible;
+        
+        if Characteristic(F) mod 2 = 0 then
+        # - = + now
+            for i in [1..n] do
+                for j in [1..n] do
+                    if f[i][j] <> f[j][i] then
+                        return 2;
+                    fi;
+                od;
+            od;
+            return 1;
+        fi;
+        symmetric_possible := true;
+        symplectic_possible := true;
+        for i in [1..n] do
+            for j in [1..n] do
+                if symmetric_possible and f[i][j] <> f[j][i] then
+                    symmetric_possible := false;
+                fi;
+                if symplectic_possible and f[i][j] <> -f[j][i] then
+                    symplectic_possible := false;
+                fi;
+            od;
+        od;
+        if symmetric_possible then
+            return 1;
+        fi;
+        if symplectic_possible then
+            return 0;
+        fi;
+        return 2;
+    end;
+
+    if Size(Forms) = 0 then
+        return [];
+    fi;
+    if Size(Forms) = 1 then
+        transposed_equal_result := TransposedEqual(Forms[1], F, n);
+        if transposed_equal_result = 2 then
+            return [];
+        fi;
+        if transposed_equal_result = 1 then
+            return [[Forms[1]], []];
+        fi;
+        if transposed_equal_result = 2 then
+            return [[], [Forms[1]]];
+        fi;
+
+    fi;
+
+    if Characteristic(F) mod 2 <> 0 then
+        symmetric_base := MutableBasis(F, [NullMat(n, n, F)]);
+        symplectic_base := MutableBasis(F, [NullMat(n, n, F)]);
+        for form in Forms do
+            transposed_form := TransposedMat(form);
+            CloseMutableBasis(symmetric_base, transposed_form + form);
+            CloseMutableBasis(symplectic_base, form - transposed_form);
+        od;
+
+        # this does not create compressed matrices, rather it returns lists consisting of compressed vectors... TODO: investigate how MutableBasis works on the inside, and maybe change it to use compressed matrices since they are faster to deal with
+        symmetric_base_vecs := BasisVectors(ImmutableBasis(symmetric_base));
+        symplectic_base_vecs := BasisVectors(ImmutableBasis(symplectic_base));
+
+        if Size(symmetric_base_vecs) + Size(symplectic_base_vecs) <> Size(Forms) then 
+            Error("This should not have happend!! there are supposedly ", Size(symmetric_base_vecs), " linearly independent symmetric forms and ", Size(symplectic_base_vecs), " linearly independent symplectic forms, yet the dimension of the formspace is ", Size(Forms), "\n");
+        fi;
+        return [symmetric_base_vecs, symplectic_base_vecs];
+
+    fi;
+    # TODO: ignore the diagonal entries for the symmetric matrices, for symplectic these need to be zero.
+    # TODO: solve this in some efficient way that does not formulate this by solving sets of linear equations of matrices. Instead it would be better to gradually consider entries of the matrices. Then use some heuristic to determine we are done and just check wether the resulting matrices are infact symmetric. this should be faster because now worst case we are solving a system of linear equations that consists of n^2 equations and Size(Forms) indeterminates.
+    # TODO: maybe do these todos for all characteristics the nice thing about the current algorithm for char F <> 2 is that we do not have to solve many systems of equations, rather just check wether we have the zero matrix
+
+    char_2_eqs := [];
+    for form in Forms do
+        Add(char_2_eqs, __FORMSPACE__INTERNAL__MatrixReorganize(form - TransposedMat(form), n, F, n));
+    od;
+    sol := NullspaceMatDestructive(char_2_eqs);
+    out := [];
+    for form in sol do
+        Add(out, __FORMSPACE__INTERNAL__VectorReorganize(form, n, F, n));
+    od;
+    return out;
 end;
 
 # tries to filter the F = GF(q^2) vectorspace generated by <Forms> and return the GF(q) vector space A such that A = <Forms> \cap B where B = {A \in F^{n\times n}, A* = A} TODO: THIS NEEDS SOME FURTHER INVESTIGATION
 # there must be a better way to compute these matrices..
 __FORMSPACE__INTERNAL__FilterUnitaryForms := function(Forms, F, n, hom)
-    local i, j, ent, q, half, O, l, FF, p, tr_form, Base, baseVecs;
+    local i, j, ent, q, half, O, l, FF, p, tr_form, Base, baseVecs, gf_base;
     if Size(Forms) = 0 then
         return [];
     fi;
@@ -257,7 +358,7 @@ __FORMSPACE__INTERNAL__FilterUnitaryForms := function(Forms, F, n, hom)
             return [];
         fi;
         
-        return [HermitianFormByMatrix(Forms[1] * l, F)];
+        return [Forms[1] * l];
     fi;
     # this is where it gets interesting
     # Print("ahhh this needs work!\n");
@@ -267,30 +368,44 @@ __FORMSPACE__INTERNAL__FilterUnitaryForms := function(Forms, F, n, hom)
 
     ## we use (A + A*) is a hermitian form if gAg* = A the problem here is that for A, B such that gA*g = A and gB*g = B we may loose information namely it may be the case that 1/2 (A + A*) = c/2 (B + B*) this is annoying.... one thing one could do is check whether these matrices <1/2 (A + A*), 1/2 (B + B*), ...> are lineraly independent. if that is the case, we know that all forms must have been found (but do we???). but what if not? then there might be another form... this is annoying. Then we may add matrices A, B and so on such that <C1,C2, ., D1, D2..> is a basis of F where C1 and so on are hermitian and D1, D2 and so on are not. We may write D1 = A + B where A is hermitian and B is not. we can then try to write B in terms of the other matrices??? does this help... idk :(
     ## for char = 2 this can be a bad idea as it can make the diagonal disaapear..   oh well
-    Base := MutableBasis(F, [NullMat(n, n, F)]);
-    for FF in Forms do
-        l := __FORMSPACE__INTERNAL__ScalarFormIdentifyCheck(FF, F, n, hom, p, q);
-        if l = fail then
+    if Characteristic(F) mod 2 <> 0 then
+        Base := MutableBasis(F, [NullMat(n, n, F)]);
+        gf_base := BasisVectors(Basis(GF(GF(q), 2)))[2];
+        for FF in Forms do
+            Add(FF, gf_base * FF);
+        od;
+        for FF in Forms do
+            # l := __FORMSPACE__INTERNAL__ScalarFormIdentifyCheck(FF, F, n, hom, p, q);
+            # if l = fail then
             tr_form := TransposedMat(FF^hom);
             CloseMutableBasis(Base, FF + tr_form);
-        else
-            CloseMutableBasis(Base, l * FF);
-        fi;
-    od;
+            # else
+                # CloseMutableBasis(Base, l * FF);
+            # fi;
+        od;
 
-    O := [];
-    baseVecs := ImmutableBasis(Base);
-    for FF in baseVecs do
-        Add(O, HermitianFormByMatrix(FF, F));
-    od;
+        O := [];
+        baseVecs := ImmutableBasis(Base);
+        # for FF in baseVecs do
+        #     Add(O, HermitianFormByMatrix(FF, F));
+        # od;
 
-    if Size(O) = Size(Forms) then
-        return O;
+        # if Size(O) = Size(Forms) then
+        #     return O;
+        # fi;
+        # if Size(baseVecs) = Size(Forms) then
+        #     return baseVecs;
+        # fi;
+
+        return BasisVectors(baseVecs);
     fi;
-
-    Print("Could not find a basis of Forms. Returned hermitian Forms, Bigger space of matrices that contains all possible hermitian forms. \n");
-    return [O, Forms];
+    Print("char 2 case is missing!!");
+    # # TODO this function definetly needs work!!!
+    # Print("Could not find a basis of hermitian Forms. Returned hermitian Forms and a Bigger space of matrices that contains all possible hermitian forms. \n");
+    # return [baseVecs, Forms];
 end;
+
+
 
 # Compute the formspace for cyclic matrix group. TODO!!
 __FORMSPACE__INTERNAL__CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, Lambda, unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, frob_inv_base_change, F, n)
@@ -398,6 +513,7 @@ __FORMSPACE__INTERNAL__FormspaceInternal := function(Gens, Lambdas, unitary, hom
     # fi;
     return O;
 end;
+
 
 #! @Arguments G, L, unitary
 #! @Returns a basis of $\mathcal{F}_h(G, \Lambda)$
@@ -530,3 +646,32 @@ InstallMethod(PreservedFormspace,
         return Out;
     end
 );
+
+#! @Arguments Forms, Field, unitary
+#! @Returns basis of the spaces of symmetric/symplectic matrices or a basis of the hermitian matrices contained in Forms
+#! @Description
+#! In the case where unitary is false, this will return a list that contains to lists of matrices. The first is a basis of the symmetric matrices, the second is a basis of the symplectic matrices. Be carefull: If the characteristic of the field is 2, then symplectic matrices and symmetric matrices are the same. Hence only one basis will be returned. If unitary is false this will return a basis of the hermitian matrices.
+#! The reason the the field must be given as an argument, is so that the Field automorphims of order two, which is used to compute the adjoined, is specified.
+InstallMethod(FilterFormspace, "for list of matrices, F finite field, bool hermitian", [IsList, IsFinite and IsField, IsBool], function(Forms, F, unitary)
+    local n, hom, p_exponent;
+    if Size(Forms) = 0 then
+        return [];
+    fi;
+    n := NrRows(Forms[1]);
+
+    if Size(Forms) = n^2 then
+        # TODO: special case where we should just return a precomputed basis... 
+    fi;
+
+    if not unitary then
+        return __FORMSPACE__INTERNAL__FilterBilinearForms(Forms, F, n);
+    else
+        p_exponent := DegreeOverPrimeField(F);
+        if p_exponent mod 2 <> 0 then 
+            Error("The given Field ", F, " must admit a field automorphism of order two for unitary = true\n");
+            return [];
+        fi;
+        hom := FrobeniusAutomorphism(F)^(p_exponent/2);
+        return __FORMSPACE__INTERNAL__FilterUnitaryForms(Forms, F, n, hom);
+    fi;
+end);
