@@ -233,7 +233,7 @@ __FORMSPACE__INTERNAL__ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q
     return RootFFE(F, Inverse(lambda), q - 1);
 end;
 
-# find symplectic and symmetric forms
+# find symplectic and symmetric matrices in Forms
 __FORMSPACE__INTERNAL__FilterBilinearForms := function(Forms, F, n)
     # TODO
 end;
