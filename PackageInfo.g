@@ -99,7 +99,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.9",
-  NeededOtherPackages := [],
+  NeededOtherPackages := [["nofoma", "1.0"]],
   SuggestedOtherPackages := [],
   ExternalConditions := []),
 
