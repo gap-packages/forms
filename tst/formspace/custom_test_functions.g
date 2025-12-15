@@ -35,7 +35,7 @@ TestPolyEval := function(benchmark)
         f := UnivariatePolynomial(F, coeffs);
         time_start := NanosecondsSinceEpoch();
         frob := FrobeniusNormalForm(mat);
-        eval := __FORMSPACE__INTERNAL__EvaluatePolynomialWithFrobenius(coeffs, Matrix(mat), frob, Inverse(frob[2]), F, n);
+        eval := FORMS_EvaluatePolynomialWithFrobenius(coeffs, Matrix(mat), frob, Inverse(frob[2]), F, n);
         time_average_frob := time_average_frob + (NanosecondsSinceEpoch() - time_start);
 
         time_start := NanosecondsSinceEpoch();
@@ -75,7 +75,7 @@ TestMatricesAreForms := function(G, Lambdas, unitary, forms)
         f := forms[i];
         for j in [1..Size(Gens)] do
             g := Gens[j];
-            if g * f * __FORMSPACE__INTERNAL__CalculateAdjoint(g, unitary, hom, n, F) <> Lambdas[j] * f then
+            if g * f * FORMS_CalculateAdjoint(g, unitary, hom, n, F) <> Lambdas[j] * f then
                 Error("Computed non formspace element ", f, "group " , G, " unitary ", unitary, " Lambdas ", Lambdas);
             fi;
         od;
@@ -153,7 +153,7 @@ TestComputeFormspaceBruteForce := function(G, Lambdas, unitary)
     for j in [1..Size(base)] do  
         for i in [1..Size(Gens)] do
             b := base[j];  
-            v :=  MatrixToVector(Gens[i] * b * __FORMSPACE__INTERNAL__CalculateAdjoint(Gens[i], unitary, hom, n, F) - Lambdas[i] * b, F, n);
+            v :=  MatrixToVector(Gens[i] * b * FORMS_CalculateAdjoint(Gens[i], unitary, hom, n, F) - Lambdas[i] * b, F, n);
             if i = 1 then
                 Add(eqs, v);
             else
