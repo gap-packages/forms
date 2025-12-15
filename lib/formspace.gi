@@ -5,7 +5,7 @@
 #! For details on how the form space is computed SEE: somewhere that does not exist yet
 
 # underlying field F, g is in F^{n\times n}, v is in F^n, coeffs are the coefficients of a polynomial p in F[X]. Returns vp(g).
-__FORMSPACE__INTERNAL__EvaluateMatrixPolynomialWithVector := function(F, n, g, v, coeffs)
+FORMS_EvaluateMatrixPolynomialWithVector := function(F, n, g, v, coeffs)
     local res, i, deg;
     deg := Size(coeffs);
     v := Vector(v);
@@ -28,7 +28,7 @@ end;
 
 # Given mat in F^{n\times n} F Field, n \in N, mode says whether to apply hom or not. Returns (mat^T)^hom.
 # mode = False \iff mat* := mat^tr, mode = True \iff mat* = komplex_konjugiert(mat^tr)
-__FORMSPACE__INTERNAL__CalculateAdjoint := function(mat, mode, hom, n, F)
+FORMS_CalculateAdjoint := function(mat, mode, hom, n, F)
     local transposed, i, j;
     transposed := TransposedMat(mat);
     ConvertToMatrixRep(transposed, F);
@@ -44,7 +44,7 @@ end;
 # tries to find a element g \in <Gens> such that the Frobenius Normal form of g has as few blocks as possible. Lambdas describes a group homomorphism induced by Phi : Gens[i] \mapsto Lambdas[i]
 # Returns [g, Phi(g), FrobeniusNormalForm(g), nrOfTries]
 # nrOfTries contains the number of random elements tested before g was found.
-__FORMSPACE__INTERNAL__FindCyclicGroupElementAndScalars := function(Gens, Lambdas)
+FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas)
     local cur_group_element, cur_scalar, known_elements, i, mode, n, res, j, known_scalars, best_known_element_index, best_known_res, best_known_length, mod_elem, g, e;
 
     known_elements := ShallowCopy(Gens);
@@ -98,7 +98,7 @@ __FORMSPACE__INTERNAL__FindCyclicGroupElementAndScalars := function(Gens, Lambda
 end;
 
 # turns the (jn) vector vec in F^{jn} and returns a F^{j times n} matrix
-__FORMSPACE__INTERNAL__VectorReorganize := function(vec, j, F, n)
+FORMS_VectorReorganize := function(vec, j, F, n)
     local A, i;
     A := NullMat(j, n, F);
     ConvertToMatrixRep(A, F);
@@ -109,7 +109,7 @@ __FORMSPACE__INTERNAL__VectorReorganize := function(vec, j, F, n)
 end;
 
 # turns the F^{j times n} matrix into F^{jn} vector
-__FORMSPACE__INTERNAL__MatrixReorganize := function(mat, j, F, n)
+FORMS_MatrixReorganize := function(mat, j, F, n)
     local vec, i;
     vec := ZeroVector(F, j*n);
     for i in [1..j] do
@@ -119,13 +119,13 @@ __FORMSPACE__INTERNAL__MatrixReorganize := function(mat, j, F, n)
 end;
 
 # Evaluates the univariate polynomial p (given as coefficients) in the matrix g \in F^{n\times n}. frob_base = FrobeniusNormalForm(g) must be satisfied and frob_base_inv = Inverse(FrobeniusNormalForm(g)[2]). The reason these two parameters are given, and not computed in the function itself is to not compute FrobeniusNormalForm(g) multiple times when evaluating multiple polynomials in g.
-__FORMSPACE__INTERNAL__EvaluatePolynomialWithFrobenius := function(p, g, frob_base, frob_base_inv, F, n) # frob_base_inv useless, right now this is not actually evaluating the polynomial frob_base_inv missing
+FORMS_EvaluatePolynomialWithFrobenius := function(p, g, frob_base, frob_base_inv, F, n) # frob_base_inv useless, right now this is not actually evaluating the polynomial frob_base_inv missing
     local ws, C, i, end_pos, j, k;
     ws := [];
     j := Size(frob_base[3]);
     for k in [1..j] do
     #  function(F, n, g, v, coeffs)
-        Add(ws, __FORMSPACE__INTERNAL__EvaluateMatrixPolynomialWithVector(F, n, g, frob_base[2][frob_base[3][k]]{[1..n]}, p));
+        Add(ws, FORMS_EvaluateMatrixPolynomialWithVector(F, n, g, frob_base[2][frob_base[3][k]]{[1..n]}, p));
     od;
     C := NullMat(n, n, F);
     #ConvertToMatrixRep(C, F);
@@ -156,7 +156,7 @@ end;
 
 # This computes (and returns) the matrix \mathcal{P}_{h, u} from the bachelors thesis.
 # Here we have u, h \in F^{n\times n}, h_star = h^*, scalar_h = \lambda_h, g_star_inv_scaled = g^{-*}*lambda_g, frob_base = FrobeniusNormalForm(g^{-*}), frob_base_inv = Inverse(FrobeniusNormalForm(g)[2]), frob_base_inv_star = Inverse(frob_base[2]). The reason we to give ten billion parameters is to avoid computing the same matrices multiple times. TODO: better names!!!!!!
-__FORMSPACE__INTERNAL__ComputeConditionMatrixFrob := function(u, h, h_star, scalar_h, g_star_inv_scaled, frob_base, frob_base_inv, frob_base_inv_star, F, n)
+FORMS_ComputeConditionMatrixFrob := function(u, h, h_star, scalar_h, g_star_inv_scaled, frob_base, frob_base_inv, frob_base_inv_star, F, n)
     local coeffs_c, coeffs_f, Ps, i, j, b_end, b_start, cpol, fpol;
     coeffs_c := (u * h) * frob_base_inv;
     coeffs_f := (u * frob_base_inv) * scalar_h;
@@ -174,7 +174,7 @@ __FORMSPACE__INTERNAL__ComputeConditionMatrixFrob := function(u, h, h_star, scal
         # Print("[", ((i - 1)*n + 1), ",", (i*n), "\n");
         #Print("->", frob_base[3][i],",",b_end, "\n");
         Ps{[((i - 1)*n + 1)..(i*n)]}{[1..n]} :=
-            __FORMSPACE__INTERNAL__EvaluatePolynomialWithFrobenius(coeffs_c{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n) * h_star -  __FORMSPACE__INTERNAL__EvaluatePolynomialWithFrobenius(coeffs_f{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n);
+            FORMS_EvaluatePolynomialWithFrobenius(coeffs_c{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n) * h_star -  FORMS_EvaluatePolynomialWithFrobenius(coeffs_f{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n);
         # cpol := UnivariatePolynomial(F, coeffs_c);
         # fpol := UnivariatePolynomial(F, coeffs_f);
         # Ps{[((i - 1)*n + 1)..(i*n)]}{[1..n]} :=
@@ -185,7 +185,7 @@ __FORMSPACE__INTERNAL__ComputeConditionMatrixFrob := function(u, h, h_star, scal
 end;
 
 # Spins the stuff
-__FORMSPACE__INTERNAL__FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
+FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
     local A, j, i, k, end_pos;
     j := Size(frob_base_blocks);
     A := NullMat(n, n, F);
@@ -204,7 +204,7 @@ __FORMSPACE__INTERNAL__FrobSpin := function(Images, spin_elem, frob_base_blocks,
     return A;
 end;
 
-__FORMSPACE__INTERNAL__FrobSpinAtBlock := function(Image, spin_elem, frob_base_blocks, block_index, n, F)
+FORMS_FrobSpinAtBlock := function(Image, spin_elem, frob_base_blocks, block_index, n, F)
     local A, j, i, k, end_pos;
     j := Size(frob_base_blocks);
     A := NullMat(n, n, F);
@@ -222,7 +222,7 @@ __FORMSPACE__INTERNAL__FrobSpinAtBlock := function(Image, spin_elem, frob_base_b
 end;
 
 # checks if (Form^T)^hom = c Form for some c in F and returns d such that d * Form = ((d Form)^T)^hom if possible or if not possibe fail
-__FORMSPACE__INTERNAL__ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q)
+FORMS_ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q)
     local lambda, i, j;
     lambda := fail;
     for i in [1..n] do
@@ -245,7 +245,7 @@ end;
 
 # find symplectic and symmetric matrices in Forms
 # returns bases [[symmetric forms], [symplectic forms]]
-__FORMSPACE__INTERNAL__FilterBilinearForms := function(Forms, F, n)
+FORMS_FilterBilinearForms := function(Forms, F, n)
     local transposed_equal_result, form, symmetric_base, symplectic_base, transposed_form, TransposedEqual, symmetric_base_vecs, symplectic_base_vecs, char_2_eqs, sol, out;
 
     # computes if f = f^T or f = -f^T or none
@@ -329,19 +329,19 @@ __FORMSPACE__INTERNAL__FilterBilinearForms := function(Forms, F, n)
 
     char_2_eqs := [];
     for form in Forms do
-        Add(char_2_eqs, __FORMSPACE__INTERNAL__MatrixReorganize(form - TransposedMat(form), n, F, n));
+        Add(char_2_eqs, FORMS_MatrixReorganize(form - TransposedMat(form), n, F, n));
     od;
     sol := NullspaceMatDestructive(char_2_eqs);
     out := [];
     for form in sol do
-        Add(out, __FORMSPACE__INTERNAL__VectorReorganize(form, n, F, n));
+        Add(out, FORMS_VectorReorganize(form, n, F, n));
     od;
     return out;
 end;
 
 # tries to filter the F = GF(q^2) vectorspace generated by <Forms> and return the GF(q) vector space A such that A = <Forms> \cap B where B = {A \in F^{n\times n}, A* = A} TODO: THIS NEEDS SOME FURTHER INVESTIGATION
 # there must be a better way to compute these matrices..
-__FORMSPACE__INTERNAL__FilterUnitaryForms := function(Forms, F, n, hom)
+FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
     local i, j, ent, q, half, O, l, FF, p, tr_form, Base, baseVecs, gf_base, hgf_base;
     if Size(Forms) = 0 then
         return [];
@@ -353,7 +353,7 @@ __FORMSPACE__INTERNAL__FilterUnitaryForms := function(Forms, F, n, hom)
         #checks if A = A* or A = cA* if A = A* return A, if A = cA* we want to return scalar multiples of A, namely lA for l such that c = l^(1-q) iff c^-1 = l^(q-1)
         # all the solutions then are lA*GF(q) is this correct?? i am not sure if this are indeed all the possible solutions, but it certanly are solutions.
         # Print(ff);
-        l := __FORMSPACE__INTERNAL__ScalarFormIdentifyCheck(Forms[1], F, n, hom, p, q);
+        l := FORMS_ScalarFormIdentifyCheck(Forms[1], F, n, hom, p, q);
         if l = fail then
             return [];
         fi;
@@ -373,7 +373,7 @@ __FORMSPACE__INTERNAL__FilterUnitaryForms := function(Forms, F, n, hom)
         gf_base := BasisVectors(Basis(GF(GF(q), 2)))[2];
         hgf_base := hom(gf_base);
         for FF in Forms do
-            # l := __FORMSPACE__INTERNAL__ScalarFormIdentifyCheck(FF, F, n, hom, p, q);
+            # l := FORMS_ScalarFormIdentifyCheck(FF, F, n, hom, p, q);
             # if l = fail then
             tr_form := TransposedMat(FF^hom);
             CloseMutableBasis(Base, FF + tr_form);
@@ -410,13 +410,13 @@ end;
 # TODO: optimizations:
 # this function (sometimes) yields a very large formspace 
 # to better recognize forms in this case it would be good to add a function that does not do this (since we only care about non degenerate classical forms). to find a bilinear/symplectic/hermitian form we can just compute a invertibe matrix S such that gS = Sg^{-*} (with frobenius normal form) and hope that S + S^*, S - S^* are also inevertible. Then we have found symmetric/symplectic non degenrate forms This seems like a good idea? idk
-__FORMSPACE__INTERNAL__CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, Lambda, unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, frob_inv_base_change, F, n)
+FORMS_CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, Lambda, unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, frob_inv_base_change, F, n)
     # maybe recoginize the trivial group here as a special case
     local p, mat, outspace, i, j, w, OutForms;
 
     outspace := [];
     for p in frob[1] do#function(p, g, frob_base, frob_base_inv, F, n)
-        mat := __FORMSPACE__INTERNAL__EvaluatePolynomialWithFrobenius(CoefficientsOfUnivariatePolynomial(p), Gen_adjoint_inv_scaled * Lambda, frob_inv_star_scaled, frob_inv_star_base_change, F, n);
+        mat := FORMS_EvaluatePolynomialWithFrobenius(CoefficientsOfUnivariatePolynomial(p), Gen_adjoint_inv_scaled * Lambda, frob_inv_star_scaled, frob_inv_star_base_change, F, n);
         Add(outspace, NullspaceMatDestructive(mat));
     od;
     OutForms := [];
@@ -424,14 +424,14 @@ __FORMSPACE__INTERNAL__CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, 
     
     for i in [1..Size(outspace)] do
         for w in outspace[i] do
-            Add(OutForms, frob_inv_base_change * __FORMSPACE__INTERNAL__FrobSpinAtBlock(w, Gen_adjoint_inv_scaled, frob[3], i, n, F));
+            Add(OutForms, frob_inv_base_change * FORMS_FrobSpinAtBlock(w, Gen_adjoint_inv_scaled, frob[3], i, n, F));
         od;
     od;
     return OutForms;
 end;
 
 # Returns formspace preserved by the group <Gens> modulo Lambdas. Unitary says wheter to look for unitary forms or not. hom can be the Field Automorphism of order two. g_res = [g, Lambda_g, ## The elements of ## FrobeniusNormalForm(g)]. Where g is randomly determenied. g_inv_frob = Inverse(FrobeniusNormalForm(g)[2]). g_star_inv_scaled = g^{-*} * Lambda_g, g_star_inv_scaled_frob = FrobeniusNormalForm(g^{-*} * Lambda_g), frob_base_inv_star = Inverse(g_star_inv_scaled_frob[2]). d = Size(Gens), F is base field and n is the matrix dimension. 
-__FORMSPACE__INTERNAL__FormspaceInternal := function(Gens, Lambdas, unitary, hom, g_res, g_inv_frob, g_star_inv_scaled, g_star_inv_scaled_frob, frob_base_inv_star, d, F, n)
+FORMS_FormspaceInternal := function(Gens, Lambdas, unitary, hom, g_res, g_inv_frob, g_star_inv_scaled, g_star_inv_scaled_frob, frob_base_inv_star, d, F, n)
 
     local k, i, W, first, j, Cond, Conds, h_star, h, w, O, needs_checking, A, failed_check, nspace, vec;
     first := true;
@@ -442,13 +442,13 @@ __FORMSPACE__INTERNAL__FormspaceInternal := function(Gens, Lambdas, unitary, hom
             break;
         fi;
         h := Gens[i];
-        h_star := __FORMSPACE__INTERNAL__CalculateAdjoint(h, unitary, hom, n, F);
+        h_star := FORMS_CalculateAdjoint(h, unitary, hom, n, F);
         for j in [1..n] do
             # vec := RandomVector(F, n);
             vec := g_res[4][j];
             # Display(vec);
             Conds := 
-                __FORMSPACE__INTERNAL__ComputeConditionMatrixFrob(vec, h, h_star, Lambdas[i], g_star_inv_scaled, g_star_inv_scaled_frob, g_inv_frob, frob_base_inv_star, F, n);
+                FORMS_ComputeConditionMatrixFrob(vec, h, h_star, Lambdas[i], g_star_inv_scaled, g_star_inv_scaled_frob, g_inv_frob, frob_base_inv_star, F, n);
             
             ConvertToMatrixRep(Conds, F);
             if not first then
@@ -481,12 +481,12 @@ __FORMSPACE__INTERNAL__FormspaceInternal := function(Gens, Lambdas, unitary, hom
     # W := frob_base_inv_star * W;
     # Print(WWW);
     for w in W do
-        A := g_inv_frob * __FORMSPACE__INTERNAL__FrobSpin(__FORMSPACE__INTERNAL__VectorReorganize(w, Size(g_res[5]), F, n), g_star_inv_scaled, g_res[5], n, F);
+        A := g_inv_frob * FORMS_FrobSpin(FORMS_VectorReorganize(w, Size(g_res[5]), F, n), g_star_inv_scaled, g_res[5], n, F);
         ## This whole checking should be removed, it is stupid to always check!!!
         if needs_checking then
             failed_check := false;
             for i in [1..d] do
-                if not failed_check and Gens[i] * A * __FORMSPACE__INTERNAL__CalculateAdjoint(Gens[i], unitary, hom, n, F) <> Lambdas[i] * A then
+                if not failed_check and Gens[i] * A * FORMS_CalculateAdjoint(Gens[i], unitary, hom, n, F) <> Lambdas[i] * A then
                     failed_check := true;
                 fi;
             od;
@@ -511,7 +511,7 @@ __FORMSPACE__INTERNAL__FormspaceInternal := function(Gens, Lambdas, unitary, hom
         fi;
     od;
     # if unitary then
-    #     return __FORMSPACE__INTERNAL__FilterUnitaryForms(O, F, n, hom);
+    #     return FORMS_FilterUnitaryForms(O, F, n, hom);
     # fi;
     return O;
 end;
@@ -548,16 +548,16 @@ InstallMethod(PreservedFormspace,
         
         if d = 1 then
             Gen := Gens[1];
-            Gen_adjoint := __FORMSPACE__INTERNAL__CalculateAdjoint(Gen, unitary, hom, n, F);
+            Gen_adjoint := FORMS_CalculateAdjoint(Gen, unitary, hom, n, F);
             Gen_adjoint_inv_scaled := Lambda[1]*Inverse(Gen_adjoint);
             frob := FrobeniusNormalForm(Gen);
             frob_inv_star_scaled := FrobeniusNormalForm(Gen_adjoint_inv_scaled);
             frob_inv_star_base_change := Inverse(frob_inv_star_scaled[2]);
 
-            return __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, Lambda[1], unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, Inverse(frob[2]), F, n);
+            return FORMS_CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, Lambda[1], unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, Inverse(frob[2]), F, n);
         fi;
         #contains  group element, scalar, (factors of minopol), Basis change to Frobenius (v, vg, vg^2, ...), Frobenius block lengths, number of iterations to compute
-        g_res := __FORMSPACE__INTERNAL__FindCyclicGroupElementAndScalars(Gens, Lambdas);
+        g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas);
         g_inv_frob := Inverse(g_res[4]);
         #CalculateAdjoint := function(mat, mode, hom, n)
         g_star_inv_unscaled := TransposedMat(Inverse(g_res[1]));
@@ -569,7 +569,7 @@ InstallMethod(PreservedFormspace,
         g_star_inv_scaled_frob := FrobeniusNormalForm(g_star_inv_unscaled * g_res[2]);
         frob_base_inv_star := Inverse(g_star_inv_scaled_frob[2]);
 
-        return __FORMSPACE__INTERNAL__FormspaceInternal(Gens, Lambdas, unitary, hom, g_res, g_inv_frob, g_star_inv_unscaled * g_res[2], g_star_inv_scaled_frob, frob_base_inv_star, d, F, n);
+        return FORMS_FormspaceInternal(Gens, Lambdas, unitary, hom, g_res, g_inv_frob, g_star_inv_unscaled * g_res[2], g_star_inv_scaled_frob, frob_base_inv_star, d, F, n);
     end
 );
 
@@ -596,14 +596,14 @@ InstallMethod(PreservedFormspace,
         if d = 1 then
             # Todo.... !!
             Gen := Gens[1];
-            Gen_adjoint := __FORMSPACE__INTERNAL__CalculateAdjoint(Gen, false, fail, n, F);
+            Gen_adjoint := FORMS_CalculateAdjoint(Gen, false, fail, n, F);
             Gen_adjoint_inv_scaled := One(F)*Inverse(Gen_adjoint); # scaling happens here!!
             frob := FrobeniusNormalForm(Gen);
             frob_inv_star_scaled := FrobeniusNormalForm(Gen_adjoint_inv_scaled);
             frob_inv_star_base_change := Inverse(frob_inv_star_scaled[2]);
             g_inv_frob := Inverse(frob[2]);
 
-            Add(Out, __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), false, fail, frob, frob_inv_star_scaled, frob_inv_star_base_change, g_inv_frob, F, n));
+            Add(Out, FORMS_CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), false, fail, frob, frob_inv_star_scaled, frob_inv_star_base_change, g_inv_frob, F, n));
 
             if p_exponent mod 2 = 0 then
                 hom := FrobeniusAutomorphism(F)^(p_exponent/2);
@@ -611,7 +611,7 @@ InstallMethod(PreservedFormspace,
                 frob_inv_star_base_change := frob_inv_star_base_change^hom;
                 frob_inv_star_scaled[2] := frob_inv_star_scaled[2]^hom;
 
-                Add(Out, __FORMSPACE__INTERNAL__CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), true, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, g_inv_frob, F, n));
+                Add(Out, FORMS_CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, One(F), true, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, g_inv_frob, F, n));
             else 
                 Add(Out, []);
             fi;
@@ -623,7 +623,7 @@ InstallMethod(PreservedFormspace,
             Add(Lambdas, One(F));
         od;
         #contains  group element, scalar, (factors of minopol), Basis change to Frobenius (v, vg, vg^2, ...), Frobenius block lengths, number of iterations to compute
-        g_res := __FORMSPACE__INTERNAL__FindCyclicGroupElementAndScalars(Gens, Lambdas);
+        g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas);
         ConvertToMatrixRep(g_res[1], F);
         ConvertToMatrixRep(g_res[4], F);
         g_inv_frob := Inverse(g_res[4]);
@@ -634,14 +634,14 @@ InstallMethod(PreservedFormspace,
         g_star_inv_scaled_frob := FrobeniusNormalForm(g_star_inv_unscaled); # hier ist eventuell noch ein bug mit den skalaren
         frob_base_inv_star := Inverse(g_star_inv_scaled_frob[2]);
 
-        Add(Out, __FORMSPACE__INTERNAL__FormspaceInternal(Gens, Lambdas, false, hom, g_res, g_inv_frob, g_star_inv_unscaled * g_res[2], g_star_inv_scaled_frob, frob_base_inv_star, d, F, n));
+        Add(Out, FORMS_FormspaceInternal(Gens, Lambdas, false, hom, g_res, g_inv_frob, g_star_inv_unscaled * g_res[2], g_star_inv_scaled_frob, frob_base_inv_star, d, F, n));
         if p_exponent mod 2 = 0 then
             # is ^hom actually cheaper than computing the frobenius normal form?? investigate! certainly makes the code ugly... oh well
             hom := FrobeniusAutomorphism(F)^(p_exponent/2);
             g_star_inv_unscaled := g_star_inv_unscaled^hom;
             g_star_inv_scaled_frob[2] := g_star_inv_scaled_frob[2]^hom;
             frob_base_inv_star := frob_base_inv_star^hom;
-            Add(Out, __FORMSPACE__INTERNAL__FormspaceInternal(Gens, Lambdas, true, hom, g_res, g_inv_frob, g_star_inv_unscaled * g_res[2], g_star_inv_scaled_frob, frob_base_inv_star, d, F, n));
+            Add(Out, FORMS_FormspaceInternal(Gens, Lambdas, true, hom, g_res, g_inv_frob, g_star_inv_unscaled * g_res[2], g_star_inv_scaled_frob, frob_base_inv_star, d, F, n));
         else
             Add(Out, []);
         fi;
@@ -666,7 +666,7 @@ InstallMethod(FilterFormspace, "for list of matrices, F finite field, bool hermi
     fi;
 
     if not unitary then
-        return __FORMSPACE__INTERNAL__FilterBilinearForms(Forms, F, n);
+        return FORMS_FilterBilinearForms(Forms, F, n);
     else
         p_exponent := DegreeOverPrimeField(F);
         if p_exponent mod 2 <> 0 then 
@@ -674,6 +674,6 @@ InstallMethod(FilterFormspace, "for list of matrices, F finite field, bool hermi
             return [];
         fi;
         hom := FrobeniusAutomorphism(F)^(p_exponent/2);
-        return __FORMSPACE__INTERNAL__FilterUnitaryForms(Forms, F, n, hom);
+        return FORMS_FilterUnitaryForms(Forms, F, n, hom);
     fi;
 end);
