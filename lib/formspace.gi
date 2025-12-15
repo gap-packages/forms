@@ -8,7 +8,7 @@
 FORMS_EvaluateMatrixPolynomialWithVector := function(F, n, g, v, coeffs)
     local res, i, deg;
     deg := Size(coeffs);
-    v := Vector(v);
+
     if deg = 0 then
         return ZeroVector(F, n);
     fi;
@@ -31,10 +31,9 @@ end;
 FORMS_CalculateAdjoint := function(mat, mode, hom, n, F)
     local transposed, i, j;
     transposed := TransposedMat(mat);
-    ConvertToMatrixRep(transposed, F);
+    # ConvertToMatrixRep(transposed, F);
     if mode = false then
-        return transposed; # this is apparently very slow????? what why?
-    fi;
+        return transposed;
     if mode then
         return transposed^hom;
     fi;
@@ -50,29 +49,29 @@ FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas)
     known_elements := ShallowCopy(Gens);
     known_scalars := ShallowCopy(Lambdas);
 
-    n := DimensionsMat(Gens[1])[1];
+    n := NrRows(Gens[1]);
     i := Size(known_elements);
     mod_elem := 1;
     best_known_length := n + 1;
     while i < 25 do # 25 is a magic number. maybe investigate a good number here
         # no accidental identity mat
-        if false then
+        if i < 10 then # dont start with inverting to not accidentally make the identity
             mode := 1;
         else
-            mode := PseudoRandom([1, 2]);
+            mode := Random(1, 2);
         fi;
-        j := PseudoRandom([1..Size(known_elements)]);
+        j := Random([1..Size(known_elements)]);
         cur_group_element := known_elements[j];
         cur_scalar := known_scalars[j];
 
         if mode = 1 then
-            j := PseudoRandom([1..Size(known_elements)]);
+            j := Random([1..Size(known_elements)]);
             cur_group_element := cur_group_element * known_elements[j];
             cur_scalar := cur_scalar * known_scalars[j];
         elif mode = 2 then
-            j := PseudoRandom([1..Size(known_elements)]);
-            cur_group_element := cur_group_element * Inverse(known_elements[j]);
-            cur_scalar := cur_scalar * Inverse(known_scalars[j]);
+            j := Random([1..Size(known_elements)]);
+            cur_group_element := cur_group_element / known_elements[j];
+            cur_scalar := cur_scalar / Inverse(known_scalars[j]);
         fi;
         if i mod mod_elem = 0 then
             res := FrobeniusNormalForm(cur_group_element);
@@ -90,7 +89,6 @@ FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas)
         i := i + 1;
     od;
     # Print("only found element of length ", best_known_length, "\n");
-    # TODO: möglichst kurze zyklische modul basis usw....
     if best_known_length = n + 1 then
         return Concatenation([Gens[1], Lambdas[1]], FrobeniusNormalForm(Gens[1]), [-1]);
     fi;
@@ -118,37 +116,40 @@ FORMS_MatrixReorganize := function(mat, j, F, n)
     return vec;
 end;
 
+# Spins the stuff
+FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
+    local A, j, i, k, end_pos;
+    j := Size(frob_base_blocks);
+    A := NullMat(n, n, F);
+    for i in [1..j] do
+        if i = j then
+            end_pos := n;
+        else
+            end_pos := frob_base_blocks[i + 1] - 1;
+        fi;
+        A[frob_base_blocks[i]] := Images[i];
+        for k in [(frob_base_blocks[i] + 1)..end_pos] do
+            A[k] := A[k - 1]*spin_elem;
+        od;
+    od;
+    ConvertToMatrixRep(A, F);
+    return A;
+end;
+
 # Evaluates the univariate polynomial p (given as coefficients) in the matrix g \in F^{n\times n}. frob_base = FrobeniusNormalForm(g) must be satisfied and frob_base_inv = Inverse(FrobeniusNormalForm(g)[2]). The reason these two parameters are given, and not computed in the function itself is to not compute FrobeniusNormalForm(g) multiple times when evaluating multiple polynomials in g.
-FORMS_EvaluatePolynomialWithFrobenius := function(p, g, frob_base, frob_base_inv, F, n) # frob_base_inv useless, right now this is not actually evaluating the polynomial frob_base_inv missing
+FORMS_EvaluatePolynomialWithFrobenius := function(p, g, frob_base, frob_base_inv, F, n) 
     local ws, C, i, end_pos, j, k;
     ws := [];
     j := Size(frob_base[3]);
     for k in [1..j] do
-    #  function(F, n, g, v, coeffs)
         Add(ws, FORMS_EvaluateMatrixPolynomialWithVector(F, n, g, frob_base[2][frob_base[3][k]]{[1..n]}, p));
     od;
-    C := NullMat(n, n, F);
-    #ConvertToMatrixRep(C, F);
-    for k in [1..j] do
-        end_pos := 0;
-        if j = k then
-            end_pos := n;
-        else 
-            end_pos := frob_base[3][k + 1];
-        fi;
-        for i in [0..(end_pos - frob_base[3][k])] do
-            if i = 0 then
-                C[frob_base[3][k] + i] := ws[k];
-            else
-                C[frob_base[3][k] + i] := C[frob_base[3][k] + i - 1]*g;
-            fi;
-        od;
-    od;
+    C := FORMS_FrobSpin(ws, g, frob_base[3], n, F);
     ## FrobBasSpin needed?
     # this mulitiplication might not be needed here 
     # just multiply the found basis in the end when all the condition matrices null spaces got found already (i.e. just return C here)#
     # this could potentially save up to n*d*B matrix matrix multiplications so quite significant!!! definetly investigate!
-    ConvertToMatrixRep(C, F);
+    # ConvertToMatrixRep(C, F);
     return frob_base_inv * C; #to actually evaluate the polynomial
     
     # return frob_base_inv * C;
@@ -184,25 +185,7 @@ FORMS_ComputeConditionMatrixFrob := function(u, h, h_star, scalar_h, g_star_inv_
     return Ps;
 end;
 
-# Spins the stuff
-FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
-    local A, j, i, k, end_pos;
-    j := Size(frob_base_blocks);
-    A := NullMat(n, n, F);
-    for i in [1..j] do
-        if i = j then
-            end_pos := n;
-        else
-            end_pos := frob_base_blocks[i + 1] - 1;
-        fi;
-        A[frob_base_blocks[i]] := Images[i];
-        for k in [(frob_base_blocks[i] + 1)..end_pos] do
-            A[k] := A[k - 1]*spin_elem;
-        od;
-    od;
-    ConvertToMatrixRep(A, F);
-    return A;
-end;
+
 
 FORMS_FrobSpinAtBlock := function(Image, spin_elem, frob_base_blocks, block_index, n, F)
     local A, j, i, k, end_pos;
@@ -227,15 +210,15 @@ FORMS_ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q)
     lambda := fail;
     for i in [1..n] do
         for j in [1..n] do
-            if Form[i][j] <> Zero(F) then 
-                if Form[j][i] = Zero(F) then
+            if not IsZero(Form[i, j]) then 
+                if IsZero(Form[j, i]) then
                     return fail;
                 fi;
-                if lambda <> fail and Form[i][j] * lambda <> hom(Form[j][i]) then
+                if lambda <> fail and Form[i, j] * lambda <> hom(Form[j, i]) then
                     return fail;
                 fi;
                 if lambda = fail then
-                    lambda := hom(Form[j][i]) * Inverse(Form[i][j]);
+                    lambda := hom(Form[j, i]) * Inverse(Form[i, j]);
                 fi;
             fi;
         od;
@@ -246,20 +229,20 @@ end;
 # find symplectic and symmetric matrices in Forms
 # returns bases [[symmetric forms], [symplectic forms]]
 FORMS_FilterBilinearForms := function(Forms, F, n)
-    local transposed_equal_result, form, symmetric_base, symplectic_base, transposed_form, TransposedEqual, symmetric_base_vecs, symplectic_base_vecs, char_2_eqs, sol, out;
+    local transposed_equal_result, form, symmetric_base, symplectic_base, transposed_form, TransposedEqual, symmetric_base_vecs, symplectic_base_vecs, char_2_eqs, sol, out, mat;
 
     # computes if f = f^T or f = -f^T or none
     # return 0 if f = -f^T
     # return 1 if f = f^T
     # return 2 if f <> f^T and f <> -f^T
     TransposedEqual := function(f, F, n) 
-        local i, j, symmetric_possible, symplectic_possible;
+        local i, j, symmetric_possible, symplectic_possible, mat;
         
-        if Characteristic(F) mod 2 = 0 then
+        if Characteristic(F) = 2 then
         # - = + now
             for i in [1..n] do
                 for j in [1..n] do
-                    if f[i][j] <> f[j][i] then
+                    if f[i, j] <> f[j, i] then
                         return 2;
                     fi;
                 od;
@@ -269,12 +252,18 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
         symmetric_possible := true;
         symplectic_possible := true;
         for i in [1..n] do
-            for j in [1..n] do
-                if symmetric_possible and f[i][j] <> f[j][i] then
+            for j in [i..n] do
+                if symmetric_possible and f[i, j] <> f[j, i] then
                     symmetric_possible := false;
+                    if not symplectic_possible then
+                        return 2;
+                    fi;
                 fi;
-                if symplectic_possible and f[i][j] <> -f[j][i] then
+                if symplectic_possible and f[i, j] <> -f[j, i] then
                     symplectic_possible := false;
+                    if not symmetric_possible then
+                        return 2;
+                    fi;
                 fi;
             od;
         od;
@@ -304,18 +293,29 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
 
     fi;
 
-    if Characteristic(F) mod 2 <> 0 then
+    if Characteristic(F) <> 2 then
+        # maybe not use these mutable bases
         symmetric_base := MutableBasis(F, [NullMat(n, n, F)]);
         symplectic_base := MutableBasis(F, [NullMat(n, n, F)]);
+        # symmetric_base := MutableBasis(F, [], ZeroVector(F, n));
+        # symplectic_base := MutableBasis(F, [], ZeroVector(F, n));
         for form in Forms do
             transposed_form := TransposedMat(form);
             CloseMutableBasis(symmetric_base, transposed_form + form);
             CloseMutableBasis(symplectic_base, form - transposed_form);
         od;
 
-        # this does not create compressed matrices, rather it returns lists consisting of compressed vectors... TODO: investigate how MutableBasis works on the inside, and maybe change it to use compressed matrices since they are faster to deal with
+
         symmetric_base_vecs := BasisVectors(ImmutableBasis(symmetric_base));
         symplectic_base_vecs := BasisVectors(ImmutableBasis(symplectic_base));
+
+        # for mat in symmetric_base_vecs do
+        #     ConvertToMatrixRep(mat, F);
+        # od;
+
+        # for mat in symplectic_base_vecs do
+        #     ConvertToMatrixRep(mat, F);
+        # od;
 
         if Size(symmetric_base_vecs) + Size(symplectic_base_vecs) <> Size(Forms) then 
             Error("This should not have happend!! there are supposedly ", Size(symmetric_base_vecs), " linearly independent symmetric forms and ", Size(symplectic_base_vecs), " linearly independent symplectic forms, yet the dimension of the formspace is ", Size(Forms), "\n");
@@ -327,6 +327,7 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
     # TODO: solve this in some efficient way that does not formulate this by solving sets of linear equations of matrices. Instead it would be better to gradually consider entries of the matrices. Then use some heuristic to determine we are done and just check wether the resulting matrices are infact symmetric. this should be faster because now worst case we are solving a system of linear equations that consists of n^2 equations and Size(Forms) indeterminates.
     # TODO: maybe do these todos for all characteristics the nice thing about the current algorithm for char F <> 2 is that we do not have to solve many systems of equations, rather just check wether we have the zero matrix
 
+    ## TODO: this code is broken right now, FIX!! the issue seems to lie in the function FORMS_MatrixReorganize
     char_2_eqs := [];
     for form in Forms do
         Add(char_2_eqs, FORMS_MatrixReorganize(form - TransposedMat(form), n, F, n));
@@ -342,7 +343,7 @@ end;
 # tries to filter the F = GF(q^2) vectorspace generated by <Forms> and return the GF(q) vector space A such that A = <Forms> \cap B where B = {A \in F^{n\times n}, A* = A} TODO: THIS NEEDS SOME FURTHER INVESTIGATION
 # there must be a better way to compute these matrices..
 FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
-    local i, j, ent, q, half, O, l, FF, p, tr_form, Base, baseVecs, gf_base, hgf_base;
+    local i, j, ent, q, half, O, l, FF, p, tr_form, Base, baseVecs, gf_base, hgf_base, mat;
     if Size(Forms) = 0 then
         return [];
     fi;
@@ -368,8 +369,9 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
 
     ## we use (A + A*) is a hermitian form if gAg* = A the problem here is that for A, B such that gA*g = A and gB*g = B we may loose information namely it may be the case that 1/2 (A + A*) = c/2 (B + B*) this is annoying.... one thing one could do is check whether these matrices <1/2 (A + A*), 1/2 (B + B*), ...> are lineraly independent. if that is the case, we know that all forms must have been found (but do we???). but what if not? then there might be another form... this is annoying. Then we may add matrices A, B and so on such that <C1,C2, ., D1, D2..> is a basis of F where C1 and so on are hermitian and D1, D2 and so on are not. We may write D1 = A + B where A is hermitian and B is not. we can then try to write B in terms of the other matrices??? does this help... idk :(
     ## for char = 2 this can be a bad idea as it can make the diagonal disaapear..   oh well
-    if Characteristic(F) mod 2 <> 0 then
-        Base := MutableBasis(GF(q), [NullMat(n, n, F)]);
+    if p <> 2 then
+        Base := MutableBasis(GF(q), [NullMat(n, n, GF(q))]);
+        # Base := MutableBasis(GF(q), [], ZeroVector(GF(q), n));
         gf_base := BasisVectors(Basis(GF(GF(q), 2)))[2];
         hgf_base := hom(gf_base);
         for FF in Forms do
@@ -384,7 +386,7 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
         od;
 
         O := [];
-        baseVecs := ImmutableBasis(Base);
+        baseVecs := BasisVectors(ImmutableBasis(Base));
         # for FF in baseVecs do
         #     Add(O, HermitianFormByMatrix(FF, F));
         # od;
@@ -395,16 +397,16 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
         # if Size(baseVecs) = Size(Forms) then
         #     return baseVecs;
         # fi;
-
-        return BasisVectors(baseVecs);
+        # for mat in baseVecs do
+        #     ConvertToMatrixRep(mat, F);
+        # od;
+        return baseVecs;
     fi;
     Print("char 2 case is missing!!");
     # # TODO this function definetly needs work!!!
     # Print("Could not find a basis of hermitian Forms. Returned hermitian Forms and a Bigger space of matrices that contains all possible hermitian forms. \n");
     # return [baseVecs, Forms];
 end;
-
-
 
 # Compute the formspace for cyclic matrix group. 
 # TODO: optimizations:
@@ -537,7 +539,7 @@ InstallMethod(PreservedFormspace,
         # Prüfen ob es sich um einen endlichen körper handelt??
         Gens := GeneratorsOfGroup(G);
         # F := DefaultFieldOfMatrix(Gens[1]);
-        n := DimensionsMat(Gens[1])[1];
+        n := NrRows(Gens[1]);
         d := Size(Gens);
         hom := fail;
 
@@ -589,7 +591,7 @@ InstallMethod(PreservedFormspace,
         # Prüfen ob es sich um einen endlichen körper handelt??
         Gens := GeneratorsOfGroup(G);
         # F := DefaultFieldOfMatrix(Gens[1]);
-        n := DimensionsMat(Gens[1])[1];
+        n := NrRows(Gens[1]);
         d := Size(Gens);
         hom := fail;
 

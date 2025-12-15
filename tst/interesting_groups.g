@@ -35,7 +35,7 @@ PolyEval := function(f, M)
      n := DimensionsMat(M)[1];
      F := DefaultFieldOfMatrix(M);
      frob := FrobeniusNormalForm(M);
-     return __FORMSPACE__INTERNAL__EvaluatePolynomialWithFrobenius(CoefficientsOfUnivariatePolynomial(f), M, frob, Inverse(frob[2]), F, n);
+     return FORMS_EvaluatePolynomialWithFrobenius(CoefficientsOfUnivariatePolynomial(f), M, frob, Inverse(frob[2]), F, n);
 end;
 
 
