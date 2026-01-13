@@ -355,7 +355,7 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
     #Is this really necessary? Can we not simply delete it?
     if not MTX.IsIrreducible(module)  then
         #Error("Currently the use of MeatAxe requires the module to be absolutely irreducible");
-        Info( InfoForms, 1,  "group is not irreducible and therefore it does not preserve non-degenerate forms\n" );
+        Info( InfoForms, 1,  "group is not irreducible and therefore it does not preserve non-degenerate forms\n" ); #this is wrong. Reducible groups can preserve non-degenerate forms. For example the trivial group G = <1> is reducible and preserves any form.
         return [];
     fi;
 
