@@ -261,19 +261,10 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
         symmetric_base_vecs := BasisVectors(ImmutableBasis(symmetric_base));
         symplectic_base_vecs := BasisVectors(ImmutableBasis(symplectic_base));
 
-        # for mat in symmetric_base_vecs do
-        #     ConvertToMatrixRep(mat, F);
-        # od;
-
-        # for mat in symplectic_base_vecs do
-        #     ConvertToMatrixRep(mat, F);
-        # od;
-
         if Size(symmetric_base_vecs) + Size(symplectic_base_vecs) <> Size(Forms) then 
             Error("This should not have happend!! there are supposedly ", Size(symmetric_base_vecs), " linearly independent symmetric forms and ", Size(symplectic_base_vecs), " linearly independent symplectic forms, yet the dimension of the formspace is ", Size(Forms), "\n");
         fi;
         return [symmetric_base_vecs, symplectic_base_vecs];
-
     fi;
     # TODO: ignore the diagonal entries for the symmetric matrices, for symplectic these need to be zero.
     # TODO: solve this in some efficient way that does not formulate this by solving sets of linear equations of matrices. Instead it would be better to gradually consider entries of the matrices. Then use some heuristic to determine we are done and just check wether the resulting matrices are infact symmetric. this should be faster because now worst case we are solving a system of linear equations that consists of n^2 equations and Size(Forms) indeterminates.
