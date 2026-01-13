@@ -34,6 +34,7 @@ FORMS_CalculateAdjoint := function(mat, mode, hom, n, F)
     # ConvertToMatrixRep(transposed, F);
     if mode = false then
         return transposed;
+    fi;
     if mode then
         return transposed^hom;
     fi;
@@ -231,66 +232,17 @@ end;
 FORMS_FilterBilinearForms := function(Forms, F, n)
     local transposed_equal_result, form, symmetric_base, symplectic_base, transposed_form, TransposedEqual, symmetric_base_vecs, symplectic_base_vecs, char_2_eqs, sol, out, mat;
 
-    # computes if f = f^T or f = -f^T or none
-    # return 0 if f = -f^T
-    # return 1 if f = f^T
-    # return 2 if f <> f^T and f <> -f^T
-    TransposedEqual := function(f, F, n) 
-        local i, j, symmetric_possible, symplectic_possible, mat;
-        
-        if Characteristic(F) = 2 then
-        # - = + now
-            for i in [1..n] do
-                for j in [1..n] do
-                    if f[i, j] <> f[j, i] then
-                        return 2;
-                    fi;
-                od;
-            od;
-            return 1;
-        fi;
-        symmetric_possible := true;
-        symplectic_possible := true;
-        for i in [1..n] do
-            for j in [i..n] do
-                if symmetric_possible and f[i, j] <> f[j, i] then
-                    symmetric_possible := false;
-                    if not symplectic_possible then
-                        return 2;
-                    fi;
-                fi;
-                if symplectic_possible and f[i, j] <> -f[j, i] then
-                    symplectic_possible := false;
-                    if not symmetric_possible then
-                        return 2;
-                    fi;
-                fi;
-            od;
-        od;
-        if symmetric_possible then
-            return 1;
-        fi;
-        if symplectic_possible then
-            return 0;
-        fi;
-        return 2;
-    end;
-
     if Size(Forms) = 0 then
         return [];
     fi;
     if Size(Forms) = 1 then
-        transposed_equal_result := TransposedEqual(Forms[1], F, n);
-        if transposed_equal_result = 2 then
-            return [];
-        fi;
-        if transposed_equal_result = 1 then
-            return [[Forms[1]], []];
-        fi;
-        if transposed_equal_result = 2 then
+        if FORMS_IsSymplecticMatrix(Forms[1], F) then
             return [[], [Forms[1]]];
         fi;
-
+        if FORMS_IsSymmetricMatrix(Forms[1]) then
+            return [[Forms[1]], []];
+        fi;
+        return [];
     fi;
 
     if Characteristic(F) <> 2 then
