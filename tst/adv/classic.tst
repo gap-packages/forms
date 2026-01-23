@@ -201,6 +201,23 @@ gap> g:= GO( 3, 257, mat );;
 gap> InvariantQuadraticForm( g ).matrix = mat;
 true
 
+# Test inconsistent fields of definition.
+gap> g:= GeneralOrthogonalGroup( 5, GF(3) );;
+gap> mat:= InvariantQuadraticForm( g ).matrix;;
+gap> form:= QuadraticFormByMatrix( mat, GF(9) );;
+gap> GeneralOrthogonalGroup( 5, GF(3), form );;
+Error, the defining field of <form> does not fit to <gf>
+gap> g:= GeneralUnitaryGroup( 4, 2 );;
+gap> mat:= InvariantSesquilinearForm( g ).matrix;;
+gap> form:= HermitianFormByMatrix( mat, GF(16) );;
+gap> GeneralUnitaryGroup( 4, 2, form );
+Error, the defining field of <form> does not fit to <q>
+gap> g:= SymplecticGroup( 4, GF(2) );;
+gap> mat:= InvariantBilinearForm( g ).matrix;;
+gap> form:= BilinearFormByMatrix( mat, GF(4) );;
+gap> SymplecticGroup( 4, GF(2), form );
+Error, the defining field of <form> does not fit to <q>
+
 # Increase the code coverage.
 gap> mat:= IdentityMat( 3, GF(5) );;
 gap> _IsEqualModScalars( mat, Z(5) * mat );
