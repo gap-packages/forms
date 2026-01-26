@@ -1,74 +1,26 @@
 #############################################################################
 ##  
-##  PackageInfo.g for the package `Forms'                 
-##                                                              John Bamberg
-##                                                              Jan De Beule
+##  Demo PackageInfo.g for the GitHubPagesForGAP
 ##
-##  (created from Frank Luebeck's PackageInfo.g template file)
-##  
 
-SetPackageInfo( rec( 
-  PackageName := "Forms", 
-  Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.13",
-  Date := "05/05/2025",
-  License := "GPL-2.0-or-later",
+SetPackageInfo( rec(
 
-SourceRepository := rec(
-    Type := "git",
-    URL := Concatenation( "https://github.com/gap-packages/", LowercaseString(~.PackageName) ),
-    
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
-README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/", LowercaseString(~.PackageName), "-", ~.Version ),
+PackageName := "GitHubPagesForGAP",
 
-ArchiveFormats := ".tar.gz .zip .tar.bz2",
+Subtitle := "A GitHub Pages generator for GAP packages",
+Version := "0.4",
+Date := "10/04/2025", # dd/mm/yyyy format
+License := "0BSD",
 
 Persons := [
-  rec( 
-    LastName      := "Bamberg",
-    FirstNames    := "John",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "bamberg@maths.uwa.edu.au",
-    WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
-    PostalAddress := Concatenation( [
-                       "School of Mathematics and Statistics\n",
-                       "The University of Western Australia\n",
-                       "35 Stirling Highway\n",
-                       "Crawley WA 6009, Perth\n",
-                       "Australia" ] ),
-    Place         := "Perth",
-    Institution   := "The University of Western Australia",
-  ),
-  rec( 
-    LastName      := "De Beule",
-    FirstNames    := "Jan",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "jan@debeule.eu",
-    WWWHome       := "http://www.debeule.eu",
-    PostalAddress := Concatenation( [
-                       "Department of Mathematics and Data Science\n",
-                       "Vrije Universiteit Brussel\n",
-                       "Pleinlaan 2\n",
-                       "B-1050 Brussel\n",
-                       "Belgium" ] ),
-    Place         := "Brussels",
-    Institution   := "Vrije Universiteit Brussel",
-  ),
   rec(
     LastName      := "Horn",
     FirstNames    := "Max",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "mhorn@rptu.de",
     WWWHome       := "https://www.quendi.de/math",
+    GitHubUsername:= "fingolfin",
     PostalAddress := Concatenation(
                        "Fachbereich Mathematik\n",
                        "RPTU Kaiserslautern-Landau\n",
@@ -76,56 +28,76 @@ Persons := [
                        "67663 Kaiserslautern\n",
                        "Germany" ),
     Place         := "Kaiserslautern, Germany",
-    Institution   := "RPTU Kaiserslautern-Landau",
+    Institution   := "RPTU Kaiserslautern-Landau"
+  ),
+
+  rec(
+    LastName      := "Thor",
+    FirstNames    := "A. U.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    #Email         := "author@example.com",
+  ),
+
+  rec(
+    LastName      := "Itor",
+    FirstNames    := "Jan",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    #Email         := "janitor@example.com",
   ),
 ],
 
-Status := "accepted",
-CommunicatedBy := "Leonard Soicher (London)",
-AcceptDate := "03/2009",
+Status := "other",
 
-AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
-            
+# The following are not strictly necessary in your own PackageInfo.g
+# (in the sense that update.g only looks at the usual fields
+# like PackageWWWHome, ArchiveURL etc.). But they are convenient
+# if you use exactly the scheme for your package website that we propose.
+GithubUser := "gap-system",
+GithubRepository := ~.PackageName,
+GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
+
+PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
+README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+# The following assumes you are using the Github releases system. If not, adjust
+# it accordingly.
+ArchiveURL     := Concatenation(~.GithubWWW,
+                    "/releases/download/v", ~.Version, "/",
+                    ~.GithubRepository, "-", ~.Version),
+
+ArchiveFormats := ".tar.gz .tar.bz2",
+
+AbstractHTML := 
+  "This is a pseudo package that contains no actual\
+  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
+  GAP packages that allows to quickly setup GitHub Pages.",
+
 PackageDoc := rec(
-  # use same as in GAP            
-  BookName  := "Forms",
+  BookName  := "GitHubPagesForGAP",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0_mj.html",
+  HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Forms - Sesquilinear and Quadratic",
+  LongTitle := "A GitHub Pages generator for GAP packages",
 ),
 
+# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.9",
-  NeededOtherPackages := [],
-  SuggestedOtherPackages := [],
-  ExternalConditions := []),
+  GAP := ">=4.8.1",
+  NeededOtherPackages := [
+    ["GAPDoc", ">= 1.2"],
+    ["IO", ">= 4.1"],
+  ],
+  SuggestedOtherPackages := [["orb", ">= 4.2"]],
+  ExternalConditions := []
+),
 
 AvailabilityTest := ReturnTrue,
 
-BannerString := Concatenation( 
-  "---------------------------------------------------------------------\n",
-  "Loading 'Forms' ", ~.Version," (", ~.Date,")", "\n",
-  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-        " (", ~.Persons[1].WWWHome, ")\n",
-  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
-        " (", ~.Persons[2].WWWHome, ")\n",
-   "For help, type: ?Forms \n",
-  "---------------------------------------------------------------------\n" ),
-
-TestFile := "tst/testall.g",
-
-Keywords := ["Forms", "Sesquilinear", "Quadratic"],
-
-AutoDoc := rec(
-    TitlePage := rec(
-        Copyright := Concatenation(
-            "&copyright; 2015-2024 by the authors<P/>\n\n",
-            "This package may be distributed under the terms and conditions ",
-            "of the GNU Public License Version 2 or (at your option) any later version.\n"
-            ),
-    )
-),
+Keywords := ["GitHub Pages", "GAP"]
 
 ));
+
+
