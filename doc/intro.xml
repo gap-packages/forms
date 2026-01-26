@@ -113,6 +113,9 @@ updated and corrected. This work in progress will be continued.
 This now works. Moreover the undocumented internal functions <C>IsSymplecticMatrix</C>, <C>IsOrthogonalMatrix</C>
 and <C>IsHermitianMatrix</C> were renamed to prevent anyone from accidentally using them.
 Various other internal changes were made that should not affect users.
+<P/>Version 1.2.14 prepares for a change in a future GAP version where GAP will
+enhance <C>InvariantQuadraticForm</C>, <C>InvariantBilinearForm</C> and
+<C>InvariantSesquilinearForm</C> to also provide the field of definition.
 </Section>
 <!-- ############################################################ -->
 
