@@ -30,13 +30,14 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
 ArchiveFormats := ".tar.gz .zip .tar.bz2",
 
 Persons := [
-  rec( 
+  rec(
     LastName      := "Bamberg",
     FirstNames    := "John",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "bamberg@maths.uwa.edu.au",
-    WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
+    Email         := "john.bamberg@uwa.edu.au",
+    WWWHome       := "https://johnbamberg.github.io",
+    GitHubUsername := "johnbamberg",
     PostalAddress := Concatenation( [
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
@@ -53,6 +54,7 @@ Persons := [
     IsMaintainer  := true,
     Email         := "jan@debeule.eu",
     WWWHome       := "http://www.debeule.eu",
+    GitHubUsername := "jdebeule",
     PostalAddress := Concatenation( [
                        "Department of Mathematics and Data Science\n",
                        "Vrije Universiteit Brussel\n",
