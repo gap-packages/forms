@@ -1,4 +1,4 @@
-#@local is_equal, q, F, d, es, e, g, stored, pi, permmat, form, gg, F2, mat
+#@local is_equal, q, F, d, es, e, g, filt, stored, pi, permmat, form, gg, F2, mat
 
 gap> START_TEST( "Forms: classic.tst" );
 
@@ -167,26 +167,41 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25 ] do
 gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >      F:= GF(q);
 >      for d in [ 2, 4 .. 8 ] do
->        g:= SymplecticGroup( d, q );
->        stored:= InvariantBilinearForm( g ).matrix;
->        pi:= PermutationMat( (1,2), d, F );
->        permmat:= pi * stored * TransposedMat( pi );
->        form:= BilinearFormByMatrix( stored, F );
->        gg:= SymplecticGroup( d, q, permmat );
->        if not ( is_equal( g, SymplecticGroup( g ) ) and
->                 ( is_equal( g, SymplecticGroup( stored ) ) or
->                   BaseDomain( stored ) <> F ) and
->                 is_equal( g, SymplecticGroup( form ) ) and
->                 is_equal( g, SymplecticGroup( d, q, g ) ) and
->                 is_equal( g, SymplecticGroup( d, q, stored ) ) and
->                 is_equal( g, SymplecticGroup( d, q, form ) ) and
->                 is_equal( g, SymplecticGroup( d, F, g ) ) and
->                 is_equal( g, SymplecticGroup( d, F, stored ) ) and
->                 is_equal( g, SymplecticGroup( d, F, form ) ) and
->                 IsSubset( gg, GeneratorsOfGroup( gg ) ) and
->                 IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
->          Error( "problem with Sp(", d, ",", q, ")" );
->        fi;
+>        for filt in [ IsPlistRep, IsPlistMatrixRep ] do
+>          PushOptions( rec( ConstructingFilter:= filt ) );
+> 
+>          g:= SymplecticGroup( d, q );
+>          if filt <> IsPlistRep and not filt( One( g ) ) then
+>            Error( "wrong repres. of matrices", [ q, d, filt ] );
+>          fi;
+>          stored:= InvariantBilinearForm( g ).matrix;
+>          if filt <> IsPlistRep and not filt( stored ) then
+>            Error( "wrong repres. of matrices" );
+>          fi;
+>          pi:= Matrix( PermutationMat( (1,2), d, F ), stored );
+>          permmat:= pi * stored * TransposedMat( pi );
+>          form:= BilinearFormByMatrix( stored, F );
+>          gg:= SymplecticGroup( d, q, permmat );
+>          if filt <> IsPlistRep and not filt( One( gg ) ) then
+>            Error( "wrong repres. of matrices" );
+>          fi;
+>          if not ( is_equal( g, SymplecticGroup( g ) ) and
+>                   ( is_equal( g, SymplecticGroup( stored ) ) or
+>                     BaseDomain( stored ) <> F ) and
+>                   is_equal( g, SymplecticGroup( form ) ) and
+>                   is_equal( g, SymplecticGroup( d, q, g ) ) and
+>                   is_equal( g, SymplecticGroup( d, q, stored ) ) and
+>                   is_equal( g, SymplecticGroup( d, q, form ) ) and
+>                   is_equal( g, SymplecticGroup( d, F, g ) ) and
+>                   is_equal( g, SymplecticGroup( d, F, stored ) ) and
+>                   is_equal( g, SymplecticGroup( d, F, form ) ) and
+>                   IsSubset( gg, GeneratorsOfGroup( gg ) ) and
+>                   IsSubset( g, List( GeneratorsOfGroup( gg ), x -> x^pi ) ) ) then
+>            Error( "problem with Sp(", d, ",", q, ") for ", filt );
+>          fi;
+> 
+>          PushOptions( rec( ConstructingFilter:= fail ) );
+>        od;
 >      od;
 >    od;
 
@@ -232,4 +247,4 @@ gap> _IsEqualModScalars( mat, NullMat( 3, 2, GF(5) ) );
 false
 
 ##
-gap> STOP_TEST( "classic.tst" );
+gap> STOP_TEST( "Forms: classic.tst" );
