@@ -784,15 +784,15 @@ InstallMethod( SpecialUnitaryGroupCons,
     g:= SpecialUnitaryGroupCons( filt, d, q );
     stored:= InvariantSesquilinearForm( g ).matrix;
 
-    # If the prescribed form fits then just return.
-    if stored = form!.matrix then
-      return g;
-    fi;
-
     # Check that 'form' lives over the intended field.
     F:= GF(q^2);
     if not IsSubset( F, form!.basefield ) then
       Error( "the defining field of <form> does not fit to <q>" );
+    fi;
+
+    # If the prescribed form fits then just return.
+    if stored = form!.matrix then
+      return g;
     fi;
 
     # Compute a base change matrix.
@@ -928,18 +928,17 @@ InstallMethod( SymplecticGroupCons,
     g:= SymplecticGroupCons( filt, d, F );
     stored:= InvariantBilinearForm( g ).matrix;
 
+    # Check that 'form' lives over the intended field.
+    if not IsSubset( F, form!.basefield ) then
+      Error( "the defining field of <form> does not fit to <q>" );
+    fi;
+
     # If the prescribed form fits then just return.
     form_matrix:= Matrix( form!.matrix, stored );
 #T This 'Matrix' call should become unnecessary.
 #T For that, the functions used below have to support 'IsMatrixObj' arguments.
     if stored = form_matrix then
       return g;
-    fi;
-
-    # Check that 'form' lives over the intended field.
-    F:= GF(q);
-    if not IsSubset( F, form!.basefield ) then
-      Error( "the defining field of <form> does not fit to <q>" );
     fi;
 
     # Compute a base change matrix.
@@ -964,7 +963,7 @@ InstallMethod( SymplecticGroupCons,
       SetName( gg, Name( g ) );
     fi;
 
-    SetInvariantBilinearForm( gg, rec( matrix:= form!.matrix,
+    SetInvariantBilinearForm( gg, rec( matrix:= form_matrix,
                                        baseDomain:= F ) );
     if HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
       SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,

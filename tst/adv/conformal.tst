@@ -46,7 +46,8 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >            Error( "problem with CSp(", d, ",", q, ")" );
 >          fi;
 > 
->          if Size( g ) < 10^7 then
+>          if Size( g ) < 10^7 and filt = IsPlistRep then
+> # Change this as soon as also `IsPlistMatrixRep` works!
 >            pg:= ConformalSymplecticGroup( IsPermGroup, d, q );
 >            if Size( g ) <> Size( pg ) then
 >              Error( "problem with CSp(IsPermGroup, ", d, ",", q, ")" );

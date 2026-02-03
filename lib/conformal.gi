@@ -14,7 +14,7 @@ InstallMethod( ConformalSymplecticGroupCons,
   { filt, G } -> ConformalSymplecticGroupCons( filt,
                    BilinearFormByMatrix(
                      InvariantBilinearForm( G ).matrix,
-                     Forms_FieldOfDefinition( G, InvariantBilinearForm( G ) ) ) ) );
+                     Forms_FieldOfDefinition( InvariantBilinearForm( G ), G ) ) ) );
 
 InstallMethod( ConformalSymplecticGroupCons,
   "matrix group for group with form",
@@ -23,7 +23,7 @@ InstallMethod( ConformalSymplecticGroupCons,
   { filt, G } -> ConformalSymplecticGroupCons( filt,
                    BilinearFormByMatrix(
                      InvariantBilinearFormUpToScalars( G ).matrix,
-                     Forms_FieldOfDefinition( G, InvariantBilinearFormUpToScalars( G ) ) ) ) );
+                     Forms_FieldOfDefinition( InvariantBilinearFormUpToScalars( G ), G ) ) ) );
 
 InstallMethod( ConformalSymplecticGroupCons,
   "matrix group for form",
