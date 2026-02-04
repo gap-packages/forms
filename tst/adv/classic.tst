@@ -1,4 +1,5 @@
-#@local is_equal, q, F, d, es, e, g, filt, stored, pi, permmat, form, gg, F2, mat
+#@local is_equal, q, F, d, es, e, g, filters, filt, stored, pi, permmat
+#@local form, gg, F2, mat
 
 gap> START_TEST( "Forms: classic.tst" );
 
@@ -164,10 +165,19 @@ gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25 ] do
 >    od;
 
 # Test the creation of symplectic groups.
+gap> if IsBound( ConformalSymplecticGroup ) then
+>      # Support for matrix objects was added together with this function,
+>      # https://github.com/gap-system/gap/pull/6213.
+>      # Once we know a GAP version that decides the availability,
+>      # the version number can be used for the distinction.
+>      filters:= [ IsPlistRep, IsPlistMatrixRep ];;
+>    else
+>      filters:= [ IsPlistRep ];;
+>    fi;
 gap> for q in [ 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 ] do
 >      F:= GF(q);
 >      for d in [ 2, 4 .. 8 ] do
->        for filt in [ IsPlistRep, IsPlistMatrixRep ] do
+>        for filt in filters do
 >          PushOptions( rec( ConstructingFilter:= filt ) );
 > 
 >          g:= SymplecticGroup( d, q );
