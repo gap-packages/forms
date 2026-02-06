@@ -1699,22 +1699,65 @@ InstallGlobalFunction(Forms_QUAD_EQ,
 
 InstallMethod( FORMS_IsSymplecticMatrix, [IsFFECollColl, IsField],
   function(m,f)
+    local i, j, n;
+    # maybe thorw an error if m is not square
+    n := NrRows(m);
     if Characteristic(f) = 2 then
-       if not ForAll([1..NrRows(m)], i -> IsZero(m[i,i]) ) then
-           return false;
-       fi;
+      # is this needed??? i am not sure how symplectic matrices are definied in char 2... i thought A = A^T is enough!
+      if not ForAll([1..n], i -> IsZero(m[i,i]) ) then
+        return false;
+      fi;
+      for i in [1..n] do
+        for j in [1..i] do
+          if m[i, j] <> m[j, i] then
+            return false;
+          fi;
+        od;
+      od;
+      return true;
     fi;
-    return m = -TransposedMat(m);
+    for i in [1..n] do
+      for j in [1..i] do
+        if m[i, j] <> -m[j, i] then
+          return false;
+        fi;
+      od;
+    od;
+    return true;
   end );
 
 InstallMethod( FORMS_IsSymmetricMatrix, [IsFFECollColl],
   function(m)
-    return m=TransposedMat(m);
+    local n, i, j;
+    n := NrRows(m);
+    for i in [1..n] do
+      for j in [1..i] do
+        if m[i, j] <> m[j, i] then
+          return false;
+        fi;
+      od;
+    od;
+    return true;
   end );
 
 InstallMethod( FORMS_IsHermitianMatrix, [IsFFECollColl, IsField],
   function(m,f)
-    return m=Forms_HERM_CONJ(m,Sqrt(Size(f)));
+    local p, q, n, i, j;
+    if DegreeOverPrimeField(f) mod 2 <> 0 then
+      # should this be the behaviour? could also return fail.
+      return false;
+    fi;
+    p := Characteristic(f);
+    q := p^(DegreeOverPrimeField(f)/2);
+    n := NrRows(m);
+    for i in [1..n] do
+      for j in [1..i] do
+        if m[i, j] <> m[j, i]^q then
+          return false;
+        fi;
+      od;
+    od;
+    return true;
   end );
 
 #############################################################################
