@@ -1731,7 +1731,8 @@ InstallMethod( FORMS_IsSymmetricMatrix, [IsFFECollColl],
     local n, i, j;
     n := NrRows(m);
     for i in [1..n] do
-      for j in [1..i] do
+      # minus one to ignore diagonal entries for symmetric matrices.
+      for j in [1..i - 1] do
         if m[i, j] <> m[j, i] then
           return false;
         fi;
