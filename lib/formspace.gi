@@ -75,7 +75,7 @@ FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas, n)
                 j := PseudoRandom([1..d]);
             od;
         fi;
-        # TODO: add inverses?
+        # TODO: add inverses? seems fine without
         g := known_elements[i]*known_elements[j];
         lamb := known_scalars[i]*known_scalars[j];
         res := FrobeniusNormalForm(g);
@@ -121,7 +121,7 @@ FORMS_MatrixReorganize := function(mat, j, F, n)
 end;
 
 # given j times n matrices over field F, this tries to compute a linear combination of the matrices such that their sum is zero.
-# todo maybe make this funciton more efficient by only considereing some equations, then considering more and so on until we are done.
+# TODO: maybe make this funciton more efficient by only considereing some vectors, a better optimatizion however, would be to not even generate the unused equations
 FORMS_SolveMatrixSystem := function(mats, j, n, F)
     local eqs, mat, sol, out;
     eqs := [];
@@ -131,7 +131,7 @@ FORMS_SolveMatrixSystem := function(mats, j, n, F)
     return NullspaceMatDestructive(eqs);
 end;
 
-# Spins the stuff
+# Spins a block in the frobenius normal form, with the images.
 FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
     local A, j, i, k, end_pos;
     j := Size(frob_base_blocks);
@@ -147,7 +147,6 @@ FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
             A[k] := A[k - 1]*spin_elem;
         od;
     od;
-    # ConvertToMatrixRep(A, F);
     return A;
 end;
 
@@ -160,43 +159,35 @@ FORMS_EvaluatePolynomialWithFrobenius := function(p, g, frob_base, frob_base_inv
         Add(ws, FORMS_EvaluateMatrixPolynomialWithVector(F, n, g, frob_base[2][frob_base[3][k]]{[1..n]}, p));
     od;
     C := FORMS_FrobSpin(ws, g, frob_base[3], n, F);
-    ## FrobBasSpin needed?
-    # this mulitiplication might not be needed here 
-    # just multiply the found basis in the end when all the condition matrices null spaces got found already (i.e. just return C here)#
-    # this could potentially save up to n*d*B matrix matrix multiplications so quite significant!!! definetly investigate!
-    # ConvertToMatrixRep(C, F);
-    return frob_base_inv * C; #to actually evaluate the polynomial
-    
-    # return frob_base_inv * C;
+    # TODO: this function is used to build the condition matrices, however since we are only interested in the kernels of these matrices and C is an invertible matrix we can probably eliminate this multiplication and do it at a later stage?
+    return frob_base_inv * C;
 end;
 
 # This computes (and returns) the matrix \mathcal{P}_{h, u} from the bachelors thesis.
-# Here we have u, h \in F^{n\times n}, h_star = h^*, scalar_h = \lambda_h, g_star_inv_scaled = g^{-*}*lambda_g, frob_base = FrobeniusNormalForm(g^{-*}), frob_base_inv = Inverse(FrobeniusNormalForm(g)[2]), frob_base_inv_star = Inverse(frob_base[2]). The reason we to give ten billion parameters is to avoid computing the same matrices multiple times. TODO: better names!!!!!!
+# Here we have u, h \in F^{n\times n}, h_star = h^*, scalar_h = \lambda_h, g_star_inv_scaled = g^{-*}*lambda_g, frob_base = FrobeniusNormalForm(g^{-*}), frob_base_inv = Inverse(FrobeniusNormalForm(g)[2]), frob_base_inv_star = Inverse(frob_base[2]). The reason we to give so many parameters is to avoid computing the same matrices multiple times. TODO: better names!!!!!!
 FORMS_ComputeConditionMatrixFrob := function(u, h, h_star, scalar_h, g_star_inv_scaled, frob_base, frob_base_inv, frob_base_inv_star, F, n)
     local coeffs_c, coeffs_f, Ps, i, j, b_end, b_start, cpol, fpol;
     coeffs_c := (u * h) * frob_base_inv;
     coeffs_f := (u * frob_base_inv) * scalar_h;
     j := Size(frob_base[3]);
     Ps := NullMat(n * j, n, F);
-    # ConvertToMatrixRep(Ps, F);
     for i in [1..j] do
         if i = j then
             b_end := n;
         else
             b_end := frob_base[3][i + 1] - 1;
         fi;
-        # this code looks horrible .... :(
         Ps{[((i - 1)*n + 1)..(i*n)]}{[1..n]} :=
-            FORMS_EvaluatePolynomialWithFrobenius(coeffs_c{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n) * h_star -  FORMS_EvaluatePolynomialWithFrobenius(coeffs_f{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n);
+            FORMS_EvaluatePolynomialWithFrobenius(coeffs_c{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n) * h_star - FORMS_EvaluatePolynomialWithFrobenius(coeffs_f{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n);
     od;
     return Ps;
 end;
 
+## similar to FORMS_FrobSpin but only spins one block namely that of block_index
 FORMS_FrobSpinAtBlock := function(Image, spin_elem, frob_base_blocks, block_index, n, F)
     local A, j, i, k, end_pos;
     j := Size(frob_base_blocks);
     A := NullMat(n, n, F);
-    # ConvertToMatrixRep(A, F);
     if block_index = j then
         end_pos := n;
     else
@@ -209,30 +200,8 @@ FORMS_FrobSpinAtBlock := function(Image, spin_elem, frob_base_blocks, block_inde
     return A;
 end;
 
-# checks if (Form^T)^hom = c Form for some c in F and returns d such that d * Form = ((d Form)^T)^hom if possible or if not possibe fail
-FORMS_ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q)
-    local lambda, i, j;
-    lambda := fail;
-    for i in [1..n] do
-        for j in [1..n] do
-            if not IsZero(Form[i, j]) then 
-                if IsZero(Form[j, i]) then
-                    return fail;
-                fi;
-                if lambda <> fail and Form[i, j] * lambda <> hom(Form[j, i]) then
-                    return fail;
-                fi;
-                if lambda = fail then
-                    lambda := hom(Form[j, i]) * Inverse(Form[i, j]);
-                fi;
-            fi;
-        od;
-    od;
-    return RootFFE(F, Inverse(lambda), q - 1);
-end;
-
 # find symplectic and symmetric matrices in Forms
-# returns bases [[symmetric forms], [symplectic forms]]
+# returns bases [[symmetric forms], [symplectic forms]] for char <> 2 and [symmetric forms] for char = 2
 FORMS_FilterBilinearForms := function(Forms, F, n)
     local transposed_equal_result, form, symmetric_base, symplectic_base, transposed_form, TransposedEqual, symmetric_base_vecs, symplectic_base_vecs, char_2_eqs, sol, out, mat, tmp, i, s;
 
@@ -271,9 +240,8 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
         fi;
         return [symmetric_base_vecs, symplectic_base_vecs];
     fi;
-    # TODO: ignore the diagonal entries for the symmetric matrices, for symplectic these need to be zero....?
     # TODO: solve this in some efficient way that does not formulate this by solving sets of linear equations of matrices. Instead it would be better to gradually consider entries of the matrices. Then use some heuristic to determine we are done and just check wether the resulting matrices are infact symmetric. this should be faster because now worst case we are solving a system of linear equations that consists of n^2 equations and Size(Forms) indeterminates.
-    # TODO: maybe do these todos for all characteristics the nice thing about the current algorithm for char F <> 2 is that we do not have to solve many systems of equations, rather just check wether we have the zero matrix
+    # TODO: maybe do these todos for all characteristics?
 
     if Size(Forms) = 1 then
         if FORMS_IsSymplecticMatrix(Forms[1], F) then
@@ -301,13 +269,35 @@ end;
 
 # tries to filter the F = GF(q^2) vectorspace generated by <Forms> and return the GF(q) vector space A such that A = <Forms> \cap B where B = {A \in F^{n\times n}, A* = A}
 FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
-    local i, j, ent, q, half, O, l, FF, p, tr_form, Base, baseVecs, gf_base, hgf_base, mat, small_field, field_aut_mat, gf_base_vecs, big_aut_mat, to_smaller_field_matrix, transpose_weird_mat, apply_aut_to_mat, eqs, s, form, form_changed, sol, out, tmp, big_field, changed_forms, apply_coefficient_and_get_smaller_matrix, square_base_entry_rep, multiply_with_scalar, form_changed_mult, form_changed_mult_star, form_changed_star;
+    local i, j, ent, q, half, O, l, FF, p, tr_form, Base, baseVecs, gf_base, hgf_base, mat, small_field, field_aut_mat, gf_base_vecs, big_aut_mat, to_smaller_field_matrix, transpose_weird_mat, apply_aut_to_mat, eqs, s, form, form_changed, sol, out, tmp, big_field, changed_forms, apply_coefficient_and_get_smaller_matrix, square_base_entry_rep, multiply_with_scalar, form_changed_mult, form_changed_mult_star, form_changed_star, FORMS_ScalarFormIdentifyCheck;
     if Size(Forms) = 0 then
         return [];
     fi;
     p := Characteristic(F);
     q := p^(DegreeOverPrimeField(F)/2);
     
+    # checks if (Form^T)^hom = c Form for some c in F and returns d such that d * Form = ((d Form)^T)^hom if possible or if not possibe fail
+    FORMS_ScalarFormIdentifyCheck := function(Form, F, n, hom, p, q)
+        local lambda, i, j;
+        lambda := fail;
+        for i in [1..n] do
+            for j in [1..n] do
+                if not IsZero(Form[i, j]) then 
+                    if IsZero(Form[j, i]) then
+                        return fail;
+                    fi;
+                    if lambda <> fail and Form[i, j] * lambda <> hom(Form[j, i]) then
+                        return fail;
+                    fi;
+                    if lambda = fail then
+                        lambda := hom(Form[j, i]) * Inverse(Form[i, j]);
+                    fi;
+                fi;
+            od;
+        od;
+        return RootFFE(F, Inverse(lambda), q - 1);
+    end;
+
     if Size(Forms) = 1 then
         #checks if A = A* or A = cA* if A = A* return A, if A = cA* we want to return scalar multiples of A, namely lA for l such that c = l^(1-q) iff c^-1 = l^(q-1)
         # all the solutions then are lA*GF(q) is this correct?? i am not sure if this are indeed all the possible solutions, but it certanly are solutions.
@@ -319,9 +309,9 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
         return [Forms[1] * l];
     fi;
        
-    ## If A = A* is a form preserved modulo scalar c in GF(q^2) i.e. gAg* = cA for group elements g. then c in GF(q).
+    ## Lemma: If A = A* is a form preserved modulo scalar c in GF(q^2) i.e. gAg* = cA for group elements g and A is not 0. then c in GF(q).
 
-    ## for char = 2 this can not yield all hermitian matrices as it deletes the diagonal disaapear.
+    ## for char = 2 this can not yield all hermitian matrices as it deletes the diagonal.
     if p <> 2 then
         Base := MutableBasis(GF(q), [NullMat(n, n, GF(q))]);
         # Base := MutableBasis(GF(q), [], ZeroVector(GF(q), n));
@@ -339,15 +329,15 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
         return baseVecs;
     fi;
 
-    # the idea for char 2 is to solve the semiliner system of equations. we take a F_q basis of F_q^2 namely <1, delta> and express n times n matrices with this basis. 
+    # the idea for char 2 is to solve the semiliner system of equations. we take a GF(q) basis of GF(q^2) namely <1, delta> and express n times n matrices with this basis. 
 
-    # TODO: this function is potentially really slow, it would be much better two only take a few equations and constain the problem instead of taking the entire n times n matrix. One such example would be the form space preserved by G := Group(SU(200, 2^2).1) then Size(Forms) = 38420 consisting of 200x200 matrices. 
+    # TODO: this function is potentially really slow, it would be much better two only take a few equations and constain the problem instead of taking the entire n times n matrix. One such example would be the form space preserved by G := Group(SU(200, 2^2).1) then Size(Forms) = 38420 consisting of 200x200 matrices. For cases such as this it might also be good to just have some function that tries to find one random non-deg form instead of generating random ones
 
     small_field := GF(q);
     big_field := GF(q^2);
     gf_base := Basis(GF(small_field, 2));
     gf_base_vecs :=  BasisVectors(gf_base);
-    # expresses n times n matrices as 2n times n matrices where 2 time 1 collumn vectors contain the coefficients ascoiciated with the basis gf_base
+    # expresses n times n matrices as 2n times n matrices where 2 times 1 collumn vectors contain the coefficients ascoiciated with the basis gf_base
     to_smaller_field_matrix := function(basis_of_field, small_field_, mat, n, c)
         local outmat, i, j;
         outmat := NullMat(2 * n, c, small_field_);
@@ -356,7 +346,6 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
                 outmat{[(2*i - 1)..(2*i)]}[j] := Coefficients(basis_of_field, mat[i][j]);
             od;
         od;
-        # ConvertToMatrixRep(outmat, small_field_);
         return outmat;
     end;
     # this matrix applies the field automorphism hom to a element expressed in the basis over the smaller field
@@ -372,7 +361,7 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
         return outmat;
     end;
 
-    # transposes 2n times n matrix  
+    # transposes 2n times n matrix (as if it were a n times n matrix)
     transpose_weird_mat := function(mat, n)
         local outmat, i, j;
         outmat := 1*mat; # hack to force gap to copy the matrix.
@@ -427,28 +416,56 @@ FORMS_CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, Lambda, unitary, 
     local p, mat, outspace, i, j, w, OutForms;
 
     outspace := [];
-    for p in frob[1] do#function(p, g, frob_base, frob_base_inv, F, n)
+    for p in frob[1] do
         mat := FORMS_EvaluatePolynomialWithFrobenius(CoefficientsOfUnivariatePolynomial(p), Gen_adjoint_inv_scaled * Lambda, frob_inv_star_scaled, frob_inv_star_base_change, F, n);
         Add(outspace, NullspaceMatDestructive(mat));
     od;
     OutForms := [];
-    #(Image, spin_elem, frob_base_blocks, block_index, n, F)
     
     for i in [1..Size(outspace)] do
         for w in outspace[i] do
-            Add(OutForms, frob_inv_base_change * FORMS_FrobSpinAtBlock(w, Gen_adjoint_inv_scaled, frob[3], i, n, F));
+            Add(OutForms, frob_inv_base_change * FORMS_FrobSpinAtBlock(w, Gen_adjoint_inv_scaled, frob[3], i, n, F)); # this can be used to bound the rank very cheaply, it is smaller than the lenght of the ith frobenius block, furthermore we use the different frobenius blocks, to build a non-deg form we should use a form from each block and add them??
         od;
     od;
     return OutForms;
 end;
 
+
+# builds the forms from image vectors and frobenius normal forms and so on, might needs to check if the forms are actually preserved forms
+FORMS_ReturnFormspace := function(needs_checking, W, g_res, g_star_inv_scaled, Lambdas, unitary, hom, Gens, d, F, g_inv_frob, n)
+    local O, w, A, i;
+    # no kernel, return empty
+    O := [];
+    for w in W do
+        A := g_inv_frob * FORMS_FrobSpin(FORMS_VectorReorganize(w, Size(g_res[5]), F, n), g_star_inv_scaled, g_res[5], n, F);
+        if needs_checking then
+            for i in [1..d] do
+                #todo: store adjoints so they do not have to be reused!
+                if Gens[i] * A * FORMS_CalculateAdjoint(Gens[i], unitary, hom, n, F) <> Lambdas[i] * A then
+                    if Size(W) = 1 then
+                        return []; #one dimensional case no further computation needed
+                    fi;
+                    return false;
+                fi;
+            od;
+            Add(O, A);
+        else
+            Add(O, A);
+        fi;
+    od;
+    return O;
+end;
+
 # Returns formspace preserved by the group <Gens> modulo Lambdas. Unitary says wheter to look for unitary forms or not. hom can be the Field Automorphism of order two. g_res = [g, Lambda_g, ## The elements of ## FrobeniusNormalForm(g)]. Where g is randomly determenied. g_inv_frob = Inverse(FrobeniusNormalForm(g)[2]). g_star_inv_scaled = g^{-*} * Lambda_g, g_star_inv_scaled_frob = FrobeniusNormalForm(g^{-*} * Lambda_g), frob_base_inv_star = Inverse(g_star_inv_scaled_frob[2]). d = Size(Gens), F is base field and n is the matrix dimension. 
 FORMS_FormspaceInternal := function(Gens, Lambdas, unitary, hom, g_res, g_inv_frob, g_star_inv_scaled, g_star_inv_scaled_frob, frob_base_inv_star, d, F, n)
-
-    local k, i, W, first, j, Cond, Conds, h_star, h, w, O, needs_checking, A, failed_check, nspace, vec;
+    local k, i, W, first, j, Cond, Conds, h_star, h, w, O, needs_checking, A, failed_check, nspace, vec, stagnatiton, stagnation_max, old_kernel_size, nspace_size;
     first := true;
     needs_checking := false; ## maybe remove?
-
+   
+    ## after computing 5 kernels and the formspace not getting smaller, assume that all forms have been found.
+    old_kernel_size := n + 1;
+    stagnatiton := 0;
+    stagnation_max := 3; 
     for i in [1..d] do
         if needs_checking then
             break;
@@ -456,109 +473,71 @@ FORMS_FormspaceInternal := function(Gens, Lambdas, unitary, hom, g_res, g_inv_fr
         h := Gens[i];
         h_star := FORMS_CalculateAdjoint(h, unitary, hom, n, F);
         for j in [1..n] do
-            # vec := RandomVector(F, n);
+            # vec := RandomVector(F, n); # does not seem to be better
             vec := g_res[4][j];
-            # Display(vec);
             Conds := 
                 FORMS_ComputeConditionMatrixFrob(vec, h, h_star, Lambdas[i], g_star_inv_scaled, g_star_inv_scaled_frob, g_inv_frob, frob_base_inv_star, F, n);
             
-            # ConvertToMatrixRep(Conds, F);
             if not first then
                 nspace := NullspaceMat(W * Conds);
-                # ConvertToMatrixRep(nspace, F);
-                if Size(nspace) = 0 then 
-                    # Print("empty");
+                nspace_size := Size(nspace);
+                if nspace_size = 0 then 
                     return [];
                 fi;
                 W := nspace * W;
             fi;
             if first then
                 nspace := NullspaceMat(Conds);
-                # ConvertToMatrixRep(nspace, F);
-                if Size(nspace) = 0 then 
-                    # Print("empty");
+                nspace_size := Size(nspace);
+                if nspace_size = 0 then 
                     return [];
                 fi;
                 W := nspace;
                 first := false;
             fi;
-            if Size(nspace) = 1 then
-                # technically we still need checking here..
+            if nspace_size = 1 then
                 needs_checking := true;
                 break;
             fi;
+            if old_kernel_size = nspace_size then
+                stagnatiton := stagnatiton + 1;
+            else 
+                stagnatiton := 0;
+            fi;
+            # try exit early
+            if stagnatiton = stagnation_max then
+                stagnatiton := 0;
+                # the idea is to not do this computation too often..
+                stagnation_max := stagnation_max * 2;
+                O := FORMS_ReturnFormspace(needs_checking, W, g_res, g_star_inv_scaled, Lambdas, unitary, hom, Gens, d, F, g_inv_frob, n);
+                if O <> false then
+                    return O;
+                fi;
+            fi;
         od;
     od;
-    O := [];
-    # W := frob_base_inv_star * W;
-    # Print(WWW);
-    for w in W do
-        A := g_inv_frob * FORMS_FrobSpin(FORMS_VectorReorganize(w, Size(g_res[5]), F, n), g_star_inv_scaled, g_res[5], n, F);
-        ## This whole checking should be removed, it is stupid to always check!!!
-        if needs_checking then
-            failed_check := false;
-            for i in [1..d] do
-                if not failed_check and Gens[i] * A * FORMS_CalculateAdjoint(Gens[i], unitary, hom, n, F) <> Lambdas[i] * A then
-                    failed_check := true;
-                fi;
-            od;
-            if not failed_check then
-                Add(O, A);
-            fi;
-        fi;
-        if not needs_checking then
-            # if not unitary then
-            #     # throws errors since the forms package only accepts symmetric bilinear forms... i think this should be changed..
-            #     # or should i solve for symmetric matrices as a system of linear equations..?
-            #     Add(O, BilinearFormByMatrix(A, F));
-            # else
-            #     Add(O, A);
-            # fi;
-            Add(O, A);
-        fi;
-    od;
-    # if unitary then
-    #     return FORMS_FilterUnitaryForms(O, F, n, hom);
-    # fi;
+    # needs_checking should be changed depneding if the cyclic matrix condition needs to be checked, i think this can be decided from the frobenius normal form but i am not entirely sure.
+    O := FORMS_ReturnFormspace(needs_checking, W, g_res, g_star_inv_scaled, Lambdas, unitary, hom, Gens, d, F, g_inv_frob, n);
+    if O = false then
+        # TODO: cyclic matrix conditition and example Group where this is needed if such a group exists. Can only happen for a group that does not preserve non-deg form but preserves deg form i think.
+        # TODO: one could also do this instead of checking if forms are preserved however this seems slower
+    fi;
     return O;
 end;
 
 # ideas for scalars : 
 ## non-degenerate 
-# - do the things already in the forms package with trace/ analyze minimal and characteristic polynomial
+# - do the things already in the forms package with trace/ analyze minimal and characteristic polynomial DONE! :)
 ## degenerate : 
 # - do the trick where a group generator with scalar guranteed to be one gets added and compute the eigenvalues of this one these are then all possible choices of scalars, we can even do this a few times to arrow down the possibilities. 
-## commutator group? idk if this is a good approach, ideally i want it to be able to handle every case, even if the commutatof subgroup generated is trivial. the issue with this is that the resulting forms of the commutator group may not be forms of the bigger group. In this case we might need linear combinations.
-
-# computes possible scalars and the ascosciated formspaces. 
-FORMS_FormsWithScalarsGeneralCase := function(Gens)
-    local data;
-    data := rec();
-    
-    if Size(Gens) = 1 then
-        # todo! furthermore an implementation that can handle abelian groups well is also missing. This would just boil down  to solving the cyclic case multiple times and intersecting the resulting formspaces. However i dont have a good idea how to obtain scalars for these groups. 
-
-        # maybe compute assuming the group generators are cyclic we might compute det(\mu_g(\lambda_g g^{-*})) as a polynomial in \lambda_g and solve for its zeros? Is this even worth it or should we just brute force the computation of q formspaces?
-    fi;
-
     ## structure : 
-    # 1. find a random element in the group of form ghg^{-1}h^{-1} (i.e.) it has scalar one with as few frobenius blocks (best case cyclic) in the group.
-    # 2. we compute the eigenvalues of one part of the condition matrix. TODO: specify
-    # 3. repeat the first two steps until scalars are sufficiently constricted
-    # 4. compute formspaces of these scalars.
+        # 1. find a random element in the group of form ghg^{-1}h^{-1} (i.e.) it has scalar one with as few frobenius blocks (best case cyclic) in the group.
+        # 2. we compute the eigenvalues of one part of the condition matrix. TODO: specify
+        # 3. repeat the first two steps until scalars are sufficiently constricted
+        # 4. compute formspaces of these scalars.
 
-    ## If there is a frobenius hom wi need to do the above twice. once with the normal conjugation and once with frobenius conjugation?
-end;
-
-
-# Requires the given group to be irreducible and returns a classical form in the sense of the forms package i.e. a form object. This function does not depend on the scalars but does not return all forms other than the formspace functinos. The idea of this is to actually be used in Recog. 
-FORMS_PreservedClassicalForm := function(G)
-
-    ## structure :
-    # obtain scalars with trace and minimal polynomial tricks.
-    # iterate the computation of formspace elements and try to make them into classical forms with the A + A*, A - A* tricks. maybe also do this for unitary forms and just accept that we might delete diagonal entries. this is not a problem because if A is a form then A* is one too so A + A* is a form and and hence is invertible or zero. both cases are fine.
-
-end;
+        ## If there is a frobenius hom wi need to do the above twice. once with the normal conjugation and once with frobenius conjugation?
+## commutator group? idk if this is a good approach, ideally i want it to be able to handle every case, even if the commutator subgroup generated is trivial. the issue with this is that the resulting forms of the commutator group may not be forms of the bigger group. In this case we might need linear combinations and are still missing scalars
 
 #! @Arguments G, L, unitary
 #! @Returns a basis of $\mathcal{F}_h(G, \Lambda)$
@@ -577,7 +556,7 @@ InstallMethod(PreservedFormspace,
             # Print("Field does not admit field automorphism of order two!");
             return [];
         fi;
-        # Prüfen ob es sich um einen endlichen körper handelt??
+        # check if field is finite?
         Gens := GeneratorsOfGroup(G);
         # F := DefaultFieldOfMatrix(Gens[1]);
         n := NrRows(Gens[1]);
@@ -602,13 +581,10 @@ InstallMethod(PreservedFormspace,
         #contains  group element, scalar, (factors of minopol), Basis change to Frobenius (v, vg, vg^2, ...), Frobenius block lengths, number of iterations to compute
         g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas, n);
         g_inv_frob := Inverse(g_res[4]);
-        #CalculateAdjoint := function(mat, mode, hom, n)
         g_star_inv_unscaled := TransposedMat(Inverse(g_res[1]));
         if unitary then
             g_star_inv_unscaled := g_star_inv_unscaled^hom;
         fi;
-        #* g_res[2]; 
-        # Todo the computation of this can probably be sped up by using the known information about g!!!
         g_star_inv_scaled_frob := FrobeniusNormalForm(g_star_inv_unscaled * g_res[2]);
         frob_base_inv_star := Inverse(g_star_inv_scaled_frob[2]);
 
@@ -665,14 +641,9 @@ InstallMethod(PreservedFormspace,
         od;
         #contains  group element, scalar, (factors of minopol), Basis change to Frobenius (v, vg, vg^2, ...), Frobenius block lengths, number of iterations to compute
         g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas, n);
-        # ConvertToMatrixRep(g_res[1], F);
-        # ConvertToMatrixRep(g_res[4], F);
         g_inv_frob := Inverse(g_res[4]);
-        #CalculateAdjoint := function(mat, mode, hom, n)
         g_star_inv_unscaled := TransposedMat(Inverse(g_res[1]));
-        #* g_res[2]; 
-        # Todo the computation of this can probably be sped up by using the known information about g!!!
-        g_star_inv_scaled_frob := FrobeniusNormalForm(g_star_inv_unscaled); # hier ist eventuell noch ein bug mit den skalaren
+        g_star_inv_scaled_frob := FrobeniusNormalForm(g_star_inv_unscaled); # maybe this causes a bug with scalars
         frob_base_inv_star := Inverse(g_star_inv_scaled_frob[2]);
 
         Add(Out, FORMS_FormspaceInternal(Gens, Lambdas, false, hom, g_res, g_inv_frob, g_star_inv_unscaled * g_res[2], g_star_inv_scaled_frob, frob_base_inv_star, d, F, n));
@@ -694,7 +665,6 @@ InstallMethod(PreservedFormspace,
 #! @Returns basis of the spaces of symmetric/symplectic matrices or a basis of the hermitian matrices contained in Forms
 #! @Description
 #! In the case where unitary is false, this will return a list that contains to lists of matrices. The first is a basis of the symmetric matrices, the second is a basis of the symplectic matrices. Be carefull: If the characteristic of the field is 2, then symplectic matrices and symmetric matrices are the same. Hence only one basis will be returned. If unitary is false this will return a basis of the hermitian matrices.
-#! The reason the the field must be given as an argument, is so that the Field automorphims of order two, which is used to compute the adjoined, is specified.
 InstallMethod(FilterFormspace, "for list of matrices, F finite field, bool hermitian", [IsList, IsFinite and IsField, IsBool], function(Forms, F, unitary)
     local n, hom, p_exponent;
     if Size(Forms) = 0 then
@@ -720,8 +690,8 @@ InstallMethod(FilterFormspace, "for list of matrices, F finite field, bool hermi
 end);
 
 
-# computes non degenerate forms and scalars, ireed says whether the given group acts irreducibly, if irred = true then all forms will be non deg, if irred = false the function should use random methods to try and construct a non deg form as a linear combination.
-FORMS_PreservedNonDegFormsWithScalarsOp := function(G, irred, sesquilinear)
+# computes non degenerate forms and scalars, TODO: random_non_deg should specify whether the function should use random methods to make sure that the returned forms are non deg, this is a todo and not necessary for irreducible groups.
+FORMS_PreservedNonDegFormsWithScalarsOp := function(G, random_non_deg, sesquilinear)
     local F, Gens, n, p_exponent, hom, newGens, forms_bil, forms_herm, filtered, space, forms_out, filt_bil, filt_herm, Form, quad, x, biglist;
     F := DefaultFieldOfMatrixGroup(G);
     Gens := GeneratorsOfGroup(G);
@@ -730,12 +700,6 @@ FORMS_PreservedNonDegFormsWithScalarsOp := function(G, irred, sesquilinear)
     forms_bil := [];
     forms_herm := [];
 
-
-    # if Size(Gens) = 1 then
-    #     ## TODO specialised code?
-    # fi;
-    
-
     hom := FrobeniusAutomorphism(F)^0; # better way to obtain identity mapping?
     newGens := ClassicalForms_GeneratorsWithBetterScalarsSesquilinear(G, hom);
     filt_bil := [[], []];
@@ -743,8 +707,6 @@ FORMS_PreservedNonDegFormsWithScalarsOp := function(G, irred, sesquilinear)
         # this should be improved, many computations from PreservedFormspace could probably be recycled for example the cyclic group element, and so on... Does not seem to be such a big issue, this is only inefficient for groups that actually have multiple possible scalars which seems to be very rare. Infact TODO: test case with irreducible group which preserves forms modulo different sets of scalars. DOes such a group even exist?
         biglist := Cartesian(newGens[2]);
         for x in biglist do
-            # scale_gens := List([1..Length(newGens)],i->newGens[i] / x[i]);
-            # Add(forms_bil, PreservedFormspace(G, x, false));
             forms_bil := PreservedFormspace(Group(newGens[1]), x, false);
             filtered := FilterFormspace(forms_bil, F, false);
             if forms_bil = [] then
@@ -805,11 +767,22 @@ FORMS_PreservedNonDegFormsWithScalarsOp := function(G, irred, sesquilinear)
     return forms_out;
 end;
 
+
+#! @Arguments G
+#! @Returns List of preserved Forms by G
+#! @Description
+#! <A>G</A> is a finitely generated matrix group over a finite field $K$. 
+#! This function computes scalars $\lambda$ and forms $\Phi$ such that <A>G</A> preserves $\Phi$ modulo $\lambda$. The function does only find scalars that belong to non-degenerate forms but may return degenerate forms if the group action is reducible. 
 InstallMethod(PreservedFormsWithScalars, "for matrix groups", [IsMatrixGroup], 
 function(G)
     return FORMS_PreservedNonDegFormsWithScalarsOp(G, true, false);
 end);
 
+#! @Arguments G
+#! @Returns List of preserved sesquilinear Forms by G
+#! @Description 
+#! Very similar to <A>PreservedFormsWithScalars</A> where <A>G</A> is a finitely generated matrix group over a finite field $K$. 
+#! This function computes scalars $\lambda$ and forms $\Phi$ such that <A>G</A> preserves $\Phi$ modulo $\lambda$. The function does only find scalars that belong to non-degenerate forms but may return degenerate forms if the group action is reducible.
 InstallMethod(PreservedSesquilinearFormsWithScalars, "for matrix groups", [IsMatrixGroup], 
 function(G)
     return FORMS_PreservedNonDegFormsWithScalarsOp(G, true, true);
