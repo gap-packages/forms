@@ -29,6 +29,48 @@ TestPolyEval := function(benchmark)
     return "Ok";
 end;
 
+RandomMatrix := function(n, F)
+    local i, M, j;
+    M := ZeroMatrix(F, n, n);
+    for i in [1..n] do
+        for j in [1..n] do
+            M[i][j] := PseudoRandom(F);
+        od;
+    od;
+    return M;
+end;
+
+
+# only checks whether the returned matrices infact unitary, does not check if all matrices have been found!
+TestChar2Filter := function()
+    local powers, num_tries, matnr_range, ns, i, n, power, F, hom, nr_mats, mats, k, out, o;
+    powers := [2, 4];
+    num_tries := 10;
+    matnr_range := [1..10];
+    ns := [10, 20];
+   
+    for i in [1..num_tries] do
+        for n in ns do
+            for power in powers do
+                F := GF(2^power);
+                hom := FrobeniusAutomorphism(F)^(power/2);
+                nr_mats := PseudoRandom(matnr_range);
+                mats := [];
+                for k in [1..nr_mats] do
+                    Add(mats, RandomMatrix(n, F));
+                od;
+                out := FORMS_FilterUnitaryForms(mats, F, n, hom);
+                for o in out do
+                    if o <> TransposedMat(o^hom) then
+                        Error("Error in computation with mats ", mats);
+                    fi;
+                od;
+            od;
+        od;
+    od;
+    return "Ok";
+end;
+
 TestMatricesAreForms := function(G, Lambdas, unitary, forms)
     local p_exponent, hom, F, f, g, i, Gens, n, j;
     F := DefaultFieldOfMatrixGroup(G);
