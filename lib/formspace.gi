@@ -45,7 +45,7 @@ end;
 # Returns [g, Phi(g), FrobeniusNormalForm(g), nrOfTries]
 # nrOfTries contains the number of random elements tested before g was found.
 FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas, n)
-    local known_elements, known_scalars, i, j, run, runs_max, best_known_length, best_known_res, best_known_scalar, best_known_element, g, lamb, s, d, res;
+    local known_elements, known_scalars, i, j, run, runs_max, best_known_length, best_known_res, best_known_scalar, best_known_element, g, lamb, s, d, res, interval;
 
     d := Size(Gens);
 
@@ -62,19 +62,9 @@ FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas, n)
 
     for run in [1..runs_max] do
         i := PseudoRandom([1..d]);
-        if d = 2 then 
-            if i = 1 then 
-                j := 2;
-            fi;
-            if i = 2 then
-                j := 1;
-            fi;
-        else
-            j := PseudoRandom([1..d]);
-            while i <> j do
-                j := PseudoRandom([1..d]);
-            od;
-        fi;
+        interval := [1..d];
+        Remove(interval, i);
+        j := PseudoRandom(interval);
         # TODO: add inverses? seems fine without
         g := known_elements[i]*known_elements[j];
         lamb := known_scalars[i]*known_scalars[j];
@@ -102,7 +92,8 @@ end;
 # turns the (jn) vector vec in F^{jn} and returns a F^{j times n} matrix
 FORMS_VectorReorganize := function(vec, j, F, n)
     local A, i;
-    A := NullMat(j, n, F);
+    # A := NullMat(j, n, F);
+    A := ZeroMatrix(F, j, n);
     # ConvertToMatrixRep(A, F);
     for i in [1..j] do
         A[i] := vec{[((i - 1) * n + 1)..(i*n)]};
@@ -135,7 +126,8 @@ end;
 FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
     local A, j, i, k, end_pos;
     j := Size(frob_base_blocks);
-    A := NullMat(n, n, F);
+    # A := NullMat(n, n, F);
+    A := ZeroMatrix(F, n, n);
     for i in [1..j] do
         if i = j then
             end_pos := n;
@@ -170,7 +162,8 @@ FORMS_ComputeConditionMatrixFrob := function(u, h, h_star, scalar_h, g_star_inv_
     coeffs_c := (u * h) * frob_base_inv;
     coeffs_f := (u * frob_base_inv) * scalar_h;
     j := Size(frob_base[3]);
-    Ps := NullMat(n * j, n, F);
+    # Ps := NullMat(n * j, n, F);
+    Ps := ZeroMatrix(F, n*j, n);
     for i in [1..j] do
         if i = j then
             b_end := n;
@@ -187,7 +180,8 @@ end;
 FORMS_FrobSpinAtBlock := function(Image, spin_elem, frob_base_blocks, block_index, n, F)
     local A, j, i, k, end_pos;
     j := Size(frob_base_blocks);
-    A := NullMat(n, n, F);
+    # A := NullMat(n, n, F);
+    A := ZeroMatrix(F, n, n);
     if block_index = j then
         end_pos := n;
     else
@@ -222,8 +216,10 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
 
 
         # maybe not use these mutable bases
-        symmetric_base := MutableBasis(F, [NullMat(n, n, F)]);
-        symplectic_base := MutableBasis(F, [NullMat(n, n, F)]);
+        # symmetric_base := MutableBasis(F, [NullMat(n, n, F)]);
+        # symplectic_base := MutableBasis(F, [NullMat(n, n, F)]);
+        symmetric_base := MutableBasis(F, [ZeroMatrix(F, n, n)]);
+        symplectic_base := MutableBasis(F, [ZeroMatrix(F, n, n)]);
         # symmetric_base := MutableBasis(F, [], ZeroVector(F, n));
         # symplectic_base := MutableBasis(F, [], ZeroVector(F, n));
         for form in Forms do
@@ -313,7 +309,9 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
 
     ## for char = 2 this can not yield all hermitian matrices as it deletes the diagonal.
     if p <> 2 then
-        Base := MutableBasis(GF(q), [NullMat(n, n, GF(q))]);
+        # Base := MutableBasis(GF(q), [NullMat(n, n, GF(q))]);
+        Base := MutableBasis(GF(q), [ZeroMatrix(GF(q), n, n)]);
+        
         # Base := MutableBasis(GF(q), [], ZeroVector(GF(q), n));
         gf_base := BasisVectors(Basis(GF(GF(q), 2)))[2];
         hgf_base := hom(gf_base);
@@ -340,7 +338,8 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
     # expresses n times n matrices as 2n times n matrices where 2 times 1 collumn vectors contain the coefficients ascoiciated with the basis gf_base
     to_smaller_field_matrix := function(basis_of_field, small_field_, mat, n, c)
         local outmat, i, j;
-        outmat := NullMat(2 * n, c, small_field_);
+        # outmat := NullMat(2 * n, c, small_field_);
+        outmat := ZeroMatrix(small_field_, 2 * n, c);
         for i in [1..n] do
             for j in [1..c] do
                 outmat{[(2*i - 1)..(2*i)]}[j] := Coefficients(basis_of_field, mat[i][j]);
@@ -465,7 +464,7 @@ FORMS_FormspaceInternal := function(Gens, Lambdas, unitary, hom, g_res, g_inv_fr
     ## after computing 5 kernels and the formspace not getting smaller, assume that all forms have been found.
     old_kernel_size := n + 1;
     stagnatiton := 0;
-    stagnation_max := 3; 
+    stagnation_max := 2; # test three matrices
     for i in [1..d] do
         if needs_checking then
             break;
@@ -504,11 +503,12 @@ FORMS_FormspaceInternal := function(Gens, Lambdas, unitary, hom, g_res, g_inv_fr
             else 
                 stagnatiton := 0;
             fi;
+            old_kernel_size := nspace_size;
             # try exit early
             if stagnatiton = stagnation_max then
                 stagnatiton := 0;
-                # the idea is to not do this computation too often..
-                stagnation_max := stagnation_max * 2;
+                # the idea is to not do this computation too often..?
+                # stagnation_max := stagnation_max * 2;
                 O := FORMS_ReturnFormspace(needs_checking, W, g_res, g_star_inv_scaled, Lambdas, unitary, hom, Gens, d, F, g_inv_frob, n);
                 if O <> false then
                     return O;
