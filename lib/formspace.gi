@@ -44,56 +44,59 @@ end;
 # tries to find a element g \in <Gens> such that the Frobenius Normal form of g has as few blocks as possible. Lambdas describes a group homomorphism induced by Phi : Gens[i] \mapsto Lambdas[i]
 # Returns [g, Phi(g), FrobeniusNormalForm(g), nrOfTries]
 # nrOfTries contains the number of random elements tested before g was found.
-FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas)
-    local cur_group_element, cur_scalar, known_elements, i, mode, n, res, j, known_scalars, best_known_element_index, best_known_res, best_known_length, mod_elem, g, e;
+FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas, n)
+    local known_elements, known_scalars, i, j, run, runs_max, best_known_length, best_known_res, best_known_scalar, best_known_element, g, lamb, s, d, res;
+
+    d := Size(Gens);
+
+    # no point to random group generators in cyclic groups.
+    if d = 1 then 
+        return Concatenation([Gens[1], Lambdas[1]], FrobeniusNormalForm(Gens[1]), [-1]); 
+    fi;
+    runs_max := 3*d + 15; # pretty random idk what to put here
 
     known_elements := ShallowCopy(Gens);
     known_scalars := ShallowCopy(Lambdas);
 
-    n := NrRows(Gens[1]);
-    i := Size(known_elements);
-    mod_elem := 1;
     best_known_length := n + 1;
-    while i < 25 do # 25 is a magic number. maybe investigate a good number here
-        # no accidental identity mat
-        if i < 10 then # dont start with inverting to not accidentally make the identity
-            mode := 1;
-        else
-            mode := Random(1, 2);
-        fi;
-        j := Random([1..Size(known_elements)]);
-        cur_group_element := known_elements[j];
-        cur_scalar := known_scalars[j];
 
-        if mode = 1 then
-            j := Random([1..Size(known_elements)]);
-            cur_group_element := cur_group_element * known_elements[j];
-            cur_scalar := cur_scalar * known_scalars[j];
-        elif mode = 2 then
-            j := Random([1..Size(known_elements)]);
-            cur_group_element := cur_group_element / known_elements[j];
-            cur_scalar := cur_scalar / Inverse(known_scalars[j]);
-        fi;
-        if i mod mod_elem = 0 then
-            res := FrobeniusNormalForm(cur_group_element);
-            if Size(res[3]) = 1 then
-                return Concatenation([cur_group_element, cur_scalar], res, [i]); 
+    for run in [1..runs_max] do
+        i := PseudoRandom([1..d]);
+        if d = 2 then 
+            if i = 1 then 
+                j := 2;
             fi;
-            if Size(res[3]) <= best_known_length and not (cur_group_element in Gens) then
-                best_known_element_index := i + 1;
-                best_known_res := res;
-                best_known_length := Size(res[3]);
+            if i = 2 then
+                j := 1;
             fi;
+        else
+            j := PseudoRandom([1..d]);
+            while i <> j do
+                j := PseudoRandom([1..d]);
+            od;
         fi;
-        Add(known_elements, cur_group_element);
-        Add(known_scalars, cur_scalar);
-        i := i + 1;
+        # TODO: add inverses?
+        g := known_elements[i]*known_elements[j];
+        lamb := known_scalars[i]*known_scalars[j];
+        res := FrobeniusNormalForm(g);
+        s := Size(res[3]);
+        if s = 1 then
+            return Concatenation([g, lamb], res, [run]);
+        fi;
+        if s < best_known_length then
+            best_known_length := s;
+            best_known_element := g;
+            best_known_scalar := lamb;
+            best_known_res := res;
+        fi;
+        known_elements[i] := g;
+        known_scalars[i] := lamb;
     od;
-    # Print("only found element of length ", best_known_length, "\n");
+   
     if best_known_length = n + 1 then
         return Concatenation([Gens[1], Lambdas[1]], FrobeniusNormalForm(Gens[1]), [-1]);
     fi;
-    return Concatenation([known_elements[best_known_element_index], known_scalars[best_known_element_index]], best_known_res, [i]);
+    return Concatenation([best_known_element, best_known_scalar], best_known_res, [runs_max]);
 end;
 
 # turns the (jn) vector vec in F^{jn} and returns a F^{j times n} matrix
@@ -597,7 +600,7 @@ InstallMethod(PreservedFormspace,
             return FORMS_CyclicGroupCase(Gen, Gen_adjoint_inv_scaled, Lambda[1], unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, Inverse(frob[2]), F, n);
         fi;
         #contains  group element, scalar, (factors of minopol), Basis change to Frobenius (v, vg, vg^2, ...), Frobenius block lengths, number of iterations to compute
-        g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas);
+        g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas, n);
         g_inv_frob := Inverse(g_res[4]);
         #CalculateAdjoint := function(mat, mode, hom, n)
         g_star_inv_unscaled := TransposedMat(Inverse(g_res[1]));
@@ -661,7 +664,7 @@ InstallMethod(PreservedFormspace,
             Add(Lambdas, One(F));
         od;
         #contains  group element, scalar, (factors of minopol), Basis change to Frobenius (v, vg, vg^2, ...), Frobenius block lengths, number of iterations to compute
-        g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas);
+        g_res := FORMS_FindCyclicGroupElementAndScalars(Gens, Lambdas, n);
         # ConvertToMatrixRep(g_res[1], F);
         # ConvertToMatrixRep(g_res[4], F);
         g_inv_frob := Inverse(g_res[4]);
