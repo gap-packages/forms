@@ -14,3 +14,7 @@
 
 ReadPackage("forms","lib/forms.gd");
 ReadPackage("forms","lib/recognition.gd");
+
+if IsBound( ConformalSymplecticGroup ) then
+  ReadPackage("forms","lib/conformal.gd");
+fi;
