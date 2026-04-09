@@ -92,15 +92,6 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
   function( grp, frob )
     local tries, gens, field, m1, a1, new, i, scalars, root, improvegenerator, res, newgens, champion, len, qq, q;
 
-    # the aim of this function is to replace the matrix m1 by a
-    # matrix that has as few solutions to the scalar equation
-    # lambda^a1[1] = a1[2] as possible. It checks first if a1[1] = 1,
-    # since then lambda is determined. Next we check if a1[2] is a
-    # square. And then we replace m1 by a matrix that leaves the
-    # bilinear form invariant modula the scalar 1. If none of these
-    # are possible, we try to replace m1 by a matrix that has fewer
-    # solutions to the scalar equation.
-
     #field := FieldOfMatrixGroup(grp); #this causes a problem if one has a maximal subgroup of e.g. SU(3,7^2). There are examples of which de FieldOf is GF(7), while DefaultFieldOF is GF(7^2). Then this causes problems.
     field := DefaultFieldOfMatrixGroup(grp);
     qq := Size(field);
@@ -111,10 +102,9 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
     fi;
 
     # the next function returns a matrix with a list of possible scalars for this matrix.
-    # if it is possible to change the matrix to multiple that preserves up to scalar one, this is achieved.
 
-    improvegenerator := function(m1,i,count,len)
-        local a1, s, j, k, scalars, root; #I think root should be declare locally here!
+    improvegenerator := function(m1)
+        local a1, scalars;
         
         a1 := ClassicalForms_PossibleScalarsSesquilinear(field,m1,frob);
         #Recall that the scalars satisfy the equation lambda^a[1] = a[2]
@@ -123,47 +113,31 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
         fi;
                 
         if IsList(a1) then
-            root := NthRoot(field,a1[2],a1[1]);
             if a1[1] = 1 then # the matrix m1 has scalar a1[2]
-                #if a1[2] has a square root, we can replace m1 with m1*sqrt{a1[2]};
-                if LogFFE(a1[2],PrimitiveRoot(field)) mod 2 = 0 then
-                    return [m1/NthRoot(field,a1[2],2),[One(field)]];
-                fi;
-                return [m1,[a1[2]]]; #originally, the three lines above this return were not there. Those three lines make sure scalar becomes 1 if possible (basicaly if there is a sqrt).
-            elif LogFFE(root,PrimitiveRoot(field)) mod (q+1) = 0 then
-                return [m1/NthRoot(field,root,q+1),[One(field)]]; #either frob = id, then q+1 = 2, or frob is not trivial, then we take q+1-st root. In both cases, modify m1 to a matrix that has scalar one.
+                return [m1,[a1[2]]];
             else
                 scalars := AsList(Group(NthRoot(field,a1[2],a1[1]))); # add all possible scalars for m1
-                if count = 0 then
-                    return champion; # add all possible scalars for m1
-                elif Length(scalars) < len then
-                    champion := [m1,scalars];
-                    len := Length(scalars);
-                fi;
-                k := Random(Difference([1..Length(gens)],[i])); #m1 could not be improved, so try to change m1 by multiplying with another generator.
-                m1 := m1*gens[k];
-                return improvegenerator(m1,i,count-1,len);
+                return [m1, scalars];
             fi;
         fi;
     end;
 
     # start with 2 random elements,  at most 10 tries
-    tries := 0;
-    gens  := ShallowCopy(GeneratorsOfGroup(grp));
-    if Length(gens) = 1 then
-        Add(gens,PseudoRandom(grp));
-    fi;
-    #We will randomize the generating set in the hope that we obtain generators preserving fewer
-    #scalars.
+    
+    # i have commented this out because my routine for computing preserved forms has extra logic for cyclic groups. However maybe i should investigate this!
+    # tries := 0;
+    # gens  := ShallowCopy(GeneratorsOfGroup(grp));
+    # if Length(gens) = 1 then
+    #     Add(gens,PseudoRandom(grp));
+    # fi;
+    #We will randomize the generating set in the hope that we obtain generators preserving fewer scalars.
      
     scalars := [];
  
-    newgens := ShallowCopy(gens);
+    gens := GeneratorsOfGroup(grp);
         
     for i in [1..Length(gens)] do
-        champion := [gens[i],AsList(Group(PrimitiveRoot(field)))];
-        len := Length(champion[2]);
-        res := improvegenerator(gens[i],i,10,len);
+        res := improvegenerator(gens[i]);
         if res = false then
             return false; #The group does not preserve a bilinear form modulo scalars
         fi;
