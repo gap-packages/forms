@@ -125,13 +125,10 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
         if IsList(a1) then
             root := NthRoot(field,a1[2],a1[1]);
             if a1[1] = 1 then # the matrix m1 has scalar a1[2]
-                #if a1[2] has a square root, we can replace m1 with m1*sqrt{a1[2]};
-                if LogFFE(a1[2],PrimitiveRoot(field)) mod 2 = 0 then
-                    return [m1/NthRoot(field,a1[2],2),[One(field)]];
+                if LogFFE(a1[2],PrimitiveRoot(field)) mod (q+1) = 0 then
+                    return [m1/NthRoot(field,a1[2],q+1),[One(field)]];
                 fi;
-                return [m1,[a1[2]]]; #originally, the three lines above this return were not there. Those three lines make sure scalar becomes 1 if possible (basicaly if there is a sqrt).
-            elif LogFFE(root,PrimitiveRoot(field)) mod (q+1) = 0 then
-                return [m1/NthRoot(field,root,q+1),[One(field)]]; #either frob = id, then q+1 = 2, or frob is not trivial, then we take q+1-st root. In both cases, modify m1 to a matrix that has scalar one.
+                return [m1,[a1[2]]]; #originally, the three lines above this return were not there. Those three lines make sure scalar becomes 1 if possible (basically if there is a q+1-st root).
             else
                 scalars := AsList(Group(NthRoot(field,a1[2],a1[1]))); # add all possible scalars for m1
                 if count = 0 then
