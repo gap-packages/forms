@@ -114,10 +114,10 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
                 
         if IsList(a1) then
             if a1[1] = 1 then # the matrix m1 has scalar a1[2]
-                return [m1,[a1[2]]];
+                return [a1[2]];
             else
                 scalars := AsList(Group(NthRoot(field,a1[2],a1[1]))); # add all possible scalars for m1
-                return [m1, scalars];
+                return scalars;
             fi;
         fi;
     end;
@@ -141,11 +141,10 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
         if res = false then
             return false; #The group does not preserve a bilinear form modulo scalars
         fi;
-        newgens[i] := res[1];
-        scalars[i] := res[2];
+        scalars[i] := res;
     od;
 
-    return [newgens,scalars];
+    return [gens,scalars];
 
   end );
 
