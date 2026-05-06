@@ -90,7 +90,7 @@ InstallGlobalFunction( ClassicalForms_PossibleScalarsSesquilinear,
 ##
 InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
   function( grp, frob )
-    local tries, gens, field, m1, a1, new, i, scalars, root, improvegenerator, res, newgens, champion, len, qq, q;
+    local tries, gens, field, m1, a1, new, i, scalars, improvegenerator, res, newgens, champion, len, qq, q;
 
     # the aim of this function is to replace the matrix m1 by a
     # matrix that has as few solutions to the scalar equation
@@ -114,7 +114,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
     # if it is possible to change the matrix to multiple that preserves up to scalar one, this is achieved.
 
     improvegenerator := function(m1,i,count,len)
-        local a1, s, j, k, scalars, root; #I think root should be declare locally here!
+        local a1, s, j, k, scalars;
         
         a1 := ClassicalForms_PossibleScalarsSesquilinear(field,m1,frob);
         #Recall that the scalars satisfy the equation lambda^a[1] = a[2]
@@ -123,7 +123,6 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
         fi;
                 
         if IsList(a1) then
-            root := NthRoot(field,a1[2],a1[1]);
             if a1[1] = 1 then # the matrix m1 has scalar a1[2]
                 if LogFFE(a1[2],PrimitiveRoot(field)) mod (q+1) = 0 then
                     return [m1/NthRoot(field,a1[2],q+1),[One(field)]];
