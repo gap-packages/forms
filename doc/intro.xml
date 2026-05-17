@@ -116,6 +116,8 @@ Various other internal changes were made that should not affect users.
 <P/>Version 1.2.14 prepares for a change in a future GAP version where GAP will
 enhance <C>InvariantQuadraticForm</C>, <C>InvariantBilinearForm</C> and
 <C>InvariantSesquilinearForm</C> to also provide the field of definition.
+<P/>Version 1.3.0 adds <C>ConformalSymplecticGroup</C>, fixes a bug in <C>PreservedSesquilinearForms</C>
+and improves various internals to better work with matrix objects.
 </Section>
 <!-- ############################################################ -->
 

@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.14",
-  Date := "26/01/2026",
+  Version := "1.3.0",
+  Date := "17/05/2026",
   License := "GPL-2.0-or-later",
 
 SourceRepository := rec(
@@ -124,7 +124,7 @@ Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2015-2024 by the authors<P/>\n\n",
+            "&copyright; 2015-2026 by the authors<P/>\n\n",
             "This package may be distributed under the terms and conditions ",
             "of the GNU Public License Version 2 or (at your option) any later version.\n"
             ),
