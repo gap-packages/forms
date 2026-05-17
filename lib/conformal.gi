@@ -115,23 +115,30 @@ InstallMethod( ConformalSymplecticGroupCons,
     "IsField and IsFinite",
     "IsBilinearForm" ],
   function( filt, d, F, form )
-  local g, stored, wanted, mat1, mat2, mat, matinv, gens, gg;
+  local g, stored, matrix_filt, form_matrix, wanted, mat1, mat2, mat, matinv,
+        gens, gg;
 
   # Create the default generators and form.
   g:= ConformalSymplecticGroupCons( filt, d, F );
   stored:= InvariantBilinearFormUpToScalars( g ).matrix;
+  matrix_filt:= ConstructingFilter( stored );
+  Assert( 1, ForAll( GeneratorsOfGroup( g ),
+                     x -> ConstructingFilter( x ) = matrix_filt ) );
 
   # If the prescribed form fits then just return.
-  if stored = form!.matrix then
+  # We do not require that 'form!.matrix' is in 'matrix_filt',
+  # only its entries describe the desired form.
+  form_matrix:= Matrix( matrix_filt, F, form!.matrix );
+  if stored = form_matrix then
     return g;
   fi;
 
   # Compute a base change matrix.
   # (Check that the canonical forms are equal.)
   wanted:= BilinearFormByMatrix( stored, F );
-  mat1:= BaseChangeToCanonical( form );
-  mat2:= BaseChangeToCanonical( wanted );
-  if mat1 * form!.matrix * TransposedMat( mat1 ) <>
+  mat1:= Matrix( matrix_filt, F, BaseChangeToCanonical( form ) );
+  mat2:= Matrix( matrix_filt, F, BaseChangeToCanonical( wanted ) );
+  if mat1 * form_matrix * TransposedMat( mat1 ) <>
      mat2 * stored * TransposedMat( mat2 ) then
     Error( "canonical forms of <form> and <wanted> differ" );
   fi;
@@ -139,8 +146,7 @@ InstallMethod( ConformalSymplecticGroupCons,
   matinv:= mat^-1;
 
   # Create the group w.r.t. the prescribed form.
-  gens:= List( GeneratorsOfGroup( g ),
-               x -> Matrix( matinv * x * mat, stored ) );
+  gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
   gg:= GroupWithGenerators( gens );
 
   UseIsomorphismRelation( g, gg );
@@ -150,7 +156,7 @@ InstallMethod( ConformalSymplecticGroupCons,
   fi;
 
   SetInvariantBilinearFormUpToScalars( gg,
-    rec( matrix:= Matrix( form!.matrix, stored ), baseDomain:= F ) );
+    rec( matrix:= form_matrix, baseDomain:= F ) );
 
   if HasIsFullSubgroupGLRespectingBilinearFormUpToScalars( g ) then
     SetIsFullSubgroupGLRespectingBilinearFormUpToScalars( gg,
