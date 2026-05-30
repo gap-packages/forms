@@ -92,15 +92,6 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
   function( grp, frob )
     local tries, gens, field, m1, a1, new, i, scalars, improvegenerator, res, newgens, champion, len, qq, q;
 
-    # the aim of this function is to replace the matrix m1 by a
-    # matrix that has as few solutions to the scalar equation
-    # lambda^a1[1] = a1[2] as possible. It checks first if a1[1] = 1,
-    # since then lambda is determined. Next we check if a1[2] is a
-    # square. And then we replace m1 by a matrix that leaves the
-    # bilinear form invariant modula the scalar 1. If none of these
-    # are possible, we try to replace m1 by a matrix that has fewer
-    # solutions to the scalar equation.
-
     #field := FieldOfMatrixGroup(grp); #this causes a problem if one has a maximal subgroup of e.g. SU(3,7^2). There are examples of which de FieldOf is GF(7), while DefaultFieldOF is GF(7^2). Then this causes problems.
     field := DefaultFieldOfMatrixGroup(grp);
     qq := Size(field);
@@ -111,7 +102,6 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
     fi;
 
     # the next function returns a matrix with a list of possible scalars for this matrix.
-    # if it is possible to change the matrix to multiple that preserves up to scalar one, this is achieved.
 
     improvegenerator := function(m1,i,count,len)
         local a1, s, j, k, scalars;
@@ -143,14 +133,16 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
         fi;
     end;
 
+
     # start with 2 random elements,  at most 10 tries
-    tries := 0;
+    
+    # this logic for cyclic groups is not helpfull to the formspace function, as it will return a group with more than one generator, this is bad for the preserved formspace funcitons, as they have extra logic for dealing with groups with one generator.
+    # tries := 0;
     gens  := ShallowCopy(GeneratorsOfGroup(grp));
-    if Length(gens) = 1 then
-        Add(gens,PseudoRandom(grp));
-    fi;
-    #We will randomize the generating set in the hope that we obtain generators preserving fewer
-    #scalars.
+    # if Length(gens) = 1 then
+    #     Add(gens,PseudoRandom(grp));
+    # fi;
+    #We will randomize the generating set in the hope that we obtain generators preserving fewer scalars.
      
     scalars := [];
  
@@ -351,7 +343,7 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
     #Is this really necessary? Can we not simply delete it?
     if not MTX.IsIrreducible(module)  then
         #Error("Currently the use of MeatAxe requires the module to be absolutely irreducible");
-        Info( InfoForms, 1,  "group is not irreducible and therefore it does not preserve non-degenerate forms\n" );
+        Info( InfoForms, 1,  "group is not irreducible and therefore it does not preserve non-degenerate forms\n" ); #this is wrong. Reducible groups can preserve non-degenerate forms. For example the trivial group G = <1> is reducible and preserves any form.
         return [];
     fi;
 

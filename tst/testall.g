@@ -6,6 +6,8 @@ if not IsBound(DescribesInvariantQuadraticForm) then
   Add( exclude, "adv/classic.tst" );
 fi;
 
+ReadPackage("forms", "tst/interesting_groups.g");
+ReadPackage("forms", "tst/formspace/custom_test_functions.g");
 if not IsBound(ConformalSymplecticGroup) then
   # conformal.tst cannot run
   Add( exclude, "adv/conformal.tst" );
