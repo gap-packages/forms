@@ -136,9 +136,9 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
 
     # start with 2 random elements,  at most 10 tries
     
-    # i have commented this out because my routine for computing preserved forms has extra logic for cyclic groups. However maybe i should investigate this!
+    # this logic for cyclic groups is not helpfull to the formspace function, as it will return a group with more than one generator, this is bad for the preserved formspace funcitons, as they have extra logic for dealing with groups with one generator.
     # tries := 0;
-    # gens  := ShallowCopy(GeneratorsOfGroup(grp));
+    gens  := ShallowCopy(GeneratorsOfGroup(grp));
     # if Length(gens) = 1 then
     #     Add(gens,PseudoRandom(grp));
     # fi;
@@ -146,17 +146,20 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
      
     scalars := [];
  
-    gens := GeneratorsOfGroup(grp);
+    newgens := ShallowCopy(gens);
         
     for i in [1..Length(gens)] do
-        res := improvegenerator(gens[i]);
+        champion := [gens[i],AsList(Group(PrimitiveRoot(field)))];
+        len := Length(champion[2]);
+        res := improvegenerator(gens[i],i,10,len);
         if res = false then
             return false; #The group does not preserve a bilinear form modulo scalars
         fi;
-        scalars[i] := res;
+        newgens[i] := res[1];
+        scalars[i] := res[2];
     od;
 
-    return [gens,scalars];
+    return [newgens,scalars];
 
   end );
 
