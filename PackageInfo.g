@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.13",
-  Date := "05/05/2025",
+  Version := "1.3.0",
+  Date := "17/05/2026",
   License := "GPL-2.0-or-later",
 
 SourceRepository := rec(
@@ -30,13 +30,14 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
 ArchiveFormats := ".tar.gz .zip .tar.bz2",
 
 Persons := [
-  rec( 
+  rec(
     LastName      := "Bamberg",
     FirstNames    := "John",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "bamberg@maths.uwa.edu.au",
-    WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
+    Email         := "john.bamberg@uwa.edu.au",
+    WWWHome       := "https://johnbamberg.github.io",
+    GitHubUsername := "johnbamberg",
     PostalAddress := Concatenation( [
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
@@ -53,6 +54,7 @@ Persons := [
     IsMaintainer  := true,
     Email         := "jan@debeule.eu",
     WWWHome       := "http://www.debeule.eu",
+    GitHubUsername := "jdebeule",
     PostalAddress := Concatenation( [
                        "Department of Mathematics and Data Science\n",
                        "Vrije Universiteit Brussel\n",
@@ -122,7 +124,7 @@ Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2015-2024 by the authors<P/>\n\n",
+            "&copyright; 2015-2026 by the authors<P/>\n\n",
             "This package may be distributed under the terms and conditions ",
             "of the GNU Public License Version 2 or (at your option) any later version.\n"
             ),

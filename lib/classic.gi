@@ -43,18 +43,39 @@ BindGlobal( "_IsEqualModScalars",
     return IsZero( mat2 );
 end );
 
+# The following helper function provides compatibility
+# with older GAP versions.
+# Before gap-system/gap/pull/6203, 'FieldOfMatrixGroup( G )' was interpreted
+# as the field of definition of the invariant forms stored in 'G'.
+# This was not always correct, hence we decided to add a component
+# 'baseDomain' to the records that describe the invariant forms created with
+# 'InvariantBilinearForm' etc.
+BindGlobal("Forms_FieldOfDefinition", function( form_record, G )
+  if IsBound( form_record.baseDomain ) then
+    return form_record.baseDomain;
+  else
+    return FieldOfMatrixGroup( G );
+  fi;
+end );
+
 BindGlobal("Forms_OrthogonalGroup",
     function( g, form )
     local stored, gf, d, wanted, mat1, mat2, mat, matinv, gens, gg;
 
-    stored:= InvariantQuadraticForm( g ).matrix;
+    stored:= InvariantQuadraticForm( g );
+    gf:= Forms_FieldOfDefinition( stored, g );
+    stored:= stored.matrix;
+
+    # Check that 'form' lives over the intended field.
+    if not IsSubset( gf, form!.basefield ) then
+      Error( "the defining field of <form> does not fit to <gf>" );
+    fi;
 
     # If the prescribed form fits then just return.
     if stored = form!.matrix then
       return g;
     fi;
 
-    gf:= FieldOfMatrixGroup( g );
     d:= DimensionOfMatrixGroup( g );
 
     # Compute a base change matrix.
@@ -80,14 +101,15 @@ BindGlobal("Forms_OrthogonalGroup",
       SetName( gg, Name( g ) );
     fi;
 
-    SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix ) );
+    SetInvariantQuadraticForm( gg, rec( matrix:= form!.matrix,
+                                        baseDomain:= gf ) );
     if HasIsFullSubgroupGLorSLRespectingQuadraticForm( g ) then
       SetIsFullSubgroupGLorSLRespectingQuadraticForm( gg,
           IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
     fi;
 
     mat:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv );
-    SetInvariantBilinearForm( gg, rec( matrix:= mat ) );
+    SetInvariantBilinearForm( gg, rec( matrix:= mat, baseDomain:= gf ) );
     if Characteristic( gf ) <> 2 and
        HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
       SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
@@ -138,7 +160,7 @@ InstallMethod( GeneralOrthogonalGroupCons,
     { filt, G } -> GeneralOrthogonalGroupCons( filt,
                      QuadraticFormByMatrix(
                        InvariantQuadraticForm( G ).matrix,
-                       FieldOfMatrixGroup( G ) ) ) );
+                       Forms_FieldOfDefinition( InvariantQuadraticForm( G ), G ) ) ) );
 
 InstallMethod( GeneralOrthogonalGroupCons,
     "matrix group for form",
@@ -278,7 +300,7 @@ InstallMethod( SpecialOrthogonalGroupCons,
     { filt, G } -> SpecialOrthogonalGroupCons( filt,
                      QuadraticFormByMatrix(
                        InvariantQuadraticForm( G ).matrix,
-                       FieldOfMatrixGroup( G ) ) ) );
+                       Forms_FieldOfDefinition( InvariantQuadraticForm( G ), G ) ) ) );
 
 InstallMethod( SpecialOrthogonalGroupCons,
     "matrix group for form",
@@ -455,7 +477,7 @@ InstallMethod( OmegaCons,
     { filt, G } -> OmegaCons( filt,
                      QuadraticFormByMatrix(
                        InvariantQuadraticForm( G ).matrix,
-                       FieldOfMatrixGroup( G ) ) ) );
+                       Forms_FieldOfDefinition( InvariantQuadraticForm( G ), G ) ) ) );
 
 InstallMethod( OmegaCons,
     "matrix group for form",
@@ -563,7 +585,7 @@ InstallMethod( GeneralUnitaryGroupCons,
     { filt, G } -> GeneralUnitaryGroupCons( filt,
                      HermitianFormByMatrix(
                        InvariantSesquilinearForm( G ).matrix,
-                       FieldOfMatrixGroup( G ) ) ) );
+                       Forms_FieldOfDefinition( InvariantSesquilinearForm( G ), G ) ) ) );
 
 InstallMethod( GeneralUnitaryGroupCons,
     "matrix group for form",
@@ -619,11 +641,17 @@ InstallMethod( GeneralUnitaryGroupCons,
       IsPosInt,
       IsHermitianForm ],
     function( filt, d, q, form )
-    local g, stored, wanted, mat1, mat2, mat, matinv, gens, gg;
+    local g, stored, F, wanted, mat1, mat2, mat, matinv, gens, gg;
 
     # Create the default generators and form.
     g:= GeneralUnitaryGroupCons( filt, d, q );
     stored:= InvariantSesquilinearForm( g ).matrix;
+
+    # Check that 'form' lives over the intended field.
+    F:= GF(q^2);
+    if not IsSubset( F, form!.basefield ) then
+      Error( "the defining field of <form> does not fit to <q>" );
+    fi;
 
     # If the prescribed form fits then just return.
     if stored = form!.matrix then
@@ -632,7 +660,7 @@ InstallMethod( GeneralUnitaryGroupCons,
 
     # Compute a base change matrix.
     # (Check that the canonical forms are equal.)
-    wanted:= HermitianFormByMatrix( stored, GF(q^2) );
+    wanted:= HermitianFormByMatrix( stored, F );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
     if mat1 * form!.matrix * TransposedFrobeniusMat( mat1, q ) <>
@@ -652,7 +680,9 @@ InstallMethod( GeneralUnitaryGroupCons,
       SetName( gg, Name( g ) );
     fi;
 
-    SetInvariantSesquilinearForm( gg, rec( matrix:= form!.matrix ) );
+    SetInvariantSesquilinearForm( gg, rec( matrix:= form!.matrix,
+                                           baseDomain:= F ) );
+
     if HasIsFullSubgroupGLorSLRespectingSesquilinearForm( g ) then
       SetIsFullSubgroupGLorSLRespectingSesquilinearForm( gg,
           IsFullSubgroupGLorSLRespectingSesquilinearForm( g ) );
@@ -708,7 +738,7 @@ InstallMethod( SpecialUnitaryGroupCons,
     { filt, G } -> SpecialUnitaryGroupCons( filt,
                      HermitianFormByMatrix(
                        InvariantSesquilinearForm( G ).matrix,
-                       FieldOfMatrixGroup( G ) ) ) );
+                       Forms_FieldOfDefinition( InvariantSesquilinearForm( G ), G ) ) ) );
 
 InstallMethod( SpecialUnitaryGroupCons,
     "matrix group for form",
@@ -748,11 +778,17 @@ InstallMethod( SpecialUnitaryGroupCons,
       IsPosInt,
       IsHermitianForm ],
     function( filt, d, q, form )
-    local g, stored, wanted, mat1, mat2, mat, matinv, gens, gg;
+    local g, stored, F, wanted, mat1, mat2, mat, matinv, gens, gg;
 
     # Create the default generators and form.
     g:= SpecialUnitaryGroupCons( filt, d, q );
     stored:= InvariantSesquilinearForm( g ).matrix;
+
+    # Check that 'form' lives over the intended field.
+    F:= GF(q^2);
+    if not IsSubset( F, form!.basefield ) then
+      Error( "the defining field of <form> does not fit to <q>" );
+    fi;
 
     # If the prescribed form fits then just return.
     if stored = form!.matrix then
@@ -761,7 +797,7 @@ InstallMethod( SpecialUnitaryGroupCons,
 
     # Compute a base change matrix.
     # (Check that the canonical forms are equal.)
-    wanted:= HermitianFormByMatrix( stored, GF(q^2) );
+    wanted:= HermitianFormByMatrix( stored, F );
     mat1:= BaseChangeToCanonical( form );
     mat2:= BaseChangeToCanonical( wanted );
     if mat1 * form!.matrix * TransposedFrobeniusMat( mat1, q ) <>
@@ -781,7 +817,9 @@ InstallMethod( SpecialUnitaryGroupCons,
       SetName( gg, Name( g ) );
     fi;
 
-    SetInvariantSesquilinearForm( gg, rec( matrix:= form!.matrix ) );
+    SetInvariantSesquilinearForm( gg, rec( matrix:= form!.matrix,
+                                           baseDomain:= F ) );
+
     if HasIsFullSubgroupGLorSLRespectingSesquilinearForm( g ) then
       SetIsFullSubgroupGLorSLRespectingSesquilinearForm( gg,
           IsFullSubgroupGLorSLRespectingSesquilinearForm( g ) );
@@ -794,8 +832,8 @@ end );
 #############################################################################
 ##
 #O  SymplecticGroupCons( <filter>, <form> )
-#O  SymplecticGroupCons( <filter>, <d>, <q>, <form> )
 #O  SymplecticGroupCons( <filter>, <d>, <R>, <form> )
+#O  SymplecticGroupCons( <filter>, <d>, <q>, <form> )
 ##
 ##  'SymplecticGroup' is a plain function that is defined in the GAP
 ##  library.
@@ -808,9 +846,9 @@ Perform(
     function( obj )
       DeclareConstructor( "SymplecticGroupCons", [ IsGroup, obj ] );
       DeclareConstructor( "SymplecticGroupCons",
-        [ IsGroup, IsPosInt, IsPosInt, obj ] );
-      DeclareConstructor( "SymplecticGroupCons",
         [ IsGroup, IsPosInt, IsRing, obj ] );
+      DeclareConstructor( "SymplecticGroupCons",
+        [ IsGroup, IsPosInt, IsPosInt, obj ] );
     end );
 
 
@@ -830,14 +868,14 @@ InstallMethod( SymplecticGroupCons,
     { filt, G } -> SymplecticGroupCons( filt,
                      BilinearFormByMatrix(
                        InvariantBilinearForm( G ).matrix,
-                       FieldOfMatrixGroup( G ) ) ) );
+                       Forms_FieldOfDefinition( InvariantBilinearForm( G ), G ) ) ) );
 
 InstallMethod( SymplecticGroupCons,
     "matrix group for form",
     [ IsMatrixGroup and IsFinite, IsBilinearForm ],
     { filt, form } -> SymplecticGroupCons( filt,
                         NumberRows( form!.matrix ),
-                        Size( form!.basefield ), form ) );
+                        form!.basefield, form ) );
 
 
 #############################################################################
@@ -850,7 +888,7 @@ InstallMethod( SymplecticGroupCons,
       IsPosInt,
       IsPosInt,
       IsMatrixOrMatrixObj ],
-    { filt, d, q, mat } -> SymplecticGroupCons( filt, d, q,
+    { filt, d, q, mat } -> SymplecticGroupCons( filt, d, GF(q),
                              BilinearFormByMatrix( mat, GF(q) ) ) );
 
 InstallMethod( SymplecticGroupCons,
@@ -859,7 +897,7 @@ InstallMethod( SymplecticGroupCons,
       IsPosInt,
       IsPosInt,
       IsGroup and HasInvariantBilinearForm ],
-    { filt, d, q, G } -> SymplecticGroupCons( filt, d, q,
+    { filt, d, q, G } -> SymplecticGroupCons( filt, d, GF(q),
                            BilinearFormByMatrix(
                              InvariantBilinearForm( G ).matrix, GF(q) ) ) );
 
@@ -869,24 +907,46 @@ InstallMethod( SymplecticGroupCons,
       IsPosInt,
       IsPosInt,
       IsBilinearForm ],
-    function( filt, d, q, form )
-    local g, stored, wanted, mat1, mat2, mat, matinv, gens, gg;
+    { filt, d, q, form } -> SymplecticGroupCons( filt, d, GF(q), form ) );
+
+
+#############################################################################
+##
+#M  SymplecticGroupCons( <filt>, <d>, <F>, <form> )
+##
+InstallMethod( SymplecticGroupCons,
+    "matrix group for dimension, finite field, form",
+    [ IsMatrixGroup and IsFinite,
+      IsPosInt,
+      IsField and IsFinite,
+      IsBilinearForm ],
+    function( filt, d, F, form )
+    local q, g, stored, form_matrix, wanted, mat1, mat2, mat, matinv, gens, gg;
 
     # Create the default generators and form.
-    g:= SymplecticGroupCons( filt, d, q );
+    q:= Size( F );
+    g:= SymplecticGroupCons( filt, d, F );
     stored:= InvariantBilinearForm( g ).matrix;
 
+    # Check that 'form' lives over the intended field.
+    if not IsSubset( F, form!.basefield ) then
+      Error( "the defining field of <form> does not fit to <q>" );
+    fi;
+
     # If the prescribed form fits then just return.
-    if stored = form!.matrix then
+    form_matrix:= Matrix( form!.matrix, stored );
+#T This 'Matrix' call should become unnecessary.
+#T For that, the functions used below have to support 'IsMatrixObj' arguments.
+    if stored = form_matrix then
       return g;
     fi;
 
     # Compute a base change matrix.
     # (Check that the canonical forms are equal.)
-    wanted:= BilinearFormByMatrix( stored, GF(q) );
-    mat1:= BaseChangeToCanonical( form );
-    mat2:= BaseChangeToCanonical( wanted );
-    if mat1 * form!.matrix * TransposedMat( mat1 ) <>
+    wanted:= BilinearFormByMatrix( stored, F );
+    mat1:= Matrix( BaseChangeToCanonical( form ), stored );
+    mat2:= Matrix( BaseChangeToCanonical( wanted ), stored );
+    if mat1 * form_matrix * TransposedMat( mat1 ) <>
        mat2 * stored * TransposedMat( mat2 ) then
       Error( "canonical forms of <form> and <wanted> differ" );
     fi;
@@ -903,7 +963,8 @@ InstallMethod( SymplecticGroupCons,
       SetName( gg, Name( g ) );
     fi;
 
-    SetInvariantBilinearForm( gg, rec( matrix:= form!.matrix ) );
+    SetInvariantBilinearForm( gg, rec( matrix:= form_matrix,
+                                       baseDomain:= F ) );
     if HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
       SetIsFullSubgroupGLorSLRespectingBilinearForm( gg,
           IsFullSubgroupGLorSLRespectingBilinearForm( g ) );
@@ -912,18 +973,13 @@ InstallMethod( SymplecticGroupCons,
     return gg;
 end );
 
-
-#############################################################################
-##
-#M  SymplecticGroupCons( <filt>, <d>, <R>, <form> )
-##
 InstallMethod( SymplecticGroupCons,
     "matrix group for dimension, finite field, matrix of form",
     [ IsMatrixGroup and IsFinite,
       IsPosInt,
       IsField and IsFinite,
       IsMatrixOrMatrixObj ],
-    { filt, d, F, form } -> SymplecticGroupCons( filt, d, Size( F ),
+    { filt, d, F, form } -> SymplecticGroupCons( filt, d, F,
                               BilinearFormByMatrix( form, F ) ) );
 
 InstallMethod( SymplecticGroupCons,
@@ -932,14 +988,6 @@ InstallMethod( SymplecticGroupCons,
       IsPosInt,
       IsField and IsFinite,
       IsGroup and HasInvariantBilinearForm ],
-    { filt, d, F, G } -> SymplecticGroupCons( filt, d, Size( F ),
+    { filt, d, F, G } -> SymplecticGroupCons( filt, d, F,
                            BilinearFormByMatrix(
                              InvariantBilinearForm( G ).matrix, F ) ) );
-
-InstallMethod( SymplecticGroupCons,
-    "matrix group for dimension, finite field, form",
-    [ IsMatrixGroup and IsFinite,
-      IsPosInt,
-      IsField and IsFinite,
-      IsBilinearForm ],
-    { filt, d, F, form } -> SymplecticGroupCons( filt, d, Size( F ), form ) );

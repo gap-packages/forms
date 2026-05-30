@@ -90,7 +90,7 @@ InstallGlobalFunction( ClassicalForms_PossibleScalarsSesquilinear,
 ##
 InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
   function( grp, frob )
-    local tries, gens, field, m1, a1, new, i, scalars, root, improvegenerator, res, newgens, champion, len, qq, q;
+    local tries, gens, field, m1, a1, new, i, scalars, improvegenerator, res, newgens, champion, len, qq, q;
 
     #field := FieldOfMatrixGroup(grp); #this causes a problem if one has a maximal subgroup of e.g. SU(3,7^2). There are examples of which de FieldOf is GF(7), while DefaultFieldOF is GF(7^2). Then this causes problems.
     field := DefaultFieldOfMatrixGroup(grp);
@@ -103,8 +103,8 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
 
     # the next function returns a matrix with a list of possible scalars for this matrix.
 
-    improvegenerator := function(m1)
-        local a1, scalars;
+    improvegenerator := function(m1,i,count,len)
+        local a1, s, j, k, scalars;
         
         a1 := ClassicalForms_PossibleScalarsSesquilinear(field,m1,frob);
         #Recall that the scalars satisfy the equation lambda^a[1] = a[2]
@@ -114,13 +114,25 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
                 
         if IsList(a1) then
             if a1[1] = 1 then # the matrix m1 has scalar a1[2]
-                return [a1[2]];
+                if LogFFE(a1[2],PrimitiveRoot(field)) mod (q+1) = 0 then
+                    return [m1/NthRoot(field,a1[2],q+1),[One(field)]];
+                fi;
+                return [m1,[a1[2]]]; #originally, the three lines above this return were not there. Those three lines make sure scalar becomes 1 if possible (basically if there is a q+1-st root).
             else
                 scalars := AsList(Group(NthRoot(field,a1[2],a1[1]))); # add all possible scalars for m1
-                return scalars;
+                if count = 0 then
+                    return champion; # add all possible scalars for m1
+                elif Length(scalars) < len then
+                    champion := [m1,scalars];
+                    len := Length(scalars);
+                fi;
+                k := Random(Difference([1..Length(gens)],[i])); #m1 could not be improved, so try to change m1 by multiplying with another generator.
+                m1 := m1*gens[k];
+                return improvegenerator(m1,i,count-1,len);
             fi;
         fi;
     end;
+
 
     # start with 2 random elements,  at most 10 tries
     

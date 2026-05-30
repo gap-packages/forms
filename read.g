@@ -17,3 +17,7 @@ ReadPackage("forms", "lib/recognition.gi");
 ReadPackage("forms", "lib/classic.gi");
 ReadPackage("forms", "lib/recognition_new.gi");
 ReadPackage("forms", "lib/formspace.gi");
+
+if IsBound( ConformalSymplecticGroup ) then
+  ReadPackage("forms", "lib/conformal.gi");
+fi;
