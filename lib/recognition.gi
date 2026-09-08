@@ -689,11 +689,9 @@ InstallGlobalFunction(PossibleClassicalForms,
 
     if forms.maybeFrobenius then
         qq := Characteristic(f)^(DegreeOverPrimeField(f)/2);
-        tMi := tMi^qq;               # Frobenius of trace
     fi;
 
-    if (IsZero(tM) and not IsZero(tMi)) or
-       (not IsZero(tM) and IsZero(tMi)) then
+    if IsZero(tM) <> IsZero(tMi) then
         forms.maybeFrobenius := false;
         forms.maybeDual := false;
         return false;
@@ -708,20 +706,22 @@ InstallGlobalFunction(PossibleClassicalForms,
     fi;
     Add(I,q-1);
 
-    # we need gcd one in order to get alpha exactly (ignoring +-)
+    # If g preserves a form up to the scalar lambda, then
+    # a*c[d-i+1]/c[i+1] = lambda^i for all i in I. Nonzero traces determine
+    # lambda as tM/tMi. Otherwise only lambda^i0 for i0 = gcd(I) can be
+    # recovered from these quotients, and consistency with it is checked.
     t := GcdRepresentation(I);
     i0:=I*t;
-
-    if not IsZero(tM) and not IsZero(tMi) then
-        return [i0, tM/tMi];
-    fi;
-
 
     if forms.maybeDual  then
         a  := c[1];
         l  := List( [1..Length(I)-1],
                     x ->(a*c[d-I[x]+1]/c[I[x]+1]) );
-        g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        if IsZero(tM) then
+            g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        else
+            g  := (tM/tMi)^i0;
+        fi;
         if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
             forms.maybeDual := false;
         fi;
@@ -730,7 +730,11 @@ InstallGlobalFunction(PossibleClassicalForms,
         a  := c[1];
         l  := List([1..Length(I)-1], x ->
                    (a*c[d-I[x]+1]^qq/c[I[x]+1]));
-        g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        if IsZero(tM) then
+            g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        else
+            g  := (tM/tMi^qq)^i0;
+        fi;
         if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
             forms.maybeFrobenius := false;
         fi;
