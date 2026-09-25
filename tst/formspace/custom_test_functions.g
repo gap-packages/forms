@@ -29,7 +29,7 @@ TestPolyEval := function(benchmark)
     return "Ok";
 end;
 
-RandomMatrix := function(n, F)
+RandomMatrix__ := function(n, F)
     local i, M, j;
     M := ZeroMatrix(F, n, n);
     for i in [1..n] do
@@ -57,7 +57,7 @@ TestChar2Filter := function()
                 nr_mats := PseudoRandom(matnr_range);
                 mats := [];
                 for k in [1..nr_mats] do
-                    Add(mats, RandomMatrix(n, F));
+                    Add(mats, RandomMatrix__(n, F));
                 od;
                 out := FORMS_FilterUnitaryForms(mats, F, n, hom);
                 for o in out do
