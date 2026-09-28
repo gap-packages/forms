@@ -1,4 +1,4 @@
-gap> START_TEST("Forms: recog_preserved_sesqui_with_scalars_test.tst"); # Adapted from test_recog.tst for PreservedSesquilinearFormsWithScalars
+gap> START_TEST("Formspace: recog_preserved_sesqui_with_scalars_test.tst"); # Adapted from test_recog.tst for PreservedSesquilinearFormsWithScalars
 gap> g := Sp(6,3);
 Sp(6,3)
 gap> forms := PreservedSesquilinearFormsWithScalars(g);
@@ -35,4 +35,4 @@ gap> forms := PreservedSesquilinearFormsWithScalars(g);
 [ < bilinear form > ]
 gap> TestPreservedSesquilinearForms(g,forms);
 true
-gap> STOP_TEST("recog_preserved_sesqui_with_scalars_test.tst", 10000 );
+gap> STOP_TEST("Formspace: recog_preserved_sesqui_with_scalars_test.tst", 10000 );

@@ -1096,6 +1096,32 @@ InstallOtherMethod( \^,
     return m;
   end );
 
+# This might be horribly slow..., i am not sure how to best implement this logic..
+InstallOtherMethod( \^, "for a FFE matrix object and a Frobenius automorphism",
+  [ IsMatrixObj, IsFrobeniusAutomorphism ],
+  function( m, f )
+    return NewMatrix( ConstructingFilter(m), BaseDomain(m), NrCols(m),
+                      List( Unpack(m), v -> List( v, x -> x^f ) ) );
+  end );
+
+InstallOtherMethod( \^, "for a FFE matrix object and a trivial Frobenius automorphism",
+  [ IsMatrixObj, IsMapping and IsOne ],
+  function( m, f )
+    return m;
+  end );
+
+InstallOtherMethod( \^, "for a FFE vector object and a Frobenius automorphism",
+  [ IsVectorObj, IsFrobeniusAutomorphism ],
+  function( v, f )
+    return NewVector( ConstructingFilter(v), BaseDomain(v),
+                      List( Unpack(v), x -> x^f ) );
+  end );
+
+InstallOtherMethod( \^, "for a FFE vector object and a trivial Frobenius automorphism",
+  [ IsVectorObj, IsMapping and IsOne ],
+  function( v, f )
+    return v;
+  end );
 #############################################################################
 # Overloading: Forms
 #############################################################################

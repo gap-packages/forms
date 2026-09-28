@@ -42,10 +42,10 @@ InstallGlobalFunction( ClassicalForms_PossibleScalarsSesquilinear,
     I := Filtered( [ 0 .. d ],  x -> c[x+1] <> z );
 
     #Lemma: Trace(M) <> z implies that Trace(M^*) <> z.
-
+    # Use TraceMatrix to support Matrix Objs
     Minv := M^-1;
-    if Trace(M) = z and Trace(Minv) <> z or
-       Trace(M) <> z and Trace(Minv) = z then
+    if TraceMatrix(M) = z and TraceMatrix(Minv) <> z or
+       TraceMatrix(M) <> z and TraceMatrix(Minv) = z then
         return false;
     fi;
     

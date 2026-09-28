@@ -4,10 +4,40 @@
 #! @Section Computing the Formspace
 #! For details on how the form space is computed SEE: somewhere that does not exist yet
 
+## This wrapper function fixes some compatibilby issues of NullspaceMat with matrix objects. Namely in the case that the matrix is the zero matrix or in the case that the kernel is empty. This ensures that calling NullspaceMat with a matrix object returns a matrix object and calling it with a list matrix returns a list matrix. TODO: Have a destructive variant?? but NullspaceMatDestructive does not seem to work at all for matrix objects at the moment. TODO: Also this is AI Code, so further testing should be done
+FORMS_NullspaceMat := function(m)
+    local filt, R, n;
+    filt := ConstructingFilter(m);
+    R := BaseDomain(m);
+
+    if IsZero(m) then
+        return NewIdentityMatrix(filt, R, NrRows(m));
+    fi;
+
+    n := NullspaceMat(m);
+    if n = [] then
+        # compressed representations do not support zero rows yet
+        if filt = Is8BitMatrixRep or filt = IsGF2MatrixRep then
+            filt := IsPlistMatrixRep;
+        fi;
+        return NewZeroMatrix(filt, R, 0, NrRows(m));
+    fi;
+    if not filt(n) then
+        n := List(n, function(v)
+            if IsPlistRep(v) then
+                return v;
+            fi;
+            return Unpack(v);
+        end);
+        n := NewMatrix(filt, R, NrRows(m), n);
+    fi;
+    return n;
+end;
+
 # underlying field F, g is in F^{n\times n}, v is in F^n, coeffs are the coefficients of a polynomial p in F[X]. Returns vp(g).
 FORMS_EvaluateMatrixPolynomialWithVector := function(F, n, g, v, coeffs)
     local res, i, deg;
-    deg := Size(coeffs);
+    deg := Length(coeffs);
 
     if deg = 0 then
         return ZeroVector(F, n);
@@ -42,6 +72,7 @@ FORMS_CalculateAdjoint := function(mat, mode, hom, n, F)
 end;
 
 # tries to find a element g \in <Gens> such that the Frobenius Normal form of g has as few blocks as possible. Lambdas describes a group homomorphism induced by Phi : Gens[i] \mapsto Lambdas[i]
+## TODO: In the case that the scalars are known (the case of this function, a cyclic element from the group algebra should suffice. This could improve the odds of finding a cyclic element for some groups)
 # Returns [g, Phi(g), FrobeniusNormalForm(g), nrOfTries]
 # nrOfTries contains the number of random elements tested before g was found.
 FORMS_FindCyclicGroupElementAndScalars := function(Gens, Lambdas, n)
@@ -119,16 +150,25 @@ FORMS_SolveMatrixSystem := function(mats, j, n, F)
     for mat in mats do 
         Add(eqs, FORMS_MatrixReorganize(mat, j, F, n));
     od;
-    return NullspaceMatDestructive(eqs);
+    return FORMS_NullspaceMat(eqs);
 end;
 
 # Spins a block in the frobenius normal form, with the images.
 FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
-    local A, j, i, k, end_pos;
+    local A, j, i, k, end_pos, Images_lists, v;
     j := Size(frob_base_blocks);
-    A := NullMat(n, n, F);
-    # A := ZeroMatrix(F, n, n);
-    CopySubMatrix(Images, A, [1..j], frob_base_blocks, [1..n], [1..n]);
+    if IsPlistMatrixRep(spin_elem) then
+        A := ZeroMatrix(IsPlistMatrixRep, F, n, n);
+    else
+        A := NullMat(n, n, F);
+    fi;
+    Images_lists := List(Images, function(v)
+        if IsPlistVectorRep(v) then
+            return Unpack(v);
+        fi;
+        return v;
+    end);
+    CopySubMatrix(Images_lists, A, [1..j], frob_base_blocks, [1..n], [1..n]);
     for i in [1..j] do
         if i = j then
             end_pos := n;
@@ -138,8 +178,11 @@ FORMS_FrobSpin := function(Images, spin_elem, frob_base_blocks, n, F)
         # causes error if A is matrix obj and Images is plain list... :(( 
         # A[frob_base_blocks[i]] := Images[i];
         for k in [(frob_base_blocks[i] + 1)..end_pos] do
-            CopySubMatrix([A[k - 1]*spin_elem], A, [1], [k], [1..n], [1..n]);
-            # A[k] := A[k - 1]*spin_elem;
+            v := A[k - 1]*spin_elem ;
+            if IsPlistVectorRep(v) then
+                v := Unpack(v);
+            fi;
+            CopySubMatrix([v], A, [1], [k], [1..n], [1..n]);
         od;
     od;
     return A;
@@ -161,20 +204,28 @@ end;
 # This computes (and returns) the matrix \mathcal{P}_{h, u} from the bachelors thesis.
 # Here we have u, h \in F^{n\times n}, h_star = h^*, scalar_h = \lambda_h, g_star_inv_scaled = g^{-*}*lambda_g, frob_base = FrobeniusNormalForm(g^{-*}), frob_base_inv = Inverse(FrobeniusNormalForm(g)[2]), frob_base_inv_star = Inverse(frob_base[2]). The reason we to give so many parameters is to avoid computing the same matrices multiple times. TODO: better names!!!!!!
 FORMS_ComputeConditionMatrixFrob := function(u, h, h_star, scalar_h, g_star_inv_scaled, frob_base, frob_base_inv, frob_base_inv_star, F, n)
-    local coeffs_c, coeffs_f, Ps, i, j, b_end, b_start, cpol, fpol;
+    local coeffs_c, coeffs_f, Ps, i, j, b_end, b_start, cpol, fpol, mat;
     coeffs_c := (u * h) * frob_base_inv;
     coeffs_f := (u * frob_base_inv) * scalar_h;
     j := Size(frob_base[3]);
-    Ps := NullMat(n * j, n, F);
-    # Ps := ZeroMatrix(F, n*j, n);
+    if IsPlistMatrixRep(h) then
+        Ps := ZeroMatrix(IsPlistMatrixRep, F, n*j, n);
+    else
+        Ps := NullMat(n * j, n, F);
+    fi;
+   
     for i in [1..j] do
         if i = j then
             b_end := n;
         else
             b_end := frob_base[3][i + 1] - 1;
         fi;
-        Ps{[((i - 1)*n + 1)..(i*n)]}{[1..n]} :=
-            FORMS_EvaluatePolynomialWithFrobenius(coeffs_c{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n) * h_star - FORMS_EvaluatePolynomialWithFrobenius(coeffs_f{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n);
+        
+        # Ps{[((i - 1)*n + 1)..(i*n)]}{[1..n]} :=
+        #     FORMS_EvaluatePolynomialWithFrobenius(coeffs_c{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n) * h_star - 
+        #     FORMS_EvaluatePolynomialWithFrobenius(coeffs_f{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n);
+        mat := FORMS_EvaluatePolynomialWithFrobenius(coeffs_c{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n) * h_star - FORMS_EvaluatePolynomialWithFrobenius(coeffs_f{[frob_base[3][i]..b_end]}, g_star_inv_scaled, frob_base, frob_base_inv_star, F, n);
+        CopySubMatrix(mat, Ps, [1..n], [((i - 1)*n + 1)..(i*n)], [1..n], [1..n]);
     od;
     return Ps;
 end;
@@ -183,8 +234,11 @@ end;
 FORMS_FrobSpinAtBlock := function(Image, spin_elem, frob_base_blocks, block_index, n, F)
     local A, j, i, k, end_pos;
     j := Size(frob_base_blocks);
-    A := NullMat(n, n, F);
-    # A := ZeroMatrix(F, n, n);
+    if IsPlistMatrixRep(spin_elem) then
+        A := ZeroMatrix(IsPlistMatrixRep, F, n, n);
+    else
+        A := NullMat(n, n, F);
+    fi;
     if block_index = j then
         end_pos := n;
     else
@@ -415,17 +469,20 @@ end;
 # to better recognize forms in this case it would be good to add a function that does not do this (since we only care about non degenerate classical forms). to find a bilinear/symplectic/hermitian form we can just compute a invertibe matrix S such that gS = Sg^{-*} (with frobenius normal form) and hope that S + S^*, S - S^* are also inevertible. Then we have found symmetric/symplectic non degenrate forms This seems like a good idea? idk
 FORMS_CyclicGroupCase := function(Gen, Gen_adjoint_inv_scaled, Lambda, unitary, hom, frob, frob_inv_star_scaled, frob_inv_star_base_change, frob_inv_base_change, F, n)
     # maybe recoginize the trivial group here as a special case
-    local p, mat, outspace, i, j, w, OutForms;
+    local p, mat, outspace, i, j, w, OutForms, W;
 
     outspace := [];
     for p in frob[1] do
         mat := FORMS_EvaluatePolynomialWithFrobenius(CoefficientsOfUnivariatePolynomial(p), Gen_adjoint_inv_scaled * Lambda, frob_inv_star_scaled, frob_inv_star_base_change, F, n);
-        Add(outspace, NullspaceMatDestructive(mat));
+        Add(outspace, FORMS_NullspaceMat(mat));
     od;
     OutForms := [];
-    
     for i in [1..Size(outspace)] do
-        for w in outspace[i] do
+        W := outspace[i];
+        if IsPlistMatrixRep(W) and IsRowListMatrix(W) then
+            W := List(W);
+        fi;
+        for w in W do
             Add(OutForms, frob_inv_base_change * FORMS_FrobSpinAtBlock(w, Gen_adjoint_inv_scaled, frob[3], i, n, F)); # this can be used to bound the rank very cheaply, it is smaller than the lenght of the ith frobenius block, furthermore we use the different frobenius blocks, to build a non-deg form we should use a form from each block and add them??
         od;
     od;
@@ -438,6 +495,10 @@ FORMS_ReturnFormspace := function(needs_checking, W, g_res, g_star_inv_scaled, L
     local O, w, A, i;
     # no kernel, return empty
     O := [];
+    # to enumerate over the matrix rows, we turn into a list
+    if IsPlistMatrixRep(W) and IsRowListMatrix(W) then
+        W := List(W);
+    fi;
     for w in W do
         A := g_inv_frob * FORMS_FrobSpin(FORMS_VectorReorganize(w, Size(g_res[5]), F, n), g_star_inv_scaled, g_res[5], n, F);
         if needs_checking then
@@ -477,16 +538,16 @@ FORMS_FormspaceInternal := function(Gens, Lambdas, unitary, hom, g_res, g_inv_fr
                 FORMS_ComputeConditionMatrixFrob(vec, h, h_star, Lambdas[i], g_star_inv_scaled, g_star_inv_scaled_frob, g_inv_frob, frob_base_inv_star, F, n);
             
             if not first then
-                nspace := NullspaceMat(W * Conds);
-                nspace_size := Size(nspace);
+                nspace := FORMS_NullspaceMat(W * Conds);
+                nspace_size := Length(nspace);
                 if nspace_size = 0 then 
                     return [];
                 fi;
                 W := nspace * W;
             fi;
             if first then
-                nspace := NullspaceMat(Conds);
-                nspace_size := Size(nspace);
+                nspace := FORMS_NullspaceMat(Conds);
+                nspace_size := Length(nspace);
                 if nspace_size = 0 then 
                     return [];
                 fi;
@@ -528,6 +589,8 @@ end;
 # ideas for scalars : 
 ## non-degenerate 
 # - do the things already in the forms package with trace/ analyze minimal and characteristic polynomial DONE! :)
+# - add a function that given a group just tries to return one non-degenerate form as fast as possible.
+# - add a functions for reducible groups that given formspaces, return a random non-deg form; try to compute all non-deg forms
 ## degenerate : 
 # - do the trick where a group generator with scalar guranteed to be one gets added and compute the eigenvalues of this one these are then all possible choices of scalars, we can even do this a few times to arrow down the possibilities. 
     ## structure : 

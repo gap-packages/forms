@@ -22,9 +22,9 @@ end;
 FileBenchmark := function()
     local bench_time, number_to_average, Ns, Qs, Gs, Gs_names, n, q, k, g, G, mine_total, theirs_total, i, H_conj, H, start_mine, time_after, time_start, time_after_after, average_mine, average_theirs, waste1, waste2, file_name;
     bench_time := Runtime();
-    number_to_average := 10;
+    number_to_average := 1;
     Ns := [100, 300, 500];
-    Qs := [3, 5, 3^2];
+    Qs := [5, 3^2, 5^3];
     file_name := "benchmark.csv";
     Gs := [Sp, SU, GOMinus];
     Gs_names := ["Sp", "SU", "GOMinus"];

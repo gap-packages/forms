@@ -52,3 +52,58 @@ The authors,
 
 
 John Bamberg and Jan De Beule
+
+GAP DAYS TODOs:
+
+- Fix Bugs with diferent Kinds of Matrices (and add Tests)
+	- added Tests for Matrix objs
+	- do cvec package? 
+- replace old Methods with new formspace ones and update documentation
+- Add Methods:
+	- For random invertible form	
+	- For all forms (possibly this is hard)
+	- Idea with finding all scalars (medium hard lots of work possibly)
+- Go through the code/comments and add some of the ideas
+- Soft rewrite..?
+- actually have the forms package also support MatrixObjs internally this seems like a lot of work, currently i only want to fix the formspace computation to be able to support it, not the Forms objects.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- matobj issues i found
+		-> issue mat * matobj not defined. gibt es noch
+		-> issue for plist Vector Size() does not work
+		-> CopySubMatrix does not support plist vectors issue (not really a issue?) works for matrices
+
+		-> NullspaceMatDestructive does not support Matrix objects seems fixed
+		-> NullspaceMat behaves weirdly for Matrix objects, namely sometimes the solution that is returned is not a Matrix object itself.
+      A := Matrix(IsPlistMatrixRep, GF(5), [ [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ] ]);
+      NullspaceMat(A);
+
+      A := PseudoRandom(GL(4, 5));
+      A := Matrix(IsPlistMatrixRep, GF(5), A);
+      NullspaceMat(A); IS NOT a matrix obj
+
+      -> Trace does not work for matrix obj????
+      M := [ [ Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
+            [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
+            [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ],
+            [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ],
+            [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ],
+            [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3) ] ];
+      M := Matrix(IsPlistMatrixRep, GF(3), M);
+      Trace(M); Fix is TraceMatrix
+
+

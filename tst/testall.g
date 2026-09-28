@@ -13,10 +13,19 @@ if not IsBound(ConformalSymplecticGroup) then
   Add( exclude, "adv/conformal.tst" );
 fi;
 
-TestDirectory(DirectoriesPackageLibrary("forms", "tst"),
+## THIS IS A TEMPORARY CHANGE! DO NOT COMMIT
+# TestDirectory(DirectoriesPackageLibrary("forms", "tst"),
+#     rec(
+#       exitGAP := true,
+#       exclude := exclude,
+#       #rewriteToFile := true,  # enable this line to update tests
+#     ));
+# FORCE_QUIT_GAP(1);
+
+TestDirectory(DirectoriesPackageLibrary("forms", "tst/formspace"),
     rec(
       exitGAP := true,
       exclude := exclude,
       #rewriteToFile := true,  # enable this line to update tests
     ));
-FORCE_QUIT_GAP(1);
+# FORCE_QUIT_GAP(1);

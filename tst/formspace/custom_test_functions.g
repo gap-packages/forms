@@ -188,3 +188,24 @@ TestComputeFormspaceBruteForce := function(G, Lambdas, unitary)
     # Print(aaa);
     return out;
 end;
+
+# used to convert compressed matrix into lists containing lists
+TestListList := function(m)
+    local a, r;
+    a := List(m);
+    for r in [1..Size(a)] do
+        a[r] := List(a[r]);
+    od;
+    return a;
+end;
+
+TestForceMatrixObjGens := function(G)
+    local Gens, i, F;
+    Gens := ShallowCopy(GeneratorsOfGroup(G));
+    for i in [1..Size(Gens)] do
+        F := DefaultFieldOfMatrix(Gens[i]);
+        Gens[i] := Matrix(IsPlistMatrixRep, F, TestListList(Gens[i]));
+    od;
+    return Group(Gens);
+end;
+

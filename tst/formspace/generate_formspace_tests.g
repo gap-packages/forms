@@ -5,14 +5,24 @@ ReadPackage("forms", "tst/interesting_groups.g");
 
 ## TODO: Tests with scalars that are not equal to one are desperately missing!!!
 
-WriteTestFilePreservedFormspaceTest := function(path, name, G, n, F,f_space_expected_normal_d, f_space_expected_unitary_d)
-    local full_name, start_test, end_test, stream, file_name, dir, full_path;
+WriteTestFilePreservedFormspaceTest := function(path, name, G, n, F,f_space_expected_normal_d, f_space_expected_unitary_d, force_matrix_objs)
+    local full_name, start_test, end_test, stream, file_name, dir, full_path, i, cleaned_name;
     full_name := StringFormatted("test_{}.tst", name);
     full_name := ReplacedString(full_name, ",", "_");
     full_path := StringFormatted("{}/{}", path, full_name);
+    cleaned_name := name;
+    cleaned_name := ReplacedString(cleaned_name, ",", "_");
+    cleaned_name := ReplacedString(cleaned_name, ".", "_");
+    cleaned_name := ReplacedString(cleaned_name, "(", "_");
+    cleaned_name := ReplacedString(cleaned_name, ")", "_");
 
-    start_test := StringFormatted("gap> START_TEST(\"Formspace: Preserved Formspace {}\");\n", name);
-    end_test := StringFormatted("gap> STOP_TEST(\"Formspace: Preserved Formspace {}\");\n", name);
+    if not force_matrix_objs then
+        start_test := StringFormatted("gap> START_TEST(\"Formspace: Preserved Formspace {}\");\n", name);
+        end_test := StringFormatted("gap> STOP_TEST(\"Formspace: Preserved Formspace {}\");\n", name);
+    else
+        start_test := StringFormatted("gap> START_TEST(\"Formspace: Preserved Formspace with Matrix Obj {}\");\n", name);
+        end_test := StringFormatted("gap> STOP_TEST(\"Formspace: Preserved Formspace with Matrix Obj {}\");\n", name);
+    fi;
     dir := DirectoriesPackageLibrary("forms", path);
     # create file with this
     PrintTo(full_path, "");
@@ -25,6 +35,9 @@ WriteTestFilePreservedFormspaceTest := function(path, name, G, n, F,f_space_expe
     WriteAll(stream, StringFormatted("gap> G := {};; # Some groups are defined in interesting_groups.g\n", G[1]));
     WriteAll(stream, StringFormatted("gap> R := PseudoRandom(GL({}, {}));;\n", n, F));
     WriteAll(stream, "gap> G := G^R;;\n");
+    if (force_matrix_objs) then
+        WriteAll(stream, "gap> G:=TestForceMatrixObjGens(G);;\n");
+    fi;
     WriteAll(stream, StringFormatted("gap> f_space_expected_normal_d := {};; # the dimensions of the expected formspaces \n", f_space_expected_normal_d));
     WriteAll(stream, StringFormatted("gap> f_space_expected_unitary_d := {};;\n", f_space_expected_unitary_d));
     WriteAll(stream, "gap> L:=PreservedFormspace(G);;\n");
@@ -38,9 +51,13 @@ WriteTestFilePreservedFormspaceTest := function(path, name, G, n, F,f_space_expe
     CloseStream(stream);
 end;
 
-GenerateTestsForPreservedFormspace := function()
+GenerateTestsForPreservedFormspace := function(force_matrix_objs)
     local Groups, R, G, GG, n, F, Gens, path, lambdas, i, conjugated, f_space_expected_normal_d, f_space_expected_unitary_d;
-    path := "tst/formspace/preserved_formspace";
+    if(not force_matrix_objs) then
+        path := "tst/formspace/preserved_formspace";
+    else 
+        path := "tst/formspace/matrix_tests/formspace_matrix_obj";
+    fi;
     Groups := [["GO(5,3)", GO(5, 3)], ["SU(4,5)", SU(4, 5)], ["Sp(4,5)", Sp(4, 5)], ["Gtriv", Gtriv], ["G1", G1], ["G2", G2], ["G3", G3], ["G4", G4], ["G5", G5], ["G6", G6], ["G7", G7], ["G8", G8], ["GP22", GP22], ["Group(SP(4,5).1)", Group(SP(4,5).1)]];
     for GG in Groups do
         G := GG[2];
@@ -55,8 +72,7 @@ GenerateTestsForPreservedFormspace := function()
         conjugated := GG[2]^R;
         f_space_expected_normal_d := Size(TestComputeFormspaceBruteForce(conjugated, lambdas, false));
         f_space_expected_unitary_d := Size(TestComputeFormspaceBruteForce(conjugated, lambdas, true));
-        WriteTestFilePreservedFormspaceTest(path, GG[1], GG, n, F, f_space_expected_normal_d, f_space_expected_unitary_d);
+        WriteTestFilePreservedFormspaceTest(path, GG[1], GG, n, F, f_space_expected_normal_d, f_space_expected_unitary_d, force_matrix_objs);
     od;
 end;
-
 
