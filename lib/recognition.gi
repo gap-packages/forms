@@ -712,11 +712,6 @@ InstallGlobalFunction(PossibleClassicalForms,
     t := GcdRepresentation(I);
     i0:=I*t;
 
-    if not IsZero(tM) and not IsZero(tMi) then
-        return [i0, tM/tMi];
-    fi;
-
-
     if forms.maybeDual  then
         a  := c[1];
         l  := List( [1..Length(I)-1],
