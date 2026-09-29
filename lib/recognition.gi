@@ -677,7 +677,13 @@ InstallGlobalFunction(PossibleClassicalForms,
          forms.maybeFrobenius := DegreeOverPrimeField(f) mod 2 = 0;
     fi;
 
-    c := CharacteristicPolynomial(g);
+    # Hack: if used from recog, we may already be given the charpoly of g,
+    # in that case, use it instead of recomputing it
+    if IsBound(forms.cpol) and IsBound(forms.g) and forms.g = g then
+        c := forms.cpol;
+    else
+        c := CharacteristicPolynomial(g);
+    fi;
     c := CoefficientsOfUnivariatePolynomial(c);
 
     d := DimensionOfMatrixGroup(grp);
@@ -686,10 +692,6 @@ InstallGlobalFunction(PossibleClassicalForms,
     q := Size(f);
     Minv := g^-1;
     tM := Trace(g); tMi := Trace(Minv);
-
-    if forms.maybeFrobenius then
-        qq := Characteristic(f)^(DegreeOverPrimeField(f)/2);
-    fi;
 
     if IsZero(tM) <> IsZero(tMi) then
         forms.maybeFrobenius := false;
@@ -715,8 +717,10 @@ InstallGlobalFunction(PossibleClassicalForms,
 
     if forms.maybeDual  then
         a  := c[1];
+        # compute the terms a*c[d-i+1]/c[i+1] for all i where c[i+1] <> 0
         l  := List( [1..Length(I)-1],
                     x ->(a*c[d-I[x]+1]/c[I[x]+1]) );
+        # compute g = lambda^i0
         if IsZero(tM) then
             g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
         else
@@ -727,9 +731,14 @@ InstallGlobalFunction(PossibleClassicalForms,
         fi;
     fi;
     if forms.maybeFrobenius  then
+        # The case involving a Frobenius is similar, just inserting `^qq` in a
+        # few places.
         a  := c[1];
+        qq := Characteristic(f)^(DegreeOverPrimeField(f)/2);
+        # compute the terms a*c[d-i+1]^qq/c[i+1] for all i where c[i+1] <> 0
         l  := List([1..Length(I)-1], x ->
                    (a*c[d-I[x]+1]^qq/c[I[x]+1]));
+        # compute g = lambda^i0
         if IsZero(tM) then
             g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
         else
@@ -739,11 +748,7 @@ InstallGlobalFunction(PossibleClassicalForms,
             forms.maybeFrobenius := false;
         fi;
     fi;
-    if forms.maybeDual = false and forms.maybeFrobenius = false then
-        return false;
-    else
-        return true;
-    fi;
+    return forms.maybeDual or forms.maybeFrobenius;
 end);
 
 #############################################################################
