@@ -6,15 +6,26 @@ if not IsBound(DescribesInvariantQuadraticForm) then
   Add( exclude, "adv/classic.tst" );
 fi;
 
+ReadPackage("forms", "tst/interesting_groups.g");
+ReadPackage("forms", "tst/formspace/custom_test_functions.g");
 if not IsBound(ConformalSymplecticGroup) then
   # conformal.tst cannot run
   Add( exclude, "adv/conformal.tst" );
 fi;
 
-TestDirectory(DirectoriesPackageLibrary("forms", "tst"),
+## THIS IS A TEMPORARY CHANGE! DO NOT COMMIT
+# TestDirectory(DirectoriesPackageLibrary("forms", "tst"),
+#     rec(
+#       exitGAP := true,
+#       exclude := exclude,
+#       #rewriteToFile := true,  # enable this line to update tests
+#     ));
+# FORCE_QUIT_GAP(1);
+
+TestDirectory(DirectoriesPackageLibrary("forms", "tst/formspace"),
     rec(
       exitGAP := true,
       exclude := exclude,
       #rewriteToFile := true,  # enable this line to update tests
     ));
-FORCE_QUIT_GAP(1);
+# FORCE_QUIT_GAP(1);

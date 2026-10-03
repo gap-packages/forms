@@ -184,6 +184,20 @@ InstallOtherMethod( BilinearFormByMatrix,
   [ "IsMatrixObj and IsFFECollColl" ],
   m -> BilinearFormByMatrix( Unpack( m ) ) );
 
+## I have also added these as a temporary solution to make the formspace code work, TODO: have forms objects support matrix objects
+
+InstallOtherMethod( QuadraticFormByMatrix, "for a matrix object and a field",
+[ IsMatrixObj, IsField and IsFinite ],
+function( m, f )
+  return QuadraticFormByMatrix(Unpack(m),f);
+end );
+
+InstallOtherMethod( HermitianFormByMatrix, "for a matrix object and a field",
+[ IsMatrixObj, IsField and IsFinite ],
+function( m, f )
+  return HermitianFormByMatrix(Unpack(m),f);
+end );
+
 
 # The following is apparently needed in the tests in `tst/adv/conformal.tst`.
 # Strictly speaking, the following is not correct,

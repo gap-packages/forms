@@ -13,7 +13,8 @@ if fail = LoadPackage("AutoDoc", ">= 2019.04.10") then
 fi;
 AutoDoc(rec(
     scaffold := rec( MainPage := false ),
-    gapdoc := rec( main := "forms.xml" ),
+    gapdoc := rec( main := "forms.xml",),
+    autodoc := true,
 ));
 QUIT;
 
