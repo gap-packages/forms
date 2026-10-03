@@ -677,7 +677,13 @@ InstallGlobalFunction(PossibleClassicalForms,
          forms.maybeFrobenius := DegreeOverPrimeField(f) mod 2 = 0;
     fi;
 
-    c := CharacteristicPolynomial(g);
+    # Hack: if used from recog, we may already be given the charpoly of g,
+    # in that case, use it instead of recomputing it
+    if IsBound(forms.cpol) and IsBound(forms.g) and forms.g = g then
+        c := forms.cpol;
+    else
+        c := CharacteristicPolynomial(g);
+    fi;
     c := CoefficientsOfUnivariatePolynomial(c);
 
     d := DimensionOfMatrixGroup(grp);
@@ -687,13 +693,7 @@ InstallGlobalFunction(PossibleClassicalForms,
     Minv := g^-1;
     tM := Trace(g); tMi := Trace(Minv);
 
-    if forms.maybeFrobenius then
-        qq := Characteristic(f)^(DegreeOverPrimeField(f)/2);
-        tMi := tMi^qq;               # Frobenius of trace
-    fi;
-
-    if (IsZero(tM) and not IsZero(tMi)) or
-       (not IsZero(tM) and IsZero(tMi)) then
+    if IsZero(tM) <> IsZero(tMi) then
         forms.maybeFrobenius := false;
         forms.maybeDual := false;
         return false;
@@ -708,38 +708,47 @@ InstallGlobalFunction(PossibleClassicalForms,
     fi;
     Add(I,q-1);
 
-    # we need gcd one in order to get alpha exactly (ignoring +-)
+    # If g preserves a form up to the scalar lambda, then
+    # a*c[d-i+1]/c[i+1] = lambda^i for all i in I. Nonzero traces determine
+    # lambda as tM/tMi. Otherwise only lambda^i0 for i0 = gcd(I) can be
+    # recovered from these quotients, and consistency with it is checked.
     t := GcdRepresentation(I);
     i0:=I*t;
 
-    if not IsZero(tM) and not IsZero(tMi) then
-        return [i0, tM/tMi];
-    fi;
-
-
     if forms.maybeDual  then
         a  := c[1];
+        # compute the terms a*c[d-i+1]/c[i+1] for all i where c[i+1] <> 0
         l  := List( [1..Length(I)-1],
                     x ->(a*c[d-I[x]+1]/c[I[x]+1]) );
-        g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        # compute g = lambda^i0
+        if IsZero(tM) then
+            g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        else
+            g  := (tM/tMi)^i0;
+        fi;
         if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
             forms.maybeDual := false;
         fi;
     fi;
     if forms.maybeFrobenius  then
+        # The case involving a Frobenius is similar, just inserting `^qq` in a
+        # few places.
         a  := c[1];
+        qq := Characteristic(f)^(DegreeOverPrimeField(f)/2);
+        # compute the terms a*c[d-i+1]^qq/c[i+1] for all i where c[i+1] <> 0
         l  := List([1..Length(I)-1], x ->
                    (a*c[d-I[x]+1]^qq/c[I[x]+1]));
-        g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        # compute g = lambda^i0
+        if IsZero(tM) then
+            g  := Product( [1..Length(I)-1],x -> l[x]^t[x] );
+        else
+            g  := (tM/tMi^qq)^i0;
+        fi;
         if ForAny( [1..Length(I)-1], x -> l[x]<>g^(I[x]/i0) )  then
             forms.maybeFrobenius := false;
         fi;
     fi;
-    if forms.maybeDual = false and forms.maybeFrobenius = false then
-        return false;
-    else
-        return true;
-    fi;
+    return forms.maybeDual or forms.maybeFrobenius;
 end);
 
 #############################################################################
