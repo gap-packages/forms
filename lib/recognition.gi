@@ -357,11 +357,11 @@ end );
 ##
 ##  Because of the optimizations in improvegenerators, we may assume that generators
 ##  indeed preserve the sesquilinear form up to scalar one, since in characteristic
-##  2 we can always achieve this.
+##  2 we can always achieve this. Since the function that tries to make the scalars one was changed, see https://github.com/gap-packages/forms/issues/83 I have now changed this, so that the generators are guranteed to have scalar one, as this is always possible in char 2. (x -> x^2 is bijective)
 ##
 InstallGlobalFunction( ClassicalForms_QuadraticForm2,
  function( field, form, gens, scalars )
-    local dim, H, i, j, e, b, y, x, r, l;
+    local dim, H, i, j, e, b, y, x, r, l, rr;
 
     # raise an error if char is not two
     if Characteristic(field) <> 2  then
@@ -385,7 +385,8 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
     for y  in [ 1 .. Length(gens) ]  do
 
         # remove scalars
-        x := gens[y]*scalars[y]^-1;
+        rr := RootFFE(field,scalars[y]^-1, 2);
+        x := gens[y]*rr;
 
         # first the right hand size
         r := x*H*TransposedMat(x)+H;

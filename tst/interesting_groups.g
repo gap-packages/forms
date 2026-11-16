@@ -41,6 +41,16 @@ end;
 
 ## groups
 
+# this particular group was suggested to me by claude, as an example where my code can not find all quadratic forms in char 2. The problem is lifting the found bilinear forms to quadratic forms, where the quadratic forms might be a linear combiniation of basis vectors. i am not yet sure how to resolve this.
+F := GF(4);
+I := IdentityMat(2,F);
+gens := Concatenation(List(GeneratorsOfGroup(Sp(2,4)), g->DirectSumMat(g,I)),
+                      List(GeneratorsOfGroup(SO(1,2,4)), h->DirectSumMat(I,h)));
+c := [ [ Z(2^2)^2, Z(2)^0, Z(2)^0, Z(2^2) ], [ 0*Z(2), Z(2^2), Z(2^2), Z(2^2)^2 ], [ Z(2^2)^2, Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2^2)^2, Z(2^2), 0*Z(2), Z(2^2)^2 ] ];
+G9 := Group(List(gens, g->c^-1*g*c));
+
+
+
 ## groups from issue https://github.com/gap-packages/forms/issues/83
 G83_1 := Group([ [ [ Z(3^2)^3, Z(3^2)^6, Z(3^2)^7 ], [ Z(3^2)^7, Z(3^2)^2, Z(3)^0 ], [ Z(3^2)^7, Z(3^2)^7, 0*Z(3) ] ], [ [ 0*Z(3), 0*Z(3), Z(3) ], [ Z(3^2)^7, Z(3)^0, Z(3^2)^7 ], [ Z(3), Z(3^2), Z(3) ] ], [ [ Z(3^2), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3^2), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3^2) ] ] ]);
 
