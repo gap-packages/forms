@@ -206,9 +206,6 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
         return [symmetric_base_vecs, symplectic_base_vecs];
     fi;
     # TODO: solve this in some efficient way that does not formulate this by solving sets of linear equations of matrices. Instead it would be better to gradually consider entries of the matrices. Then use some heuristic to determine we are done and just check wether the resulting matrices are infact symmetric. this should be faster because now worst case we are solving a system of linear equations that consists of n^2 equations and Size(Forms) indeterminates.
-    # TODO: maybe do these todos for all characteristics?
-    # TODO: for char 2 i am quite confused what the difference between a symmetric and symplectic form is. A^tr = -A or A^tr = A is the same condition in that case, but in the implementation of FORMS_IsSymplectic we also check if the diagonal only consists of zeros or not. What we could do as a second step after we obtain all the symmetric matrices with this code, is make an extra system of equations just to try and make the diagonal entries zero. THis would probably be more correct!!
-    # Update on this: i think the correct thing to do is have both. The matrices with A^tr = A and those that satisfy this and have diagonal = 0, as they are actually the symplectic matrices!
 
     if Size(Forms) = 1 then
         if FORMS_IsSymplecticMatrix(Forms[1], F) then
