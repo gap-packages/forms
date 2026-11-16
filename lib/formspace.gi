@@ -1005,17 +1005,19 @@ FORMS_PreservedOp := function(G, random_non_deg, sesquilinear, only_quadratic)
                 for Form in filtered do
                     if not sesquilinear then
                         quad := ClassicalForms_QuadraticForm2(F, Form, newGens[1], x);
-                        if quad = false and not only_quadratic then
-                            Add(filt_bil[2], Form);
-                        else
+                        if quad <> false then
                             Add(filt_bil[1], quad);
+                        elif not only_quadratic then
+                            Add(filt_bil[2], Form);
                         fi;
                     else
                         Add(filt_bil[2], Form);
                     fi;
                 od;
             else 
-                filt_bil[2] := Concatenation(filt_bil[2], filtered[2]);
+                if not only_quadratic then
+                    filt_bil[2] := Concatenation(filt_bil[2], filtered[2]);
+                fi;
                 for Form in filtered[1] do
                     if not sesquilinear then
                         quad := ClassicalForms_QuadraticForm(F, Form);
