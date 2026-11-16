@@ -924,19 +924,25 @@ InstallMethod(PreservedFormspace,
         hom := fail;
         cent_rec := FORMS_BuildCentRecord(Gens1, Gens2, F);
         Add(Out, FORMS_ComputeCentralizingSpaceOp(cent_rec));
-
+            
         if p_exponent mod 2 = 0 then
-            # is ^hom actually cheaper than computing the frobenius normal form?? investigate! certainly makes the code ugly... oh well
             hom := FrobeniusAutomorphism(F)^(p_exponent/2);
-            cent_rec.h := cent_rec.h^hom;
+            if cent_rec.exit_early then
+                # we exited early and have not computed everything yet, so we have to build a new record instead of patching the old one
+                Gens2 := List(Gens2, x -> x^hom);
+                cent_rec := FORMS_BuildCentRecord(Gens1, Gens2, F);
+                Add(Out, FORMS_ComputeCentralizingSpaceOp(cent_rec));
+            else 
+                # is ^hom actually cheaper than computing the frobenius normal form?? investigate! certainly makes the code ugly... oh well
+                cent_rec.h := cent_rec.h^hom;
+                # This line makes it such that cent_rec.frob_h <> FrobeniusNormalForm(cent_rec.h). This is fine during all the computations where cent_rec is used however if someone has trouble this might be the case why. To fix this one would also need to apply the homomorphism to the factors of the minimal polynomial which are stored in cent_rec.frob_h[1], however they are never used in the computation so i decided against it.
+                cent_rec.frob_h[2] := cent_rec.frob_h[2]^hom;
 
-            # This line makes it such that cent_rec.frob_h <> FrobeniusNormalForm(cent_rec.h). This is fine during all the computations where cent_rec is used however if someone has trouble this might be the case why. To fix this one would also need to apply the homomorphism to the factors of the minimal polynomial which are stored in cent_rec.frob_h[1], however they are never used in the computation so i decided against it.
-            cent_rec.frob_h[2] := cent_rec.frob_h[2]^hom;
-
-            cent_rec.frob_h_inverse_base := cent_rec.frob_h_inverse_base^hom;
-            Gens2 := List(Gens2, x -> x^hom);
-            cent_rec.Bs := Gens2;
-            Add(Out, FORMS_ComputeCentralizingSpaceOp(cent_rec));
+                cent_rec.frob_h_inverse_base := cent_rec.frob_h_inverse_base^hom;
+                Gens2 := List(Gens2, x -> x^hom);
+                cent_rec.Bs := Gens2;
+                Add(Out, FORMS_ComputeCentralizingSpaceOp(cent_rec));
+            fi;
         else
             Add(Out, []);
         fi;
@@ -973,8 +979,8 @@ InstallMethod(FilterFormspace, "for list of matrices, F finite field, bool hermi
 end);
 
 
-# computes non degenerate forms and scalars, TODO: random_non_deg should specify whether the function should use random methods to make sure that the returned forms are non deg, this is a todo and not necessary for irreducible groups.
-FORMS_PreservedNonDegFormsWithScalarsOp := function(G, random_non_deg, sesquilinear)
+# computes non degenerate forms and scalars, TODO: random_non_deg should specify whether the function should use random methods to make sure that the returned forms are non deg (use alias Unit Group function?), this is not necessary if the group is irreducible.
+FORMS_PreservedOp := function(G, random_non_deg, sesquilinear, only_quadratic)
     local F, Gens, n, p_exponent, hom, newGens, forms_bil, forms_herm, filtered, space, forms_out, filt_bil, filt_herm, Form, quad, x, biglist;
     F := DefaultFieldOfMatrixGroup(G);
     Gens := GeneratorsOfGroup(G);
@@ -999,7 +1005,7 @@ FORMS_PreservedNonDegFormsWithScalarsOp := function(G, random_non_deg, sesquilin
                 for Form in filtered do
                     if not sesquilinear then
                         quad := ClassicalForms_QuadraticForm2(F, Form, newGens[1], x);
-                        if quad = false then
+                        if quad = false and not only_quadratic then
                             Add(filt_bil[2], Form);
                         else
                             Add(filt_bil[1], quad);
@@ -1023,7 +1029,7 @@ FORMS_PreservedNonDegFormsWithScalarsOp := function(G, random_non_deg, sesquilin
     fi;
    
     filt_herm := [];
-    if p_exponent mod 2 = 0 then
+    if p_exponent mod 2 = 0 and not only_quadratic then
         hom := FrobeniusAutomorphism(F)^(p_exponent/2);
         newGens := ClassicalForms_GeneratorsWithBetterScalarsSesquilinear(G, hom);
         if newGens <> false then
@@ -1057,9 +1063,9 @@ end;
 #! @Description
 #! <A>G</A> is a finitely generated matrix group over a finite field $K$. 
 #! This function computes scalars $\lambda$ and forms $\Phi$ such that <A>G</A> preserves $\Phi$ modulo $\lambda$. The function does only find scalars that belong to non-degenerate forms but may return degenerate forms if the group action is reducible. 
-InstallMethod(PreservedFormsWithScalars, "for matrix groups", [IsMatrixGroup], 
+InstallMethod(PreservedForms, "for matrix groups", [IsMatrixGroup], 
 function(G)
-    return FORMS_PreservedNonDegFormsWithScalarsOp(G, true, false);
+    return FORMS_PreservedOp(G, false, false, false);
 end);
 
 #! @Arguments G
@@ -1067,9 +1073,15 @@ end);
 #! @Description 
 #! Very similar to <A>PreservedFormsWithScalars</A> where <A>G</A> is a finitely generated matrix group over a finite field $K$. 
 #! This function computes scalars $\lambda$ and forms $\Phi$ such that <A>G</A> preserves $\Phi$ modulo $\lambda$. The function does only find scalars that belong to non-degenerate forms but may return degenerate forms if the group action is reducible.
-InstallMethod(PreservedSesquilinearFormsWithScalars, "for matrix groups", [IsMatrixGroup], 
+InstallMethod(PreservedSesquilinearForms, "for matrix groups", [IsMatrixGroup], 
 function(G)
-    return FORMS_PreservedNonDegFormsWithScalarsOp(G, true, true);
+    return FORMS_PreservedOp(G, false, true, false);
+end);
+
+# Computes the quadratic forms preserved by G, if those exist.
+InstallMethod(PreservedQuadraticForms, "for matrix groups", [IsMatrixGroup],
+function(G)
+    return FORMS_PreservedOp(G, false, false, true);
 end);
 
 
