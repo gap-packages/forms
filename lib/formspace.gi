@@ -183,7 +183,8 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
         fi;
 
 
-        # maybe not use these mutable bases
+        # TODO: convert matrices into row vectors and run MutableBasis on that. This seems absolutely stupid but oh well. Another thing one could do is only take one row at a time and then have multiple mutable basis objs. Probably we should do some comparisons on what is fastest...?
+        # My idea is as follows. Make a mutable basis with only the 
         symmetric_base := MutableBasis(F, [NullMat(n, n, F)]);
         symplectic_base := MutableBasis(F, [NullMat(n, n, F)]);
         # symmetric_base := MutableBasis(F, [ZeroMatrix(F, n, n)]);
@@ -207,6 +208,7 @@ FORMS_FilterBilinearForms := function(Forms, F, n)
     # TODO: solve this in some efficient way that does not formulate this by solving sets of linear equations of matrices. Instead it would be better to gradually consider entries of the matrices. Then use some heuristic to determine we are done and just check wether the resulting matrices are infact symmetric. this should be faster because now worst case we are solving a system of linear equations that consists of n^2 equations and Size(Forms) indeterminates.
     # TODO: maybe do these todos for all characteristics?
     # TODO: for char 2 i am quite confused what the difference between a symmetric and symplectic form is. A^tr = -A or A^tr = A is the same condition in that case, but in the implementation of FORMS_IsSymplectic we also check if the diagonal only consists of zeros or not. What we could do as a second step after we obtain all the symmetric matrices with this code, is make an extra system of equations just to try and make the diagonal entries zero. THis would probably be more correct!!
+    # Update on this: i think the correct thing to do is have both. The matrices with A^tr = A and those that satisfy this and have diagonal = 0, as they are actually the symplectic matrices!
 
     if Size(Forms) = 1 then
         if FORMS_IsSymplecticMatrix(Forms[1], F) then
