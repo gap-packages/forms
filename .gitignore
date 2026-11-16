@@ -27,3 +27,5 @@ benchmark.csv
 benchmark_old.csv
 bench_intertwiners.g
 intertwiners_benchmark.csv
+/doc/forms.fdb_latexmk
+/doc/forms.fls
