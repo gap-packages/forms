@@ -399,6 +399,8 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
         # result must be symmetric.
         # In fact, we now know mathematically, that scalars should always be one
         # if the given form indeed comes from a quadratic form.
+
+        # TODO: i think we can delete this check..., given H should always be symmetric the way i use the function and always be preserved, hence r would be zero?
         for i  in [ 1 .. dim ]  do
             for j  in [ i+1 .. dim ]  do
                 if not IsZero(r[i,j]+r[j,i]) then

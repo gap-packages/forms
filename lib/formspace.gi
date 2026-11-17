@@ -583,12 +583,36 @@ FORMS_FindCyclicElement := function(cent_rec)
     return true;
 end;
 
+# Computes the part of the condition matrix that only depends on vec and not on the generator specific generator. Needed by FORMS_ComputeConditionMatrixForCent
+FORMS_ComputeVecEvaluationsForCent := function(cent_rec, vec)
+    local coeffs_f, j, i, b_end, out;
+    coeffs_f := vec * cent_rec.frob_g_inverse_base;
+    j := Size(cent_rec.frob_g[3]);
+    out := [];
+    for i in [1..j] do
+        if i = j then
+            b_end := cent_rec.n;
+        else
+            b_end := cent_rec.frob_g[3][i + 1] - 1;
+        fi;
+        out[i] := FORMS_EvaluatePolynomialWithFrobenius(
+            coeffs_f{[cent_rec.frob_g[3][i]..b_end]},
+            cent_rec.h,
+            cent_rec.frob_h,
+            cent_rec.frob_h_inverse_base,
+            cent_rec.F,
+            cent_rec.n
+        );
+    od;
+    return out;
+end;
+
 # TODO: idk how to document this it would require a long text...
-FORMS_ComputeConditionMatrixForCent := function(cent_rec, vec, cur_a, cur_b)
-    local coeffs_c, coeffs_f, Ps, i, j, b_end, b_start, cpol, fpol, mat;
+# vec_evals must be FORMS_ComputeVecEvaluationsForCent(cent_rec, vec), this was moved out of this function to save time and reuse part of the computation.
+FORMS_ComputeConditionMatrixForCent := function(cent_rec, vec, cur_a, cur_b, vec_evals)
+    local coeffs_c, Ps, i, j, b_end, mat;
 
     coeffs_c := vec * cur_a * cent_rec.frob_g_inverse_base;
-    coeffs_f := vec * cent_rec.frob_g_inverse_base;
 
     j := Size(cent_rec.frob_g[3]);
     Ps := FORMS_ZeroMatrix(cur_a, cent_rec.F, cent_rec.n*j, cent_rec.n);
@@ -607,15 +631,8 @@ FORMS_ComputeConditionMatrixForCent := function(cent_rec, vec, cur_a, cur_b)
             cent_rec.frob_h_inverse_base,
             cent_rec.F, 
             cent_rec.n
-        ) 
-        - FORMS_EvaluatePolynomialWithFrobenius(
-            coeffs_f{[cent_rec.frob_g[3][i]..b_end]}, 
-            cent_rec.h, 
-            cent_rec.frob_h, 
-            cent_rec.frob_h_inverse_base,
-            cent_rec.F, 
-            cent_rec.n
-        ) * cur_b;
+        )
+        - vec_evals[i] * cur_b;
         
         CopySubMatrix(mat, Ps, [1..cent_rec.n], [((i - 1)*cent_rec.n + 1)..(i*cent_rec.n)], [1..cent_rec.n], [1..cent_rec.n]);
     od;
@@ -736,7 +753,7 @@ end;
 
 # given cent_rec which already should contain cyclic elements g, h in the matrix algebras <As> and <Bs> respectively computes the basis of the centralizing matrices. Also Size(As) = Size(Bs) > 1 should hold.
 FORMS_ComputeCentralizingSpace := function(cent_rec)
-    local old_kernel_size, stagnation, stagnation_max, i, j, cur_b, cur_a, vec, Conds, first, nspace, nspace_size, W, O, exit_loop, index_order, k;
+    local old_kernel_size, stagnation, stagnation_max, i, j, cur_b, cur_a, vec, vec_evals, Conds, first, nspace, nspace_size, W, O, exit_loop, index_order, k;
     first := true;
     exit_loop := false;
     old_kernel_size := cent_rec.n + 1;
@@ -754,12 +771,13 @@ FORMS_ComputeCentralizingSpace := function(cent_rec)
         if exit_loop then
             break;
         fi;
-        
+        vec_evals := FORMS_ComputeVecEvaluationsForCent(cent_rec, vec);
+
         for i in [1..cent_rec.d] do
             cur_a := cent_rec.As[i];
             cur_b := cent_rec.Bs[i];
             
-            Conds := FORMS_ComputeConditionMatrixForCent(cent_rec, vec, cur_a, cur_b);
+            Conds := FORMS_ComputeConditionMatrixForCent(cent_rec, vec, cur_a, cur_b, vec_evals);
             # In theory on the first run the cyclic case could be computed however this is slow, also intializing with W with identity matrices seems wasteful so i decided against it.
             if first then 
                 nspace := FORMS_NullspaceMat(Conds, cent_rec.F);
@@ -801,7 +819,7 @@ FORMS_ComputeCentralizingSpace := function(cent_rec)
     
     O := FORMS_ReturnCent(cent_rec, true, W);
 
-    # TODO: claude claimed to me that this fallback is pointless and ran a buch of tests where this was never reached. I am not fully sure this is correct so i decided to leave it in anyways. Getting to this if seems quite rare anyways and this is not wrong, worst case is that it is slower.
+    # TODO: claude claimed to me that this fallback is pointless and ran a buch of tests where this was never reached. I am not fully sure this is correct so i decided to leave it in anyways. Getting to this if seems quite rare anyways, as far as i can tell, this is not wrong, worst case is that it is slower.
     if O = false then
         Conds := FORMS_ComputeCyclicMatCondition(cent_rec);
         if Conds = [] then  
