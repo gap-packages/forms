@@ -596,15 +596,16 @@ will result in an error message.
 <Section Label="recognition">
 <Heading>Recognition of forms preserved by a classical group</Heading>
 
-In this section, we describe a function that was initially developed by Frank Celler
-(and which has now been adapted to <Package>Forms</Package>) for the recognition of
+In this section, we describe a function for the recognition of quadratic and sesquilinear forms left invariant by a matrix group. The algorithm in the forms package differs from that found in the <Package>MeatAxe</Package>. Initially the function in <Package>Forms</Package> was developed by Franc Celler. His algorithm also used the <Package>MeatAxe</Package>, for more information on that algorithm see <Cite Key="CLGNNPP"/>. Currently, the algorithm used is based on an idea suggested by Cheryl Praeger to employ cyclic matrices, that was then further developed and implemented by Peter Seidemann.
+<!-- In this section, we describe a function that was initially developed by Frank Celler
+(and was has now been adapted to <Package>Forms</Package>) for the recognition of
 quadratic and sesquilinear forms left invariant by a matrix group. More importantly, we should
 stress that this routine differs to that already offered by the <Package>MeatAxe</Package> 
 in that it finds sesquilinear forms preserved up to <B>scalars</B>. Eventually, the procedure used
 for finding preserved sesquilinear forms does use the <Package>MeatAxe</Package> but 
 in some cases it can rule out the existence of preserved forms without calling
 the <Package>MeatAxe</Package>. For more information on the algorithm, please see 
-<Cite Key="CLGNNPP"/>.
+<Cite Key="CLGNNPP"/>. -->
 
 <ManSection>
 <Oper Name="PreservedForms" Arg="group"/>
@@ -612,16 +613,13 @@ the <Package>MeatAxe</Package>. For more information on the algorithm, please se
 </Returns>
 <Description>
 The argument <A>group</A> is a matrix group. The function uses random methods
-to find all of the bilinear, unitary or quadratic forms preserved by <A>group</A> (the
-trivial form is also a possibility) up to a scalar. Since the procedure relies on a pseudo-random
-generator, the user may need to execute the operation more than once to find
-all invariant sesquilinear forms. Note that when possible, a quadratic form will be given.
+to find all of the bilinear, unitary or quadratic forms preserved by <A>group</A> up to a scalar. The function only considers scalars for which <A>group</A> could preserve a non-degenerate form, hence if <A>group</A> is reducible, some degenerate preserved forms may not be found. <!-- TODO: make another function that does not have this issue. --> If a preserved bilinear form is the polar form of a preserved quadratic form, the function returns the quadratic form instead of the bilinear form. For each possible choice of scalars, the returned quadratic forms are a basis of the preserved quadratic forms, the returned hermitian forms are a basis (over the subfield of index two) of the preserved hermitian forms, and the returned bilinear forms together with the polar forms of the returned quadratic forms span the preserved bilinear forms. As this function uses random methods, the returned bases may differ between multiple runs.
+
+TODO: In characteristic two, the function might currently not find all preserved quadratic forms. I have an example of this G9 in interesting_groups.g. This bug also affects PreservedSesquilinearForms and PreservedQuadraticForms.
 <Example>
 <#Include SYSTEM "../examples/include/preservedforms1.include">
 </Example>
-The next example demonstrates the impact of randomized methods on the number of preserved forms
-returned. For the particular matrix group, two preserved forms are returned after four calls of
-the operation.
+The next example shows that the function may return more than one form.
 <Example>
 <#Include SYSTEM "../examples/include/preservedforms2.include">
 </Example>
@@ -634,10 +632,7 @@ the operation.
 </Returns>
 <Description>
 The argument <A>group</A> is a matrix group. The function uses random methods
-to find all of the bilinear or unitary forms preserved by <A>group</A> (the
-trivial form is also a possibility) up to a scalar. Since the procedure relies on a pseudo-random
-generator, the user may need to execute the operation more than once to find
-all invariant sesquilinear forms.
+to find all of the bilinear or unitary forms preserved by <A>group</A> up to a scalar. The function only considers scalars for which <A>group</A> could preserve a non-degenerate form, hence if <A>group</A> is reducible, some degenerate preserved forms may not be found. For each possible choice of scalars, the returned bilinear forms are a basis of the preserved symmetric and alternating bilinear forms, and the returned hermitian forms are a basis (over the subfield of index two) of the preserved hermitian forms. As this function uses random methods, the returned bases may differ between multiple runs.
 <Example>
 <#Include SYSTEM "../examples/include/pres_sesforms1.include"> 
 </Example>
@@ -658,12 +653,60 @@ preserving a (hyperbolic) bilinear form on a 6-dimensional vector space over <Al
 </Returns>
 <Description>
 The argument <A>group</A> is a matrix group. The function uses random methods
-to find all of the quadratic forms preserved by <A>group</A> up to a scalar.
-Since the procedure relies on a pseudo-random
-generator, the user may need to execute the operation more than once to find
-all invariant sesquilinear forms.
+to find all of the quadratic forms preserved by <A>group</A> up to a scalar. The function only considers scalars for which <A>group</A> could preserve a non-degenerate form, hence if <A>group</A> is reducible, some degenerate preserved forms may not be found. For each possible choice of scalars, the returned quadratic forms are a basis of the preserved quadratic forms. As this function uses random methods, the returned bases may differ between multiple runs.
 <Example>
 <#Include SYSTEM "../examples/include/pres_quadform.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="ScalarsOfPreservedForm" Arg="group, form"/>
+<Returns>a list of field elements or <C>false</C>
+</Returns>
+<Description>
+The argument <A>group</A> is a matrix group and <A>form</A> is a bilinear, hermitian or quadratic form. If <A>group</A> preserves <A>form</A> up to a scalar, the function returns a list containing for each generator in <C>GeneratorsOfGroup(</C><A>group</A><C>)</C> the scalar with which this generator preserves <A>form</A>, in the same order as the generators. Otherwise <C>false</C> is returned. These are the scalars in the sense of <Ref Oper="PreservedFormspace" Label="for a matrix group, scalars and a boolean"/>, i.e. if <A>form</A> is a bilinear or hermitian form, its Gram matrix is contained in the space returned by <C>PreservedFormspace(</C><A>group</A><C>, scalars, unitary)</C>, where <C>scalars</C> is the returned list and <C>unitary</C> is <C>true</C> if and only if <A>form</A> is hermitian. The trivial form is preserved modulo any scalars, in this case a vector containing only ones is returned.
+<Example>
+<#Include SYSTEM "../examples/include/scalarsofpreservedform.include">
+</Example>
+</Description>
+</ManSection>
+
+The following functions compute the space of all matrices preserved by a matrix group, without
+restricting to symmetric, alternating or hermitian matrices. They are used by the functions above.
+
+<ManSection>
+<Oper Name="PreservedFormspace" Arg="group" Label="for a matrix group"/>
+<Returns>a list of two lists of matrices
+</Returns>
+<Description>
+The argument <A>group</A> is a matrix group over a finite field <M>F</M>. The first returned list is a basis of the vector space of matrices <M>M</M> over <M>F</M>, such that <M>g M g^T = M</M> for all <M>g</M> in <A>group</A>. If <M>F</M> admits a field automorphism <M>\alpha</M> of order two, the second returned list is a basis of the vector space of matrices <M>M</M> over <M>F</M>, such that <M>g M (g^{\alpha})^T = M</M> for all <M>g</M> in <A>group</A>, otherwise the second list is empty. The returned matrices need not be symmetric, alternating or hermitian, and only forms preserved modulo the scalar one are found. As this function uses random methods, the returned bases may differ between multiple runs.
+<Example>
+<#Include SYSTEM "../examples/include/preservedformspace1.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="PreservedFormspace" Arg="group, scalars, unitary" Label="for a matrix group, scalars and a boolean"/>
+<Returns>a list of matrices
+</Returns>
+<Description>
+The argument <A>group</A> is a matrix group over a finite field <M>F</M> with generators <M>g_1, \dots, g_k</M>, given by <C>GeneratorsOfGroup(</C><A>group</A><C>)</C>. The argument <A>scalars</A> is a list of <M>k</M> elements <M>\lambda_1, \dots, \lambda_k</M> of <M>F</M>. If <A>unitary</A> is <C>false</C>, the function returns a basis of the vector space of matrices <M>M</M> over <M>F</M>, such that <M>g_i M g_i^T = \lambda_i M</M> for <M>1 \leq i \leq k</M>. If <A>unitary</A> is <C>true</C>, the function returns a basis of the vector space of matrices <M>M</M> over <M>F</M>, such that <M>g_i M (g_i^{\alpha})^T = \lambda_i M</M> for <M>1 \leq i \leq k</M>, where <M>\alpha</M> is the field automorphism of order two of <M>F</M>. If <M>F</M> admits no such field automorphism, the empty list is returned. The returned matrices need not be symmetric, alternating or hermitian. As this function uses random methods, the returned basis may differ between multiple runs.
+<Example>
+<#Include SYSTEM "../examples/include/preservedformspace2.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="MatrixIntertwiners" Arg="As, Bs, F"/>
+<Returns>a list of matrices
+</Returns>
+<Description>
+The arguments <A>As</A> and <A>Bs</A> are two non-empty lists of the same length, containing <M>n \times n</M> matrices over the field <A>F</A>. The function returns a basis of the vector space of matrices <M>C</M> over <A>F</A>, such that <A>As</A><M>[i] C = C</M><A>Bs</A><M>[i]</M> for all <M>i</M>. If <A>As</A> and <A>Bs</A> are equal, this is the centralizer algebra of the matrices in <A>As</A>. The same space is computed by <C>MTX.BasisModuleHomomorphisms</C> of the <Package>MeatAxe</Package>, which takes modules as arguments and depends on whether the first module is irreducible, whereas this function works directly on the matrices and works by trying to find a cyclic matrix in the matrix algebra generated by the matrices of <A>As</A>. The returned basis may differ between multiple runs.
+<Example>
+<#Include SYSTEM "../examples/include/matrixintertwiners.include">
 </Example>
 </Description>
 </ManSection>

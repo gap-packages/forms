@@ -1,0 +1,10 @@
+gap> G := Sp(4,5);
+Sp(4,5)
+gap> group := Group(G.1 * Z(5), G.2 * Z(5)^3);
+&lt;matrix group with 2 generators>
+gap> PreservedFormspace(group, [Z(5)^0, Z(5)^0], false);
+[  ]
+gap> PreservedFormspace(group, [Z(5)^2, Z(5)^2], false);
+[ [ [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], 
+      [ 0*Z(5), Z(5)^2, 0*Z(5), 0*Z(5) ], [ Z(5)^2, 0*Z(5), 0*Z(5), 0*Z(5) ] 
+     ] ]

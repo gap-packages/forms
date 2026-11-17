@@ -24,9 +24,3 @@ gap> group := Group(gens);
 &lt;matrix group with 3 generators>
 gap> PreservedForms(group);
 [ &lt; quadratic form >, &lt; hermitian form > ]
-gap> PreservedForms(group);
-[ &lt; quadratic form >, &lt; hermitian form > ]
-gap> PreservedForms(group);
-[ &lt; quadratic form >, &lt; hermitian form > ]
-gap> PreservedForms(group);
-[ &lt; quadratic form >, &lt; hermitian form > ]

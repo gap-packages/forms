@@ -13,7 +13,4 @@ gens := [ [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ],
       	[ 0*Z(5), 0*Z(5), Z(5^2)^20, Z(5)^2 ] ] ];
 group := Group(gens);
 PreservedForms(group);
-PreservedForms(group);
-PreservedForms(group);
-PreservedForms(group);
 quit;

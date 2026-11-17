@@ -181,6 +181,10 @@ InstallGlobalFunction(ScalarsOfPreservedForm,
     z := 0*gram[1][1];
     zero := List([1..Length(gram)],i->z);
     r := First([1..Length(gram)],x->gram[x] <> zero);
+    if r = fail then
+        # the trivial form is preserved modulo any scalars
+        return List(gens, g -> One(gf));
+    fi;
     c := First([1..Length(gram)],x->gram[r][x] <> z);
     for i in [1..Length(gens)] do
         if IsQuadraticForm(form) then

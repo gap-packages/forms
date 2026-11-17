@@ -1,0 +1,12 @@
+gap> G := Sp(4,5);
+Sp(4,5)
+gap> group := Group(G.1 * Z(5), G.2 * Z(5)^3);
+&lt;matrix group with 2 generators>
+gap> forms := PreservedForms(group);
+[ &lt; bilinear form > ]
+gap> ScalarsOfPreservedForm(group, forms[1]);
+[ Z(5)^2, Z(5)^2 ]
+gap> form := BilinearFormByMatrix(IdentityMat(4, GF(5)), GF(5));
+&lt; bilinear form >
+gap> ScalarsOfPreservedForm(group, form);
+false

@@ -61,6 +61,7 @@ files := ["conic", "w53", "preservedform", "bg_th_ex1", "bg_th_ex2","bg_th_ex3",
             "isometriccanonicalform", "quadformfields", "orthogonaltovector",
             "istotallysingular", "istotallyisotropic", "isisotropicvector",
             "issingularvector", "istotallysingular", "scalarfromsim", "trivialform",
+            "preservedformspace1", "preservedformspace2", "matrixintertwiners", "scalarsofpreservedform",
             "trivialform_prop", "wittindex", "typeofform", "orthogonaltovector"];
 
 generate_script(files);
