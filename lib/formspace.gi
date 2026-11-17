@@ -734,16 +734,12 @@ FORMS_ComputeCentralizingSpace := function(cent_rec)
     index_order := Shuffle([1..cent_rec.n]);
     # loop over vectors and then generators to hopefully avoid non constraining generators..
     for j in index_order do
-        # random test vectors seem to be important especially if the generators As, Bs are very very nice...
+        # we randomize the vector vec s.t. the n random vectors generated will always be a basis of the vector space.
         vec := ZeroVector(cent_rec.n, cent_rec.g);
-        repeat 
-            for k in [1..cent_rec.n] do
-                vec[k] := Random(cent_rec.F);
-            od;
-        until not IsZero(vec);
-        # idk if random vectors are better... maybe..?
-        # vec := ZeroVector(cent_rec.n, cent_rec.g);
-        # vec[j] := One(cent_rec.F);
+        for k in [j + 1..cent_rec.n] do
+            vec[k] := Random(cent_rec.F);
+        od;
+        vec[j] := One(cent_rec.F);
         if exit_loop then
             break;
         fi;
@@ -770,10 +766,6 @@ FORMS_ComputeCentralizingSpace := function(cent_rec)
                 W := nspace;
                 first := false;
             fi;
-            # Print(nspace_size);
-            # Print(", ");
-            # Print(Size(W));
-            # Print("\n");
             if nspace_size = 1 then
                 exit_loop := true; # exit both loops
                 break;
@@ -798,7 +790,6 @@ FORMS_ComputeCentralizingSpace := function(cent_rec)
     
     O := FORMS_ReturnCent(cent_rec, true, W);
     if O = false then
-        # Print("we are here... :(");
         Conds := FORMS_ComputeCyclicMatCondition(cent_rec);
         if Conds = [] then  
             return [];
@@ -836,11 +827,6 @@ FORMS_BuildCentRecord := function(As, Bs, F)
             cent_rec.exit_early := true;
             return cent_rec; # we do not have to compute the frobenius base inverses and stuff as we exit early.
         fi;
-        # Print("frob bases sizes: ");
-        # Print(Size(cent_rec.frob_g[1]));
-        # Print(",");
-        # Print(Size(cent_rec.frob_h[1]));
-        # Print("\n");
     fi;
     cent_rec.frob_g_inverse_base := Inverse(cent_rec.frob_g[2]);
     cent_rec.frob_h_inverse_base := Inverse(cent_rec.frob_h[2]);
