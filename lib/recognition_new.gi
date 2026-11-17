@@ -134,7 +134,7 @@ InstallGlobalFunction( ClassicalForms_GeneratorsWithBetterScalarsSesquilinear,
                     len := Length(scalars);
                 fi;
                 k := Random(Difference([1..Length(gens)],[i])); #m1 could not be improved, so try to change m1 by multiplying with another generator.
-                m1 := m1*gens[k];
+                m1 := m1*newgens[k]; # this should be newgens, such that the improved generators still generate the group instead of a subgroup.
                 return improvegenerator(m1,i,count-1,len);
             fi;
         fi;
