@@ -407,7 +407,7 @@ FORMS_FilterUnitaryForms := function(Forms, F, n, hom)
         form_changed := to_smaller_field_matrix(gf_base, small_field, form, n, n);
         form_changed_star := apply_aut_to_mat(transpose_weird_mat(form_changed, n), n, field_aut_mat);
         form_changed_mult := multiply_with_scalar(gf_base_vecs[2], gf_base, square_base_entry_rep, form_changed, n);
-        form_changed_mult_star := multiply_with_scalar(hom(gf_base_vecs[2]), gf_base, square_base_entry_rep, form_changed, n);
+        form_changed_mult_star := multiply_with_scalar(hom(gf_base_vecs[2]), gf_base, square_base_entry_rep, form_changed_star, n);
 
         Add(eqs, form_changed - form_changed_star);
         Add(eqs, form_changed_mult - form_changed_mult_star);
