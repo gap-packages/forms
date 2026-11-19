@@ -22,14 +22,12 @@
 #############################################################################
 
 DeclareGlobalFunction( "DualFrobeniusGModule" );
-DeclareGlobalFunction( "DualFrobeniusGModuleNew" );
 
 DeclareGlobalFunction( "ClassicalForms_InvariantFormDual" );
 DeclareGlobalFunction( "ClassicalForms_InvariantFormFrobenius" );
 
 DeclareGlobalFunction( "ClassicalForms_PossibleScalarsSesquilinear" );
 DeclareGlobalFunction( "ClassicalForms_GeneratorsWithBetterScalarsSesquilinear" );
-DeclareGlobalFunction( "ClassicalForms_InvariantForms" );
 
 DeclareGlobalFunction( "ClassicalForms_ScalarMultipleFrobenius" );
 DeclareGlobalFunction( "ClassicalForms_GeneratorsWithoutScalarsFrobenius" );
@@ -53,12 +51,7 @@ DeclareGlobalFunction( "TransposedFrobeniusMat" );
 # Methods (to be used by the user):
 #############################################################################
 
-DeclareOperation( "ScalarOfSimilarity", [ IsMatrix, IsSesquilinearForm ]);
-DeclareOperation( "PreservedFormsOp", [ IsMatrixGroup ] ); #jdb 19/09/2018: was PreservedForms.
-
-DeclareOperation( "PreservedForms", [ IsMatrixGroup ] );
-DeclareOperation( "PreservedQuadraticForms", [ IsMatrixGroup ] );
-DeclareOperation( "PreservedSesquilinearForms", [ IsMatrixGroup ] );
+DeclareOperation( "ScalarOfSimilarity", [ IsMatrixOrMatrixObj, IsSesquilinearForm ]);
 
 InfoForms := NewInfoClass("InfoForms");;
 

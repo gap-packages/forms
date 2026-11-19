@@ -11,6 +11,10 @@
 if not IsBound(IsMatrixOrMatrixObj) then
     BindGlobal("IsMatrixOrMatrixObj", IsMatrixObj);
 fi;
+#to only work on "true" matrix objects, this was added to fix some issues with collisions with the compressed versions. TODO: it might be good to use this in a lot more places to also avoid redundat conversions
+BindGlobal( "Forms_IsStrictMatrixObject",
+    m -> IsMatrixObj( m ) and not IsPlistRep( m )
+         and not IsGF2MatrixRep( m ) and not Is8BitMatrixRep( m ) );
 
 # We cannot use the function 'IsEqualProjective' from the recog package
 # because the matrices that describe forms can have zero rows.
@@ -60,11 +64,16 @@ end );
 
 BindGlobal("Forms_OrthogonalGroup",
     function( g, form )
-    local stored, gf, d, wanted, mat1, mat2, mat, matinv, gens, gg;
+    local stored, gf, d, wanted, mat1, mat2, mat, matinv, gens, gg, formmat;
 
     stored:= InvariantQuadraticForm( g );
     gf:= Forms_FieldOfDefinition( stored, g );
     stored:= stored.matrix;
+
+    # the stored matrix might not be of the same form as the gram matrix of the saved form. We need to convert.
+    if IsMatrixObj(form!.matrix) then
+      stored := Matrix(form!.matrixfilter, gf, stored);
+    fi;
 
     # Check that 'form' lives over the intended field.
     if not IsSubset( gf, form!.basefield ) then
@@ -72,7 +81,8 @@ BindGlobal("Forms_OrthogonalGroup",
     fi;
 
     # If the prescribed form fits then just return.
-    if stored = form!.matrix then
+    # TODO: this is wasteful right now, but the group g has matrices that does not match g so it should be rebuild. This however might be slow. A better solution would be to have a nice function that can just convert all the matrices and so forth of a group into the right representation.
+    if stored = form!.matrix and not Forms_IsStrictMatrixObject(form!.matrix) then
       return g;
     fi;
 
@@ -91,8 +101,13 @@ BindGlobal("Forms_OrthogonalGroup",
     mat:= mat2^-1 * mat1;
     matinv:= mat^-1;
 
+    gens := GeneratorsOfGroup( g );
+
+    if IsMatrixObj(form!.matrix) then
+      gens := List(gens, x -> Matrix(x, mat));
+    fi;
     # Create the group w.r.t. the prescribed form.
-    gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
+    gens:= List(gens, x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
     UseIsomorphismRelation( g, gg );
@@ -108,7 +123,13 @@ BindGlobal("Forms_OrthogonalGroup",
           IsFullSubgroupGLorSLRespectingQuadraticForm( g ) );
     fi;
 
-    mat:= matinv * InvariantBilinearForm( g ).matrix * TransposedMat( matinv );
+    formmat := InvariantBilinearForm( g ).matrix;
+
+    if IsMatrixObj(form!.matrix) then
+      formmat := Matrix(formmat, mat); 
+    fi;
+
+    mat:= matinv * formmat * TransposedMat( matinv );
     SetInvariantBilinearForm( gg, rec( matrix:= mat, baseDomain:= gf ) );
     if Characteristic( gf ) <> 2 and
        HasIsFullSubgroupGLorSLRespectingBilinearForm( g ) then
@@ -653,8 +674,13 @@ InstallMethod( GeneralUnitaryGroupCons,
       Error( "the defining field of <form> does not fit to <q>" );
     fi;
 
+    # the stored matrix might not be of the same form as the gram matrix of the saved form. We need to convert.
+    if IsMatrixObj(form!.matrix) then
+      stored := Matrix(form!.matrixfilter, F, stored);
+    fi;
+
     # If the prescribed form fits then just return.
-    if stored = form!.matrix then
+    if stored = form!.matrix and not Forms_IsStrictMatrixObject(form!.matrix) then
       return g;
     fi;
 
@@ -671,7 +697,11 @@ InstallMethod( GeneralUnitaryGroupCons,
     matinv:= mat^-1;
 
     # Create the group w.r.t. the prescribed form.
-    gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
+    gens := GeneratorsOfGroup( g );
+    if IsMatrixObj( form!.matrix ) then
+      gens:= List( gens, x -> Matrix( x, mat ) );
+    fi;
+    gens:= List( gens, x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
     UseIsomorphismRelation( g, gg );
@@ -790,8 +820,13 @@ InstallMethod( SpecialUnitaryGroupCons,
       Error( "the defining field of <form> does not fit to <q>" );
     fi;
 
+    # the stored matrix might not be of the same form as the gram matrix of the saved form. We need to convert.
+    if IsMatrixObj(form!.matrix) then
+      stored := Matrix(form!.matrixfilter, F, stored);
+    fi;
+
     # If the prescribed form fits then just return.
-    if stored = form!.matrix then
+    if stored = form!.matrix and not Forms_IsStrictMatrixObject(form!.matrix) then
       return g;
     fi;
 
@@ -808,7 +843,11 @@ InstallMethod( SpecialUnitaryGroupCons,
     matinv:= mat^-1;
 
     # Create the group w.r.t. the prescribed form.
-    gens:= List( GeneratorsOfGroup( g ), x -> matinv * x * mat );
+    gens := GeneratorsOfGroup( g );
+    if IsMatrixObj( form!.matrix ) then
+      gens:= List( gens, x -> Matrix( x, mat ) );
+    fi;
+    gens:= List( gens, x -> matinv * x * mat );
     gg:= GroupWithGenerators( gens );
 
     UseIsomorphismRelation( g, gg );
@@ -933,10 +972,15 @@ InstallMethod( SymplecticGroupCons,
       Error( "the defining field of <form> does not fit to <q>" );
     fi;
 
+    # the stored matrix might not be of the same form as the gram matrix of the saved form. We need to convert.
+    if IsMatrixObj(form!.matrix) then
+      stored := Matrix(form!.matrixfilter, F, stored);
+    fi;
+
     # If the prescribed form fits then just return.
     form_matrix:= Matrix( form!.matrix, stored );
-#T This 'Matrix' call should become unnecessary.
-#T For that, the functions used below have to support 'IsMatrixObj' arguments.
+    #T This 'Matrix' call should become unnecessary.
+    #T For that, the functions used below have to support 'IsMatrixObj' arguments. I disagree the problem is that stored is potentially not a matrixobj.
     if stored = form_matrix then
       return g;
     fi;

@@ -1,0 +1,13 @@
+gap> group := Sp(4,3);
+Sp(4,3)
+gap> spaces := PreservedFormspace(group);
+[ [ [ [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ], [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], 
+          [ 0*Z(3), Z(3), 0*Z(3), 0*Z(3) ], [ Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] 
+         ] ], [  ] ]
+gap> group := SU(3,2);
+SU(3,2)
+gap> spaces := PreservedFormspace(group);
+[ [  ], 
+  [ 
+      [ [ 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+          [ Z(2)^0, 0*Z(2), 0*Z(2) ] ] ] ]

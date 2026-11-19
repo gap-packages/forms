@@ -357,11 +357,11 @@ end );
 ##
 ##  Because of the optimizations in improvegenerators, we may assume that generators
 ##  indeed preserve the sesquilinear form up to scalar one, since in characteristic
-##  2 we can always achieve this.
+##  2 we can always achieve this. Since the function that tries to make the scalars one was changed, see https://github.com/gap-packages/forms/issues/83 I have now changed this, so that the generators are guranteed to have scalar one, as this is always possible in char 2. (x -> x^2 is bijective)
 ##
 InstallGlobalFunction( ClassicalForms_QuadraticForm2,
  function( field, form, gens, scalars )
-    local dim, H, i, j, e, b, y, x, r, l;
+    local dim, H, i, j, e, b, y, x, r, l, rr;
 
     # raise an error if char is not two
     if Characteristic(field) <> 2  then
@@ -385,7 +385,8 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
     for y  in [ 1 .. Length(gens) ]  do
 
         # remove scalars
-        x := gens[y]*scalars[y]^-1;
+        rr := RootFFE(field,scalars[y]^-1, 2);
+        x := gens[y]*rr;
 
         # first the right hand size
         r := x*H*TransposedMat(x)+H;
@@ -398,6 +399,8 @@ InstallGlobalFunction( ClassicalForms_QuadraticForm2,
         # result must be symmetric.
         # In fact, we now know mathematically, that scalars should always be one
         # if the given form indeed comes from a quadratic form.
+
+        # TODO: i think we can delete this check..., given H should always be symmetric the way i use the function and always be preserved, hence r would be zero?
         for i  in [ 1 .. dim ]  do
             for j  in [ i+1 .. dim ]  do
                 if not IsZero(r[i,j]+r[j,i]) then
@@ -535,22 +538,6 @@ InstallGlobalFunction( ClassicalForms_InvariantFormDual,
         return [ "unknown", "dual", form, scalars ];
     fi;
 end );
-
-#############################################################################
-##
-#F  TransposedFrobeniusMat( <module>, <fmodule> )
-##
-##this is now in classic.gi
-#TransposedFrobeniusMat := function( mat, qq )
-#    local   i,  j;
-#    mat:=MutableTransposedMat(mat);
-#    for i  in [ 1 .. NrRows(mat) ]  do
-#        for j  in [ 1 .. NrCols(mat) ]  do
-#            mat[i,j] := mat[i,j]^qq;
-#        od;
-#    od;
-#    return mat;
-#end;
 
 #############################################################################
 ##
@@ -744,121 +731,12 @@ end);
 
 #############################################################################
 ##
-#F  PreservedSesquilinearForms( <grp> )
-##
-##    returns a list of forms
-##
-#InstallMethod( PreservedSesquilinearForms, [ IsMatrixGroup ],
-#  function( grp )
-#    local   forms, field, i, g, qq, c, module,  invariantforms,
-#            dmodule, fmodule, form, y, newform, newforms;
-#    field := DefaultFieldOfMatrixGroup(grp);
-
-#    forms := rec();
-#    forms.field := field;
-#    forms.invariantforms := [];
-#    forms.maybeDual      := false;
-#    forms.maybeFrobenius := false;
-
-#    # set up the module and other information
-#    module := GModuleByMats(GeneratorsOfGroup(grp), field);
-
-    # set the possibilities
-#    forms.maybeDual      := true;
-#    forms.maybeFrobenius := DegreeOverPrimeField(field) mod 2 = 0;
-
-#    if forms.maybeFrobenius  then
-#        qq := Characteristic(field)^(DegreeOverPrimeField(field)/2);
-#    fi;
-
-    # We first perform some inexpensive tests with a few random elements
-#    for i in [1 .. 8]  do
-#        g := PseudoRandom(grp);
-#        if forms.maybeDual or forms.maybeFrobenius  then
-#           PossibleClassicalForms( grp, g, forms );
-#        fi;
-#    od;
-
-    # if all forms are excluded then we are finished
-#    if not forms.maybeDual and not forms.maybeFrobenius  then
-#       i := NrRows(One(g));
-#        return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
-#    fi;
-
-    # <grp> must act absolutely irreducibly
-#    if not MTX.IsAbsolutelyIrreducible(module)  then
-#        Info( InfoForms, 1,  "grp not absolutely irreducible\n" );
-#        return [];
-#    fi;
-
-    # try to find generators without scalars
-#    if forms.maybeDual  then
-#        dmodule := ClassicalForms_GeneratorsWithoutScalarsDual(grp);
-#        if dmodule = false  then
-#            forms.maybeDual := false;
-#        fi;
-#    fi;
-#    if forms.maybeFrobenius  then
-#        fmodule := ClassicalForms_GeneratorsWithoutScalarsFrobenius(grp);
-#        if fmodule = false  then
-#            forms.maybeFrobenius := false;
-#        fi;
-#    fi;
-
-    # now try to find an invariant form
-#    if forms.maybeDual  then
-#        form := ClassicalForms_InvariantFormDual(module,dmodule);
-#        if form <> false  then
-#            Add( forms.invariantforms, form );
-#        else
-#            forms.maybeDual := false;
-#        fi;
-#    fi;
-
-#    if forms.maybeFrobenius  then
-#        form := ClassicalForms_InvariantFormFrobenius(module,fmodule);
-#        if form <> false  then
-#            Add( forms.invariantforms, form );
-#        else
-#            forms.maybeFrobenius := false;
-#        fi;
-#    fi;
-    # if all forms are excluded then we are finished
-#    if not forms.maybeDual and not forms.maybeFrobenius  then
-#            Add( forms.invariantforms, [ "linear" ] );
-#    fi;
-
-    ## We can convert the information Frank Celler wanted
-    ## to output we want...
-
-#    newforms := [];
-
-#    for y in forms!.invariantforms do
-#       if y[1] in ["symplectic", "orthogonalplus",
-#                   "orthogonalminus", "orthogonalcircle"] then
-#          newform := BilinearFormByMatrix(y[2], field);
-#          Add( newforms, newform );
-#       elif y[1] = "unitary" then
-#          newform := HermitianFormByMatrix(y[2], field);
-#          Add( newforms, newform );
-#       elif y[1] = "linear" then
-#          i := NrRows(One(g));
-#          newform := BilinearFormByMatrix( NullMat(i,i,field), field );
-#          Add( newforms, newform );
-#       fi;
-#    od;
-#
-#    return newforms;
-#end );
-
-#############################################################################
-##
 #O  ScalarOfSimilarity( <grp> )
 ##
 ##    returns a scalar. Is this somewhere used?
 ##
 ## To do: see if the check function can get this name and/or be merged with this function.
-InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
+InstallMethod( ScalarOfSimilarity, [IsMatrixOrMatrixObj, IsSesquilinearForm],
   function( g, form )
 
     ## Recall that a similarity of a form f on V, is a linear transformation g
@@ -874,8 +752,8 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
     if NrRows(g) <> NrRows( gram ) then
        Error("dimensions are incompatible.");
     fi;
-
-    if not ForAll(Flat(g), t -> t in form!.basefield) then
+    
+    if not BaseDomain(g) = form!.basefield then
        Error("fields are incompatible");
     fi;
 
@@ -892,189 +770,3 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
     scalar := m[1,pos] / gram[1,pos];
     return scalar;
   end );
-
-#############################################################################
-##
-#O  PreservedFormsOp( <grp> )
-##  return a record containing information on preserved forms. This operation
-##  is not intended for the user. Its output will be processed in different
-##  operations. New version in recognition_new
-##
-#InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
-#  function( grp )
-#    local   forms, field, i, g, qq, c, module,  invariantforms,
-#            dmodule, fmodule, form, y, newform, newforms;
-#    field := DefaultFieldOfMatrixGroup(grp);
-
-#    forms := rec();
-#    forms.field := field;
-#    forms.invariantforms := [];
-#    forms.maybeDual      := false;
-#    forms.maybeFrobenius := false;
-
-#    # set up the module and other information
-#    module := GModuleByMats(GeneratorsOfGroup(grp), field);
-
-#    # set the possibilities
-#    forms.maybeDual      := true;
-#    forms.maybeFrobenius := DegreeOverPrimeField(field) mod 2 = 0;
-
-#    if forms.maybeFrobenius  then
-#        qq := Characteristic(field)^(DegreeOverPrimeField(field)/2);
-#    fi;
-
-#    # We first perform some inexpensive tests with a few random elements
-#    for i in [1 .. 8]  do
-#        g := PseudoRandom(grp);
-#        if forms.maybeDual or forms.maybeFrobenius  then
-#           PossibleClassicalForms( grp, g, forms );
-#        fi;
-#    od;
-
-#    # if all forms are excluded then we are finished
-#    if not forms.maybeDual and not forms.maybeFrobenius  then
-#        i := NrRows(One(g));
-#        return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];@
-#    fi;
-
-#    # <grp> must act absolutely irreducibly
-#    if not MTX.IsAbsolutelyIrreducible(module)  then
-#        Error("Currently the use of MeatAxe requires the module to be absolutely irreducible");
-#        #Info( InfoForms, 1,  "grp not absolutely irreducible\n" );
-#        #return [];
-#    fi;
-
-#    # try to find generators without scalars
-#    if forms.maybeDual  then
-#        dmodule := ClassicalForms_GeneratorsWithoutScalarsDual(grp);
-#        if dmodule = false  then
-#            forms.maybeDual := false;
-#        fi;
-#    fi;
-#    if forms.maybeFrobenius  then
-#        fmodule := ClassicalForms_GeneratorsWithoutScalarsFrobenius(grp);
-#        if fmodule = false  then
-#            forms.maybeFrobenius := false;
-#        fi;
-#    fi;
-
-#    # now try to find an invariant form
-#    if forms.maybeDual  then
-#        form := ClassicalForms_InvariantFormDual(module,dmodule);
-#        if form <> false  then
-#            Add( forms.invariantforms, form );
-#        else
-#            forms.maybeDual := false;
-#        fi;
-#    fi;
-
-#    if forms.maybeFrobenius  then
-#        form := ClassicalForms_InvariantFormFrobenius(module,fmodule);
-#        if form <> false  then
-#            Add( forms.invariantforms, form );
-#        else
-#            forms.maybeFrobenius := false;
-#        fi;
-#    fi;
-#    # if all forms are excluded then we are finished
-#    if not forms.maybeDual and not forms.maybeFrobenius  then
-#            Add( forms.invariantforms, [ "linear" ] );
-#    fi;
-#
-#    return forms;
-#end );
-
-#############################################################################
-##
-#O  PreservedForms( <grp> )
-##    returns (i) quadratic form(s) if it has one,
-##            (ii) a sesquilinear form(s) otherwise
-##  it basically converts the information given by Frank Cellers operation
-## to output we want...
-##
-#InstallMethod( PreservedForms,
-#    "for a matrix group over a finite field",
-#    [ IsMatrixGroup ],
-#    function( grp )
-#    local newforms, forms, y, newform, i, field;
-#    newforms := [];
-#    field := DefaultFieldOfMatrixGroup(grp);
-#    forms := PreservedFormsOp(grp);
-#    for y in forms!.invariantforms do
-#       if y[1] in ["orthogonalplus", "orthogonalminus", "orthogonalcircle"] then
-#          newform := QuadraticFormByMatrix(y[4], field);
-#          Info(InfoForms, 1, Concatenation("preserved up to the following scalars: ", String(y[3])) );
-#          Info(InfoForms, 1, y[1] );
-#          Add( newforms, newform );
-#       elif y[1] = "symplectic" then
-#          newform := BilinearFormByMatrix(y[2], field);
-#          Add( newforms, newform );
-#       elif y[1] = "unitary" then
-#          newform := HermitianFormByMatrix(y[2], field);
-#          Add( newforms, newform );
-#       elif y[1] = "linear" then
-#          i := NrRows(One(grp));
-#          newform := BilinearFormByMatrix( NullMat(i,i,field), field );
-#          Add( newforms, newform );
-#       fi;
-#    od;
-#    return newforms;
-#end );
-
-#############################################################################
-##
-#O  PreservedSesquilinearForms( <grp> )
-##    returns a sesquilinear form(s) if it has one
-##  it basically converts the information given by Frank Cellers operation
-## to output we want...
-##
-#InstallMethod( PreservedSesquilinearForms,
-#    "for a matrix group over a finite field",
-#    [ IsMatrixGroup ],
-#    function( grp )
-#    local newforms, forms, y, newform, i, field;
-#    newforms := [];
-#    field := DefaultFieldOfMatrixGroup(grp);
-#    forms := PreservedFormsOp(grp);
-#    for y in forms!.invariantforms do
-#       if y[1] in ["symplectic", "orthogonalplus",
-#                   "orthogonalminus", "orthogonalcircle"] then
-#          newform := BilinearFormByMatrix(y[2], field);
-#          Add( newforms, newform );
-#       elif y[1] = "unitary" then
-#          newform := HermitianFormByMatrix(y[2], field);
-#          Add( newforms, newform );
-#       elif y[1] = "linear" then
-#          i := NrRows(One(grp));
-#         newform := BilinearFormByMatrix( NullMat(i,i,field), field );
-#          Add( newforms, newform );
-#       fi;
-#    od;
-#    return newforms;
-#end );
-
-#############################################################################
-##
-#O  PreservedQuadraticForms( <grp> )
-##    returns  quadratic form(s) if it has one.
-##  it basically converts the information given by Frank Cellers operation
-## to output we want...
-##
-#InstallMethod( PreservedQuadraticForms,
-#    "for a matrix group over a finite field",
-#    [ IsMatrixGroup ],
-#    function( grp )
-#    local newforms, forms, y, newform, i, field;
-#    newforms := [];
-#    field := DefaultFieldOfMatrixGroup(grp);
-#    forms := PreservedFormsOp(grp);
-#    for y in forms!.invariantforms do
-#       if y[1] in ["orthogonalplus", "orthogonalminus", "orthogonalcircle"] then
-#          newform := QuadraticFormByMatrix(y[4], field);
-#          Info(InfoForms, 1, Concatenation("preserved up to the following scalars: ", String(y[3])) );
-#          Info(InfoForms, 1, y[1] );
-#          Add( newforms, newform );
-#        fi;
-#    od;
-#    return newforms;
-#end );

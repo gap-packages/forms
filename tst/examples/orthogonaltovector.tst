@@ -24,9 +24,8 @@ gap> form := QuadraticFormByMatrix(mat);
 < quadratic form >
 gap> v := [Z(2)^0,Z(2)^0,0*Z(2)];
 [ Z(2)^0, Z(2)^0, 0*Z(2) ]
-gap> vperp := OrthogonalSubspaceMat(form,v);
-[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 
-    3> ]
+gap> vperp := OrthogonalSubspaceMat(form,v); # TODO: this is the only change in the orignial tests. previously it expected [ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length 3> ]
+<an immutable 2x3 matrix over GF2>
 gap> bil_form := AssociatedBilinearForm(form);
 < bilinear form >
 gap> List(vperp,x->[x,v]^bil_form);

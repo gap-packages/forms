@@ -1,0 +1,3 @@
+The tests in this folder are AI generated. I gave the prompt to duplicate all forms package tests involving matrices and calling the same methods with matrix objects. This might have resulted in tests that can not be passed. I will update this once i looked through all tests and checked if they are sensible.
+
+Update: I have looked through most of them (as i had to fix the functions) and added some more tests myself. I think these tests are now mostly ok. Their main purpose is anyways to see if the functions still work with matrix objects, and not to see if they provide the correct mathematical result, as this is done by the old tests anyways.

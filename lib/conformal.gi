@@ -167,22 +167,36 @@ InstallMethod( ConformalSymplecticGroupCons,
 end );
 
 
-#############################################################################
-##
-##  The following methods are currently needed to make the code work
-##  in case one creates groups whose elements are in `IsMatrixObj`.
-##  Eventually we must support `IsMatrixObj` matrices in form objects.
-##
+# #############################################################################
+# ##
+# ##  The following methods are currently needed to make the code work
+# ##  in case one creates groups whose elements are in `IsMatrixObj`.
+# ##  Eventually we must support `IsMatrixObj` matrices in form objects.
+# ##
 
-InstallOtherMethod( BilinearFormByMatrix,
-  "for a ffe matrix object and a field",
-  [ "IsMatrixObj and IsFFECollColl", "IsField and IsFinite" ],
-  { m, F } -> BilinearFormByMatrix( Unpack( m ), F ) );
+# InstallOtherMethod( BilinearFormByMatrix,
+#   "for a ffe matrix object and a field",
+#   [ "IsMatrixObj and IsFFECollColl", "IsField and IsFinite" ],
+#   { m, F } -> BilinearFormByMatrix( Unpack( m ), F ) );
 
-InstallOtherMethod( BilinearFormByMatrix,
-  "for a ffe matrix object",
-  [ "IsMatrixObj and IsFFECollColl" ],
-  m -> BilinearFormByMatrix( Unpack( m ) ) );
+# InstallOtherMethod( BilinearFormByMatrix,
+#   "for a ffe matrix object",
+#   [ "IsMatrixObj and IsFFECollColl" ],
+#   m -> BilinearFormByMatrix( Unpack( m ) ) );
+
+# ## I have also added these as a temporary solution to make the formspace code work, TODO: have forms objects support matrix objects
+
+# InstallOtherMethod( QuadraticFormByMatrix, "for a matrix object and a field",
+# [ IsMatrixObj, IsField and IsFinite ],
+# function( m, f )
+#   return QuadraticFormByMatrix(Unpack(m),f);
+# end );
+
+# InstallOtherMethod( HermitianFormByMatrix, "for a matrix object and a field",
+# [ IsMatrixObj, IsField and IsFinite ],
+# function( m, f )
+#   return HermitianFormByMatrix(Unpack(m),f);
+# end );
 
 
 # The following is apparently needed in the tests in `tst/adv/conformal.tst`.

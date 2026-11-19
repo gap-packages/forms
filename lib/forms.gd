@@ -73,16 +73,16 @@ BindGlobal( "TrivialFormType",
 #############################################################################
 
 ## the user probably won't use this one. it will not be documented.
-DeclareOperation( "FormByMatrix", [IsMatrix and IsFFECollColl, IsField, IsString] );
-DeclareOperation( "BilinearFormByMatrixOp", [IsMatrix and IsFFECollColl, IsField] );
-DeclareOperation( "QuadraticFormByMatrixOp", [IsMatrix and IsFFECollColl, IsField]);
+DeclareOperation( "FormByMatrix", [IsMatrixOrMatrixObj, IsField, IsString] );
+DeclareOperation( "BilinearFormByMatrixOp", [IsMatrixOrMatrixObj, IsField] );
+DeclareOperation( "QuadraticFormByMatrixOp", [IsMatrixOrMatrixObj, IsField]);
 
 ## For the users...
-DeclareOperation( "BilinearFormByMatrix", [IsMatrix and IsFFECollColl, IsField] );
-DeclareOperation( "BilinearFormByMatrix", [IsMatrix and IsFFECollColl] );
-DeclareOperation( "HermitianFormByMatrix", [IsMatrix and IsFFECollColl, IsField] );
-DeclareOperation( "QuadraticFormByMatrix", [IsMatrix and IsFFECollColl, IsField] );
-DeclareOperation( "QuadraticFormByMatrix", [IsMatrix and IsFFECollColl] );
+DeclareOperation( "BilinearFormByMatrix", [IsMatrixOrMatrixObj, IsField] );
+DeclareOperation( "BilinearFormByMatrix", [IsMatrixOrMatrixObj] );
+DeclareOperation( "HermitianFormByMatrix", [IsMatrixOrMatrixObj, IsField] );
+DeclareOperation( "QuadraticFormByMatrix", [IsMatrixOrMatrixObj, IsField] );
+DeclareOperation( "QuadraticFormByMatrix", [IsMatrixOrMatrixObj] );
 
 ## For the users...
 DeclareOperation( "BilinearFormByPolynomial",
@@ -118,13 +118,13 @@ DeclareOperation( "GramMatrixByPolynomialForHermitianForm",
 
 ## computing base changes. See package documentation for information.
 DeclareOperation( "BaseChangeOrthogonalBilinear",
-                      [IsMatrix and IsFFECollColl, IsField and IsFinite] );
+                      [IsMatrixOrMatrixObj, IsField and IsFinite] );
 DeclareOperation( "BaseChangeOrthogonalQuadratic",
-                      [IsMatrix and IsFFECollColl, IsField and IsFinite] );
+                      [IsMatrixOrMatrixObj, IsField and IsFinite] );
 DeclareOperation( "BaseChangeSymplectic",
-                      [IsMatrix and IsFFECollColl, IsField and IsFinite] );
+                      [IsMatrixOrMatrixObj, IsField and IsFinite] );
 DeclareOperation( "BaseChangeHermitian",
-                      [IsMatrix and IsFFECollColl, IsField and IsFinite] );
+                      [IsMatrixOrMatrixObj, IsField and IsFinite] );
 
 #############################################################################
 # Functions to support base change operations. (not to be used by the user):
@@ -136,6 +136,7 @@ DeclareGlobalFunction( "Forms_SUM_OF_SQUARES" ); #DeclareGlobalFunction( "SUM_OF
 DeclareGlobalFunction( "Forms_REDUCE2" ); #DeclareGlobalFunction( "REDUCE2" );
 DeclareGlobalFunction( "Forms_REDUCE4" ); #DeclareGlobalFunction( "REDUCE4" );
 DeclareGlobalFunction( "Forms_DIFF_2_S" ); #DeclareGlobalFunction( "DIFF_2_S" );
+DeclareGlobalFunction( "Forms_RESET_immutable");
 DeclareGlobalFunction( "Forms_RESET" ); #DeclareGlobalFunction( "RESET" );
 DeclareGlobalFunction( "Forms_SQRT2" ); #DeclareGlobalFunction( "SQRT2" );
 DeclareGlobalFunction( "Forms_PERM_VAR" ); #DeclareGlobalFunction( "PERM_VAR" );
@@ -149,9 +150,9 @@ DeclareGlobalFunction( "BaseChangeSymplectic_cleanup" );
 # Operations to check input (not for the user):
 #############################################################################
 
-DeclareOperation( "FORMS_IsSymplecticMatrix",[IsFFECollColl, IsField] );
-DeclareOperation( "FORMS_IsSymmetricMatrix", [IsFFECollColl] );
-DeclareOperation( "FORMS_IsHermitianMatrix", [IsFFECollColl, IsField] );
+DeclareOperation( "FORMS_IsSymplecticMatrix",[IsMatrixOrMatrixObj, IsField] );
+DeclareOperation( "FORMS_IsSymmetricMatrix", [IsMatrixOrMatrixObj] );
+DeclareOperation( "FORMS_IsHermitianMatrix", [IsMatrixOrMatrixObj, IsField] );
 
 #############################################################################
 # User operations:
@@ -193,7 +194,7 @@ DeclareProperty( "IsParabolicForm", IsForm );
 DeclareProperty( "IsHyperbolicForm", IsForm );
 
 ## More Operations
-DeclareOperation( "BaseChangeHomomorphism", [ IsMatrix and IsFFECollColl, IsField ] );
+DeclareOperation( "BaseChangeHomomorphism", [ IsMatrixOrMatrixObj, IsField ] );
 
 #changed all declarations below on 23/2/9.
 DeclareOperation( "EvaluateForm", [ IsSesquilinearForm,
@@ -203,19 +204,30 @@ DeclareOperation( "EvaluateForm", [ IsTrivialForm,
 DeclareOperation( "EvaluateForm", [ IsSesquilinearForm, IsFFECollColl, IsFFECollColl]);
 DeclareOperation( "EvaluateForm", [ IsTrivialForm, IsFFECollColl, IsFFECollColl]);
 DeclareOperation( "EvaluateForm", [ IsQuadraticForm, IsVector and IsFFECollection]);
-DeclareOperation( "EvaluateForm", [ IsQuadraticForm, IsFFECollColl]);
+DeclareOperation( "EvaluateForm", [ IsQuadraticForm, IsMatrixOrMatrixObj]);
 DeclareOperation( "EvaluateForm", [ IsTrivialForm, IsVector and IsFFECollection]);
 
+
 DeclareOperation("OrthogonalSubspaceMat", [IsForm, IsVector and IsFFECollection]);
-DeclareOperation("OrthogonalSubspaceMat", [IsForm, IsMatrix]);
+DeclareOperation("OrthogonalSubspaceMat", [IsForm, IsMatrixOrMatrixObj]);
 
 DeclareOperation("OrthogonalSubspace", [IsForm, IsVector and IsFFECollection]);
-DeclareOperation("OrthogonalSubspace", [IsForm, IsMatrix]);
 
-DeclareOperation("IsIsotropicVector", [IsForm, IsVector and IsFFECollection]);
-DeclareOperation("IsTotallyIsotropicSubspace", [IsForm, IsMatrix]);
+DeclareOperation("OrthogonalSubspace", [IsForm, IsMatrixOrMatrixObj]);
+
+
+DeclareOperation("IsTotallyIsotropicSubspace", [IsForm, IsMatrixOrMatrixObj]);
+
+
+DeclareOperation("IsTotallySingularSubspace", [IsQuadraticForm, IsMatrixOrMatrixObj]);
+
+# TODO: maybe we should do stuff like this to not have IsVector and IsFFECollection ???
+# DeclareOperation("IsSingularVector", [IsQuadraticForm, IsVectorObj]);
+# DeclareOperation("IsIsotropicVector", [IsForm, IsVectorObj]);
+# DeclareOperation("OrthogonalSubspace", [IsForm, IsVectorObj]);
+# DeclareOperation("OrthogonalSubspaceMat", [IsForm, IsVectorObj]);
+
 
 DeclareOperation("IsSingularVector", [IsQuadraticForm, IsVector and IsFFECollection]);
-DeclareOperation("IsTotallySingularSubspace", [IsQuadraticForm, IsMatrix]);
-
+DeclareOperation("IsIsotropicVector", [IsForm, IsVector and IsFFECollection]);
 
