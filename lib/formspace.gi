@@ -817,17 +817,20 @@ FORMS_ComputeCentralizingSpace := function(cent_rec)
         od;
     od;
     
-    O := FORMS_ReturnCent(cent_rec, true, W);
-
-    # TODO: claude claimed to me that this fallback is pointless and ran a buch of tests where this was never reached. I am not fully sure this is correct so i decided to leave it in anyways. Getting to this if seems quite rare anyways, as far as i can tell, this is not wrong, worst case is that it is slower.
-    if O = false then
-        Conds := FORMS_ComputeCyclicMatCondition(cent_rec);
-        if Conds = [] then  
-            return [];
-        fi;
-        W := FORMS_IntersectVectorSpaces(Conds, W, cent_rec.F);
-        O := FORMS_ReturnCent(cent_rec, false, W);
+    # if we exited early, we still need to check otherwise not.
+    O := FORMS_ReturnCent(cent_rec, exit_loop, W);
+    if O = false then 
+        return [];
     fi;
+    # claude claimed to me that this fallback is pointless and ran a buch of tests where this was never reached. I checked my bachelors thesis where i proved the computaition and i am now also pretty sure this computation is unnecessary.
+    # if O = false then
+    #     Conds := FORMS_ComputeCyclicMatCondition(cent_rec);
+    #     if Conds = [] then  
+    #         return [];
+    #     fi;
+    #     W := FORMS_IntersectVectorSpaces(Conds, W, cent_rec.F);
+    #     O := FORMS_ReturnCent(cent_rec, false, W);
+    # fi;
     return O;
 end;
 
