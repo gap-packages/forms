@@ -819,9 +819,6 @@ FORMS_ComputeCentralizingSpace := function(cent_rec)
     
     # if we exited early, we still need to check otherwise not.
     O := FORMS_ReturnCent(cent_rec, exit_loop, W);
-    if O = false then 
-        return [];
-    fi;
     # claude claimed to me that this fallback is pointless and ran a buch of tests where this was never reached. I checked my bachelors thesis where i proved the computaition and i am now also pretty sure this computation is unnecessary.
     # if O = false then
     #     Conds := FORMS_ComputeCyclicMatCondition(cent_rec);
