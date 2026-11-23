@@ -11,6 +11,11 @@ if not IsBound(ConformalSymplecticGroup) then
   Add( exclude, "adv/conformal.tst" );
 fi;
 
+if not IsBound(ConformalOrthogonalGroup) then
+  # conformal2.tst cannot run
+  Add( exclude, "adv/conformal2.tst" );
+fi;
+
 TestDirectory(DirectoriesPackageLibrary("forms", "tst"),
     rec(
       exitGAP := true,

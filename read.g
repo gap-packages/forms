@@ -20,3 +20,7 @@ ReadPackage("forms", "lib/recognition_new.gi");
 if IsBound( ConformalSymplecticGroup ) then
   ReadPackage("forms", "lib/conformal.gi");
 fi;
+
+if IsBound( ConformalOrthogonalGroup ) then
+  ReadPackage("forms", "lib/conformal2.gi");
+fi;
